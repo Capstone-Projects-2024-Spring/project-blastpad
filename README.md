@@ -39,24 +39,10 @@ Discuss what you need to develop this project. This includes background informat
 <table>
 <tr>
     <td align="center">
-        <a href="https://github.com/ApplebaumIan">
-            <img src="https://avatars.githubusercontent.com/u/9451941?v=4" width="100;" alt="ApplebaumIan"/>
+        <a href="https://github.com/Snarr">
+            <img src="https://avatars.githubusercontent.com/u/20634143?v=4" width="100;" alt="Snarr"/>
             <br />
-            <sub><b>Ian Tyler Applebaum</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/leekd99">
-            <img src="https://avatars.githubusercontent.com/u/32583417?v=4" width="100;" alt="leekd99"/>
-            <br />
-            <sub><b>Kyle Dragon Lee</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/thanhnguyen46">
-            <img src="https://avatars.githubusercontent.com/u/60533187?v=4" width="100;" alt="thanhnguyen46"/>
-            <br />
-            <sub><b>Thanh Nguyen</b></sub>
+            <sub><b>Jacob Snarr</b></sub>
         </a>
     </td>
    </tr>
