@@ -45,6 +45,13 @@ Discuss what you need to develop this project. This includes background informat
             <sub><b>Jacob Snarr</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/gummyfrog">
+            <img src="https://avatars.githubusercontent.com/u/32652208?v=4" width="100;" alt="Neil"/>
+            <br />
+            <sub><b>Neil Conley</b></sub>
+        </a>
+    </td>
    </tr>
 </table>
 
