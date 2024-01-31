@@ -50,8 +50,28 @@ const testBlock = {
 };
 
 
+const gameLoop = {
+  'type': 'game_loop',
+  'message0': 'Game Loop',
+  'message1': 'DO %1 End of Game',
+  "args0": [
+  ],
+  'args1': [
+    {
+      'type': 'input_statement',
+      'name': 'DO',
+    },
+  ],
+  'previousStatement': null,
+  'nextStatement': null,
+  'tooltip': 'Your Game Loop!',
+  'helpUrl': '',
+  'style': 'loop_blocks'
+};
+
+
 // Create the block definitions for the JSON-only blocks.
 // This does not register their definitions with Blockly.
 // This file has no side effects!
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(
-    [addText, testBlock]);
+    [addText, testBlock, gameLoop]);

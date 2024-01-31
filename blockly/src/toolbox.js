@@ -497,6 +497,10 @@ export const toolbox = {
         },
         {
           'kind': 'block',
+          'type': 'game_loop',
+        },
+        {
+          'kind': 'block',
           'type': 'add_text',
           'inputs': {
             'TEXT': {
