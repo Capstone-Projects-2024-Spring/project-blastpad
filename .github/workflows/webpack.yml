@@ -28,6 +28,6 @@ jobs:
 
     - name: Commit Build
       run: |
-        git add dist
+        git add --all
         git commit -m "Webpack Production Build"
         git push origin master
