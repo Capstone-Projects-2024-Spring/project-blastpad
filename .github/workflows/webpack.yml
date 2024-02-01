@@ -30,4 +30,4 @@ jobs:
       run: |
         git add --all
         git commit -m "Webpack Production Build"
-        git push origin master
+        git push origin main
