@@ -1,7 +1,8 @@
 # disabled
 on:
     push:
-        branches: '' # < remove and add 'main' to re enable
+        paths:
+          - blockly/**
 
 jobs:
   updateAuthors:
@@ -14,6 +15,7 @@ jobs:
         node-version: '20.x'
     - name: Install dependencies
       run: cd blockly && npm install && npm run build
+    - name: Commit build
     - uses: EndBug/add-and-commit@v9
       with:
         default_author: github_actions
