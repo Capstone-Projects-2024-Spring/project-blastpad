@@ -4,6 +4,8 @@ on:
         branches: 'main'
         # paths:
           # - blockly/**
+permissions:
+  contents: write
 
 jobs:
   webpack:
