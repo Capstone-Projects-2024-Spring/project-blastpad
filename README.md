@@ -58,6 +58,12 @@ Discuss what you need to develop this project. This includes background informat
             <br />
             <sub><b>Jeffin Johnykutty</b></sub>
         </a>
+        <td align="center">
+        <a href="https://github.com/MWedee">
+            <img src="https://avatars.githubusercontent.com/u/104322948?v=4" width="100;" alt="Wedee"/>
+            <br />
+            <sub><b>Mustafa Wedee</b></sub>
+        </a>
     </td>
     
 </tr>
