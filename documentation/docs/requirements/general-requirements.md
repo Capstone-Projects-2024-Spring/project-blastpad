@@ -13,7 +13,7 @@ sidebar_position: 3
     - Tactile Switch Buttons 
     - Pisugar S plus: Battery for Raspberry Pi 3B/3B+/4B
     - Rotary Encoder
-    = Raspberry Pi GPIO Reference Card
+    - Raspberry Pi GPIO Reference Card
     - SanDisk 64GB Ultra microSDXC UHS-I Memory Card
 - Software Requirements
     - Pygame Zero (Python library)
