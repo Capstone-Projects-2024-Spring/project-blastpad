@@ -73,13 +73,13 @@ https://capstone-projects-2024-spring.github.io/project-blastpad/docs/requiremen
             <br />
             <sub><b>Jeffin Johnykutty</b></sub>
         </a>
-        <td align="center">
+    </td>
+    <td align="center">
         <a href="https://github.com/MWedee">
             <img src="https://avatars.githubusercontent.com/u/104322948?v=4" width="100;" alt="Wedee"/>
             <br />
             <sub><b>Mustafa Wedee</b></sub>
         </a>
-        </td>
     </td>
     
 </tr>
