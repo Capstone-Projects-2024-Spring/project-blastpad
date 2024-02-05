@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Features and Requirements
 
-## Some Functional Requirements
+## Functional Requirements
 - BlastPad’s home screen will appear when the system starts.
     - The Home Screen displays a horizontally scrolling gallery of the user’s saved games.
     - The Home Screen contains a button that opens the code editor.
