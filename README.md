@@ -81,6 +81,13 @@ https://capstone-projects-2024-spring.github.io/project-blastpad/docs/requiremen
             <sub><b>Mustafa Wedee</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/mustafamalik-tu">
+            <img src="https://avatars.githubusercontent.com/u/144449116?v=4" width="100;" alt="Malik"/>
+            <br />
+            <sub><b>Mustafa Malik</b></sub>
+        </a>
+    </td>
     
 </tr>
 </table>
