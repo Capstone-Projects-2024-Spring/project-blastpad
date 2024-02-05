@@ -79,6 +79,7 @@ https://capstone-projects-2024-spring.github.io/project-blastpad/docs/requiremen
             <br />
             <sub><b>Mustafa Wedee</b></sub>
         </a>
+        </td>
     </td>
     
 </tr>
