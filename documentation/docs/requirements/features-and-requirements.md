@@ -5,7 +5,7 @@ sidebar_position: 4
 # Features and Requirements
 
 ## Functional Requirements
-- BlastPad must allow users to develop and play games created used the Blockly code editor.
+- BlastPad must allow users to develop and play games created using the Blockly code editor.
 - BlastPad must be easily navigable for children.
     - All pages should lack unnecessary visual clutter and contain only a few distinct intractable elements.
     - Any text displayed on the BlastPad, including documentation, UI elements, alerts and errors, should be interpretable by a child, age 5 at the youngest.
