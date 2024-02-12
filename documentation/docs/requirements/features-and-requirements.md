@@ -16,7 +16,7 @@ sidebar_position: 4
     - Ability to run a game from the editor and return to it when the game is exited.
     - Ability to configure a game’s title, image, author, and version.
     - Blocks that generate PyGame-0 code must be available in the editor.
-    - Comment blocks must be available in the editor so that users can describe their program and leave notes..
+    - Comment blocks must be available in the editor so that users can describe their program and leave notes.
     - The block editor must contain a link to built-in documentation for blocks
     - The code editor must be accessible from a laptop via a local network connection.
         - The Code Editor contains an “upload to classroom button.
