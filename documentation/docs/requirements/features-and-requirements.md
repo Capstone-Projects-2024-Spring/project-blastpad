@@ -40,6 +40,9 @@ sidebar_position: 4
     - Users must be able to start games from either the code editor or Home Screen and return to their original view when the game ends.
     - Debug information must be visible in the code editor should the game encounter a fatal error.
     - Games must take up the entire focus of the BlastPad while they are running
+- Device must have the ability to be used as an access point to share games.
+    - Users must be able to publish games online and it can be downloaded from the remote server by another Blastpad.
+    - Users must be able to download games to the Blastpad by browsing for publicly published games and selecting one for download.
 - BlastPad games must be uploadable to a public database.
     Users must be able to upload their games to a web server that hosts them for other users to download.
 - BlastPad games must be uploadable to a private group.
