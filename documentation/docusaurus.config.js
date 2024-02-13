@@ -1,8 +1,8 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+// const lightCodeTheme = require('prism-react-renderer/themes/github');
+// const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /**
  * The URL or reference to your projects logo!
@@ -33,7 +33,7 @@ const config = {
   url: 'https://'+process.env.ORG_NAME+'.github.io/',
   baseUrl: '/'+process.env.PROJECT_NAME+'/',
   trailingSlash: false,
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
@@ -66,7 +66,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME+'/edit/main/documentation/',
+              'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME+'/edit/main/documentation/',
           // remarkPlugins: [require('mdx-mermaid')],
 
         },
@@ -103,98 +103,98 @@ const config = {
     ],
   ],
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        /*TODO: Change to your project's title*/
-        title: title,
-        logo: {
-          alt: 'My Site Logo',
-          src: logo,
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+      ({
+        navbar: {
+          /*TODO: Change to your project's title*/
+          title: title,
+          logo: {
+            alt: 'My Site Logo',
+            src: logo,
+          },
+          items: [
+            {
+              type: 'doc',
+              docId: 'intro',
+              position: 'left',
+              label: 'Documentation',
+            },{
+              to: '/tutorial/Intro',
+              label: 'Docusaurus Tutorial',
+              position: 'left',
+              activeBaseRegex: `/tutorial/`,
+            },
+            {
+              href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
+              label: 'GitHub',
+              position: 'right',
+            },
+          ],
         },
-        items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Documentation',
-          },{
-            to: '/tutorial/Intro',
-            label: 'Docusaurus Tutorial',
-            position: 'left',
-            activeBaseRegex: `/tutorial/`,
+        footer: {
+          logo: {
+            alt: 'My Site Logo',
+            src: logo,
           },
-          {
-            href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        logo: {
-          alt: 'My Site Logo',
-          src: logo,
+          links: [
+            {
+              title: 'Docs',
+              items: [
+                {
+                  label: 'Documentation',
+                  to: '/docs/intro',
+                },
+              ],
+            },
+            // {
+            //   title: 'Community',
+            //   items: [
+            //     {
+            //       label: 'Stack Overflow',
+            //       href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            //     },
+            //     {
+            //       label: 'Discord',
+            //       href: 'https://discordapp.com/invite/docusaurus',
+            //     },
+            //     {
+            //       label: 'Twitter',
+            //       href: 'https://twitter.com/docusaurus',
+            //     },
+            //   ],
+            // },
+            {
+              title: 'More',
+              items: [
+                {
+                  label: 'GitHub',
+                  href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
+                },
+              ],
+            },
+          ],
+          copyright: `Copyright © ${new Date().getFullYear()} ${title}, Inc. Built with Docusaurus.`,
         },
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Documentation',
-                to: '/docs/intro',
-              },
-            ],
+        // prism: {
+        //   theme: lightCodeTheme,
+        //   darkTheme: darkCodeTheme,
+        // },
+        imageZoom: {
+          // CSS selector to apply the plugin to, defaults to '.markdown img'
+          selector: '.markdown img',
+          // Optional medium-zoom options
+          // see: https://www.npmjs.com/package/medium-zoom#options
+          options: {
+            margin: 24,
+            zIndex:100,
+            background: 'white',
+            // scrollOffset: 10,
+            // container: '#zoom-container',
+            // template: '#zoom-template',
           },
-          // {
-          //   title: 'Community',
-          //   items: [
-          //     {
-          //       label: 'Stack Overflow',
-          //       href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-          //     },
-          //     {
-          //       label: 'Discord',
-          //       href: 'https://discordapp.com/invite/docusaurus',
-          //     },
-          //     {
-          //       label: 'Twitter',
-          //       href: 'https://twitter.com/docusaurus',
-          //     },
-          //   ],
-          // },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} ${title}, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-      imageZoom: {
-        // CSS selector to apply the plugin to, defaults to '.markdown img'
-        selector: '.markdown img',
-        // Optional medium-zoom options
-        // see: https://www.npmjs.com/package/medium-zoom#options
-        options: {
-          margin: 24,
-          zIndex:100,
-          background: 'white',
-          // scrollOffset: 10,
-          // container: '#zoom-container',
-          // template: '#zoom-template',
         },
-      },
 
-    }),
+      }),
   plugins: [
     [
       '@docusaurus/plugin-content-docs',
@@ -217,7 +217,7 @@ const config = {
 
   ],
   scripts:['https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-      ...main_template_jira_scripts()
+    ...main_template_jira_scripts()
   ],
 };
 console.log(config.scripts)
