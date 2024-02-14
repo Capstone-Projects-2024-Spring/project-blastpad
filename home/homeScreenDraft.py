@@ -1,5 +1,10 @@
 import tkinter as tk
+import webbrowser
 from tkinter import messagebox
+
+# Opens Google.com in a new browser tab
+def openGoogle():
+    webbrowser.open('http://www.google.com')
 
 # Clears all widgets from the root window
 def clearWidgets():
@@ -9,13 +14,24 @@ def clearWidgets():
 # Function to display the home page with a button and label
 def showHomePage():
     clearWidgets()
-    # Create and place the 'Code Editor' button at the top-left
-    homeButton = tk.Button(root, text="Code Editor", command=showNewPage, bg="red", fg="white")
-    homeButton.pack(side=tk.TOP, anchor=tk.W)
-    
+
+    # Use a frame as a container for the top row buttons
+    topFrame = tk.Frame(root)
+    topFrame.pack(side=tk.TOP, anchor=tk.NW)  # This frame is at the top-left
+
+    # Create and place the 'Code Editor' button in the frame
+    codeEditorButton = tk.Button(topFrame, text="Code Editor", command=openGoogle, bg="red", fg="white")
+    codeEditorButton.pack(side=tk.LEFT)  # Pack it to the left side of the frame
+
+    # Create and place the 'New Page' button to the right of the "Code Editor" button
+    newPageButton = tk.Button(topFrame, text="New Page", command=showNewPage, bg="yellow", fg="black")
+    newPageButton.pack(side=tk.LEFT)  # Pack it to the left side of the frame, next to the Code Editor button
+
     # Display a label in the center of the home page
     homePageLabel = tk.Label(root, text="Home page is shown", font=("Arial", 14))
     homePageLabel.pack(expand=True)
+
+
 
 # Function to display the new page with a 'Back' button and label
 def showNewPage():
@@ -25,7 +41,7 @@ def showNewPage():
     backButton.pack(side=tk.TOP, anchor=tk.W)
     
     # Display a label in the center of the new page
-    newPageLabel = tk.Label(root, text="Pseudo Code Editor is shown", font=("Arial", 14))
+    newPageLabel = tk.Label(root, text="New Page is shown", font=("Arial", 14))
     newPageLabel.pack(expand=True)
 
 # Set up the GUI window and display the home page
