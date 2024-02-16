@@ -6,7 +6,11 @@
     <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>
   </head>
   <body>
-    <div id="pageContainer">
+    <div id="selectionContainer">
+      <h2> Available Games: </h2>
+      <div id="gamesContainer"></div>
+    </div>
+    <div id="pageContainer" class="hidden">
       <div id="outputPane">
         <pre id="generatedCode"><code></code></pre>
         <button id="saveGame"> Save Game </button>

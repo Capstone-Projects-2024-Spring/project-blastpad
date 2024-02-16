@@ -1,0 +1,73 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "controls_repeat_ext",
+                "id": ".zJzkNRSnRwxi?X1F(SX",
+                "x": 295,
+                "y": 220,
+                "inputs": {
+                    "TIMES": {
+                        "shadow": {
+                            "type": "math_number",
+                            "id": "[hDS%RGy!+j#C*CELz=y",
+                            "fields": {
+                                "NUM": 10
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "game_loop",
+                "id": "+d#{6]}hl)Kw/t[=oWSP",
+                "x": 14,
+                "y": 251
+            },
+            {
+                "type": "text_join",
+                "id": ",oAMR$DN-g5B;~YnL;s/",
+                "x": 51,
+                "y": 180,
+                "extraState": {
+                    "itemCount": 2
+                }
+            },
+            {
+                "type": "controls_repeat_ext",
+                "id": "P=jK?n3zhAx3WNR~706k",
+                "x": 195,
+                "y": 39,
+                "inputs": {
+                    "TIMES": {
+                        "shadow": {
+                            "type": "math_number",
+                            "id": "ZGR*#[6nytiA]Oc%A6=|",
+                            "fields": {
+                                "NUM": 10
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "procedures_defreturn",
+                "id": "g^*P8d.!M|/=a?Bp@R^]",
+                "x": 188,
+                "y": 350,
+                "icons": {
+                    "comment": {
+                        "text": "Describe this function...",
+                        "pinned": false,
+                        "height": 80,
+                        "width": 160
+                    }
+                },
+                "fields": {
+                    "NAME": "do something"
+                }
+            }
+        ]
+    }
+}

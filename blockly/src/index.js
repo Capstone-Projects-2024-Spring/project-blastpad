@@ -22,7 +22,13 @@ const outputDiv = document.getElementById('output');
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
 
+const selectionContainer = document.getElementById('selectionContainer')
+const gamesContainer = document.getElementById('gamesContainer')
+const pageContainer = document.getElementById('pageContainer')
+
 const ws = Blockly.inject(blocklyDiv, {toolbox});
+
+
 
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
@@ -54,8 +60,6 @@ const runCode = () => {
 };
 
 // Load the initial state from storage and run the code.
-load(ws);
-runCode();
 
 // Every time the workspace changes state, save the changes to storage.
 ws.addChangeListener((e) => {
@@ -77,3 +81,45 @@ ws.addChangeListener((e) => {
   }
   runCode();
 });
+
+
+const fetchAndLoadGame = (gameName) => {
+  // gamename includes .json at the end. this will need to change
+  // on both the flask end and this end.
+
+  fetch(`http://localhost:5000/games/${gameName}`).then(function(response) {
+    return response.json()
+  }).then((gameWorkspace) => {
+    Blockly.Events.disable();
+    Blockly.serialization.workspaces.load(gameWorkspace, ws, false);
+    Blockly.Events.enable();
+
+    selectionContainer.classList.add("hidden");
+    pageContainer.classList.remove("hidden");
+  })
+}
+
+const startEditor = () => {
+  selectionContainer.classList.remove("hidden");
+  pageContainer.classList.add("hidden");
+
+  fetch('http://localhost:5000/games').then(function(response) {
+    return response.json()
+  }).then((json) => {
+    console.log(json);
+    for(var gameFileName of json.games) {
+      // you would also want to display the bitmap here... generate an image perhaps
+      var gamePlaceholder = document.createElement("h2");
+      gamePlaceholder.innerHTML = gameFileName;
+      gamePlaceholder.addEventListener('click', (e) => {
+        fetchAndLoadGame(gameFileName);
+      });
+      gamesContainer.appendChild(gamePlaceholder);
+    }
+  })
+
+  // load(ws);
+// runCode();
+}
+
+startEditor();
