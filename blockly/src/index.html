@@ -1,16 +1,18 @@
 <!DOCTYPE html>
- <html>
-   <head>
-     <meta charset="utf-8" />
-     <title>Blockly Sample App</title>
-   </head>
-   <body>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Blockly Sample App</title>
+    <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+  </head>
+  <body>
     <div id="pageContainer">
       <div id="outputPane">
         <pre id="generatedCode"><code></code></pre>
+        <button id="saveGame"> Save Game </button>
         <div id="output"></div>
       </div>
       <div id="blocklyDiv"></div>
     </div>
-   </body>
- </html>
+  </body>
+</html>

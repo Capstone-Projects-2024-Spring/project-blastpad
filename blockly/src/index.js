@@ -20,7 +20,25 @@ Object.assign(pythonGenerator.forBlock, forBlock);
 const codeDiv = document.getElementById('generatedCode').firstChild;
 const outputDiv = document.getElementById('output');
 const blocklyDiv = document.getElementById('blocklyDiv');
+const saveGameButton = document.getElementById('saveGame');
+
 const ws = Blockly.inject(blocklyDiv, {toolbox});
+
+saveGameButton.addEventListener("click", async (e) => {
+    const data = Blockly.serialization.workspaces.save(ws);
+
+    var response = await fetch("http://localhost:5000/save/game", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      console.log(response);
+})
 
 // This function resets the code and output divs, shows the
 // generated code from the workspace, and evals the code.
