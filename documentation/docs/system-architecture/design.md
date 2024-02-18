@@ -26,16 +26,19 @@ title: BlastPad
 ---
 classDiagram
     BlocklyEditor o-- "0..*" Game
-	Classroom o-- "0..*" Game
-	BlocklyEditor o-- "0..*" Block
-	BlocklyEditor o-- "1" Documentation
-	Gallery <-- "1" ClassroomManager
-	Gallery <-- "1" BlocklyEditor
-	ClassroomManager *-- "0..*" Classroom
-	DeviceManager <-- "1" Gallery
-	DeviceManager <-- "1" User
-	Block <-- "0..*" Sensor
-	Gallery <-- "1" Configuration
+		Classroom o-- "0..*" Game
+		BlocklyEditor o-- "0..*" Block
+		BlocklyEditor o-- "1" Documentation
+		Gallery <-- "1" ClassroomManager
+		Gallery <-- "1" BlocklyEditor
+		ClassroomManager *-- "0..*" Classroom
+		DeviceManager <-- "1" Gallery
+		Block <-- "0..*" Sensor
+		Gallery <-- "1" Configuration
+		DeviceManager <-- "1" User
+		Database o-- "0..*" User
+		Database o-- "0..*" Classroom
+		
 		
     class Game{
         -title: String
@@ -82,8 +85,9 @@ classDiagram
 		+teacherID: int
 		+games: Game[]
 
-		+deleteGame(userID: int): bool
-		+approveGame(userID: int): bool
+		+deleteGame(userID: int) bool
+		+approveGame(userID: int) bool
+		+uploadGame(game: Game)
     }
 	class ClassroomManager {
 		-classrooms: Classroom[]
@@ -92,7 +96,7 @@ classDiagram
 		+leaveClassroom(c: Classroom)
 		+viewClassrooms()
 	}
-    class User {
+	class User {
     	-String: username
 		-String: password
 		+login(username: String, password: String)
@@ -108,7 +112,7 @@ classDiagram
 		+close()
     }
     class Gallery {
-		+openCodeEditor()
+    	+openCodeEditor()
 		+openConfiguration()
 		+viewClassrooms()
 		+viewGames()
@@ -116,12 +120,21 @@ classDiagram
     }
     class Documentation {
 		+header: String
-		+body: String
+    	+body: String
 
 		+loadContent(type: String) String
 	}
 	class DeviceManager {
-			+loadGallery()
+		+loadGallery()
+	}
+	class Database {
+		-users: User[]
+		-classroom: Classroom[]
+
+		+addUser()
+		+removeUser()
+		+addClassroom()
+		+removeClassroom()
 	}
 ```
 
