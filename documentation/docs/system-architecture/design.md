@@ -18,6 +18,57 @@ Sequence diagrams showing the data flow for _all_ use cases. One sequence diagr
 
 Describe algorithms employed in your project, e.g. neural network paradigm, training and training data set, etc.
 
+# UML
+
+```mermaid
+graph TD;
+---
+title: BlastPad
+---
+classDiagram
+	Block <-- "0..*" Sensor
+		
+    class Block {
+        +type: String
+				+message0: String
+				+message1: String
+				+args0: Object[]
+				+args1: Object[]
+				+previousStatement: String
+				+nextStatment: String
+				+tooltip: String
+				+helpurl: String
+				+style: String
+    }
+    class Sensor {
+				+sensorID: int
+				-sensorData: int[]
+		
+				+getSensorData(): int[]
+				+recalibrateSensor()
+				+clearSensorData()
+    }
+    class Configuration {
+			+connectionStatus: Boolean
+			+listOfAvailNetworks: String[]
+			+SSID: String
+			-securityKey: String
+			
+			+scan() String[]
+			+connect(SSID: String, securityKey: String)
+			+close()
+    }
+    class Documentation {
+			+header: String
+      +body: String
+
+			+loadContent(type: String) String
+		}
+		class DeviceManager {
+			+loadGallery()
+		}
+```
+
 If there is a database:
 
 Entity-relation diagram.
