@@ -18,6 +18,130 @@ Sequence diagrams showing the data flow for _all_ use cases. One sequence diagr
 
 Describe algorithms employed in your project, e.g. neural network paradigm, training and training data set, etc.
 
+# UML
+
+```mermaid
+---
+title: BlastPad Class Diagram
+---
+classDiagram
+    BlocklyEditor o-- "0..*" Game
+	User --o "0..*" Database
+	Classroom o-- "0..*" Game
+	DeviceManager <-- "1" User
+	BlocklyEditor o-- "0..*" Block
+	Database o-- "0..*" Classroom
+	BlocklyEditor o-- "1" Documentation
+	Gallery <-- "1" ClassroomManager
+	Gallery <-- "1" BlocklyEditor	
+	ClassroomManager *-- "0..*" Classroom
+	Block <-- "0..*" Sensor
+	Gallery <-- "1" Configuration	
+	DeviceManager <-- "1" Gallery
+	Game <-- "1" CodeCompiler
+		
+    class Game{
+        -title: String
+		-imageFile: String
+        -version: String
+		-author: String
+		
+		+startGame()
+		+pauseGame()
+		+quitGame()
+		+uploadToClassroom(Classroom)
+		+compileGame()
+    }
+    class BlocklyEditor{
+        -games: Game[]
+		-availableBlocks: Block[]
+		
+		+createNewGame()
+		+saveGame()
+		+displayBlockInformation()
+		+displayErrorMessages()
+    }
+    class Block {
+        +type: String
+		+message0: String
+		+message1: String
+		+args0: Object[]
+		+args1: Object[]
+		+previousStatement: String
+		+nextStatment: String
+		+tooltip: String
+		+helpurl: String
+		+style: String
+    }
+    class Sensor {
+		+sensorID: int
+		-sensorData: int[]
+
+		+getSensorData(): int[]
+		+recalibrateSensor()
+		+clearSensorData()
+    }
+    class Classroom {
+        +classroomID: int
+		+teacherID: int
+		+games: Game[]
+
+		+deleteGame(userID: int) bool
+		+approveGame(userID: int) bool
+		+uploadGame(game: Game)
+    }
+	class ClassroomManager {
+		-classrooms: Classroom[]
+
+		+joinClassroom(c: Classroom)
+		+leaveClassroom(c: Classroom)
+		+viewClassrooms()
+	}
+	class User {
+    	-String: username
+		-String: password
+		+login(username: String, password: String)
+    }
+    class Configuration {
+		+connectionStatus: Boolean
+		+listOfAvailNetworks: String[]
+		+SSID: String
+		-securityKey: String
+		
+		+scan() String[]
+		+connect(SSID: String, securityKey: String)
+		+close()
+    }
+    class Gallery {
+    	+openCodeEditor()
+		+openConfiguration()
+		+viewClassrooms()
+		+viewGames()
+			
+    }
+    class Documentation {
+		+header: String
+    	+body: String
+
+		+loadContent(type: String) String
+	}
+	class DeviceManager {
+		+loadGallery()
+	}
+	class Database {
+		-users: User[]
+		-classroom: Classroom[]
+
+		+addUser()
+		+removeUser()
+		+addClassroom()
+		+removeClassroom()
+	}
+	class CodeCompiler {
+		+compileBlocklytoPython()
+	}
+```
+
 If there is a database:
 
 Entity-relation diagram.
