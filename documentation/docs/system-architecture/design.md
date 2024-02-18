@@ -26,19 +26,19 @@ title: BlastPad
 ---
 classDiagram
     BlocklyEditor o-- "0..*" Game
-		Classroom o-- "0..*" Game
-		BlocklyEditor o-- "0..*" Block
-		BlocklyEditor o-- "1" Documentation
-		Gallery <-- "1" ClassroomManager
-		Gallery <-- "1" BlocklyEditor
-		ClassroomManager *-- "0..*" Classroom
-		DeviceManager <-- "1" Gallery
-		Block <-- "0..*" Sensor
-		Gallery <-- "1" Configuration
-		DeviceManager <-- "1" User
-		Database o-- "0..*" User
-		Database o-- "0..*" Classroom
-		
+	User --o "0..*" Database
+	Classroom o-- "0..*" Game
+	DeviceManager <-- "1" User
+	BlocklyEditor o-- "0..*" Block
+	Database o-- "0..*" Classroom
+	BlocklyEditor o-- "1" Documentation
+	Gallery <-- "1" ClassroomManager
+	Gallery <-- "1" BlocklyEditor	
+	ClassroomManager *-- "0..*" Classroom
+	Block <-- "0..*" Sensor
+	Gallery <-- "1" Configuration	
+	DeviceManager <-- "1" Gallery
+	Game <-- "1" CodeCompiler
 		
     class Game{
         -title: String
@@ -50,6 +50,7 @@ classDiagram
 		+pauseGame()
 		+quitGame()
 		+uploadToClassroom(Classroom)
+		+compileGame()
     }
     class BlocklyEditor{
         -games: Game[]
@@ -135,6 +136,9 @@ classDiagram
 		+removeUser()
 		+addClassroom()
 		+removeClassroom()
+	}
+	class CodeCompiler {
+		+compileBlocklytoPython()
 	}
 ```
 
