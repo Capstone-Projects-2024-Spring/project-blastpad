@@ -39,9 +39,6 @@ sidebar_position: 4
     - Contains a gear icon to open system configuration.
 - System settings must be accessible from the home page with a gear icon.
     - Users must be able to configure WiFi and volume.
-- Device must have the ability to be used as an access point to share games.
-    - Users must be able to publish games online and it can be downloaded from the remote server by another BlastPad.
-    - Users must be able to download games to the BlastPad by browsing for publicly published games and selecting one for download.
 - BlastPad games must be able to upload to a public database.
     Users must be able to upload their games to a web server that hosts them for other users to download.
 - BlastPad games must be uploadable to a private group.
