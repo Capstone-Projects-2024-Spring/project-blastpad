@@ -54,25 +54,7 @@ A user’s Blockly code fails during compilation and they would like to view the
 4. When the code compilation fails, the user will receive an error message stating which 
 block failed to compile.
 
-### Use Case 6 - Sharing game using BlastPad as an access point
-A user wants to use the blast pad to share a game with their friend.
-
-1. The user turns on the BlastPad. 
-2. Then selects the menu to publish a game file.
-3. Then the user publishes the game file with a title and description.
-4. The user receives a confirmation message that the file was uploaded successfully.
-5. The friend is now able to download the game file from the remote server using their BlastPad.
-
-### Use Case 7 - Receiving game using BlastPad as an access point
-A user wants to play a game that was shared with them from a friend
-
-1. The user turns on the BlastPad.
-2. Then selects the menu option to browse publicly published games.
-3. Then browses the website and is able to search for their friend’s published games.
-4. Then the user downloads the game and receives a confirmation that the game has been successfully downloaded.
-5. The user can find the shared/downloaded game using the ‘browse local games’ menu option.
-
-### Use Case 8 - Joining a Classroom
+### Use Case 6 - Joining a Classroom
 A user would like to join a classroom from the BlastPad.
 
 1. The user turns on the BlastPad.
@@ -82,7 +64,7 @@ A user would like to join a classroom from the BlastPad.
 5. Then the user types in the share link given to them by their instructor and hits enter..
 6. The user will be returned to the home screen.
 
-### Use Case 9 - Creating a Classroom
+### Use Case 7 - Creating a Classroom
 A user/teacher would like to a create a classroom to host BlastPad projects for students
 
 1. The user visits the BlastPad™ website.
@@ -91,7 +73,7 @@ A user/teacher would like to a create a classroom to host BlastPad projects for 
 4. Then the user configures the Classroom’s permissions
 5. The user creates a special share link for students to join from their BlastPad
 
-### Use Case 10 - Viewing and playing a Classroom's Games
+### Use Case 8 - Viewing and playing a Classroom's Games
 A user would like to view games in a classroom and play a game from one
 
 1. The user turns on the BlastPad.
@@ -102,7 +84,7 @@ A user would like to view games in a classroom and play a game from one
 6. The user scrolls through the list of published games in the Classroom and selects one for download.
 7. The user plays the downloaded game on their BlastPad.
 
-### Use Case 11 - Uploading a game to a Classroom
+### Use Case 9 - Uploading a game to a Classroom
 A user would like to upload a game to a Classroom
 
 1. The user turns on the BlastPad.
@@ -111,7 +93,7 @@ A user would like to upload a game to a Classroom
 4. Then the user selects the "Upload to Classroom" button and selects the specific Classroom for upload.
 5. The user receives a confirmation message that the game was uploaded to the Classroom pending approval if that was set.
 
-### Use Case 12 - Approving an uploaded game for public visibility in a Classroom
+### Use Case 10 - Approving an uploaded game for public visibility in a Classroom
 A user/teacher would like to approve an uploaded game to be visible in the Classroom
 
 1. The user visits the BlastPad™ website.
