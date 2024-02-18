@@ -26,47 +26,104 @@ graph TD;
 title: BlastPad
 ---
 classDiagram
+    BlocklyEditor o-- "0..*" Game
+	Classroom o-- "0..*" Game
+	BlocklyEditor o-- "0..*" Block
+	BlocklyEditor o-- "1" Documentation
+	Gallery <-- "1" ClassroomManager
+	Gallery <-- "1" BlocklyEditor
+	ClassroomManager *-- "0..*" Classroom
+	DeviceManager <-- "1" Gallery
+	DeviceManager <-- "1" User
 	Block <-- "0..*" Sensor
+	Gallery <-- "1" Configuration
 		
+    class Game{
+        -title: String
+		-imageFile: String
+        -version: String
+		-author: String
+		
+		+startGame()
+		+pauseGame()
+		+quitGame()
+		+uploadToClassroom(Classroom)
+    }
+    class BlocklyEditor{
+        -games: Game[]
+		-availableBlocks: Block[]
+		
+		+createNewGame()
+		+saveGame()
+		+displayBlockInformation()
+		+displayErrorMessages()
+    }
     class Block {
         +type: String
-				+message0: String
-				+message1: String
-				+args0: Object[]
-				+args1: Object[]
-				+previousStatement: String
-				+nextStatment: String
-				+tooltip: String
-				+helpurl: String
-				+style: String
+		+message0: String
+		+message1: String
+		+args0: Object[]
+		+args1: Object[]
+		+previousStatement: String
+		+nextStatment: String
+		+tooltip: String
+		+helpurl: String
+		+style: String
     }
     class Sensor {
-				+sensorID: int
-				-sensorData: int[]
-		
-				+getSensorData(): int[]
-				+recalibrateSensor()
-				+clearSensorData()
+		+sensorID: int
+		-sensorData: int[]
+
+		+getSensorData(): int[]
+		+recalibrateSensor()
+		+clearSensorData()
+    }
+    class Classroom {
+        +classroomID: int
+		+teacherID: int
+		+games: Game[]
+
+		+deleteGame(userID: int): bool
+		+approveGame(userID: int): bool
+    }
+	class ClassroomManager {
+		-classrooms: Classroom[]
+
+		+joinClassroom(c: Classroom)
+		+leaveClassroom(c: Classroom)
+		+viewClassrooms()
+	}
+    class User {
+    	-String: username
+		-String: password
+		+login(username: String, password: String)
     }
     class Configuration {
-			+connectionStatus: Boolean
-			+listOfAvailNetworks: String[]
-			+SSID: String
-			-securityKey: String
+		+connectionStatus: Boolean
+		+listOfAvailNetworks: String[]
+		+SSID: String
+		-securityKey: String
+		
+		+scan() String[]
+		+connect(SSID: String, securityKey: String)
+		+close()
+    }
+    class Gallery {
+		+openCodeEditor()
+		+openConfiguration()
+		+viewClassrooms()
+		+viewGames()
 			
-			+scan() String[]
-			+connect(SSID: String, securityKey: String)
-			+close()
     }
     class Documentation {
-			+header: String
-      +body: String
+		+header: String
+		+body: String
 
-			+loadContent(type: String) String
-		}
-		class DeviceManager {
+		+loadContent(type: String) String
+	}
+	class DeviceManager {
 			+loadGallery()
-		}
+	}
 ```
 
 If there is a database:
