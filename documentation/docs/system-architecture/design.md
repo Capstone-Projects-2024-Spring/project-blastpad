@@ -21,7 +21,6 @@ Describe algorithms employed in your project, e.g. neural network paradigm, trai
 # UML
 
 ```mermaid
-graph TD;
 ---
 title: BlastPad
 ---
