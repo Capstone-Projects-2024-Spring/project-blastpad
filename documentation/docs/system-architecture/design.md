@@ -22,7 +22,7 @@ Describe algorithms employed in your project, e.g. neural network paradigm, trai
 
 ```mermaid
 ---
-title: BlastPad
+title: BlastPad Class Diagram
 ---
 classDiagram
     BlocklyEditor o-- "0..*" Game
