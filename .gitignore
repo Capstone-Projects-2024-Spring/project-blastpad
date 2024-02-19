@@ -7,7 +7,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
-blockly/__pycache__/*
+flask/__pycache__/*
 
 # Logs
 logs

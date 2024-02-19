@@ -14,6 +14,11 @@ pre, code {
     height: 100vh;
 }
 
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
 #blocklyDiv {
     flex-basis: 100%;
     height: 100%;
