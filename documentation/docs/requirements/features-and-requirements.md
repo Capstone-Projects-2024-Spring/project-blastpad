@@ -14,7 +14,7 @@ sidebar_position: 4
     - Ability to create a new game or edit an existing game.
     - Ability to save game projects.
     - Ability to run a game from the editor and return to it when the game is exited.
-    - Ability to configure a game’s title, image, author, and version.
+    - Ability to configure a game’s title, icon, author, and version.
     - Blocks that generate PyGame-0 code must be available in the editor.
     - Comment blocks must be available in the editor so that users can describe their program and leave notes.
     - The block editor must contain a link to built-in documentation for blocks
@@ -24,6 +24,7 @@ sidebar_position: 4
     - The Home Screen contains a “view classrooms” button.
         - Users must be able to select a classroom from a list of classrooms they have joined.
         - Users must be able to browse games that other users have shared with the classroom and download them.
+- Blockly Code Editor must feature tool for designing sprites and the game icon
 - Device must be capable of loading and running games.
     - Users must be able to start games from either the code editor or Home Screen and return to their original view when the game ends.
     - Debug information must be visible in the code editor should the game encounter a fatal error.
@@ -48,7 +49,7 @@ sidebar_position: 4
         - Users must be able to join multiple classrooms from their BlastPad and download games from them.
         - Teachers and parents must be able to restrict download functionality on a BlastPad with a PIN or Password.
 - Gallery must be accessible from the home page to display information about the game projects.
-    - The user must see the title, image, version, file size, author and playtime associated with a game.
+    - The user must see the title, icon, version, file size, author and playtime associated with a game.
     - Users must be able to select an item from the gallery to launch a game.
 - Contains built-in documentation.
     - Users must be able to read information about blocks available in the code editor, such as recommended usage, expected parameters, and examples of proper use.
