@@ -1,0 +1,8 @@
+{
+  "label": "Meeting Minutes",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Notes from our group meetings"
+  }
+}
