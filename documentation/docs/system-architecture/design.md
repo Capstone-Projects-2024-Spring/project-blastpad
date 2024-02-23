@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Design
 
-# UML
+## Class Diagram
 
 ```mermaid
 ---
@@ -139,13 +139,16 @@ Lastly, the Gallery class is linked to the Configuration class to handle WiFi co
 
 
 
-**Sequence Diagrams**
+## Sequence Diagrams
 
 
-<!-- ---
-sidebar_position: 5
---- -->
+### Use Case 1 – Playing a Game
+A user would like to play a game on their BlastPad.
 
+1. The user turns on the BlastPad, and is presented with the Home Screen.
+2. The user selects a game from their downloaded games, and is presented with the Play, Edit, and Upload buttons.
+3. The user presses the Play button. BlastPad compiles the game and launches it.
+4. The user plays the game!
 
 ```mermaid
 ---
@@ -172,6 +175,13 @@ User->>+Game: Play game!
 ```
 
 
+### Use Case 2 - Develop a Game using the BlastPad
+A user would like to develop a game using the BlastPad with Blockly.
+
+1. The user turns on the BlastPad and is presented with the home screen.
+2. The user selects the "New Game" icon from the home screen's game gallery and is presented with the code editor.
+3. The user creates a new game in the editor.
+4. The user saves their game.
 
 ```mermaid
 ---
@@ -208,7 +218,12 @@ BlocklyEditor-->>-User: Display Successful Save Message
 ```
 
 
-
+### Use Case 3 - Develop game using laptop
+A user would like to develop a game for the BlastPad with their laptop.
+1. The user turns on the BlastPad.
+2. The user connects to the BlastPad's hotspot and accesses the Block Editor from their browser.
+3. The user is presented with the games on their BlastPad and the option to create a new game. The user chooses to create a new game.
+4. The user creates their game and presses the save button. 
 
 ```mermaid
 ---
@@ -243,6 +258,16 @@ BlocklyEditor-->>-User: Display Successful Save Message
 ```
 
 
+
+
+### Use Case 4 - Debugging your game
+A user’s Blockly code fails during compilation and they would like to view the error message in order to debug their blocks.
+
+1. The user starts the BlastPad.
+2. Then chooses the saved created game from menu.
+3. Then the user runs the game/hits play.
+4. When the code compilation fails, the user will receive an error message stating which block failed to compile.
+
 ```mermaid
 ---
 title: "Sequence Diagram 4 - Debugging your game"
@@ -270,6 +295,15 @@ Gallery-->>-User: Display Verbose Compilation Failure Message
 ```
 
 
+
+### Use Case 5 - Creating a Classrooms Account
+A user would like to create a Classrooms account for their BlastPad.
+
+1. The user turns on the BlastPad and attaches their keyboard and mouse.
+2. The user selects the “Account” button on the main menu of the home screen, which presents a choice between Login and Create Account.
+3. The user selects “Create Account” and enters a username and password.
+4. After entering the username and password, the user confirms their password by re-entering it.
+5. The BlastPad displays a success message and returns the user to the home screen.
 
 ```mermaid
 ---
@@ -307,6 +341,16 @@ sequenceDiagram
 ```
 
 
+### Use Case 6 - Joining a Classroom
+A user would like to join a classroom from the BlastPad.
+
+1. The user turns on the BlastPad.
+2. Then connects a keyboard and mouse to the BlastPad
+3. Then selects the “Classroom” option on the main menu of the home screen.
+4. Then selects the “Join Classroom” button from the “Classroom” page menu.
+5. Then the user types in the share link given to them by their instructor and hits enter..
+6. The user will be returned to the home screen.
+
 
 ```mermaid
 ---
@@ -333,6 +377,17 @@ Gallery-->>-User: Display Successful Join Message
 
 ```
 
+
+### Use Case 7 - Viewing and playing a published game
+A user would like to view their classmate's games and play one.
+
+1. The user turns on the BlastPad.
+2. Then connects a keyboard and mouse to the BlastPad.
+3. Then selects the “Classroom” option on the main menu of the home screen.
+4. Then selects the “View Classroom(s)” button from the “Classroom” page menu.
+5. Then the user scrolls through the list of Classrooms they have joined and selects one.
+6. The user scrolls through the list of published games in the Classroom and selects one for download.
+7. The user plays the downloaded game on their BlastPad.
 
 ```mermaid
 ---
@@ -393,6 +448,14 @@ User->>+Game: Play game!
 
 ```
 
+### Use Case 8 - Uploading a game to a Classroom
+A user would like to upload a game to a Classroom
+
+1. The user turns on the BlastPad.
+2. Then connects a keyboard and mouse to the BlastPad.
+3. Then selects the menu to publish a game file.
+4. Then the user selects the "Upload to Classroom" button and selects the specific Classroom for upload.
+5. The user receives a confirmation message that the game was uploaded to the Classroom pending approval if that was set.
 
 ```mermaid
 ---
@@ -429,9 +492,20 @@ Gallery-->>-User: Display successful upload
 ```
 
 
+### Use Case 9 - Creating a Classroom
+A user/teacher would like to a create a classroom to host BlastPad projects for students
+
+1. The user visits the BlastPad™ website.
+2. Then logs in/creates an account as an educator (verified by email domain)
+3. Then selects the “Create Classroom” option from the educator dashboard.
+4. Then the user configures the Classroom’s permissions
+5. The user creates a special share link for students to join from their BlastPad
+
+
+
 ```mermaid
 ---
-title: "Sequence D 9 - Creating a Classroom"
+title: "Sequence Diagram 9 - Creating a Classroom"
 ---
 
 sequenceDiagram
@@ -460,6 +534,17 @@ Classrooms Site-->>-User: Display Generated Share Link
 
 ```
 
+
+
+
+### Use Case 10 - Approving an uploaded game for public visibility in a Classroom
+A user/teacher would like to approve an uploaded game to be visible in the Classroom
+
+1. The user visits the BlastPad™ website.
+2. Then logs in as an educator.
+3. Then receives a notification on the educator dashboard that a game has been uploaded.
+4. Then the user connects a BlastPad to their computer to view the game code in the editor or play it.
+5. The user approves the game on the dashboard making the game visible within the Classroom.
 
 ```mermaid
 ---
@@ -546,6 +631,15 @@ Classrooms Database-->>-Classrooms Site: Acknowledge Successful Approval
 Classrooms Site-->>-User: Display games awaiting approval
 ```
 
+### Use Case 11 - Configuring the WiFi
+A user would like to configure the WiFi for the BlastPad.
+
+1. The user turns on the BlastPad (likely for the first time).
+2. Then connects a keyboard and mouse to the BlastPad.
+3. Then selects the “WiFi” icon on the main menu of the home screen.
+4. Then selects the network they want to connect to from the scrollable list of available networks.
+5. Then the user types in the Network key and hits enter.
+6. The user is successfully connected and returned to the home screen
 
 ```mermaid
 ---
@@ -579,15 +673,8 @@ Gallery-->>-User: Display successful connection
 ```
 
 
+## Entity-relation diagram.
 
 
 
-
-
-If there is a database:
-
-Entity-relation diagram.
-
-Table design.
-
-A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance.
+<!-- A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance. -->
