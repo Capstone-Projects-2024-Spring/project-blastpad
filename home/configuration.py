@@ -1,5 +1,10 @@
 class Configuration:
-    def connectToNetwork(SSID: str, networkKey: str):
+    connectionStatus = False
+    listOfAvailNetworks = []
+    SSID = ""
+    securityKey = ""
+
+    def connect(SSID: str, securityKey: str):
         """
         Connect to given network using SSID and network key 
         """
@@ -8,11 +13,12 @@ class Configuration:
         List available networks and return as string
         """
         return ''
-    def scan():
+    def scan() -> list[str]:
         """
         Scan for new networks
         """
-    def disconnectFromNetwork():
+        return Configuration.listOfAvailNetworks
+    def close():
         """
         Disconnect from current network
         """
