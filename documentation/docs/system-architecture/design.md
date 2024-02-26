@@ -694,7 +694,8 @@ erDiagram
         teacher_id INT PK
         first_name VARCHAR(255)
         last_name VARCHAR(255)
-        password VARCHAR(255)
+        username VARCHAR(255)
+		password VARCHAR(255)
     }
     Classrooms {
         room_number INT PK
@@ -704,11 +705,13 @@ erDiagram
         student_id INT PK
         first_name VARCHAR(255)
         last_name VARCHAR(255)
+		username VARCHAR(255)
         room_number INT FK
         password VARCHAR(255)
         games VARCHAR(255)
     }
     Games {
+		game_name VARCHAR(255)
         game_id INT PK
         name VARCHAR(255)
         last_edited_date DATE
