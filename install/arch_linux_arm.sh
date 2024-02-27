@@ -1,4 +1,4 @@
-SDX = $1
+SDX=$1
 
 (
   echo o
@@ -16,4 +16,22 @@ SDX = $1
   echo ""
   echo ""
   echo w
-) | sudo fdisk
+) | sudo fdisk $SDX
+
+mkfs.vfat /dev/$SDX1
+rmdir boot
+mkdir boot
+mount /dev/$SDX1 boot
+
+mkfs.ext4 /dev/$SDX2
+rmdir boot
+mkdir root
+mount /dev/$SDX2 root
+
+wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-armv7-latest.tar.gz
+bsdtar -xpf ArchLinuxARM-rpi-armv7-latest.tar.gz -C root
+sync
+
+mv root/boot/* boot
+
+umount boot root
