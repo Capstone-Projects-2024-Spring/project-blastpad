@@ -101,6 +101,7 @@ class Games:
         return self.game_name
         #return ""
 
+
     def set_game_name(self, game_name):
         """
         Set the name of the game.\n
@@ -109,3 +110,4 @@ class Games:
         - game_name (str): The new name of the game.
         """
         self.game_name = game_name #''
+        
