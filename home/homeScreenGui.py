@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import Canvas, Frame, Scrollbar, Label
 
-#Methods that displays border colors if the mouse hover over clickable widgets
+# Methods that displays border colors if the mouse hover over clickable widgets
 def on_enter(e, widget):
     widget.config(highlightbackground='yellow', highlightthickness=2)
 
@@ -9,7 +9,7 @@ def on_leave(e, widget):
     widget.config(highlightbackground='grey', highlightthickness=1)
 
 
-def displayGameInfo(root, game_name):
+def display_game_info(root, game_name):
     # Clear any existing game information container
     for widget in root.winfo_children():
         if hasattr(widget, "game_info_tag"):  # Check if the widget has the tag attribute
@@ -36,12 +36,11 @@ def displayGameInfo(root, game_name):
     upload_button.pack(side=tk.LEFT, padx=5, pady=5)
 
 
-def renderGameLibrary(root):
+def render_game_library(root):
     # Create a container frame with a border
     container = tk.Frame(root, bd=2, relief='groove')
     container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
     
-    # Create a canvas within the container
     canvas = tk.Canvas(container, highlightthickness=0)
     
     # Create a frame for the scrollbar to ensure it's at the bottom of the container
@@ -65,18 +64,17 @@ def renderGameLibrary(root):
     canvas.create_window((0, 0), window=game_list_frame, anchor='nw')
     
     # Define a function to update the canvas's scrollregion
-    def onFrameConfigure(canvas):
+    def on_frame_configure(canvas):
         canvas.configure(scrollregion=canvas.bbox('all'))
     
     # Bind the Frame's configuration event to update the canvas's scrollregion
-    game_list_frame.bind('<Configure>', lambda event, canvas=canvas: onFrameConfigure(canvas))
+    game_list_frame.bind('<Configure>', lambda event, canvas=canvas: on_frame_configure(canvas))
     
     # Example list of games to populate the frame
     games = ["Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7"]
     
 
     # Add games to the frame
-    # Add games to the frame with a loop
     for game in games:
         # Modify the size of each game box here if needed
         box_width = 150  # or some dynamic value based on game
@@ -102,82 +100,81 @@ def renderGameLibrary(root):
     
     # Update the scrollregion after the UI has been drawn
     game_list_frame.update_idletasks()
-    onFrameConfigure(canvas)
+    on_frame_configure(canvas)
     
     # Bind mousewheel scrolling to the canvas
-    def _on_mousewheel(event):
+    def on_mousewheel(event):
         canvas.xview_scroll(int(-1*(event.delta/120)), "units")
-    canvas.bind_all("<MouseWheel>", _on_mousewheel)
+    canvas.bind_all("<MouseWheel>", on_mousewheel)
 
-
-def homeButtonClickedEvent(event=None):
+# Methods to test if cliking widgets are responsive
+def home_button_clicked_event(event=None):
     print("Home button clicked!")
 
-def communityHubClickedEvent(event=None):
+def community_hub_clicked_event(event=None):
     print("Community Hub button clicked!")
 
-def classroomClickedEvent(event=None):
+def classroom_clicked_event(event=None):
     print("Classroom button clicked!")
 
-def settingsClickedEvent(event=None):
+def settings_clicked_event(event=None):
     print("Settings button clicked!")
 
-def renderTopFrame(root):
-    topFrame = tk.Frame(root)
-    topFrame.pack(side=tk.TOP, anchor=tk.NW)
+def render_top_frame(root):
+    top_frame = tk.Frame(root)
+    top_frame.pack(side=tk.TOP, anchor=tk.NW)
 
     # Add home button
-    homeCanvas = tk.Canvas(topFrame, width=100, height=100)
-    homeCanvas.pack(side=tk.LEFT, padx=10, pady=10)
-    homeCanvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
-    homeCanvas.create_text(50, 50, text="Home", fill="#FFFFFF")
-    homeCanvas.bind("<Button-1>", homeButtonClickedEvent)
-    homeCanvas.bind("<Enter>", lambda e, widget=homeCanvas: on_enter(e, widget))
-    homeCanvas.bind("<Leave>", lambda e, widget=homeCanvas: on_leave(e, widget))
+    home_canvas = tk.Canvas(top_frame, width=100, height=100)
+    home_canvas.pack(side=tk.LEFT, padx=10, pady=10)
+    home_canvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
+    home_canvas.create_text(50, 50, text="Home", fill="#FFFFFF")
+    home_canvas.bind("<Button-1>", home_button_clicked_event)
+    home_canvas.bind("<Enter>", lambda e, widget=home_canvas: on_enter(e, widget))
+    home_canvas.bind("<Leave>", lambda e, widget=home_canvas: on_leave(e, widget))
 
 
     # Add Community Hub button
-    communityCanvas = tk.Canvas(topFrame, width=100, height=100)
-    communityCanvas.pack(side=tk.LEFT, padx=10, pady=10)
-    communityCanvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
-    communityCanvas.create_text(50, 50, text="CH", fill="#FFFFFF")
-    communityCanvas.bind("<Button-1>", communityHubClickedEvent)
-    communityCanvas.bind("<Enter>", lambda e, widget=communityCanvas: on_enter(e, widget))
-    communityCanvas.bind("<Leave>", lambda e, widget=communityCanvas: on_leave(e, widget))
+    community_canvas = tk.Canvas(top_frame, width=100, height=100)
+    community_canvas.pack(side=tk.LEFT, padx=10, pady=10)
+    community_canvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
+    community_canvas.create_text(50, 50, text="CH", fill="#FFFFFF")
+    community_canvas.bind("<Button-1>", community_hub_clicked_event)
+    community_canvas.bind("<Enter>", lambda e, widget=community_canvas: on_enter(e, widget))
+    community_canvas.bind("<Leave>", lambda e, widget=community_canvas: on_leave(e, widget))
 
 
     # Add Classroom button
-    classroomCanvas = tk.Canvas(topFrame, width=100, height=100)
-    classroomCanvas.pack(side=tk.LEFT, padx=10, pady=10)
-    classroomCanvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
-    classroomCanvas.create_text(50, 50, text="Classroom", fill="#FFFFFF")
-    classroomCanvas.bind("<Button-1>", classroomClickedEvent)
-    classroomCanvas.bind("<Enter>", lambda e, widget=classroomCanvas: on_enter(e, widget))
-    classroomCanvas.bind("<Leave>", lambda e, widget=classroomCanvas: on_leave(e, widget))
+    classroom_canvas = tk.Canvas(top_frame, width=100, height=100)
+    classroom_canvas.pack(side=tk.LEFT, padx=10, pady=10)
+    classroom_canvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
+    classroom_canvas.create_text(50, 50, text="Classroom", fill="#FFFFFF")
+    classroom_canvas.bind("<Button-1>", classroom_clicked_event)
+    classroom_canvas.bind("<Enter>", lambda e, widget=classroom_canvas: on_enter(e, widget))
+    classroom_canvas.bind("<Leave>", lambda e, widget=classroom_canvas: on_leave(e, widget))
 
 
     # Add Settings Button
-    settingsCanvas = tk.Canvas(topFrame, width=100, height=100)
-    settingsCanvas.pack(side=tk.LEFT, padx=10, pady=10)
-    settingsCanvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
-    settingsCanvas.create_text(50, 50, text="Settings", fill="#FFFFFF")
-    settingsCanvas.bind("<Button-1>", settingsClickedEvent)
-    settingsCanvas.bind("<Enter>", lambda e, widget=settingsCanvas: on_enter(e, widget))
-    settingsCanvas.bind("<Leave>", lambda e, widget=settingsCanvas: on_leave(e, widget))
+    settings_canvas = tk.Canvas(top_frame, width=100, height=100)
+    settings_canvas.pack(side=tk.LEFT, padx=10, pady=10)
+    settings_canvas.create_rectangle(0, 0, 100, 100, fill="#51535B")
+    settings_canvas.create_text(50, 50, text="Settings", fill="#FFFFFF")
+    settings_canvas.bind("<Button-1>", settings_clicked_event)
+    settings_canvas.bind("<Enter>", lambda e, widget=settings_canvas: on_enter(e, widget))
+    settings_canvas.bind("<Leave>", lambda e, widget=settings_canvas: on_leave(e, widget))
 
 
+def initial_render(root):
+    render_top_frame(root)
+    render_game_library(root)
 
-def initialRender(root):
-    renderTopFrame(root)
-    renderGameLibrary(root)
-
-def displayHomeScreen():
+def display_home_screen():
     root = tk.Tk()
     root.geometry("800x450")
-    initialRender(root)
+    initial_render(root)
     root.mainloop()
 
-displayHomeScreen()
+display_home_screen()
 
 
 
