@@ -1,32 +1,66 @@
 import subprocess
-class Configuration:
-    connectionStatus = False
-    listOfAvailNetworks = []
-    SSID = ""
-    securityKey = ""
+import re
 
-    def connect(self, SSID: str, securityKey: str):
+class WirelessManager:
+    """
+    WirelessManager Class
+    ---------------------
+
+    This class provides methods for scanning, listing, connecting, and disconnecting Wi-Fi networks.
+    Requires iw and networkmanager packages on arch.
+
+    Methods:
+        - scan_wifi_networks: Scan for available Wi-Fi networks.
+        - list_wifi_networks: List the names of available Wi-Fi networks.
+        - connect_to_wifi: Connect to a specified Wi-Fi network.
+        - disconnect_wifi: Disconnect from the currently connected Wi-Fi network.
+    """
+
+    def __init__(self):
+        pass
+
+    def scan_wifi_networks(self):
         """
-        Connect to given network using SSID and network key 
+        Scan for available Wi-Fi networks.
+
+        Returns:
+            str: The output of the Wi-Fi scanning command.
         """
-        p = subprocess.run(f'nmcli device wifi connect {SSID} password {securityKey}'.split(), capture_output=True, text=True).stdout
-        self.connectionStatus = True
-    def listNetworks(self) -> str:
+        result = subprocess.run(['iw', 'dev', 'wlp1s0', 'scan'], capture_output=True, text=True)
+        return result.stdout
+
+    def list_wifi_networks(self):
         """
-        List available networks and return as string
+        List the names of available Wi-Fi networks.
+
+        Returns:
+            list: A list of available Wi-Fi network names.
         """
-        return '\n'.join(self.listOfAvailNetworks)
-    def scan(self) -> list[str]:
+        scan_result = self.scan_wifi_networks()
+        networks = re.findall(r'SSID: (.+)', scan_result)
+        return networks
+
+    def connect_to_wifi(self, ssid, password=None):
         """
-        Scan for new networks
+        Connect to a specified Wi-Fi network.
+
+        Args:
+            ssid (str): The SSID of the Wi-Fi network to connect to.
+            password (str, optional): The password for the Wi-Fi network (if required).
+
+        Raises:
+            subprocess.CalledProcessError: If the connection attempt fails.
         """
-        Configuration.listOfAvailNetworks = subprocess.run('nmcli device wifi list'.split(), capture_output=True, text=True).stdout
-        return self.listOfAvailNetworks
-    def close(self):
+        if password:
+            subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid, 'password', password], check=True)
+        else:
+            subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid], check=True)
+
+    def disconnect_wifi(self):
         """
-        Disconnect from current network
+        Disconnect from the currently connected Wi-Fi network.
+
+        Raises:
+            subprocess.CalledProcessError: If the disconnection attempt fails.
         """
-        #p = subprocess.run('nmcli d disconnect wlan0'.split(), capture_output=True, text=True).stdout
-        self.connectionStatus = False
-        #return True
-        return self.connectionStatus
+        subprocess.run(['nmcli', 'dev', 'disconnect'], check=True)

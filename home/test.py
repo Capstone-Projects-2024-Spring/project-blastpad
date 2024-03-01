@@ -1,14 +1,14 @@
 """tests for configuration.py"""
 
-from configuration import Configuration
+from classroom import Games
 
 # --------------------------------------------------
-def test_close():
+def test_get_game_Name():
     """test for close method"""
-    config = Configuration()
-    connectionStatus = config.close()
+    game = Games()
+    game_name = game.get_game_name()
 
-    assert connectionStatus == False
+    assert game_name == game.game_name
 
 def test_listNetworks():
     """test for listNetworks method"""
