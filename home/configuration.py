@@ -11,11 +11,11 @@ class Configuration:
         """
         p = subprocess.run(f'nmcli device wifi connect {SSID} password {securityKey}'.split(), capture_output=True, text=True).stdout
         self.connectionStatus = True
-    def listNetworks() -> str:
+    def listNetworks(self) -> str:
         """
         List available networks and return as string
         """
-        return ''
+        return '\n'.join(self.listOfAvailNetworks)
     def scan(self) -> list[str]:
         """
         Scan for new networks
