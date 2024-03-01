@@ -22,4 +22,4 @@ jobs:
 
     - name: Run Pytest
       run: |
-        python -m pytest ./home/test.py
+        python -m pytest -v ./home/test.py
