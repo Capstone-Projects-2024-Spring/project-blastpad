@@ -99,6 +99,8 @@ class Games:
         str: The name of the game.
         """
         return self.game_name
+        #return ""
+
 
     def set_game_name(self, game_name):
         """
@@ -107,4 +109,5 @@ class Games:
         Parameters:
         - game_name (str): The new name of the game.
         """
-        self.game_name = game_name
+        self.game_name = game_name #''
+        
