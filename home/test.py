@@ -4,14 +4,14 @@ from classroom import Games
 
 # --------------------------------------------------
 def test_get_game_name():
-    """test for close method"""
+    """test for get game name"""
     game = Games('test', 0, 'author', '3/1/2024', 'json_file', 'image_icon')
     game_name = game.get_game_name()
 
     assert game_name == game.game_name
 
 def test_set_game_name():
-    """test for listNetworks method"""
+    """test for set game name"""
     game = Games('test', 0, 'author', '3/1/2024', 'json_file', 'image_icon')
     game.set_game_name('test2')
 
