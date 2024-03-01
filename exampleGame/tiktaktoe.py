@@ -100,7 +100,9 @@ def check_draw():
 
 def reset_game():
     global board, current_player, game_over, winner, restart_message_timer
-    board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
+    board = [[' ', ' ', ' '], 
+             [' ', ' ', ' '], 
+             [' ', ' ', ' ']]
     current_player, game_over, winner = 'X', False, None
     restart_message_timer = None
     draw()
