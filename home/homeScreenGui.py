@@ -89,7 +89,7 @@ def render_game_library(root):
         game_label = tk.Label(game_frame, text=f"{game}\n",
                             fg='#FFFFFF', bg='#51535B', font=('Helvetica', 20))
         game_label.pack(expand=True)  # This will center the text in the frame
-        game_label.bind("<Button-1>", lambda event, name=game: displayGameInfo(root, name))
+        game_label.bind("<Button-1>", lambda event, name=game: display_game_info(root, name))
 
         # Set the highlightthickness for normal state so that the change is visible on hover
         game_frame.config(highlightbackground='grey', highlightthickness=1)
