@@ -4,41 +4,9 @@
         "blocks": [
             {
                 "type": "controls_repeat_ext",
-                "id": ".zJzkNRSnRwxi?X1F(SX",
-                "x": 295,
-                "y": 220,
-                "inputs": {
-                    "TIMES": {
-                        "shadow": {
-                            "type": "math_number",
-                            "id": "[hDS%RGy!+j#C*CELz=y",
-                            "fields": {
-                                "NUM": 10
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "type": "game_loop",
-                "id": "+d#{6]}hl)Kw/t[=oWSP",
-                "x": 14,
-                "y": 251
-            },
-            {
-                "type": "text_join",
-                "id": ",oAMR$DN-g5B;~YnL;s/",
-                "x": 51,
-                "y": 180,
-                "extraState": {
-                    "itemCount": 2
-                }
-            },
-            {
-                "type": "controls_repeat_ext",
                 "id": "P=jK?n3zhAx3WNR~706k",
-                "x": 195,
-                "y": 39,
+                "x": 38,
+                "y": 55,
                 "inputs": {
                     "TIMES": {
                         "shadow": {
@@ -48,26 +16,86 @@
                                 "NUM": 10
                             }
                         }
+                    },
+                    "DO": {
+                        "block": {
+                            "type": "variables_set",
+                            "id": "D=nX!IV]jxcSOx;F(MRr",
+                            "fields": {
+                                "VAR": {
+                                    "id": "m.2Yr=u3bhsY%P*F51H!"
+                                }
+                            },
+                            "inputs": {
+                                "VALUE": {
+                                    "block": {
+                                        "type": "colour_rgb",
+                                        "id": "-n#O+W*!,D;zL*Y]MLfZ",
+                                        "inputs": {
+                                            "RED": {
+                                                "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "lpBf!6dg-b^jOcLCkjc_",
+                                                    "fields": {
+                                                        "NUM": 100
+                                                    }
+                                                }
+                                            },
+                                            "GREEN": {
+                                                "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "`aK2H?m,Y%A9zc;3k2L~",
+                                                    "fields": {
+                                                        "NUM": 50
+                                                    }
+                                                }
+                                            },
+                                            "BLUE": {
+                                                "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "-!`ph,6k-y_.gc4d#l%*",
+                                                    "fields": {
+                                                        "NUM": 0
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "next": {
+                                "block": {
+                                    "type": "game_loop",
+                                    "id": "+d#{6]}hl)Kw/t[=oWSP",
+                                    "next": {
+                                        "block": {
+                                            "type": "test_block",
+                                            "id": "wlAv?sQDA6yp=IA[dM/%",
+                                            "inputs": {
+                                                "TEXT": {
+                                                    "shadow": {
+                                                        "type": "text",
+                                                        "id": "4zkuNAT%G*t[f_7=|FJI",
+                                                        "fields": {
+                                                            "TEXT": "i love big j"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
-            },
-            {
-                "type": "procedures_defreturn",
-                "id": "g^*P8d.!M|/=a?Bp@R^]",
-                "x": 188,
-                "y": 350,
-                "icons": {
-                    "comment": {
-                        "text": "Describe this function...",
-                        "pinned": false,
-                        "height": 80,
-                        "width": 160
-                    }
-                },
-                "fields": {
-                    "NAME": "do something"
                 }
             }
         ]
-    }
+    },
+    "variables": [
+        {
+            "name": "mycolor",
+            "id": "m.2Yr=u3bhsY%P*F51H!"
+        }
+    ]
 }

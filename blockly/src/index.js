@@ -5,20 +5,27 @@
  */
 
 import * as Blockly from 'blockly';
-import {blocks} from './blocks/text';
-import {forBlock} from './generators/python';
-import {pythonGenerator} from 'blockly/python';
+// import {blocks} from './blocks/text';
+
+// newfangles
+import data from './blocks/game.json';
+const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(data.blocks);
+
+
+
+// import {forBlock} from './generators/python';
+// import {pythonGenerator} from 'blockly/python';
 import {save, load} from './serialization';
 import {toolbox} from './toolbox';
 import './index.css';
 
 // Register the blocks and generator with Blockly
 Blockly.common.defineBlocks(blocks);
-Object.assign(pythonGenerator.forBlock, forBlock);
+// Object.assign(pythonGenerator.forBlock, forBlock);
 
 // Set up UI elements and inject Blockly
-const codeDiv = document.getElementById('generatedCode').firstChild;
-const outputDiv = document.getElementById('output');
+// const codeDiv = document.getElementById('generatedCode').firstChild;
+// const outputDiv = document.getElementById('output');
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
 
@@ -51,10 +58,10 @@ saveGameButton.addEventListener("click", async (e) => {
 // In a real application, you probably shouldn't use `eval`.
 const runCode = () => {
 
-  const code = pythonGenerator.workspaceToCode(ws);
+  // const code = pythonGenerator.workspaceToCode(ws);
   // const code = javascriptGenerator.workspaceToCode(ws);
-  codeDiv.innerText = code;
-  outputDiv.innerHTML = '';
+  // codeDiv.innerText = code;
+  // outputDiv.innerHTML = '';
 
   // eval(code);
 };
@@ -79,7 +86,7 @@ ws.addChangeListener((e) => {
     ws.isDragging()) {
     return;
   }
-  runCode();
+  // runCode();
 });
 
 
@@ -94,6 +101,11 @@ const fetchAndLoadGame = (gameName) => {
     Blockly.serialization.workspaces.load(gameWorkspace, ws, false);
     Blockly.Events.enable();
 
+    selectionContainer.classList.add("hidden");
+    pageContainer.classList.remove("hidden");
+  }).catch((error) => {
+    console.log("No games found, loading empty workspace.")
+    Blockly.serialization.workspaces.load({}, ws, false);
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
   })
@@ -116,6 +128,11 @@ const startEditor = () => {
       });
       gamesContainer.appendChild(gamePlaceholder);
     }
+  }).catch((err) => {
+    console.log("No games found, loading empty workspace.")
+    Blockly.serialization.workspaces.load({}, ws, false);
+    selectionContainer.classList.add("hidden");
+    pageContainer.classList.remove("hidden");
   })
 
   // load(ws);
