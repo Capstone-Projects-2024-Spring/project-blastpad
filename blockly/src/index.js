@@ -34,8 +34,6 @@ const pageContainer = document.getElementById('pageContainer')
 
 const ws = Blockly.inject(blocklyDiv, {toolbox});
 
-
-
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
   
@@ -140,6 +138,12 @@ const startEditor = () => {
 
   // load(ws);
 // runCode();
+}
+
+const params = new URLSearchParams(document.location.search);
+var specifiedGame = params.get('load');
+if(specifiedGame) {
+  fetchAndLoadGame(specifiedGame);
 }
 
 startEditor();
