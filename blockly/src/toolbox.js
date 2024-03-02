@@ -12,6 +12,25 @@ your toolbox from scratch, or carefully choosing whether you need each block
 listed here.
 */
 
+
+/*
+
+        {
+          'kind': 'block',
+          'type': 'test_block',
+          'inputs': {
+            'TEXT': {
+              'shadow': {
+                'type': 'text',
+                'fields': {
+                  'TEXT': 'text',
+                },
+              },
+            },
+          },
+        },
+  */
+
 export const toolbox = {
   'kind': 'categoryToolbox',
   'contents': [
@@ -501,39 +520,34 @@ export const toolbox = {
         },
         {
           'kind': 'block',
-          'type': 'add_text',
+          'type': 'metadata',
           'inputs': {
-            'TEXT': {
+            'game name': {
               'shadow': {
                 'type': 'text',
                 'fields': {
-                  'TEXT': 'abc',
+                  'TEXT': "Game Name"
                 },
               },
             },
-            'COLOR': {
+            'author name': {
               'shadow': {
-                'type': 'colour_picker',
+                'type': 'text',
                 'fields': {
-                  'COLOUR': '#aa00cc',
+                  'TEXT': "Author"
+                },
+              },
+            },
+            'description': {
+              'shadow': {
+                'type': 'text',
+                'fields': {
+                  'TEXT': "Description"
                 },
               },
             },
           },
-        },
-        {
-          'kind': 'block',
-          'type': 'test_block',
-          'inputs': {
-            'TEXT': {
-              'shadow': {
-                'type': 'text',
-                'fields': {
-                  'TEXT': 'peepeepoopfart',
-                },
-              },
-            },
-          },
+
         },
       ],
     },

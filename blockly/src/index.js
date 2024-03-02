@@ -12,7 +12,6 @@ import data from './blocks/game.json';
 const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(data.blocks);
 
 
-
 // import {forBlock} from './generators/python';
 // import {pythonGenerator} from 'blockly/python';
 import {save, load} from './serialization';
@@ -39,7 +38,7 @@ const ws = Blockly.inject(blocklyDiv, {toolbox});
 
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
-
+  
     var response = await fetch("http://localhost:5000/save/game", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -123,12 +122,16 @@ const startEditor = () => {
       // you would also want to display the bitmap here... generate an image perhaps
       var gamePlaceholder = document.createElement("h2");
       gamePlaceholder.innerHTML = gameFileName;
+      gamePlaceholder.setAttribute("gameName", gameFileName)
+
       gamePlaceholder.addEventListener('click', (e) => {
-        fetchAndLoadGame(gameFileName);
+        var gameToLoad = e.target.getAttribute("gameName")
+        fetchAndLoadGame(gameToLoad);
       });
       gamesContainer.appendChild(gamePlaceholder);
     }
   }).catch((err) => {
+    console.log(err);
     console.log("No games found, loading empty workspace.")
     Blockly.serialization.workspaces.load({}, ws, false);
     selectionContainer.classList.add("hidden");

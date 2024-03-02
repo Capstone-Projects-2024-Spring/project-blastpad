@@ -36,40 +36,51 @@ const Order = {
 // but don't register them with Blockly yet.
 // This file has no side effects!
 
-forBlock['add_text'] = function (block, generator) {
-  const text = generator.valueToCode(block, 'TEXT', Order.NONE) || "''";
-  const color =
-    generator.valueToCode(block, 'COLOR', Order.ATOMIC) || "'#ffffff'";
+// forBlock['add_text'] = function (block, generator) {
+//   const text = generator.valueToCode(block, 'TEXT', Order.NONE) || "''";
+//   const color =
+//     generator.valueToCode(block, 'COLOR', Order.ATOMIC) || "'#ffffff'";
 
-  const addText = generator.provideFunction_(
-      'addText',
-      `def ${generator.FUNCTION_NAME_PLACEHOLDER_}(text, color):
-        # placeholder
-      `
-  );
-  // Generate the function call for this block.
-  const code = `${addText}(${text}, ${color});\n`;
-  return code;
-};
+//   const addText = generator.provideFunction_(
+//       'addText',
+//       `def ${generator.FUNCTION_NAME_PLACEHOLDER_}(text, color):
+//         # placeholder
+//       `
+//   );
+//   // Generate the function call for this block.
+//   const code = `${addText}(${text}, ${color});\n`;
+//   return code;
+// };
 
-
-forBlock['test_block'] = function (block, generator) {
-  const text = generator.valueToCode(block, 'TEXT', Order.NONE) || "''";
-  const addText = generator.provideFunction_(
-      'printText',
-      `def ${generator.FUNCTION_NAME_PLACEHOLDER_}(text):\n  # custom function\n  print(text)
-      `
-  );
-  // Generate the function call for this block.
-  const code = `${addText}(${text});\n`;
-  return code;
-};
-
+// forBlock['test_block'] = function (block, generator) {
+//   const text = generator.valueToCode(block, 'TEXT', Order.NONE) || "''";
+//   const addText = generator.provideFunction_(
+//       'printText',
+//       `def ${generator.FUNCTION_NAME_PLACEHOLDER_}(text):\n  # custom function\n  print(text)
+//       `
+//   );
+//   // Generate the function call for this block.
+//   const code = `${addText}(${text});\n`;
+//   return code;
+// };
 
 forBlock['game_loop'] = function (block, generator) {
   let branch = generator.statementToCode(block, 'DO');
   // branch = generator.addLoopTrap(branch, block) || generator.PASS;
   return `# placeholder game loop... pygame0 anyone?\nwhile true:\n${branch}`
+};
+
+forBlock['metadata'] = function(block, generator) {
+  var value_game_name = generator.valueToCode(block, 'game name', python.Order.ATOMIC);
+  var value_author_name = generator.valueToCode(block, 'author name', python.Order.ATOMIC);
+  var value_description = generator.valueToCode(block, 'description', python.Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `
+  # ${value_game_name}
+  # By ${value_author_name}
+  # ${value_description}
+  `
+  return code;
 };
 
 module.exports = forBlock;

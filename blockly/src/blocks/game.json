@@ -1,38 +1,30 @@
-{"blocks": [{
-"type": "add_text",
-  "message0": "Add text %1 with color %2",
+{
+  "blocks": [
+{
+  "type": "metadata",
+  "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4",
   "args0": [
     {
+      "type": "input_dummy"
+    },
+    {
       "type": "input_value",
-      "name": "TEXT",
+      "name": "game name",
       "check": "String"
     },
     {
       "type": "input_value",
-      "name": "COLOR",
-      "check": "Colour"
-    }
-  ],
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 160,
-  "tooltip": "",
-  "helpUrl": ""
-},
-{
-  "type": "test_block",
-  "message0": "Print out %1",
-  "args0": [
+      "name": "author name",
+      "check": "String"
+    },
     {
       "type": "input_value",
-      "name": "TEXT",
+      "name": "description",
       "check": "String"
     }
   ],
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 160,
-  "tooltip": "heehee",
+  "colour": 230,
+  "tooltip": "Project Metadata",
   "helpUrl": ""
 },
 {
