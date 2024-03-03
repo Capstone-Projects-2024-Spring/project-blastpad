@@ -26,8 +26,16 @@ def index():
 def save(game_name):
     if request.method == 'POST':
         gamedata = request.json
+        # parse request to find metadata 
+        print(request.json)
+        gamename = ""
 
-        with open(GAMES_FOLDER+game_name+'.json', 'w', encoding='utf-8') as f:
+        for x in request.json["blocks"]["blocks"]:
+            if(x["type"]=="metadata"):
+                gamename = x["inputs"]["game name"]["block"]["fields"]["TEXT"]
+                break
+
+        with open(GAMES_FOLDER+gamename+'.json', 'w', encoding='utf-8') as f:
             json.dump(gamedata, f, ensure_ascii=False, indent=4)
             
             result = {'status': 'success'}
