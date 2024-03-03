@@ -5,20 +5,26 @@
  */
 
 import * as Blockly from 'blockly';
-import {blocks} from './blocks/text';
-import {forBlock} from './generators/python';
-import {pythonGenerator} from 'blockly/python';
+// import {blocks} from './blocks/text';
+
+// newfangles
+import data from './blocks/game.json';
+const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(data.blocks);
+
+
+// import {forBlock} from './generators/python';
+// import {pythonGenerator} from 'blockly/python';
 import {save, load} from './serialization';
 import {toolbox} from './toolbox';
 import './index.css';
 
 // Register the blocks and generator with Blockly
 Blockly.common.defineBlocks(blocks);
-Object.assign(pythonGenerator.forBlock, forBlock);
+// Object.assign(pythonGenerator.forBlock, forBlock);
 
 // Set up UI elements and inject Blockly
-const codeDiv = document.getElementById('generatedCode').firstChild;
-const outputDiv = document.getElementById('output');
+// const codeDiv = document.getElementById('generatedCode').firstChild;
+// const outputDiv = document.getElementById('output');
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
 
@@ -28,11 +34,9 @@ const pageContainer = document.getElementById('pageContainer')
 
 const ws = Blockly.inject(blocklyDiv, {toolbox});
 
-
-
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
-
+  
     var response = await fetch("http://localhost:5000/save/game", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -51,10 +55,10 @@ saveGameButton.addEventListener("click", async (e) => {
 // In a real application, you probably shouldn't use `eval`.
 const runCode = () => {
 
-  const code = pythonGenerator.workspaceToCode(ws);
+  // const code = pythonGenerator.workspaceToCode(ws);
   // const code = javascriptGenerator.workspaceToCode(ws);
-  codeDiv.innerText = code;
-  outputDiv.innerHTML = '';
+  // codeDiv.innerText = code;
+  // outputDiv.innerHTML = '';
 
   // eval(code);
 };
@@ -79,7 +83,7 @@ ws.addChangeListener((e) => {
     ws.isDragging()) {
     return;
   }
-  runCode();
+  // runCode();
 });
 
 
@@ -94,6 +98,11 @@ const fetchAndLoadGame = (gameName) => {
     Blockly.serialization.workspaces.load(gameWorkspace, ws, false);
     Blockly.Events.enable();
 
+    selectionContainer.classList.add("hidden");
+    pageContainer.classList.remove("hidden");
+  }).catch((error) => {
+    console.log("No games found, loading empty workspace.")
+    Blockly.serialization.workspaces.load({}, ws, false);
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
   })
@@ -111,15 +120,30 @@ const startEditor = () => {
       // you would also want to display the bitmap here... generate an image perhaps
       var gamePlaceholder = document.createElement("h2");
       gamePlaceholder.innerHTML = gameFileName;
+      gamePlaceholder.setAttribute("gameName", gameFileName)
+
       gamePlaceholder.addEventListener('click', (e) => {
-        fetchAndLoadGame(gameFileName);
+        var gameToLoad = e.target.getAttribute("gameName")
+        fetchAndLoadGame(gameToLoad);
       });
       gamesContainer.appendChild(gamePlaceholder);
     }
+  }).catch((err) => {
+    console.log(err);
+    console.log("No games found, loading empty workspace.")
+    Blockly.serialization.workspaces.load({}, ws, false);
+    selectionContainer.classList.add("hidden");
+    pageContainer.classList.remove("hidden");
   })
 
   // load(ws);
 // runCode();
+}
+
+const params = new URLSearchParams(document.location.search);
+var specifiedGame = params.get('load');
+if(specifiedGame) {
+  fetchAndLoadGame(specifiedGame);
 }
 
 startEditor();
