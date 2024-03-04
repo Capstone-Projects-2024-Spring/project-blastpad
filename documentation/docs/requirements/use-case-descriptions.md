@@ -159,14 +159,17 @@ Gallery-->>-User: Display Verbose Compilation Failure Message
 
 
 
-### Use Case 5 - Creating a Classrooms Account
-A user would like to create a Classrooms account for their BlastPad.
+### Use Case 5 - Creating an Account
+A user would like to create an account at home for their BlastPad.
 
 1. The user turns on the BlastPad and attaches their keyboard and mouse.
-2. The user selects the “Account” button on the main menu of the home screen, which presents a choice between Login and Create Account.
-3. The user selects “Create Account” and enters a username and password.
-4. After entering the username and password, the user confirms their password by re-entering it.
-5. The BlastPad displays a success message and returns the user to the home screen.
+2. The user selects the "Settings" button on the main menu of the home screen.
+3. The user selects the "Account" category in the settings screen.
+4. The BlastPad prompts the user to either Login or Sign Up.
+5. The user selects “Sign Up” and is prompted to enter a username and password.
+6. After entering the username and password, the user confirms their password by re-entering it.
+7. The user clicks a button to submit the signup form.
+8. The BlastPad displays a success message.
 
 ```mermaid
 ---
@@ -174,33 +177,23 @@ title: "Use Case 5: Creating a Classrooms Account"
 ---
 
 sequenceDiagram
-	actor User
-	User->>+Blastpad: Power On
+	actor Teacher
+	actor Student
+	Student->>+Blastpad: Power On
 	Blastpad->>+Gallery: Start Home Screen/Gallery
-	Gallery->>-Blastpad: Retrieve games stored on disk
-	Blastpad-->>+Gallery: Return games stored on disk
 	deactivate Blastpad	
-	Gallery-->>-User: Display Home Screen
-	
-	User->>+Blastpad: Attach Keyboard & Mouse
-	Blastpad-->>-User: Acknowledge new input device
+	Gallery-->>-Student: Display Home Screen
 
 
-	User->>+Gallery: Press "Account" Button
-	Gallery-->>-User: Render Account Management Screen
-
-	User->>+Gallery: Press "Create Account" Button
-	Gallery-->>-User: Render Account Creation Screen
-
-
-	User->>+Gallery: Enter username and password
-	Gallery->>+Classrooms: POST new user w/ username and password
-	Classrooms->>+Classrooms Database: Store new user in database
-	Classrooms Database-->>- Classrooms: Acknowledge successful store
-	Classrooms-->>-Gallery: Acknowledge successful user creation
- 
-	Gallery-->>-User: Display successful account creation message
-
+	Student->>+Gallery: Press "Classroom" Button
+	Gallery-->>-Student: Display "View Classrooms"/"Join Classroom" Dropdown
+	Teacher->>Student: Share class code
+	Student->>+Gallery: Select "Join Classroom", enter class code.
+	Gallery->>+Classroom: POST class code & student's User information
+	Classroom->>Classroom: Verify class code
+	Classroom->>Classroom: Add student's User to specified classroom
+	Classroom-->>-Gallery: Acknowledge Sucessful Join
+	Gallery-->>-Student: Display Successful Join Message
 ```
 
 
@@ -211,8 +204,8 @@ A user would like to join a classroom from the BlastPad.
 2. Then connects a keyboard and mouse to the BlastPad
 3. Then selects the “Classroom” option on the main menu of the home screen.
 4. Then selects the “Join Classroom” button from the “Classroom” page menu.
-5. Then the user types in the share link given to them by their instructor and hits enter..
-6. The user will be returned to the home screen.
+5. Then the user types in the class code given to them by their instructor and hits enter.
+6. The BlastPad displays a success message and the chosen classroom screen.
 
 
 ```mermaid
@@ -220,23 +213,24 @@ A user would like to join a classroom from the BlastPad.
 title: "Use Case 6: Joining a Classroom"
 ---
 sequenceDiagram
-actor User
-User->>+Blastpad: Power On
+actor Teacher
+actor Student
+Student->>+Blastpad: Power On
 Blastpad->>+Gallery: Start Home Screen/Gallery
 Gallery->>-Blastpad: Retrieve games stored on disk
 Blastpad-->>+Gallery: Return games stored on disk
 deactivate Blastpad	
-Gallery-->>-User: Display Home Screen
+Gallery-->>-Student: Display Home Screen
 
 
-User->>+Gallery: Press "Classroom" Button
+Student->>+Gallery: Press "Classroom" Button
 Gallery-->>-User: Display "View Classrooms"/"Join Classroom" Dropdown
-User->>+Gallery: Select "Join Classroom", enter share link.
-Gallery->>+Classroom: POST Share Link & User Information
-Classroom->>Classroom: Verify Share Link
+Student->>+Gallery: Select "Join Classroom", enter share link.
+Gallery->>+Classroom: POST Class Code & User Information
+Classroom->>Classroom: Verify Class Code
 Classroom->>Classroom: Add user to specified classroom
 Classroom-->>-Gallery: Acknowledge Sucessful Join
-Gallery-->>-User: Display Successful Join Message
+Gallery-->>-Student: Display Successful Join Message
 
 ```
 
@@ -362,7 +356,7 @@ A user/teacher would like to a create a classroom to host BlastPad projects for 
 2. Then logs in/creates an account as an educator (verified by email domain)
 3. Then selects the “Create Classroom” option from the educator dashboard.
 4. Then the user configures the Classroom’s permissions
-5. The user creates a special share link for students to join from their BlastPad
+5. The classroom site generates a special class code for students to join from their BlastPad
 
 
 
@@ -392,8 +386,8 @@ Classrooms Site->>+Classrooms Database: POST New Classroom Settings
 Classrooms Database-->>-Classrooms Site: Acknowledge New Settings
 Classrooms Site-->>-User: Render New Classroom Settings
 User->>+Classrooms Site: Select "Generate Share Link"
-Classrooms Site->>Classrooms Site: Generate Share Link
-Classrooms Site-->>-User: Display Generated Share Link
+Classrooms Site->>Classrooms Site: Generate Class Code
+Classrooms Site-->>-User: Display Generated Class Code
 
 ```
 
