@@ -175,25 +175,35 @@ A user would like to create an account at home for their BlastPad.
 ---
 title: "Use Case 5: Creating a Classrooms Account"
 ---
-
 sequenceDiagram
-	actor Teacher
-	actor Student
-	Student->>+Blastpad: Power On
+	actor User
+	User->>+Blastpad: Power On
 	Blastpad->>+Gallery: Start Home Screen/Gallery
 	deactivate Blastpad	
-	Gallery-->>-Student: Display Home Screen
+	Gallery-->>-User: Display Home Screen
+	
+	User->>+Blastpad: Attach Keyboard & Mouse
+	Blastpad-->>-User: Acknowledge new input device
 
 
-	Student->>+Gallery: Press "Classroom" Button
-	Gallery-->>-Student: Display "View Classrooms"/"Join Classroom" Dropdown
-	Teacher->>Student: Share class code
-	Student->>+Gallery: Select "Join Classroom", enter class code.
-	Gallery->>+Classroom: POST class code & student's User information
-	Classroom->>Classroom: Verify class code
-	Classroom->>Classroom: Add student's User to specified classroom
-	Classroom-->>-Gallery: Acknowledge Sucessful Join
-	Gallery-->>-Student: Display Successful Join Message
+	User->>+Gallery: Press "Settings" Button
+	Gallery-->>-User: Render Settings Screen
+
+	User->>+Gallery: Press "Account" Button
+	Gallery-->>-User: Render Account Screen
+
+	User->>+Gallery: Press "Create Account" Button
+	Gallery-->>-User: Render Account Creation Screen
+
+
+	User->>+Gallery: Enter username, password, confirmed password
+	User->>Gallery: Submit sign up form
+	Gallery->>+Classrooms: POST new user w/ username and password
+	Classrooms->>+Classrooms Database: Store new user in database
+	Classrooms Database-->>- Classrooms: Acknowledge successful store
+	Classrooms-->>-Gallery: Acknowledge successful user creation
+ 
+	Gallery-->>-User: Display successful account creation message
 ```
 
 
@@ -213,25 +223,23 @@ A user would like to join a classroom from the BlastPad.
 title: "Use Case 6: Joining a Classroom"
 ---
 sequenceDiagram
-actor Teacher
-actor Student
-Student->>+Blastpad: Power On
-Blastpad->>+Gallery: Start Home Screen/Gallery
-Gallery->>-Blastpad: Retrieve games stored on disk
-Blastpad-->>+Gallery: Return games stored on disk
-deactivate Blastpad	
-Gallery-->>-Student: Display Home Screen
+	actor Teacher
+	actor Student
+	Student->>+Blastpad: Power On
+	Blastpad->>+Gallery: Start Home Screen/Gallery
+	deactivate Blastpad	
+	Gallery-->>-Student: Display Home Screen
 
 
-Student->>+Gallery: Press "Classroom" Button
-Gallery-->>-User: Display "View Classrooms"/"Join Classroom" Dropdown
-Student->>+Gallery: Select "Join Classroom", enter share link.
-Gallery->>+Classroom: POST Class Code & User Information
-Classroom->>Classroom: Verify Class Code
-Classroom->>Classroom: Add user to specified classroom
-Classroom-->>-Gallery: Acknowledge Sucessful Join
-Gallery-->>-Student: Display Successful Join Message
-
+	Student->>+Gallery: Press "Classroom" Button
+	Gallery-->>-Student: Display "View Classrooms"/"Join Classroom" Dropdown
+	Teacher->>Student: Share class code
+	Student->>+Gallery: Select "Join Classroom", enter class code.
+	Gallery->>+Classroom: POST class code & student's User information
+	Classroom->>Classroom: Verify class code
+	Classroom->>Classroom: Add student's User to specified classroom
+	Classroom-->>-Gallery: Acknowledge Sucessful Join
+	Gallery-->>-Student: Display Successful Join Message
 ```
 
 
