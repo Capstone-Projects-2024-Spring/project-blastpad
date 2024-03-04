@@ -110,6 +110,8 @@ classDiagram
 		+loadContent(type: String) String
 	}
 	class DeviceManager {
+		+currentScreen: String
+
 		+loadGallery()
 	}
 	class Database {
