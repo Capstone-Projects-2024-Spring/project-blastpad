@@ -60,6 +60,7 @@ classDiagram
     class Sensor {
 		+sensorID: int
 		-sensorData: int[]
+		-calibration: Boolean
 
 		+getSensorData(): int[]
 		+recalibrateSensor()
