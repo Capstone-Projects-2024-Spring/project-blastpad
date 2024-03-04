@@ -49,3 +49,12 @@ Stubbed functional units: BlastPad website, example database with classrooms
 •   Verify that the game's pending state can be changed to an approved state with a query.
 
 
+## Integration Test for use case 1
+- Runs `compileBlocklyToPython()` unit tests.
+- Runs `startGame()` unit tests.
+- Passes if all tests pass.
+
+## Integration Test for use case 3
+- Runs `createNewGame()` unit tests.
+- Runs `saveGame()` unit tests.
+- Passes if all tests pass.
