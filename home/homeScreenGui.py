@@ -1,5 +1,12 @@
 import tkinter as tk
 from tkinter import Canvas, Frame, Scrollbar, Label
+import webbrowser
+
+#Opening an instance of the code editor
+def open_code_editor():
+    link = 'http://localhost:5000'
+    webbrowser.open(link)
+
 
 # Methods that displays border colors if the mouse hover over clickable widgets
 def on_enter(e, widget):
@@ -34,7 +41,7 @@ def display_game_info(game_info_container, game_name):
     play_button.bind("<Enter>", lambda e, widget=play_button: on_enter(e, widget))
     play_button.bind("<Leave>", lambda e, widget=play_button: on_leave(e, widget))
 
-    edit_button = tk.Button(button_frame, text="Edit", bg="blue", fg="white")
+    edit_button = tk.Button(button_frame, text="Edit", bg="blue", fg="white", command=open_code_editor) # When clicked, a new code editor istance is made in a new web browser tab.
     edit_button.pack(side=tk.LEFT, padx=5, pady=5, ipadx=20, ipady=20)  # Same internal padding for square shape
     edit_button.bind("<Enter>", lambda e, widget=edit_button: on_enter(e, widget))
     edit_button.bind("<Leave>", lambda e, widget=edit_button: on_leave(e, widget))
