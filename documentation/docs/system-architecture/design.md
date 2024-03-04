@@ -12,9 +12,9 @@ title: BlastPad Class Diagram
 ---
 classDiagram
     BlocklyEditor o-- "0..*" Game
-	User --o "0..*" Database
+	UserManager --o "0..*" Database
 	Classroom o-- "0..*" Game
-	DeviceManager <-- "1" User
+	DeviceManager <-- "1" UserManager
 	BlocklyEditor o-- "0..*" Block
 	Database o-- "0..*" Classroom
 	BlocklyEditor o-- "1" Documentation
@@ -36,14 +36,14 @@ classDiagram
 		+pauseGame()
 		+quitGame()
 		+uploadToClassroom(Classroom)
-		+compileGame()
+		+compileGame() String
     }
     class BlocklyEditor{
         -workspaces: Game[]
 		-availableBlocks: Block[]
 		
 		+saveWorkspace()
-		+loadWorkspace()
+		+loadWorkspace(game: Game)
     }
     class Block {
         +type: String
@@ -68,7 +68,6 @@ classDiagram
     class Classroom {
         +classroomID: int
 		+teacherID: int
-		+games: Game[]
 
 		+deleteGame(userID: int) bool
 		+approveGame(userID: int) bool
@@ -77,14 +76,15 @@ classDiagram
 	class ClassroomManager {
 		-classrooms: Classroom[]
 
-		+joinClassroom(c: Classroom)
-		+leaveClassroom(c: Classroom)
+		+joinClassroom(c: Classroom) bool
+		+leaveClassroom(c: Classroom) bool
 		+viewClassrooms()
 	}
-	class User {
+	class UserManager {
     	-String: username
 		-String: password
-		+login(username: String, password: String)
+		+login(username: String, password: String) bool
+		+createAccount(username: String, password: String) bool
     }
     class Configuration {
 		+connectionStatus: Boolean
@@ -100,7 +100,7 @@ classDiagram
     	+openCodeEditor()
 		+openConfiguration()
 		+viewClassrooms()
-		+viewGames()
+		+viewGames() Games[]
 			
     }
     class Documentation {
