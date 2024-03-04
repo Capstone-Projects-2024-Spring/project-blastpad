@@ -58,3 +58,28 @@ Stubbed functional units: BlastPad website, example database with classrooms
 - Runs `createNewGame()` unit tests.
 - Runs `saveGame()` unit tests.
 - Passes if all tests pass.
+
+## Integration Test for Use Case 2
+
+A user would like to develop a game using the BlastPad
+
+Stubbed Functional Units: Blockly Code Editor, Device Manager, Gallery
+
+### Assertions
+
+1. Upon turning on the BlastPad the user is routed to the Homescreen (Device Manager: loadGallery() unit test)
+2. Upon pressing the "Code Editor" button the user is sent to the Blockly Code Editor (Gallery: openCodeEditor() unit test)
+3. Upon Pressing the "Create New Game" button the user is able to manipulate blocks in the editor and save the game to storage (BlocklyEditor: saveWorkSpace() unit test)
+
+## Integration Test for Use Case 11
+
+A user would like to configure the WiFi
+
+Stubbed Functional Units: Configuration, Device Manager, Gallery
+
+### Assertions
+
+1. Upon turning on the BlastPad the user is routed to the Homescreen (Device Manager: loadGallery() unit test)
+2. After pressing the "WiFi" button the user is sent to the WiFi configuration screen (Gallery: openConfiguration() unit test)
+3. The user is shown a list of available networks on the Configuration screen (Configuration: scan() unit test)
+4. Then a network is selected and the user enters in a security key and presses the "Connect" button (Configuration: connect(SSID, securityKey) unit test)
