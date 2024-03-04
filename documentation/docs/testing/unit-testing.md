@@ -89,3 +89,80 @@ Unit test checks that the correct workspace has been loaded and displayed in the
 - Creates a `Game` object with random attributes.
 - Calls `compileGame()`.
 - Passes if it returns `True`.
+
+## Sensor
+
+### +getSensorData()
+Stubbed Test Class: sensor
+Requires hardware to be connected to a sensor
+
+This unit test checks if sensorData is a non-empty array and if the calibration parameter is set to false.
+
+- Creates a `Sensor` object
+- Calls `getSensorData()`
+- Passes if it returns a non-zero integer array and calibration is set to false
+
+### +recalibrateSensor()
+Stubbed Test Class: sensor
+Requires hardware to be connected to a sensor
+
+This unit test checks if the calibration parameter has been changed to True.
+
+- Creates a `Sensor` object
+- Calls `getSensorData()`
+- Passes if the calibration parameter is set to True.
+
+### +clearSensorData()
+Stubbed Test Class: sensor
+Requires hardware to be connected to a sensor
+
+This unit test checks if the sensorData array is set to all zeroes.
+
+- Creates a `Sensor` object
+- Calls `clearSensorData()`
+- Passes if the sensorData array is composed of all zeroes.
+
+## Documentation
+
+### +loadContent(type: String) : String
+Stubbed Test Class: documentation
+Requires an existing blockly documentation file assigned a type
+
+This unit test checks if a documentation string has been returned from the requested dummy content (given by type).
+
+- Creates a `Documentation` object
+- `expected` is set to the documentation string manually
+- Calls `loadContent(type)`
+- Passes if `Documentation` returned equals `expected` string.
+
+## Configuration
+
+### +scan() : String[]
+Stubbed Test Class: configuration
+Requires absence of connections to any network
+
+This unit test checks if scan returns a non-empty array of available networks to connect to.
+
+- Creates a `Configuration` object
+- Calls `scan()`
+- Passes if returned String array is non-empty
+
+### +connect(SSID: String, securityKey: String)
+Stubbed Test Class: configuration
+Requires access to the wireless adapter hardware
+
+This unit test checks if connect(SSID, securityKey) sets the connectionStatus to True
+
+- Creates a `Configuration` object
+- Calls `connect(SSID, securityKey)`
+- Passes if connectionStatus is True
+
+### +close()
+Stubbed Test Class: configuration
+Requires a network connection
+
+This unit test checks if close() sets the connectionStatus to False
+
+- Creates a `Configuration` object
+- Calls `close()`
+- Passes if connectionStatus is False
