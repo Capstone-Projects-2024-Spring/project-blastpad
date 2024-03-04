@@ -19,6 +19,23 @@ Requires some sort of sandboxed browser. Cypress is ideal for this.
 
 Unit test checks that the correct workspace has been loaded and displayed in the editor.
 
+# DeviceManager Class
+
+### +loadGalleryTest()
+
+This unit test is for the loadGallery() method in the DeviceManager class. The test calls the loadGallery method and tests if the "currentScreen" variable was changed to "Gallery".
+
+- Stubbed test class: instance of DeviceManager class 
+- Input: Void
+- Expected Output: True
+
+```
+public loadGalleryTest(Void) -> Boolean
+    deviceManager = New DeviceManager()
+    deviceManager.loadGallery()
+    return deviceManager.currentScreen == "Gallery"
+```
+
 ## ClassroomManager 
 
 ### +joinClassroom(c: Classroom)
