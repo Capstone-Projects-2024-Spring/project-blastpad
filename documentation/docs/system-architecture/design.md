@@ -39,13 +39,11 @@ classDiagram
 		+compileGame()
     }
     class BlocklyEditor{
-        -games: Game[]
+        -workspaces: Game[]
 		-availableBlocks: Block[]
 		
-		+createNewGame()
-		+saveGame()
-		+displayBlockInformation()
-		+displayErrorMessages()
+		+saveWorkspace()
+		+loadWorkspace()
     }
     class Block {
         +type: String

@@ -1,0 +1,48 @@
+{
+  "blocks": [
+{
+  "type": "metadata",
+  "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "game name",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "author name",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "description",
+      "check": "String"
+    }
+  ],
+  "colour": 230,
+  "tooltip": "Project Metadata",
+  "helpUrl": ""
+},
+{
+  "type": "game_loop",
+  "message0": "Game Loop",
+  "message1": "DO %1 End of Game",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "Your Game Loop!",
+  "helpUrl": "",
+  "style": "loop_blocks"
+}
+]}
