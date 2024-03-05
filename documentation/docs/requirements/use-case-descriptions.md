@@ -173,7 +173,7 @@ A user would like to create an account at home for their BlastPad.
 
 ```mermaid
 ---
-title: "Use Case 5: Creating a Classrooms Account"
+title: "Use Case 5: Creating an Account"
 ---
 sequenceDiagram
 	actor User
