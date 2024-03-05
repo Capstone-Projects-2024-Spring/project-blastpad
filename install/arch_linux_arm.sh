@@ -16,7 +16,7 @@ SDX=$1
   echo ""
   echo ""
   echo w
-) | sudo fdisk $SDX
+) | fdisk /dev/$SDX
 
 mkfs.vfat "/dev/${SDX}1"
 rmdir boot
