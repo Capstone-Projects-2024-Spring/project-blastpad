@@ -1,6 +1,40 @@
 {
   "blocks": [
 {
+  "type": "small_bitmap",
+  "message0": "Small Bitmap %1 %2",
+  "output": null,
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_bitmap",
+      "name": "field",
+      "align": "CENTRE",
+      "width": 8,
+      "height": 8
+    }
+  ]
+},
+{
+  "type": "large_bitmap",
+  "message0": "Large Bitmap %1 %2",
+  "output": null,
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_bitmap",
+      "name": "field",
+      "align": "CENTRE",
+      "width": 16,
+      "height": 16
+    }
+  ]
+},
+{
   "type": "metadata",
   "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4",
   "args0": [
