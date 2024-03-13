@@ -14,9 +14,10 @@ You can find the latest version of the script in our "install" directory of the 
 
 ## Run Script
 
-1. First, find the name of your SD card device using fdisk
+**1. First, find the name of your SD card**
 
-Command:
+We used the fdisk utility with the `-l` flag to list the block devices recognized by the OS.
+
 ```bash
 fdisk -l
 ```
@@ -32,7 +33,7 @@ Disk model: STORAGE DEVICE
 *In the above example, the device name is `sdb`*
 
 
-2. Run the script passing your device name as an argument
+**2. Run the script passing your device name as an argument**
 
 ```bash
 sh arch_linux_arm.sh <device name>
