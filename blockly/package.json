@@ -26,6 +26,9 @@
   },
   "dependencies": {
     "blockly": "^10.0.0",
-    "jsonfile": "^6.1.0"
+    "jsonfile": "^6.1.0",
+    "ndarray": "^1.0.19",
+    "save-pixels": "^2.3.6",
+    "zeros": "^1.0.0"
   }
 }

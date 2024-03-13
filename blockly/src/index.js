@@ -11,15 +11,19 @@ import * as Blockly from 'blockly';
 import data from './blocks/game.json';
 const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(data.blocks);
 
-
 // import {forBlock} from './generators/python';
 // import {pythonGenerator} from 'blockly/python';
+// import {FieldBitmap} from '@blockly/blockly-field-bitmap';
+// import '@blockly/field-bitmap';
+
+import './field-bitmap.js'
 import {save, load} from './serialization';
 import {toolbox} from './toolbox';
 import './index.css';
 
 // Register the blocks and generator with Blockly
 Blockly.common.defineBlocks(blocks);
+
 // Object.assign(pythonGenerator.forBlock, forBlock);
 
 // Set up UI elements and inject Blockly
