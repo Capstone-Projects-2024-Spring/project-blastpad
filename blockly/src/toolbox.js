@@ -36,6 +36,21 @@ export const toolbox = {
   'contents': [
     {
       'kind': 'category',
+      'name': 'Custom',
+      'categorystyle': 'logic_category',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'small_bitmap',
+        },
+        {
+          'kind': 'block',
+          'type': 'large_bitmap',
+        }
+      ],
+    },
+    {
+      'kind': 'category',
       'name': 'Logic',
       'categorystyle': 'logic_category',
       'contents': [
