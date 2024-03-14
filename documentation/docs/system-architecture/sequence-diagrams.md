@@ -1,149 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Design
+# Sequence Diagrams
 
-## Class Diagram
-
-```mermaid
----
-title: BlastPad Class Diagram
----
-classDiagram
-    BlocklyEditor o-- "0..*" Game
-	UserManager --o "0..*" Database
-	Classroom o-- "0..*" Game
-	DeviceManager <-- "1" UserManager
-	BlocklyEditor o-- "0..*" Block
-	Database o-- "0..*" Classroom
-	BlocklyEditor o-- "1" Documentation
-	Gallery <-- "1" ClassroomManager
-	Gallery <-- "1" BlocklyEditor	
-	ClassroomManager *-- "0..*" Classroom
-	Block <-- "0..*" Sensor
-	Gallery <-- "1" Configuration	
-	DeviceManager <-- "1" Gallery
-	Game <-- "1" CodeCompiler
-		
-    class Game{
-        -title: String
-		-imageFile: String
-        -version: String
-		-author: String
-		
-		+startGame()
-		+pauseGame()
-		+quitGame()
-		+uploadToClassroom(Classroom)
-		+compileGame() String
-    }
-    class BlocklyEditor{
-        -workspaces: Game[]
-		-availableBlocks: Block[]
-		
-		+saveWorkspace()
-		+loadWorkspace(game: Game)
-    }
-    class Block {
-        +type: String
-		+message0: String
-		+message1: String
-		+args0: Object[]
-		+args1: Object[]
-		+previousStatement: String
-		+nextStatment: String
-		+tooltip: String
-		+helpurl: String
-		+style: String
-    }
-    class Sensor {
-		+sensorID: int
-		-sensorData: int[]
-		-calibration: Boolean
-
-		+getSensorData(): int[]
-		+recalibrateSensor()
-		+clearSensorData()
-    }
-    class Classroom {
-        +classroomID: int
-		+teacherID: int
-
-		+deleteGame(userID: int) bool
-		+approveGame(userID: int) bool
-		+uploadGame(game: Game)
-    }
-	class ClassroomManager {
-		-classrooms: Classroom[]
-
-		+joinClassroom(c: Classroom) bool
-		+leaveClassroom(c: Classroom) bool
-		+viewClassrooms()
-	}
-	class UserManager {
-    	-String: username
-		-String: password
-		+login(username: String, password: String) bool
-		+createAccount(username: String, password: String) bool
-    }
-    class Configuration {
-		+connectionStatus: Boolean
-		+listOfAvailNetworks: String[]
-		+SSID: String
-		-securityKey: String
-		
-		+scan() String[]
-		+connect(SSID: String, securityKey: String)
-		+close()
-    }
-    class Gallery {
-    	+openCodeEditor()
-		+openConfiguration()
-		+viewClassrooms()
-		+viewGames() Games[]
-			
-    }
-    class Documentation {
-		+header: String
-    	+body: String
-
-		+loadContent(type: String) String
-	}
-	class DeviceManager {
-		+currentScreen: String
-
-		+loadGallery()
-	}
-	class Database {
-		-users: User[]
-		-classroom: Classroom[]
-
-		+addUser()
-		+removeUser()
-		+addClassroom()
-		+removeClassroom()
-	}
-	class CodeCompiler {
-		+compileBlocklytoPython()
-	}
-```
-The class diagram above demonstrates various relationships between classes within the BlastPad system. The **User** class is associated with the **DeviceManager** class, indicating that a user can interact with the device via the device manager. The **DeviceManager** class is also associated with the **Gallery** for loading it, as indicated by the loadGallery() method. Furthermore, the **Gallery** class is connected to the **ClassroomManager**, allowing users to view multiple classrooms, as shown by the viewClassrooms() method.
-
-The **ClassroomManager** maintains a one-to-many relationship with the **Classroom** class, signifying that it can manage multiple **Classrooms**. Each **Classroom** is capable of handling multiple **Game** objects, as depicted by their **one-to-many** association. The **Game** class is similarly connected to the **BlocklyEditor** class through a **one-to-many** relationship, suggesting that the **BlocklyEditor** can manage numerous **Block** objects.
-
-The **Database** class has a **one-to-many link** with both the **User** and **Classroom** classes, indicating that it stores and manages data from both Users and **Classrooms**.
-
-The **Block** class has a **one-to-many** relationship with the **Sensor** class, illustrating that blocks can access and utilize one or many sensors. The **Documentation** class is standalone but associated with the **BlocklyEditor** to provide tutorials for different blocks in the **BlocklyEditor**.
-
-Lastly, the **Gallery** class is linked to the **Configuration** class to handle WiFi connections.
-
-
-
-## Sequence Diagrams
-
-
-### Use Case 1 – Playing a Game
+## Use Case 1 – Playing a Game
 A user would like to play a game on their BlastPad.
 
 1. The user turns on the BlastPad, and is presented with the Home Screen.
@@ -176,7 +37,7 @@ User->>+Game: Play game!
 ```
 
 
-### Use Case 2 - Develop a Game using the BlastPad
+## Use Case 2 - Develop a Game using the BlastPad
 A user would like to develop a game using the BlastPad with Blockly.
 
 1. The user turns on the BlastPad and is presented with the home screen.
@@ -219,7 +80,7 @@ BlocklyEditor-->>-User: Display Successful Save Message
 ```
 
 
-### Use Case 3 - Develop game using laptop
+## Use Case 3 - Develop game using laptop
 A user would like to develop a game for the BlastPad with their laptop.
 1. The user turns on the BlastPad.
 2. The user connects to the BlastPad's hotspot and accesses the Block Editor from their browser.
@@ -261,7 +122,7 @@ BlocklyEditor-->>-User: Display Successful Save Message
 
 
 
-### Use Case 4 - Debugging your game
+## Use Case 4 - Debugging your game
 A user’s Blockly code fails during compilation and they would like to view the error message in order to debug their blocks.
 
 1. The user starts the BlastPad.
@@ -297,7 +158,7 @@ Gallery-->>-User: Display Verbose Compilation Failure Message
 
 
 
-### Use Case 5 - Creating a Classrooms Account
+## Use Case 5 - Creating a Classrooms Account
 A user would like to create a Classrooms account for their BlastPad.
 
 1. The user turns on the BlastPad and attaches their keyboard and mouse.
@@ -342,7 +203,7 @@ sequenceDiagram
 ```
 
 
-### Use Case 6 - Joining a Classroom
+## Use Case 6 - Joining a Classroom
 A user would like to join a classroom from the BlastPad.
 
 1. The user turns on the BlastPad.
@@ -379,7 +240,7 @@ Gallery-->>-User: Display Successful Join Message
 ```
 
 
-### Use Case 7 - Viewing and playing a published game
+## Use Case 7 - Viewing and playing a published game
 A user would like to view their classmate's games and play one.
 
 1. The user turns on the BlastPad.
@@ -449,7 +310,7 @@ User->>+Game: Play game!
 
 ```
 
-### Use Case 8 - Uploading a game to a Classroom
+## Use Case 8 - Uploading a game to a Classroom
 A user would like to upload a game to a Classroom
 
 1. The user turns on the BlastPad.
@@ -493,7 +354,7 @@ Gallery-->>-User: Display successful upload
 ```
 
 
-### Use Case 9 - Creating a Classroom
+## Use Case 9 - Creating a Classroom
 A user/teacher would like to a create a classroom to host BlastPad projects for students
 
 1. The user visits the BlastPad™ website.
@@ -538,7 +399,7 @@ Classrooms Site-->>-User: Display Generated Share Link
 
 
 
-### Use Case 10 - Approving an uploaded game for public visibility in a Classroom
+## Use Case 10 - Approving an uploaded game for public visibility in a Classroom
 A user/teacher would like to approve an uploaded game to be visible in the Classroom
 
 1. The user visits the BlastPad™ website.
@@ -632,7 +493,7 @@ Classrooms Database-->>-Classrooms Site: Acknowledge Successful Approval
 Classrooms Site-->>-User: Display games awaiting approval
 ```
 
-### Use Case 11 - Configuring the WiFi
+## Use Case 11 - Configuring the WiFi
 A user would like to configure the WiFi for the BlastPad.
 
 1. The user turns on the BlastPad (likely for the first time).
@@ -672,57 +533,3 @@ Blastpad-->>-Gallery: Acknowledge successful connection to access point
 Gallery-->>-User: Display successful connection
 
 ```
-
-
-## Entity-relation diagram.
-
-According to the following Entity-Relationship diagram below, there are four different relationships we can observe.
-1. "Teaches in" Relationship
-	This is a One-to-Many (1:N) relationship between Teachers and Classrooms. Each teacher can belong to multiple classrooms but each Classroom may only have a single Teacher.
-	Furthermore, a Teacher belongs to 1 or many Classrooms and a Classroom may have one and only one Teacher.
-2. "Contains"
-	A One-to-Many (1:N) relationship between Classrooms and Students. Each Classroom may contain multiple Students, but each Student belongs to a single Classroom.
-	Furthermore, Classrooms have one or many Students and a Student may belong to one and only one Classroom.
-3. "Played by"
-	A Many-to-Many (N:N) relationship between Students and Games. A Student may play multiple Games and a Game may be played by multiple Students.
-	Furthermore, Games may belong to one or many Students and Students may have one or many Games.
-```mermaid
----
-title: "E-R Diagram SQL Database"
----
-erDiagram
-    Teachers {
-        teacher_id INT PK
-        first_name VARCHAR(255)
-        last_name VARCHAR(255)
-        username VARCHAR(255)
-		password VARCHAR(255)
-    }
-    Classrooms {
-        room_number INT PK
-        teacher_id INT FK
-    }
-    Students {
-        student_id INT PK
-        first_name VARCHAR(255)
-        last_name VARCHAR(255)
-		username VARCHAR(255)
-        room_number INT FK
-        password VARCHAR(255)
-        games VARCHAR(255)
-    }
-    Games {
-		game_name VARCHAR(255)
-        game_id INT PK
-        name VARCHAR(255)
-        last_edited_date DATE
-        json_file BLOB
-        image_icon BLOB
-    }
-    
-    Teachers ||--|{ Classrooms : "Teaches in"
-    Classrooms ||--|{ Students : "Contains"
-    Games |{--|{ Students : "Played by"
-```
-
-<!-- A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance. -->
