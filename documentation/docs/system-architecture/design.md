@@ -128,15 +128,15 @@ classDiagram
 		+compileBlocklytoPython()
 	}
 ```
-The class diagram above demonstrates various relationships between classes within the BlastPad system. The User class is associated with the DeviceManager class, indicating that a user can interact with the device via the device manager. The DeviceManager class is also associated with the Gallery for loading it, as indicated by the loadGallery() method. Furthermore, the Gallery class is connected to the Classroom Manager, allowing users to view multiple classrooms, as shown by the viewClassrooms() method.
+The class diagram above demonstrates various relationships between classes within the BlastPad system. The **User** class is associated with the **DeviceManager** class, indicating that a user can interact with the device via the device manager. The **DeviceManager** class is also associated with the **Gallery** for loading it, as indicated by the loadGallery() method. Furthermore, the **Gallery** class is connected to the **ClassroomManager**, allowing users to view multiple classrooms, as shown by the viewClassrooms() method.
 
-The ClassroomManager maintains a one-to-many relationship with the Classroom class, signifying that it can manage multiple Classrooms. Each Classroom is capable of handling multiple Game objects, as depicted by their one-to-many association. The Game class is similarly connected to the BlocklyEditor class through a one-to-many relationship, suggesting that the BlocklyEditor can manage numerous Block objects.
+The **ClassroomManager** maintains a one-to-many relationship with the **Classroom** class, signifying that it can manage multiple **Classrooms**. Each **Classroom** is capable of handling multiple **Game** objects, as depicted by their **one-to-many** association. The **Game** class is similarly connected to the **BlocklyEditor** class through a **one-to-many** relationship, suggesting that the **BlocklyEditor** can manage numerous **Block** objects.
 
-The Database class has a one-to-many link with both the User and Classroom classes, indicating that it stores and manages data from both Users and Classrooms.
+The **Database** class has a **one-to-many link** with both the **User** and **Classroom** classes, indicating that it stores and manages data from both Users and **Classrooms**.
 
-The Block class has a one-to-many relationship with the Sensor class, illustrating that blocks can access and utilize one or many sensors. The Documentation class is standalone but associated with the BlocklyEditor to provide tutorials for different blocks in the BlocklyEditor.
+The **Block** class has a **one-to-many** relationship with the **Sensor** class, illustrating that blocks can access and utilize one or many sensors. The **Documentation** class is standalone but associated with the **BlocklyEditor** to provide tutorials for different blocks in the **BlocklyEditor**.
 
-Lastly, the Gallery class is linked to the Configuration class to handle WiFi connections.
+Lastly, the **Gallery** class is linked to the **Configuration** class to handle WiFi connections.
 
 
 
