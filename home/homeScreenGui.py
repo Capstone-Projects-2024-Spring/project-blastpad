@@ -2,6 +2,37 @@ import tkinter as tk
 from tkinter import Canvas, Frame, Scrollbar, Label
 import webbrowser
 
+#Add new game icon in scrollable list
+def render_new_game_icon(game_list_frame):
+    box_width = 125 
+    box_height = 125  
+    
+    # Create a game frame with the specified size
+    new_game_frame = tk.Frame(game_list_frame, width=box_width, height=box_height, bg='#51535B')
+    new_game_frame.pack_propagate(False)  # Prevents child widgets from altering the frame's size
+    new_game_frame.pack(side=tk.LEFT, padx=20, pady=20)
+    
+    # Create a label with the game name and size, and ensure it's centered
+    game_label = tk.Label(new_game_frame, text=f"+\n",
+                        fg='#FFFFFF', bg='#51535B', font=('Helvetica', 20))
+    game_label.pack(expand=True)  # This will center the text in the frame
+    game_label.bind("<Button-1>", open_code_editor_new_game_page)
+
+
+    # Set the highlightthickness for normal state so that the change is visible on hover
+    new_game_frame.config(highlightbackground='grey', highlightthickness=1)
+
+    # Bind enter and leave events to the game frame to show mous hovering effects
+    new_game_frame.bind("<Enter>", lambda e, widget=new_game_frame: on_enter(e, widget))
+    new_game_frame.bind("<Leave>", lambda e, widget=new_game_frame: on_leave(e, widget))
+
+#Function where it opens a new web browser tab that shows a new game page
+def open_code_editor_new_game_page(event):
+    print("New Game Icon button clicked!")
+    link = 'http://localhost:5000/load?=filename.json'
+    webbrowser.open(link)
+
+
 #Opening an instance of the code editor
 def open_code_editor():
     link = 'http://localhost:5000'
@@ -89,6 +120,8 @@ def render_game_library(main_container, game_info_container):
     # Example list of games to populate the frame
     games = ["T T T", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7"]
     
+    #Invoke new gam button function
+    render_new_game_icon(game_list_frame)
 
     # Add games to the frame
     for game in games:
