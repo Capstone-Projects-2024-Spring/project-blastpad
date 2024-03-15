@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # BlastPad
 
-(generated using [Sphinx](../../../build/html/index.html))
+<a href={"../build/html/index.html"}>Generated using Sphinx! </a>
 
 # API Documentation
 
