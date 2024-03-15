@@ -29,7 +29,7 @@ def render_new_game_icon(game_list_frame):
 #Function where it opens a new web browser tab that shows a new game page
 def open_code_editor_new_game_page(event):
     print("New Game Icon button clicked!")
-    link = 'http://localhost:5000/load?=filename.json'
+    link = 'http://localhost:5000/?load=filename.json'
     webbrowser.open(link)
 
 
