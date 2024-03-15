@@ -41,12 +41,62 @@ export const toolbox = {
       'contents': [
         {
           'kind': 'block',
+          'type': 'metadata',
+          'inputs': {
+            'game name': {
+              'shadow': {
+                'type': 'text',
+                'fields': {
+                  'TEXT': "Game Name"
+                },
+              },
+            },
+            'author name': {
+              'shadow': {
+                'type': 'text',
+                'fields': {
+                  'TEXT': "Author"
+                },
+              },
+            },
+            'description': {
+              'shadow': {
+                'type': 'text',
+                'fields': {
+                  'TEXT': "Description"
+                },
+              },
+            },
+          },
+        },
+        {
+          'kind': 'block',
           'type': 'small_bitmap',
         },
         {
           'kind': 'block',
           'type': 'large_bitmap',
-        }
+        },
+        {
+          'kind': 'block',
+          'type': 'game_loop',
+        },
+        {
+          'kind': 'block',
+          'type': 'draw',
+        },
+        {
+          'kind': 'block',
+          'type': 'set_actor',
+        },
+        {
+          'kind': 'block',
+          'type': 'actor',
+        },
+        {
+          'kind': 'block',
+          'type': 'draw_actor',
+        },
       ],
     },
     {
@@ -528,41 +578,6 @@ export const toolbox = {
               },
             },
           },
-        },
-        {
-          'kind': 'block',
-          'type': 'game_loop',
-        },
-        {
-          'kind': 'block',
-          'type': 'metadata',
-          'inputs': {
-            'game name': {
-              'shadow': {
-                'type': 'text',
-                'fields': {
-                  'TEXT': "Game Name"
-                },
-              },
-            },
-            'author name': {
-              'shadow': {
-                'type': 'text',
-                'fields': {
-                  'TEXT': "Author"
-                },
-              },
-            },
-            'description': {
-              'shadow': {
-                'type': 'text',
-                'fields': {
-                  'TEXT': "Description"
-                },
-              },
-            },
-          },
-
         },
       ],
     },

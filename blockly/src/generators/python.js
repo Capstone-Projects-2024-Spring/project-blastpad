@@ -83,4 +83,34 @@ forBlock['metadata'] = function(block, generator) {
   return code;
 };
 
+forBlock['draw'] = function(block, generator) {
+  var statements_draw = generator.statementToCode(block, 'draw');
+  // TODO: Assemble javascript into code variable.
+  var code = '...\n';
+  return code;
+};
+
+forBlock['actor'] = function(block, generator) {
+  var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
+  // TODO: Assemble javascript into code variable.
+  var code = '...\n';
+  return code;
+};
+
+forBlock['set_actor'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'Actor', javascript.Order.ATOMIC);
+  var value_property = generator.valueToCode(block, 'property', javascript.Order.ATOMIC);
+  var statements_to = generator.statementToCode(block, 'to');
+  // TODO: Assemble javascript into code variable.
+  var code = '...\n';
+  return code;
+};
+
+forBlock['draw_actor'] = function(block, generator) {
+  var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
+  // TODO: Assemble javascript into code variable.
+  var code = '...\n';
+  return code;
+};
+
 module.exports = forBlock;

@@ -78,5 +78,123 @@
   "tooltip": "Your Game Loop!",
   "helpUrl": "",
   "style": "loop_blocks"
+},
+{
+  "type": "key_down",
+  "message0": "On Key Down",
+  "message1": "DO %1 End of Game",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "Your Game Loop!",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "draw",
+  "message0": "Draw %1",
+  "args0": [
+    {
+      "type": "input_statement",
+      "name": "draw"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor",
+  "message0": "Actor %1 Name %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "NAME",
+      "check": "String"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_left",
+  "message0": "Left",
+  "output": null,
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_right",
+  "message0": "Right",
+  "output": null,
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_up",
+  "message0": "Up",
+  "output": null,
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_down",
+  "message0": "Down",
+  "output": null,
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "set_actor",
+  "message0": "Actor %1 Property %2 To %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    },
+    {
+      "type": "input_value",
+      "name": "property"
+    },
+    {
+      "type": "input_value",
+      "name": "to"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "draw_actor",
+  "message0": "Draw %1 Actor %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "NAME",
+      "check": "String"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
 }
 ]}
