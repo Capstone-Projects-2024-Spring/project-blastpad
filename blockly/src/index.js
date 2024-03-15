@@ -37,6 +37,48 @@ const gamesContainer = document.getElementById('gamesContainer')
 const pageContainer = document.getElementById('pageContainer')
 
 const ws = Blockly.inject(blocklyDiv, {toolbox});
+const defaultWorkspace = {
+  "blocks": {
+      "languageVersion": 0,
+      "blocks": [
+          {
+              "type": "metadata",
+              "id": "A$mP~29yJri+II[;(i/h",
+              "x": 40,
+              "y": 60,
+              "inputs": {
+                  "game name": {
+                      "block": {
+                          "type": "text",
+                          "id": "uL4`ChH4}lTzo~sEz[ot",
+                          "fields": {
+                              "TEXT": "Multiplayer Tetris"
+                          }
+                      }
+                  },
+                  "author name": {
+                      "block": {
+                          "type": "text",
+                          "id": "?)6dy[;RNRixg1lHZGed",
+                          "fields": {
+                              "TEXT": "BlastPad Team"
+                          }
+                      }
+                  },
+                  "description": {
+                      "block": {
+                          "type": "text",
+                          "id": "D?WrcH,o0F0HKfy2~GC;",
+                          "fields": {
+                              "TEXT": "This is an example project."
+                          }
+                      }
+                  }
+              }
+          },
+        ]
+      }
+    };
 
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
@@ -106,7 +148,7 @@ const fetchAndLoadGame = (gameName) => {
     pageContainer.classList.remove("hidden");
   }).catch((error) => {
     console.log("No games found, loading empty workspace.")
-    Blockly.serialization.workspaces.load({}, ws, false);
+    Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
   })
@@ -135,7 +177,7 @@ const startEditor = () => {
   }).catch((err) => {
     console.log(err);
     console.log("No games found, loading empty workspace.")
-    Blockly.serialization.workspaces.load({}, ws, false);
+    Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
   })
