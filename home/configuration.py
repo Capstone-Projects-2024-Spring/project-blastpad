@@ -27,6 +27,14 @@ def connect_to_wifi():
     cmd = f"nmcli device wifi connect '{ssid_var.get()}' password '{password_entry.get()}'"
     execute_command(cmd, "Connected to WiFi successfully!", "Failed to connect to WiFi")
 
+
+def disconnect_from_wifi():
+    """
+    Disconnect from WiFi network using nmcli command-line tool.
+    """
+    cmd = "nmcli device disconnect wlan0"  # Assumes wlan0 is the network interface
+    execute_command(cmd, "Disconnected from WiFi successfully!", "Failed to disconnect from WiFi")
+
 def execute_command(cmd, success_message, failure_message):
     '''
     Executes command using subprocess.run()
@@ -61,6 +69,10 @@ password_entry.grid(row=1, column=1, padx=10, pady=5, sticky="we")
 # Connect button
 connect_button = tk.Button(root, text="Connect", command=connect_to_wifi)
 connect_button.grid(row=2, column=0, padx=5, pady=10, sticky="e")
+
+# Disconnect button
+disconnect_button = tk.Button(root, text="Disconnect", command=disconnect_from_wifi)
+disconnect_button.grid(row=2, column=1, padx=5, pady=10, sticky="w")
 
 # Status label
 status_label = tk.Label(root, text="", fg="black")
