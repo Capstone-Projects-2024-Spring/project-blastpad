@@ -1,3 +1,4 @@
+import tkinter as tk
 import subprocess
 
 def get_available_networks():
@@ -18,3 +19,18 @@ def get_available_networks():
     except subprocess.CalledProcessError as e:
         print(f"Error executing nmcli command: {e}")
         return []
+
+# Create main window
+root = tk.Tk()
+root.title("WiFi Connection")
+
+# Get available WiFi networks
+available_networks = get_available_networks()
+
+# WiFi SSID selection
+ssid_label = tk.Label(root, text="Select SSID:")
+ssid_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+ssid_var = tk.StringVar(root)
+ssid_var.set(available_networks[0] if available_networks else "")  # Set default value if available networks exist
+ssid_dropdown = tk.OptionMenu(root, ssid_var, *available_networks)
+ssid_dropdown.grid(row=0, column=1, padx=10, pady=5, sticky="we")
