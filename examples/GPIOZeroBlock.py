@@ -2,7 +2,7 @@ from gpiozero import Button, LED
 
 
 #GPIO button on button 1
-button = Button(1)
+button = Button(5)
 
 
 #led on pin 2
