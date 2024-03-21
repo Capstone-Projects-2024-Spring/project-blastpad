@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import Canvas, Frame, Scrollbar, Label, ttk
+import customtkinter as ctk 
 import webbrowser
 from PIL import Image, ImageTk
 
@@ -78,8 +79,6 @@ def render_top_frame(root):
     wifi_icon = add_icon(top_frame, wifi_img_path, 75, 75)
 
 
-
-
 def render_new_game_icon(game_list_frame, button_width, button_height):
     # Open the image file with PIL and resize it
     pil_img = Image.open('home\\guiImages\\newGameIcon.png')
@@ -91,7 +90,7 @@ def render_new_game_icon(game_list_frame, button_width, button_height):
     # Create a Tkinter button with this image
     img_button = tk.Button(game_list_frame, image=photo, command=open_code_editor_new_game_page, borderwidth=0, highlightthickness=0)
     img_button.image = photo  # Keep a reference to the image
-    img_button.pack(side=tk.LEFT, padx=20, pady=20)
+    img_button.pack(side=tk.LEFT, padx=10, pady=10)
 
     img_button.bind("<Enter>", lambda e, widget=img_button: on_enter(e, widget))
     img_button.bind("<Leave>", lambda e, widget=img_button: on_leave(e, widget))
@@ -130,10 +129,10 @@ def display_game_info(game_info_container, game_name):
     text_info_frame = tk.Frame(game_info_container, padx=10, pady=10, bg='#23252C')
     text_info_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
-    # Update label styles with font size and foreground color
-    tk.Label(text_info_frame, text=game_name, font=("Helvetica", 16), anchor='w', fg='#FFFFFF', bg='#23252C').pack(fill='x')
-    tk.Label(text_info_frame, text="Author: You", anchor='w', fg='#FFFFFF', bg='#23252C').pack(fill='x')
-    tk.Label(text_info_frame, text="Last Updated: 2/13/2024", anchor='w', fg='#FFFFFF', bg='#23252C').pack(fill='x')
+    # Add text into gme info frame
+    ctk.CTkLabel(text_info_frame, text=game_name, font=("Helvetica", 40, "bold"), anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
+    ctk.CTkLabel(text_info_frame, text="Author: You", font=("Helvetica", 20, "bold") ,anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
+    ctk.CTkLabel(text_info_frame, text="Last Updated: 2/13/2024", font=("Helvetica", 20, "bold") ,anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
 
     # Style update for button frame
     button_frame = tk.Frame(game_info_container, bg='#23252C')
@@ -203,7 +202,7 @@ def render_game_library(main_container, game_info_container):
         # Create a game frame with the specified size
         game_frame = tk.Frame(game_list_frame, width=box_width, height=box_height, bg='#51535B')
         game_frame.pack_propagate(False)  # Prevents child widgets from altering the frame's size
-        game_frame.pack(side=tk.LEFT, padx=20, pady=20)
+        game_frame.pack(side=tk.LEFT, padx=10, pady=10)
 
         # Create a label with the game name and size, and ensure it's centered
         game_label = tk.Label(game_frame, text=f"{game}\n",
@@ -233,8 +232,8 @@ def initial_render(root):
     render_top_frame(top_container)
     
     # Main container frame for both the games list and game information
-    main_container = tk.Frame(root, bg='#23252C')
-    main_container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
+    main_container = ctk.CTkFrame(master=root, corner_radius=20, fg_color='#23252C')
+    main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
 
 
     # Create the game information container and pack it at the bottom of the main container
