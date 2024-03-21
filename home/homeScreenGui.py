@@ -24,7 +24,7 @@ def on_leave(e, widget):
     widget.config(highlightbackground='grey', highlightthickness=1)
 
 def render_top_frame(root):
-    top_frame = tk.Frame(root, bg='#2D3039')
+    top_frame = tk.Frame(root, bg='#33363e')
     top_frame.pack(side=tk.TOP, fill='x', anchor='n')
 
     def create_top_button(frame, image_path, command, desired_width, desired_height):
@@ -48,12 +48,37 @@ def render_top_frame(root):
     settings_img_path = 'home\\guiImages\\settingsIcon.png'
 
     # Create buttons with images
-    buttonWidth = 75
-    buttonHeight = 75
-    home_button = create_top_button(top_frame, home_img_path, home_button_clicked_event, buttonWidth, buttonHeight)
-    community_button = create_top_button(top_frame, community_img_path, community_hub_clicked_event, buttonWidth, buttonHeight)
-    classroom_button = create_top_button(top_frame, classroom_img_path, classroom_clicked_event, buttonWidth, buttonHeight)
-    settings_button = create_top_button(top_frame, settings_img_path, settings_clicked_event, buttonWidth, buttonHeight)
+    button_width = 75
+    button_height = 75
+    home_button = create_top_button(top_frame, home_img_path, home_button_clicked_event, button_width, button_height)
+    community_button = create_top_button(top_frame, community_img_path, community_hub_clicked_event, button_width, button_height)
+    classroom_button = create_top_button(top_frame, classroom_img_path, classroom_clicked_event, button_width, button_height)
+    settings_button = create_top_button(top_frame, settings_img_path, settings_clicked_event, button_width, button_height)
+
+    # Add battery and wifi icons
+    def add_icon(frame, image_path, desired_width, desired_height):
+        # Open the image file with PIL
+        pil_img = Image.open(image_path)
+        # Resize the image to the desired dimensions
+        pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+        # Create a PhotoImage object from the resized PIL image
+        img = ImageTk.PhotoImage(pil_img)
+
+        # Create a label within the frame to display the image
+        image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+        image_label.image = img  # Keep a reference to prevent garbage collection
+        image_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+    
+    battery_img_path = 'home\\guiImages\\batteryIcon.png'
+    wifi_img_path = 'home\\guiImages\\wifiIcon.png'
+
+    battery_icon = add_icon(top_frame, battery_img_path, 75, 75)
+    wifi_icon = add_icon(top_frame, wifi_img_path, 75, 75)
+
+
+
 
 def render_new_game_icon(game_list_frame, button_width, button_height):
     # Open the image file with PIL and resize it
@@ -221,7 +246,7 @@ def initial_render(root):
 def display_home_screen():
     root = tk.Tk()
     root.geometry("800x450")
-    root.configure(bg='#2D3039')
+    root.configure(bg='#33363e')
     initial_render(root)
     root.mainloop()
 
