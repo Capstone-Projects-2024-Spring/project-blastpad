@@ -1,8 +1,11 @@
 import tkinter as tk
-from tkinter import Canvas, Frame, Scrollbar, Label, ttk
+from tkinter import Canvas, Frame, Scrollbar, Label, ttk, filedialog
 import customtkinter as ctk 
 import webbrowser
 from PIL import Image, ImageTk
+import os
+
+
 
 # Methods to test if cliking widgets are responsive
 def home_button_clicked_event(event=None):
@@ -117,7 +120,7 @@ def on_leave(e, widget):
     widget.config(highlightbackground='grey', highlightthickness=1)
 
 
-def display_game_info(game_info_container, game_name):
+def display_game_info(game_info_container, game_name, game_json_path):
     # Clear any existing widgets in the game information container
     for widget in game_info_container.winfo_children():
         widget.destroy()
@@ -137,6 +140,34 @@ def display_game_info(game_info_container, game_name):
     # Style update for button frame
     button_frame = tk.Frame(game_info_container, bg='#23252C')
     button_frame.pack(side=tk.RIGHT, padx=10, pady=10)
+
+    def compile_game(json_file_path):
+        # Path to the compiler script
+        compiler_script_path = os.path.join(".", "blockly", "compile.js")
+
+        # Check if the JSON file exists
+        if not os.path.exists(json_file_path):
+            print(f"Error: JSON file '{json_file_path}' not found.")
+            return
+        
+        # Construct the command to run, enclosing json_file_path in quotes
+        command = f"node {compiler_script_path} \"{json_file_path}\""
+
+        # Call the compiler script using os.system()
+        return_code = os.system(command)
+        
+        if return_code == 0:
+            # Compilation succeeded
+            print("Game compiled successfully!")
+        else:
+            # Compilation failed
+            print("Compilation failed.")
+
+    def on_compile_click(game_json_path):
+        # Set the path to the game JSON file
+        # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
+        compile_game(game_json_path)
+
 
     def create_button(frame, image_path, command, desired_width, desired_height):
         # Open the image file with PIL
@@ -161,7 +192,8 @@ def display_game_info(game_info_container, game_name):
     buttonHeight = 90
 
     # Create buttons with new styling
-    play_button = create_button(button_frame, play_button_img_path, None, buttonWidth, buttonHeight)
+    # play_button = create_button(button_frame, play_button_img_path, on_compile_click, buttonWidth, buttonHeight)
+    play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
     edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
     upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
 
@@ -208,7 +240,7 @@ def render_game_library(main_container, game_info_container):
         game_label = tk.Label(game_frame, text=f"{game}\n",
                               fg='#FFFFFF', bg='#51535B', font=('Helvetica', 20))
         game_label.pack(expand=True)  # This will center the text in the frame
-        game_label.bind("<Button-1>", lambda event, name=game: display_game_info(game_info_container, name))
+        game_label.bind("<Button-1>", lambda event, name=game: display_game_info(game_info_container, name, os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")))
 
         # Set the highlightthickness for normal state so that the change is visible on hover
         game_frame.config(highlightbackground='grey', highlightthickness=1)
