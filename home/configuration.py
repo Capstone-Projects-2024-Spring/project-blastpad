@@ -1,66 +1,82 @@
+import tkinter as tk
 import subprocess
-import re
 
-class WirelessManager:
+def get_available_networks():
     """
-    WirelessManager Class
-    ---------------------
-
-    This class provides methods for scanning, listing, connecting, and disconnecting Wi-Fi networks.
-    Requires iw and networkmanager packages on arch.
-
-    Methods:
-        - scan_wifi_networks: Scan for available Wi-Fi networks.
-        - list_wifi_networks: List the names of available Wi-Fi networks.
-        - connect_to_wifi: Connect to a specified Wi-Fi network.
-        - disconnect_wifi: Disconnect from the currently connected Wi-Fi network.
+    Retrieves a list of available WiFi networks using nmcli command-line tool.
+    
+    Returns:
+        List of SSIDs for available WiFi networks.
     """
+    try:
+        result = subprocess.run(["nmcli", "-f", "SSID", "device", "wifi", "list"], capture_output=True, text=True, check=True)
+        networks = result.stdout.strip().splitlines()[1:] # Split output and remove the header
+        unique_networks = set(network.strip() for network in networks if network.strip()) # Extract unique SSIDs
+        return list(unique_networks)
+    except FileNotFoundError:
+        print("Error: nmcli command not found.")
+        return []
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing nmcli command: {e}")
+        return []
 
-    def __init__(self):
-        pass
+def connect_to_wifi():
+    """
+    Connects to WiFi network using nmcli command-line tool.
+    """
+    cmd = f"nmcli device wifi connect '{ssid_var.get()}' password '{password_entry.get()}'"
+    execute_command(cmd, "Connected to WiFi successfully!", "Failed to connect to WiFi")
 
-    def scan_wifi_networks(self):
-        """
-        Scan for available Wi-Fi networks.
 
-        Returns:
-            str: The output of the Wi-Fi scanning command.
-        """
-        result = subprocess.run(['iw', 'dev', 'wlp1s0', 'scan'], capture_output=True, text=True)
-        return result.stdout
+def disconnect_from_wifi():
+    """
+    Disconnect from WiFi network using nmcli command-line tool.
+    """
+    cmd = "nmcli device disconnect wlan0"  # Assumes wlan0 is the network interface
+    execute_command(cmd, "Disconnected from WiFi successfully!", "Failed to disconnect from WiFi")
 
-    def list_wifi_networks(self):
-        """
-        List the names of available Wi-Fi networks.
+def execute_command(cmd, success_message, failure_message):
+    '''
+    Executes command using subprocess.run()
+    '''
+    try:
+        subprocess.run(cmd, shell=True, check=True)
+        status_label.config(text=success_message, fg="green")
+    except subprocess.CalledProcessError as e:
+        status_label.config(text=f"{failure_message}: {e}", fg="red")
 
-        Returns:
-            list: A list of available Wi-Fi network names.
-        """
-        scan_result = self.scan_wifi_networks()
-        networks = re.findall(r'SSID: (.+)', scan_result)
-        return networks
+# Create main window
+root = tk.Tk()
+root.title("WiFi Connection")
 
-    def connect_to_wifi(self, ssid, password=None):
-        """
-        Connect to a specified Wi-Fi network.
+# Get available WiFi networks
+available_networks = get_available_networks()
 
-        Args:
-            ssid (str): The SSID of the Wi-Fi network to connect to.
-            password (str, optional): The password for the Wi-Fi network (if required).
+# WiFi SSID selection
+ssid_label = tk.Label(root, text="Select SSID:")
+ssid_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+ssid_var = tk.StringVar(root)
+ssid_var.set(available_networks[0] if available_networks else "")  # Set default value if available networks exist
+ssid_dropdown = tk.OptionMenu(root, ssid_var, *available_networks)
+ssid_dropdown.grid(row=0, column=1, padx=10, pady=5, sticky="we")
 
-        Raises:
-            subprocess.CalledProcessError: If the connection attempt fails.
-        """
-        if password:
-            subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid, 'password', password], check=True)
-        else:
-            subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid], check=True)
+# WiFi Password entry
+password_label = tk.Label(root, text="Password:")
+password_label.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+password_entry = tk.Entry(root, show="*")
+password_entry.grid(row=1, column=1, padx=10, pady=5, sticky="we")
 
-    def disconnect_wifi(self):
-        """
-        Disconnect from the currently connected Wi-Fi network.
+# Connect button
+connect_button = tk.Button(root, text="Connect", command=connect_to_wifi)
+connect_button.grid(row=2, column=0, padx=5, pady=10, sticky="e")
 
-        Raises:
-            subprocess.CalledProcessError: If the disconnection attempt fails.
-        """
-        subprocess.run(['nmcli', 'dev', 'disconnect'], check=True)
+# Disconnect button
+disconnect_button = tk.Button(root, text="Disconnect", command=disconnect_from_wifi)
+disconnect_button.grid(row=2, column=1, padx=5, pady=10, sticky="w")
+
+# Status label
+status_label = tk.Label(root, text="", fg="black")
+status_label.grid(row=3, column=0, columnspan=2)
+
+# Run the Tkinter event loop
+root.mainloop()
