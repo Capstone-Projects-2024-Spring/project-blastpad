@@ -4,8 +4,13 @@ import customtkinter as ctk
 import webbrowser
 from PIL import Image, ImageTk
 import os
+from time import strftime
 
-
+# Function that updates time
+def update_time(label):
+    current_time = strftime('%H:%M %p') # Format the current time
+    label.config(text=current_time) # Update the label text
+    label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
 
 # Methods to test if cliking widgets are responsive
 def home_button_clicked_event(event=None):
@@ -28,7 +33,7 @@ def on_leave(e, widget):
     widget.config(highlightbackground='grey', highlightthickness=1)
 
 def render_top_frame(root):
-    top_frame = tk.Frame(root, bg='#33363e')
+    top_frame = tk.Frame(root, bg='#33363E')
     top_frame.pack(side=tk.TOP, fill='x', anchor='n')
 
     def create_top_button(frame, image_path, command, desired_width, desired_height):
@@ -80,6 +85,13 @@ def render_top_frame(root):
 
     battery_icon = add_icon(top_frame, battery_img_path, 75, 75)
     wifi_icon = add_icon(top_frame, wifi_img_path, 75, 75)
+
+    time_label = tk.Label(top_frame, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+    time_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+
+    # Call the update_time function to start updating the time
+    update_time(time_label)
 
 
 def render_new_game_icon(game_list_frame, button_width, button_height):
@@ -192,7 +204,6 @@ def display_game_info(game_info_container, game_name, game_json_path):
     buttonHeight = 90
 
     # Create buttons with new styling
-    # play_button = create_button(button_frame, play_button_img_path, on_compile_click, buttonWidth, buttonHeight)
     play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
     edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
     upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
