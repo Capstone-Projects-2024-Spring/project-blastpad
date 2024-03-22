@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=admin
-WorkingDirectory=/home/project-blastpad/flask
+WorkingDirectory=/home/admin/project-blastpad/flask
 ExecStart=flask --app serve run
 Restart=always
 

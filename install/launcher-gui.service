@@ -1,0 +1,10 @@
+[Unit]
+Description=Launcher GUI
+After=network.target
+
+[Service]
+ExecStart=/bin/sh -c "/usr/bin/python3 /home/admin/project-blastpad/home/homeScreenGui.py"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
