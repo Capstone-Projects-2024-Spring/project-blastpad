@@ -67,7 +67,6 @@ var unrollWorkspaceBlocks = (workspace) => {
         if(block.inputs) {
             console.log(block.inputs);
             for(var input of Object.keys(block.inputs)) {
-                // console.log(block.inputs[input]);
                 saveBlock(block.inputs[input].block);
             }
         }
@@ -76,8 +75,6 @@ var unrollWorkspaceBlocks = (workspace) => {
             saveBlock(block.next.block)
         }
         if(block.inputs && block.inputs.DO) {
-            // console.log(block.inputs.DO);
-            // console.log(block.inputs.DO.block.inputs);
             saveBlock(block.inputs.DO);
         }
     }
@@ -153,7 +150,7 @@ try {
     }
 
     // THIS IS HOW WE GET BLOCK GENERATION
-    const forBlock = require('./src/generators/python.js')
+    const forBlock = require('./blockly/src/generators/python.js')
     Object.assign(pythonGenerator.forBlock, forBlock);
     
     try {
