@@ -7,9 +7,8 @@ Wants=graphical.target
 Type=simple
 User=admin
 Environment="DISPLAY=:0"
-Environment="XAUTHORITY=/home/pi/.Xauthority"
-ExecStartPre=/usr/bin/printenv
-ExecStart=/usr/bin/python3 /home/admin/project-blastpad/home/homeScreenGui.py
+Environment="XAUTHORITY=/home/admin/.Xauthority"
+ExecStart=/bin/bash -c "export DISPLAY=:0; /usr/bin/python3 /home/admin/project-blastpad/home/homeScreenGui.py"
 Restart=always
 
 [Install]
