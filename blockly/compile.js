@@ -7,6 +7,14 @@ const en = require('blockly/msg/en');
 const savePixels = require("save-pixels")
 const ndarray = require("ndarray");
 
+
+// const FieldBitmap = require("./src/field-bitmap.js");
+// console.log(FieldBitmap);
+
+class dummyField extends Blockly.Field {}
+dummyField.fromJson = () => {};
+Blockly.fieldRegistry.register('field_bitmap', dummyField);
+
 Blockly.setLocale(en);
 
 const primaryColor = [54, 61, 128, 255]
@@ -65,7 +73,6 @@ var unrollWorkspaceBlocks = (workspace) => {
         workspaceBlocks.push(block)
         
         if(block.inputs) {
-            console.log(block.inputs);
             for(var input of Object.keys(block.inputs)) {
                 saveBlock(block.inputs[input].block);
             }
@@ -127,7 +134,7 @@ try {
                 var variable_id = block.fields.VAR.id;
                 var bitmapBlock = block.inputs[key].block;
                 if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
-                    console.log("variable set...");
+                    // console.log("variable set...");
                     var size = getBitmapSize(bitmapBlock.type, definitionsArray)
                     var name = getVariableName(variable_id, file)
                     saveBitmap(bitmapBlock.fields.field, size, name);
