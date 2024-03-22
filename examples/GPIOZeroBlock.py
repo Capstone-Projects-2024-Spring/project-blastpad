@@ -12,9 +12,9 @@ led = LED(2)
 #boolean statement to check if button 1 is pressed or not
 def checkPressed():
    if button.is_pressed:
-       print("Button on pin 1 was pressed")
+       print("Button on pin 5 was pressed")
    else:
-       print("Button on pin 1 was not pressed")
+       print("Button on pin 5 was not pressed")
 
 
 #function that executes function when button 1 is pressed
