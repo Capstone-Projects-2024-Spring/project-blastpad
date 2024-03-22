@@ -52,9 +52,9 @@ var saveBitmap = (bitmap, size, name) => {
                 d.set(y, x, i, color[i])
             }
         }
-    }
-
-    var out = fs.createWriteStream(`${name}.png`);
+    }  
+    
+    var out = fs.createWriteStream(`images/${name.toLowerCase() || "UNKNOWN"}.png`);
     savePixels(d, "png").pipe(out)
 }
 
@@ -63,8 +63,22 @@ var unrollWorkspaceBlocks = (workspace) => {
 
     var saveBlock = (block) => {
         workspaceBlocks.push(block)
+        
+        if(block.inputs) {
+            console.log(block.inputs);
+            for(var input of Object.keys(block.inputs)) {
+                // console.log(block.inputs[input]);
+                saveBlock(block.inputs[input].block);
+            }
+        }
+
         if(block.next) {
             saveBlock(block.next.block)
+        }
+        if(block.inputs && block.inputs.DO) {
+            // console.log(block.inputs.DO);
+            // console.log(block.inputs.DO.block.inputs);
+            saveBlock(block.inputs.DO);
         }
     }
 
@@ -76,9 +90,9 @@ var unrollWorkspaceBlocks = (workspace) => {
 }
 
 var getVariableName = (block_id, workspace) => {
-    console.log("looking",block_id);
+    // console.log("looking",block_id);
     var variable_match = workspace.variables.filter((variable)=>variable.id == block_id)
-    console.log(workspace.variables)
+    // console.log(workspace.variables)
     if(variable_match.length == 0) { return block_id }
 
     return variable_match[0].name;
@@ -103,27 +117,40 @@ try {
     var definitions = Blockly.common.createBlockDefinitionsFromJsonArray(definitionsArray.blocks);
     Blockly.common.defineBlocks(definitions);
 
+    // console.log(allWorkspaceBlocks);
 
     for(var block of allWorkspaceBlocks) {
         // save orphaned bitmaps
-        // if(["small_bitmap", "large_bitmap"].includes(block.type)) {
-        //     saveBitmap(block.fields.field, block.id);
-        // }
+        if(["small_bitmap", "large_bitmap"].includes(block.type)) {
+            var size = getBitmapSize(block.type, definitionsArray)
+            saveBitmap(block.fields.field, size, block.id);
+        }
         if(block.type == "variables_set") {
             for(var key in block.inputs) {
                 var variable_id = block.fields.VAR.id;
-                var block = block.inputs[key].block;
-                if(["small_bitmap", "large_bitmap"].includes(block.type)) {
-                    var size = getBitmapSize(block.type, definitionsArray)
+                var bitmapBlock = block.inputs[key].block;
+                if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
+                    console.log("variable set...");
+                    var size = getBitmapSize(bitmapBlock.type, definitionsArray)
                     var name = getVariableName(variable_id, file)
-                    saveBitmap(block.fields.field, size, name);
+                    saveBitmap(bitmapBlock.fields.field, size, name);
                 }
             }
         }
+
+
+        if(block.type == "actor") {
+            var bitmapBlock = block.inputs.ImageName.block;
+
+            if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
+                var size = getBitmapSize(bitmapBlock.type, definitionsArray)
+                var name = getVariableName(bitmapBlock.id, file)
+                saveBitmap(bitmapBlock.fields.field, size, name);
+            }
+
+            // return;
+        }
     }
-
-
-    return;
 
     // THIS IS HOW WE GET BLOCK GENERATION
     const forBlock = require('./src/generators/python.js')
@@ -132,8 +159,9 @@ try {
     try {
         var workspace = new Blockly.Workspace();
         Blockly.serialization.workspaces.load(file, workspace);
-        const code = pythonGenerator.workspaceToCode(workspace);
+        var code = pythonGenerator.workspaceToCode(workspace);
 
+        code += `\n\n\n\npgzrun.go()`
         fs.writeFile(output, code, err => {
             if (err) {
               console.error(err);

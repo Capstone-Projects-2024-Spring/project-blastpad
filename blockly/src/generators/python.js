@@ -67,50 +67,94 @@ const Order = {
 forBlock['game_loop'] = function (block, generator) {
   let branch = generator.statementToCode(block, 'DO');
   // branch = generator.addLoopTrap(branch, block) || generator.PASS;
-  return `# placeholder game loop... pygame0 anyone?\nwhile true:\n${branch}`
+  return `
+def update():
+  screen.clear()
+${branch}
+\n`
 };
 
 forBlock['metadata'] = function(block, generator) {
-  var value_game_name = generator.valueToCode(block, 'game name', python.Order.ATOMIC);
-  var value_author_name = generator.valueToCode(block, 'author name', python.Order.ATOMIC);
-  var value_description = generator.valueToCode(block, 'description', python.Order.ATOMIC);
-  // TODO: Assemble python into code variable.
+  var value_game_name = generator.valueToCode(block, 'game name', Order.ATOMIC);
+  var value_author_name = generator.valueToCode(block, 'author name', Order.ATOMIC);
+  var value_description = generator.valueToCode(block, 'description', Order.ATOMIC);
   var code = `
-  # ${value_game_name}
-  # By ${value_author_name}
-  # ${value_description}
-  `
-  return code;
-};
 
-forBlock['draw'] = function(block, generator) {
-  var statements_draw = generator.statementToCode(block, 'draw');
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
+# BLASTPAD PRODUCTIONS
+# ${value_game_name}
+# By ${value_author_name}
+# ${value_description}\n
+
+# from gpiozero import Button, LED
+import pgzrun
+# from pgzhelper import *
+# button = Button(5)
+
+TITLE = "${value_game_name}"
+WIDTH = 40
+HEIGHT = 100
+\n
+\n
+`
   return code;
 };
 
 forBlock['actor'] = function(block, generator) {
-  var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
-  return code;
+  var value_name = generator.valueToCode(block, 'ImageName', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `Actor(${value_name}, (20, 50))`;
+  return [code, Order.NONE];
 };
 
 forBlock['set_actor'] = function(block, generator) {
-  var value_actor = generator.valueToCode(block, 'Actor', javascript.Order.ATOMIC);
-  var value_property = generator.valueToCode(block, 'property', javascript.Order.ATOMIC);
-  var statements_to = generator.statementToCode(block, 'to');
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
+  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+  var value_property = generator.valueToCode(block, 'property', Order.ATOMIC);
+  var statements_to = generator.valueToCode(block, 'to', Order.ATOMIC);
+
+  // TODO: Assemble python into code variable.
+  var code = `setattr(${value_actor}, ${value_property}, ${statements_to})\n`
   return code;
 };
 
 forBlock['draw_actor'] = function(block, generator) {
-  var value_name = generator.valueToCode(block, 'NAME', javascript.Order.ATOMIC);
-  // TODO: Assemble javascript into code variable.
-  var code = '...\n';
+  var value_name = generator.valueToCode(block, 'NAME', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_name}.draw()\n`
   return code;
 };
+
+forBlock['key_down'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`
+
+def on_key_down():
+  ${branch}
+`;
+  return code;
+};
+
+forBlock['get_property'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+  var value_property = generator.valueToCode(block, 'Property', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `getattr(${value_actor}, ${value_property})`;
+  return [code, Order.NONE]
+};
+
+
+forBlock['small_bitmap'] = function(block, generator) {
+  var code = `"${block.id.toLowerCase()}"`;
+  return [code, Order.NONE]
+};
+
+
+forBlock['large_bitmap'] = function(block, generator) {
+  var code = `"${block.id.toLowerCase()}"`;
+  return [code, Order.NONE]
+};
+
 
 module.exports = forBlock;

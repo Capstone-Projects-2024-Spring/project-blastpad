@@ -12,7 +12,6 @@ your toolbox from scratch, or carefully choosing whether you need each block
 listed here.
 */
 
-
 /*
 
         {
@@ -83,10 +82,6 @@ export const toolbox = {
         },
         {
           'kind': 'block',
-          'type': 'draw',
-        },
-        {
-          'kind': 'block',
           'type': 'set_actor',
         },
         {
@@ -97,6 +92,14 @@ export const toolbox = {
           'kind': 'block',
           'type': 'draw_actor',
         },
+        {
+          'kind': 'block',
+          'type': 'key_down'
+        },
+        {
+          'kind': 'block',
+          'type': 'get_property'
+        }
       ],
     },
     {
