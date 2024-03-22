@@ -99,7 +99,7 @@ try {
     var allWorkspaceBlocks = unrollWorkspaceBlocks(file)
 
     // THIS IS HOW WE GET BLOCK DEFINITIONS
-    var definitionsArray = jsonfile.readFileSync('./src/blocks/game.json')
+    var definitionsArray = jsonfile.readFileSync('./blockly/src/blocks/game.json')
     var definitions = Blockly.common.createBlockDefinitionsFromJsonArray(definitionsArray.blocks);
     Blockly.common.defineBlocks(definitions);
 
