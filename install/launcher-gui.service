@@ -4,9 +4,11 @@ After=graphical.target
 Wants=graphical.target
 
 [Service]
+Type=simple
 User=admin
-Environment="DISPLAY=:0.0"
+Environment="DISPLAY=:0"
 Environment="XAUTHORITY=/home/pi/.Xauthority"
+ExecStartPre=/usr/bin/printenv
 ExecStart=/usr/bin/python3 /home/admin/project-blastpad/home/homeScreenGui.py
 Restart=always
 
