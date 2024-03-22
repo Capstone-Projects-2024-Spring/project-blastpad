@@ -1,26 +1,102 @@
 import tkinter as tk
 from tkinter import Canvas, Frame, Scrollbar, Label
 import webbrowser
+from PIL import Image, ImageTk
+import os
+from time import strftime
 
-#Add new game icon in scrollable list
-def render_new_game_icon(game_list_frame):
-    box_width = 125 
-    box_height = 125  
+# Function that updates time
+def update_time(label):
+    current_time = strftime('%H:%M %p') # Format the current time
+    label.config(text=current_time) # Update the label text
+    label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
+
+# Methods to test if cliking widgets are responsive
+def home_button_clicked_event(event=None):
+    print("Home button clicked!")
+
+def community_hub_clicked_event(event=None):
+    print("Community Hub button clicked!")
+
+def classroom_clicked_event(event=None):
+    print("Classroom button clicked!")
+
+def settings_clicked_event(event=None):
+    print("Settings button clicked!")
+
+
+def on_enter(e, widget):
+    widget.config(highlightbackground='yellow', highlightthickness=2)
+
+def on_leave(e, widget):
+    widget.config(highlightbackground='grey', highlightthickness=1)
+
+def render_top_frame(root):
+    top_frame = tk.Frame(root, bg='#33363E')
+    top_frame.pack(side=tk.TOP, fill='x', anchor='n')
+
+    def create_top_button(frame, image_path, command, desired_width, desired_height):
+        # Open the image file with PIL
+        pil_img = Image.open(image_path)
+        # Resize the image to the desired dimensions
+        pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+        # Create a PhotoImage object from the resized PIL image
+        img = ImageTk.PhotoImage(pil_img)
+
+        # Create a Tkinter button with this image
+        button = tk.Button(frame, image=img, command=command, bd= 0, highlightthickness=0)
+        button.image = img  # Keep a reference to the image
+        button.pack(side=tk.LEFT, padx=10, pady=10)
+        return button
+
+    home_img_path = 'home\\guiImages\\homeIcon.png'
+    community_img_path = 'home\\guiImages\\communityHubIcon.png'
+    classroom_img_path = 'home\\guiImages\\classroomIcon.png'
+    settings_img_path = 'home\\guiImages\\settingsIcon.png'
+
+    # Create buttons with images
+    button_width = 75
+    button_height = 75
+    home_button = create_top_button(top_frame, home_img_path, home_button_clicked_event, button_width, button_height)
+    community_button = create_top_button(top_frame, community_img_path, community_hub_clicked_event, button_width, button_height)
+    classroom_button = create_top_button(top_frame, classroom_img_path, classroom_clicked_event, button_width, button_height)
+    settings_button = create_top_button(top_frame, settings_img_path, settings_clicked_event, button_width, button_height)
+
+    # Add battery and wifi icons
+    def add_icon(frame, image_path, desired_width, desired_height):
+        # Open the image file with PIL
+        pil_img = Image.open(image_path)
+        # Resize the image to the desired dimensions
+        pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+        # Create a PhotoImage object from the resized PIL image
+        img = ImageTk.PhotoImage(pil_img)
+
+        # Create a label within the frame to display the image
+        image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+        image_label.image = img  # Keep a reference to prevent garbage collection
+        image_label.pack(side=tk.LEFT, padx=10, pady=10)
+
     
-    # Create a game frame with the specified size
-    new_game_frame = tk.Frame(game_list_frame, width=box_width, height=box_height, bg='#51535B')
-    new_game_frame.pack_propagate(False)  # Prevents child widgets from altering the frame's size
-    new_game_frame.pack(side=tk.LEFT, padx=20, pady=20)
-    
-    # Create a label with the game name and size, and ensure it's centered
-    game_label = tk.Label(new_game_frame, text=f"+\n",
-                        fg='#FFFFFF', bg='#51535B', font=('Helvetica', 20))
-    game_label.pack(expand=True)  # This will center the text in the frame
-    game_label.bind("<Button-1>", open_code_editor_new_game_page)
+    battery_img_path = 'home\\guiImages\\batteryIcon.png'
+    wifi_img_path = 'home\\guiImages\\wifiIcon.png'
+
+    battery_icon = add_icon(top_frame, battery_img_path, 75, 75)
+    wifi_icon = add_icon(top_frame, wifi_img_path, 75, 75)
+
+    time_label = tk.Label(top_frame, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+    time_label.pack(side=tk.LEFT, padx=10, pady=10)
 
 
-    # Set the highlightthickness for normal state so that the change is visible on hover
-    new_game_frame.config(highlightbackground='grey', highlightthickness=1)
+    # Call the update_time function to start updating the time
+    update_time(time_label)
+
+
+def render_new_game_icon(game_list_frame, button_width, button_height):
+    # Open the image file with PIL and resize it
+    pil_img = Image.open('home\\guiImages\\newGameIcon.png')
+    pil_img = pil_img.resize((button_width, button_height), Image.LANCZOS)
 
     # Bind enter and leave events to the game frame to show mous hovering effects
     new_game_frame.bind("<Enter>", lambda e, widget=new_game_frame: on_enter(e, widget))
@@ -61,26 +137,65 @@ def display_game_info(game_info_container, game_name):
     tk.Label(text_info_frame, text="Author: You", anchor='w').pack(fill='x')
     tk.Label(text_info_frame, text="Last Updated: 2/13/2024", anchor='w').pack(fill='x')
 
-    # Create a frame for the buttons
-    button_frame = tk.Frame(game_info_container)
-    button_frame.pack(side=tk.RIGHT)
+    # Style update for button frame
+    button_frame = tk.Frame(game_info_container, bg='#23252C')
+    button_frame.pack(side=tk.RIGHT, padx=10, pady=10)
 
+    def compile_game(json_file_path):
+        # Path to the compiler script
+        compiler_script_path = os.path.join(".", "blockly", "compile.js")
+
+        # Check if the JSON file exists
+        if not os.path.exists(json_file_path):
+            print(f"Error: JSON file '{json_file_path}' not found.")
+            return
+        
+        # Construct the command to run, enclosing json_file_path in quotes
+        command = f"node {compiler_script_path} \"{json_file_path}\""
+
+        # Call the compiler script using os.system()
+        return_code = os.system(command)
+        
+        if return_code == 0:
+            # Compilation succeeded
+            print("Game compiled successfully!")
+        else:
+            # Compilation failed
+            print("Compilation failed.")
+
+    def on_compile_click(game_json_path):
+        # Set the path to the game JSON file
+        # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
+        compile_game(game_json_path)
+
+
+    def create_button(frame, image_path, command, desired_width, desired_height):
+        # Open the image file with PIL
+        pil_img = Image.open(image_path)
+        # Resize the image to the desired dimensions
+        pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+        # Create a PhotoImage object from the resized PIL image
+        img = ImageTk.PhotoImage(pil_img)
+
+        # Create a Tkinter button with this image
+        button = tk.Button(frame, image=img, command=command, bd= 0, highlightthickness=0)
+        button.image = img  # Keep a reference to the image
+        button.pack(side=tk.LEFT, padx=5, pady=5)
+        return button
     
-    # Create buttons inside the button frame with equal width and height
-    play_button = tk.Button(button_frame, text="Play", bg="red", fg="white")
-    play_button.pack(side=tk.LEFT, padx=5, pady=5, ipadx=20, ipady=20)  # ipadx and ipady add internal padding to make the button square
-    play_button.bind("<Enter>", lambda e, widget=play_button: on_enter(e, widget))
-    play_button.bind("<Leave>", lambda e, widget=play_button: on_leave(e, widget))
+    play_button_img_path = 'home\\guiImages\\playButtonIcon.png'
+    edit_button_img_path = 'home\\guiImages\\editIcon.png'
+    upload_buton_img_path = 'home\\guiImages\\uploadIcon.png'
 
-    edit_button = tk.Button(button_frame, text="Edit", bg="blue", fg="white", command=open_code_editor) # When clicked, a new code editor istance is made in a new web browser tab.
-    edit_button.pack(side=tk.LEFT, padx=5, pady=5, ipadx=20, ipady=20)  # Same internal padding for square shape
-    edit_button.bind("<Enter>", lambda e, widget=edit_button: on_enter(e, widget))
-    edit_button.bind("<Leave>", lambda e, widget=edit_button: on_leave(e, widget))
+    buttonWidth = 90
+    buttonHeight = 90
 
-    upload_button = tk.Button(button_frame, text="Upload", bg="green", fg="white")
-    upload_button.pack(side=tk.LEFT, padx=5, pady=5, ipadx=20, ipady=20)  # Same internal padding for square shape
-    upload_button.bind("<Enter>", lambda e, widget=upload_button: on_enter(e, widget))
-    upload_button.bind("<Leave>", lambda e, widget=upload_button: on_leave(e, widget))
+    # Create buttons with new styling
+    # play_button = create_button(button_frame, play_button_img_path, on_compile_click, buttonWidth, buttonHeight)
+    play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
+    edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
+    upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
 
 
 def render_game_library(main_container, game_info_container):
