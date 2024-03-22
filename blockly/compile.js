@@ -54,7 +54,7 @@ var saveBitmap = (bitmap, size, name) => {
         }
     }  
     
-    var out = fs.createWriteStream(`images/${name.toLowerCase() || "UNKNOWN"}.png`);
+    var out = fs.createWriteStream(`./blockly/compiled_games/images/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "") || "UNKNOWN"}.png`);
     savePixels(d, "png").pipe(out)
 }
 
@@ -103,7 +103,7 @@ var getBitmapSize = (bitmap_type, definitions) => {
 try {
     const file = jsonfile.readFileSync(process.argv[2]);
     var filename = process.argv[2].replace(/^.*[\\/]/, '')
-    var output = process.argv[3] || filename.split('.')[0]+".py"
+    var output = process.argv[3] || "./blockly/compiled_games/"+filename.split('.')[0]+".py"
 
     // SAVE BITMAPS
     // PROBABLY SHOULD BE IN THEIR OWN GAME FOLDER
@@ -150,7 +150,7 @@ try {
     }
 
     // THIS IS HOW WE GET BLOCK GENERATION
-    const forBlock = require('./blockly/src/generators/python.js')
+    const forBlock = require('../blockly/src/generators/python.js')
     Object.assign(pythonGenerator.forBlock, forBlock);
     
     try {

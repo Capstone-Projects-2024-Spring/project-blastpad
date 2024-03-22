@@ -146,13 +146,13 @@ forBlock['get_property'] = function(block, generator) {
 
 
 forBlock['small_bitmap'] = function(block, generator) {
-  var code = `"${block.id.toLowerCase()}"`;
+  var code = `"${block.id.toLowerCase().replace(/[^a-zA-Z ]/g, "")}"`;
   return [code, Order.NONE]
 };
 
 
 forBlock['large_bitmap'] = function(block, generator) {
-  var code = `"${block.id.toLowerCase()}"`;
+  var code = `"${block.id.toLowerCase().replace(/[^a-zA-Z ]/g, "")}"`;
   return [code, Order.NONE]
 };
 
