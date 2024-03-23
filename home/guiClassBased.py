@@ -6,6 +6,12 @@ from PIL import Image, ImageTk
 import os
 from time import strftime
 
+# Function that updates time
+def update_time(label):
+    current_time = strftime('%H:%M %p') # Format the current time
+    label.config(text=current_time) # Update the label text
+    label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
+
 # Methods to test if cliking widgets are responsive
 def home_button_clicked_event(event=None):
     print("Home button clicked!")
@@ -120,6 +126,9 @@ class Navbar(tk.Frame):
 
         time_label = tk.Label(self.top_frame, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
         time_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+        # Call the update_time function to start updating the time
+        update_time(time_label)
 
 class Main(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
