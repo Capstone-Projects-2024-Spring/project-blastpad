@@ -98,13 +98,14 @@ class CommunityHub(tk.Frame):
         button_frame.pack(side=tk.RIGHT, padx=10, pady=10)
       
         play_button_img_path = 'guiImages\\playButtonIcon.png'
-        edit_button_img_path = 'guiImages\\editIcon.png'
-        upload_buton_img_path = 'guiImages\\uploadIcon.png'
+        like_button_img_path = 'guiImages\\likeIcon.png'
+
+        def on_like_click():
+            print("Like button clicked!")
 
         buttonWidth = 90
         buttonHeight = 90
 
         # Create buttons with new styling
         play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
-        edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
-        upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
+        edit_button = create_button(button_frame, like_button_img_path, on_like_click, buttonWidth, buttonHeight)
