@@ -2,6 +2,21 @@ from PIL import Image, ImageTk
 import tkinter as tk
 import webbrowser
 
+def create_button(frame, image_path, command, desired_width, desired_height):
+    # Open the image file with PIL
+    pil_img = Image.open(image_path)
+    # Resize the image to the desired dimensions
+    pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+    # Create a PhotoImage object from the resized PIL image
+    img = ImageTk.PhotoImage(pil_img)
+
+    # Create a Tkinter button with this image
+    button = tk.Button(frame, image=img, command=command, bd= 0, highlightthickness=0)
+    button.image = img  # Keep a reference to the image
+    button.pack(side=tk.LEFT, padx=5, pady=5)
+    return button
+
 def render_new_game_icon(game_list_frame, button_width, button_height):
     # Open the image file with PIL and resize it
     pil_img = Image.open('guiImages\\newGameIcon.png')

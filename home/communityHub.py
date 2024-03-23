@@ -2,9 +2,9 @@ import tkinter as tk
 import customtkinter as ctk
 import os
 from PIL import Image, ImageTk
-from helpers import open_code_editor, on_enter, on_leave, render_new_game_icon, create_button
+from helpers import create_button, on_enter, on_leave, render_new_game_icon
 
-class HomeScreen(tk.Frame):
+class CommunityHub(tk.Frame):
     def __init__(self, parent):
         # Main container frame for both the games list and game information
         self.main_container = ctk.CTkFrame(master=parent, corner_radius=20, fg_color='#23252C')
@@ -96,34 +96,7 @@ class HomeScreen(tk.Frame):
         # Style update for button frame
         button_frame = tk.Frame(game_info_container, bg='#23252C')
         button_frame.pack(side=tk.RIGHT, padx=10, pady=10)
-
-        def compile_game(json_file_path):
-            # Path to the compiler script
-            compiler_script_path = os.path.join(".", "blockly", "compile.js")
-
-            # Check if the JSON file exists
-            if not os.path.exists(json_file_path):
-                print(f"Error: JSON file '{json_file_path}' not found.")
-                return
-            
-            # Construct the command to run, enclosing json_file_path in quotes
-            command = f"node {compiler_script_path} \"{json_file_path}\""
-
-            # Call the compiler script using os.system()
-            return_code = os.system(command)
-            
-            if return_code == 0:
-                # Compilation succeeded
-                print("Game compiled successfully!")
-            else:
-                # Compilation failed
-                print("Compilation failed.")
-
-        def on_compile_click(game_json_path):
-            # Set the path to the game JSON file
-            # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
-            compile_game(game_json_path)
-       
+      
         play_button_img_path = 'guiImages\\playButtonIcon.png'
         edit_button_img_path = 'guiImages\\editIcon.png'
         upload_buton_img_path = 'guiImages\\uploadIcon.png'
@@ -132,6 +105,6 @@ class HomeScreen(tk.Frame):
         buttonHeight = 90
 
         # Create buttons with new styling
-        play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
+        """play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
         edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
-        upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
+        upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)"""
