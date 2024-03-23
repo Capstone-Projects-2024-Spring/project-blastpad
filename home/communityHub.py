@@ -2,7 +2,7 @@ import tkinter as tk
 import customtkinter as ctk
 import os
 from PIL import Image, ImageTk
-from helpers import create_button, on_enter, on_leave, render_new_game_icon
+from helpers import create_button, on_enter, on_leave, render_new_game_icon, on_compile_click
 
 class CommunityHub(tk.Frame):
     def __init__(self, parent):
@@ -105,6 +105,6 @@ class CommunityHub(tk.Frame):
         buttonHeight = 90
 
         # Create buttons with new styling
-        """play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
+        play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
         edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
-        upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)"""
+        upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)

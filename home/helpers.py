@@ -1,6 +1,33 @@
 from PIL import Image, ImageTk
 import tkinter as tk
-import webbrowser
+import webbrowser, os
+
+def compile_game(json_file_path):
+    # Path to the compiler script
+    compiler_script_path = os.path.join(".", "blockly", "compile.js")
+
+    # Check if the JSON file exists
+    if not os.path.exists(json_file_path):
+        print(f"Error: JSON file '{json_file_path}' not found.")
+        return
+    
+    # Construct the command to run, enclosing json_file_path in quotes
+    command = f"node {compiler_script_path} \"{json_file_path}\""
+
+    # Call the compiler script using os.system()
+    return_code = os.system(command)
+    
+    if return_code == 0:
+        # Compilation succeeded
+        print("Game compiled successfully!")
+    else:
+        # Compilation failed
+        print("Compilation failed.")
+
+def on_compile_click(game_json_path):
+    # Set the path to the game JSON file
+    # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
+    compile_game(game_json_path)
 
 def create_button(frame, image_path, command, desired_width, desired_height):
     # Open the image file with PIL
