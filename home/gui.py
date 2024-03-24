@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
+import subprocess
 from helpers import *
 
 games = []
@@ -56,10 +57,10 @@ class HomePage(tk.Frame):
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
-        home_img_path = 'guiImages\\homeIconPressed.png'
-        community_img_path = 'guiImages\\communityHubIcon.png'
-        classroom_img_path = 'guiImages\\classroomIcon.png'
-        settings_img_path = 'guiImages\\settingsIcon.png'
+        home_img_path = 'home\\guiImages\\homeIconPressed.png'
+        community_img_path = 'home\\guiImages\\communityHubIcon.png'
+        classroom_img_path = 'home\\guiImages\\classroomIcon.png'
+        settings_img_path = 'home\\guiImages\\settingsIcon.png'
 
         # Create buttons with images
         button_width = 75
@@ -69,8 +70,8 @@ class HomePage(tk.Frame):
         classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
 
-        battery_img_path = 'guiImages\\batteryIcon.png'
-        wifi_img_path = 'guiImages\\wifiIcon.png'
+        battery_img_path = 'home\\guiImages\\batteryIcon.png'
+        wifi_img_path = 'home\\guiImages\\wifiIcon.png'
 
         battery_icon = add_icon(navbar, battery_img_path, 75, 75)
         wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
@@ -110,7 +111,7 @@ class HomePage(tk.Frame):
 
         def render_new_game_icon(game_list_frame, button_width, button_height):
             # Open the image file with PIL and resize it
-            pil_img = Image.open('guiImages\\newGameIcon.png')
+            pil_img = Image.open('home\\guiImages\\newGameIcon.png')
             pil_img = pil_img.resize((button_width, button_height), Image.LANCZOS)
 
             # Create a PhotoImage object from the resized PIL image
@@ -126,11 +127,11 @@ class HomePage(tk.Frame):
 
         render_new_game_icon(game_list_frame, game_lib_button_width, game_lib_button_height)
 
-        for x in os.listdir("../flask/saved/"):
+        for x in os.listdir("./flask/saved/"):
             if x.endswith(".json"):
                 # Prints only text file present in My Folder
 
-                path = "../flask/saved/"+x
+                path = "./flask/saved/"+x
                 f = open(path)
                 data = json.load(f)
                 filename = x
@@ -219,6 +220,7 @@ class HomePage(tk.Frame):
                 if return_code == 0:
                     # Compilation succeeded
                     print("Game compiled successfully!")
+                    run_game(game)
                 else:
                     # Compilation failed
                     print("Compilation failed.")
@@ -227,9 +229,13 @@ class HomePage(tk.Frame):
                 # Set the path to the game JSON file
                 # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
                 compile_game(game.path)
-            play_button_img_path = 'guiImages\\playButtonIcon.png'
-            edit_button_img_path = 'guiImages\\editIcon.png'
-            upload_buton_img_path = 'guiImages\\uploadIcon.png'
+
+            def run_game(game):
+                game_file = "./blockly/compiled_games/" + game.name + ".py"
+                subprocess.run(['python', game_file])
+            play_button_img_path = 'home\\guiImages\\playButtonIcon.png'
+            edit_button_img_path = 'home\\guiImages\\editIcon.png'
+            upload_buton_img_path = 'home\\guiImages\\uploadIcon.png'
 
             buttonWidth = 90
             buttonHeight = 90
@@ -251,10 +257,10 @@ class CommunityHub(tk.Frame):
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
-        home_img_path = 'guiImages\\homeIcon.png'
-        community_img_path = 'guiImages\\communityHubIconPressed.png'
-        classroom_img_path = 'guiImages\\classroomIcon.png'
-        settings_img_path = 'guiImages\\settingsIcon.png'
+        home_img_path = 'home\\guiImages\\homeIcon.png'
+        community_img_path = 'home\\guiImages\\communityHubIconPressed.png'
+        classroom_img_path = 'home\\guiImages\\classroomIcon.png'
+        settings_img_path = 'home\\guiImages\\settingsIcon.png'
 
         # Create buttons with images
         button_width = 75
@@ -264,8 +270,8 @@ class CommunityHub(tk.Frame):
         classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
 
-        battery_img_path = 'guiImages\\batteryIcon.png'
-        wifi_img_path = 'guiImages\\wifiIcon.png'
+        battery_img_path = 'home\\guiImages\\batteryIcon.png'
+        wifi_img_path = 'home\\guiImages\\wifiIcon.png'
 
         battery_icon = add_icon(navbar, battery_img_path, 75, 75)
         wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
@@ -305,7 +311,7 @@ class CommunityHub(tk.Frame):
 
         def render_new_game_icon(game_list_frame, button_width, button_height):
             # Open the image file with PIL and resize it
-            pil_img = Image.open('guiImages\\searchIcon.png')
+            pil_img = Image.open('home\\guiImages\\searchIcon.png')
             pil_img = pil_img.resize((button_width, button_height), Image.LANCZOS)
 
             # Create a PhotoImage object from the resized PIL image
@@ -401,8 +407,10 @@ class CommunityHub(tk.Frame):
                 # Set the path to the game JSON file
                 # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
                 compile_game(game_json_path)
-            play_button_img_path = 'guiImages\\playButtonIcon.png'
-            like_button_img_path = 'guiImages\\likeIcon.png'
+                
+                
+            play_button_img_path = 'home\\guiImages\\playButtonIcon.png'
+            like_button_img_path = 'home\\guiImages\\likeIcon.png'
 
             buttonWidth = 90
             buttonHeight = 90
@@ -423,10 +431,10 @@ class Classroom(tk.Frame):
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
-        home_img_path = 'guiImages\\homeIcon.png'
-        community_img_path = 'guiImages\\communityHubIcon.png'
-        classroom_img_path = 'guiImages\\classroomIconPressed.png'
-        settings_img_path = 'guiImages\\settingsIcon.png'
+        home_img_path = 'home\\guiImages\\homeIcon.png'
+        community_img_path = 'home\\guiImages\\communityHubIcon.png'
+        classroom_img_path = 'home\\guiImages\\classroomIconPressed.png'
+        settings_img_path = 'home\\guiImages\\settingsIcon.png'
 
         # Create buttons with images
         button_width = 75
@@ -436,8 +444,8 @@ class Classroom(tk.Frame):
         classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
 
-        battery_img_path = 'guiImages\\batteryIcon.png'
-        wifi_img_path = 'guiImages\\wifiIcon.png'
+        battery_img_path = 'home\\guiImages\\batteryIcon.png'
+        wifi_img_path = 'home\\guiImages\\wifiIcon.png'
 
         battery_icon = add_icon(navbar, battery_img_path, 75, 75)
         wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
@@ -481,10 +489,10 @@ class Settings(tk.Frame):
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
-        home_img_path = 'guiImages\\homeIcon.png'
-        community_img_path = 'guiImages\\communityHubIcon.png'
-        classroom_img_path = 'guiImages\\classroomIcon.png'
-        settings_img_path = 'guiImages\\settingsIconPressed.png'
+        home_img_path = 'home\\guiImages\\homeIcon.png'
+        community_img_path = 'home\\guiImages\\communityHubIcon.png'
+        classroom_img_path = 'home\\guiImages\\classroomIcon.png'
+        settings_img_path = 'home\\guiImages\\settingsIconPressed.png'
 
         # Create buttons with images
         button_width = 75
@@ -494,8 +502,8 @@ class Settings(tk.Frame):
         classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
 
-        battery_img_path = 'guiImages\\batteryIcon.png'
-        wifi_img_path = 'guiImages\\wifiIcon.png'
+        battery_img_path = 'home\\guiImages\\batteryIcon.png'
+        wifi_img_path = 'home\\guiImages\\wifiIcon.png'
 
         battery_icon = add_icon(navbar, battery_img_path, 75, 75)
         wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
