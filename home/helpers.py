@@ -14,8 +14,9 @@ def open_code_editor_new_game_page():
 
 
 # Opening an instance of the code editor
-def open_code_editor():
-    link = 'http://localhost:5000'
+def open_code_editor(filename):
+    print(filename)
+    link = 'http://localhost:5000?load='+filename
     webbrowser.open(link)
 
 def on_enter(e, widget):

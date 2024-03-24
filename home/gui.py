@@ -1,8 +1,19 @@
 import tkinter as tk  
 from PIL import Image, ImageTk
 import customtkinter as ctk
-import os
+import os, json
 from helpers import *
+
+games = []
+
+
+class Game:
+    def __init__(self, name, description, author, path, filename):
+        self.name = name
+        self.description = description
+        self.author = author
+        self.path = path
+        self.filename = filename
 
 class BlastPad(tk.Tk):  
   
@@ -115,7 +126,29 @@ class HomePage(tk.Frame):
 
         render_new_game_icon(game_list_frame, game_lib_button_width, game_lib_button_height)
 
-        games = ["Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7"]
+        for x in os.listdir("../flask/saved/"):
+            if x.endswith(".json"):
+                # Prints only text file present in My Folder
+
+                path = "../flask/saved/"+x
+                f = open(path)
+                data = json.load(f)
+                filename = x
+                gamename = ""
+                description = ""
+                author = ""
+
+                for x in data["blocks"]["blocks"]:
+                    if(x["type"]=="metadata"):
+                        gamename = x["inputs"]["game name"]["block"]["fields"]["TEXT"]
+                        description = x["inputs"]["description"]["block"]["fields"]["TEXT"]
+                        author = x["inputs"]["author name"]["block"]["fields"]["TEXT"]
+                        break
+                f.close()  
+
+
+            games.append(Game(gamename, description, author, path, filename))
+            print(games[0].name)
 
         # Add games to the frame
         for game in games:
@@ -128,11 +161,10 @@ class HomePage(tk.Frame):
             game_frame.pack(side=tk.LEFT, padx=10, pady=10)
 
             # Create a label with the game name and size, and ensure it's centered
-            game_label = tk.Label(game_frame, text=f"{game}\n",
-                                fg='#FFFFFF', bg='#51535B', font=('Helvetica', 20))
+            game_label = tk.Label(game_frame, text=f"{game.name}\n",
+                              fg='#FFFFFF', bg='#51535B', font=('Helvetica', 13))
             game_label.pack(expand=True)  # This will center the text in the frame
-            game_label.bind("<Button-1>", lambda event, name=game: display_game_info(game_info_container, name, os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")))
-
+            game_label.bind("<Button-1>", lambda event, boundGame=game: display_game_info(game_info_container, boundGame))
             # Set the highlightthickness for normal state so that the change is visible on hover
             game_frame.config(highlightbackground='grey', highlightthickness=1)
 
@@ -148,7 +180,7 @@ class HomePage(tk.Frame):
             canvas.xview_scroll(int(-1 * (event.delta/120)), "units")
         canvas.bind_all("<MouseWheel>", on_mousewheel)
 
-        def display_game_info(game_info_container, game_name, game_json_path):
+        def display_game_info(game_info_container, game):
             # Clear any existing widgets in the game information container
             for widget in game_info_container.winfo_children():
                 widget.destroy()
@@ -161,8 +193,8 @@ class HomePage(tk.Frame):
             text_info_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
             # Add text into gme info frame
-            ctk.CTkLabel(text_info_frame, text=game_name, font=("Helvetica", 40, "bold"), anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
-            ctk.CTkLabel(text_info_frame, text="Author: You", font=("Helvetica", 20, "bold") ,anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
+            ctk.CTkLabel(text_info_frame, text=game.name, font=("Helvetica", 40, "bold"), anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
+            ctk.CTkLabel(text_info_frame, text="Author: "+game.author, font=("Helvetica", 20, "bold") ,anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
             ctk.CTkLabel(text_info_frame, text="Last Updated: 2/13/2024", font=("Helvetica", 20, "bold") ,anchor='w', text_color='#FFFFFF', fg_color='#23252C').pack(fill='x')
 
             # Style update for button frame
@@ -194,7 +226,7 @@ class HomePage(tk.Frame):
             def on_compile_click(game_json_path):
                 # Set the path to the game JSON file
                 # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
-                compile_game(game_json_path)
+                compile_game(game.path)
             play_button_img_path = 'guiImages\\playButtonIcon.png'
             edit_button_img_path = 'guiImages\\editIcon.png'
             upload_buton_img_path = 'guiImages\\uploadIcon.png'
@@ -203,8 +235,8 @@ class HomePage(tk.Frame):
             buttonHeight = 90
 
             # Create buttons with new styling
-            play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
-            edit_button = create_button(button_frame, edit_button_img_path, open_code_editor, buttonWidth, buttonHeight)
+            play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game.path), buttonWidth, buttonHeight)
+            edit_button = create_button(button_frame, edit_button_img_path, open_code_editor(game.filename), buttonWidth, buttonHeight)
             upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
 
   
