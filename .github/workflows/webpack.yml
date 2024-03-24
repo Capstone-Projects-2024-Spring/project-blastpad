@@ -23,13 +23,13 @@ jobs:
     - name: Install dependencies
       run: cd blockly && npm install && npm run build
 
-    - name: Configure Git
-      run: |
-        git config user.name "GitHub Actions Bot"
-        git config user.email "<>"
+    # - name: Configure Git
+    #   run: |
+    #     git config user.name "GitHub Actions Bot"
+    #     git config user.email "<>"
 
-    - name: Commit Build
-      run: |
-        git add --all
-        git commit -m "Webpack Production Build"
-        git push origin main
+    # - name: Commit Build
+    #   run: |
+    #     git add --all
+    #     git commit -m "Webpack Production Build"
+    #     git push origin main
