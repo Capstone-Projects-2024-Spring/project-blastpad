@@ -20,7 +20,8 @@ const EMPTY_PIXEL_COLOR = '#fff';
 const PIXEL_COLORS = {
     0: "#fff",
     1: "#363d80",
-    2: "#0da73f"
+    2: "#0da73f",
+    3: "#FF0000"
 }
 
 /**
@@ -137,7 +138,7 @@ export class FieldBitmap extends Blockly.Field {
     // Check if all contents of the arrays are either 0 or 1
     for (const row of newValue) {
       for (const cell of row) {
-        if (cell !== 0 && cell !== 1 && cell !== 2) {
+        if (cell !== 0 && cell !== 1 && cell !== 2 && cell !== 3) {
           return null;
         }
       }
@@ -430,13 +431,22 @@ export class FieldBitmap extends Blockly.Field {
     var value = this.getValue()[r][c];
     var newValue = 0;
     
-    if(value == 0) {
-        newValue = 1;
-    } else if(value == 1) {
-        newValue = 2
+
+    newValue = value+1;
+
+    if(newValue == 4) {
+      newValue = 0;
     }
 
-    const newPixelValue = 1 - this.getValue()[r][c];
+    // if(value == 0) {
+    //     newValue = 1;
+    // } else if(value == 1) {
+    //     newValue = 2
+    // } else if(value == 2) {
+    //     newValue = 3
+    // }
+
+    // const newPixelValue = 1 - this.getValue()[r][c];
     
     this.setPixel_(r, c, newValue);
     this.mouseIsDown_ = true;

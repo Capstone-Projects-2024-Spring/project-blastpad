@@ -17,14 +17,20 @@ pipe_two = None
 score = None
 
 # Describe this function...
-def make_a_pipe():
-  global actor, property2, value, pipe_to_move, pipe, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
-  pipe_one = [Actor(("ihkpwkhapu"), (20, 50)), Actor(("pxerfhlykc"), (20, 50))]
-  setattr((pipe_one[0]), 'y', 300)
-  setattr((pipe_one[1]), 'y', 400)
-  pipe_two = [Actor(("jlttgilxxxg"), (20, 50)), Actor(("wyxzpeikxzh"), (20, 50))]
-  setattr((pipe_two[0]), 'y', 300)
-  setattr((pipe_two[1]), 'y', 400)
+def move_pipe(pipe_to_move):
+  global actor, property2, value, pipe, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
+  for i in pipe_to_move:
+    increment(i, 'x', pipe_speed)
+    if (getattr(i, 'x')) <= -20:
+      vary_pipe_height(pipe_to_move)
+      set_pipe_x(pipe_to_move, 600)
+      pipe_speed = (pipe_speed if isinstance(pipe_speed, Number) else 0) + -0.7
+      score = (score if isinstance(score, Number) else 0) + 1
+      if True:
+        return
+    if collide_pixels(flappy_bird, i):
+        die()
+
 
 # Describe this function...
 def start_game():
@@ -34,10 +40,20 @@ def start_game():
   pipe_speed = -2
   score = 0
   flappy_bird = Actor(("borbgromtz"), (20, 50))
-  set_pipe_x(pipe_one, 200)
-  set_pipe_x(pipe_two, 500)
+  set_pipe_x(pipe_one, 500)
+  set_pipe_x(pipe_two, 800)
   vary_pipe_height(pipe_one)
   vary_pipe_height(pipe_two)
+
+# Describe this function...
+def make_a_pipe():
+  global actor, property2, value, pipe_to_move, pipe, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
+  pipe_one = [Actor(("kvqijmrufil"), (20, 50)), Actor(("filciadtm"), (20, 50))]
+  setattr((pipe_one[0]), 'y', 300)
+  setattr((pipe_one[1]), 'y', 400)
+  pipe_two = [Actor(("fjcarbrfpewp"), (20, 50)), Actor(("nqubilxygnckp"), (20, 50))]
+  setattr((pipe_two[0]), 'y', 300)
+  setattr((pipe_two[1]), 'y', 400)
 
 # Describe this function...
 def die():
@@ -49,20 +65,10 @@ def die():
   setattr(you_ded, 'y', 250)
 
 # Describe this function...
-def move_pipe(pipe_to_move):
-  global actor, property2, value, pipe, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
-  for i in pipe_to_move:
-    increment(i, 'x', pipe_speed)
-    if (getattr(i, 'x')) <= 0:
-      vary_pipe_height(pipe_to_move)
-      set_pipe_x(pipe_to_move, 500)
-      pipe_speed = (pipe_speed if isinstance(pipe_speed, Number) else 0) + -0.7
-      score = (score if isinstance(score, Number) else 0) + 1
-      if True:
-        return
-    if collide_pixels(flappy_bird, i):
-        die()
-
+def vary_pipe_height(pipe):
+  global actor, property2, value, pipe_to_move, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
+  setattr((pipe[0]), 'y', (random.randint(0, 180)))
+  setattr((pipe[1]), 'y', (random.randint(400, 500)))
 
 # Describe this function...
 def set_pipe_x(pipe, x):
@@ -71,21 +77,15 @@ def set_pipe_x(pipe, x):
     setattr(i, 'x', x)
 
 # Describe this function...
-def draw_pipe(pipe):
-  global actor, property2, value, pipe_to_move, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
-  for i in pipe:
-    i.draw()
-
-# Describe this function...
 def increment(actor, property2, value):
   global pipe_to_move, pipe, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
   setattr(actor, property2, ((getattr(actor, property2)) + value))
 
 # Describe this function...
-def vary_pipe_height(pipe):
+def draw_pipe(pipe):
   global actor, property2, value, pipe_to_move, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
-  setattr((pipe[0]), 'y', (random.randint(0, 200)))
-  setattr((pipe[1]), 'y', (random.randint(400, 500)))
+  for i in pipe:
+    i.draw()
 
 
 

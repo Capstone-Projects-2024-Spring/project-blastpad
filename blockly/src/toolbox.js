@@ -82,10 +82,6 @@ export const toolbox = {
         },
         {
           'kind': 'block',
-          'type': 'draw_loop',
-        },
-        {
-          'kind': 'block',
           'type': 'set_actor',
         },
         {
