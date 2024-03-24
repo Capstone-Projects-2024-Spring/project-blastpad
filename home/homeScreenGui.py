@@ -68,6 +68,7 @@ def render_top_frame(root):
     classroom_img_path = 'home/guiImages/classroomIcon.png'
     settings_img_path = 'home/guiImages/settingsIcon.png'
 
+
     # Create buttons with images
     button_width = 75
     button_height = 75
@@ -92,6 +93,8 @@ def render_top_frame(root):
         image_label.pack(side=tk.LEFT, padx=10, pady=10)
 
 
+  
+
     battery_img_path = 'home/guiImages/batteryIcon.png'
     wifi_img_path = 'home/guiImages/wifiIcon.png'
 
@@ -109,6 +112,7 @@ def render_top_frame(root):
 def render_new_game_icon(game_list_frame, button_width, button_height):
     # Open the image file with PIL and resize it
     pil_img = Image.open('home/guiImages/newGameIcon.png')
+
     pil_img = pil_img.resize((button_width, button_height), Image.LANCZOS)
 
     # Create a PhotoImage object from the resized PIL image
@@ -208,10 +212,10 @@ def display_game_info(game_info_container, game):
         button.image = img  # Keep a reference to the image
         button.pack(side=tk.LEFT, padx=5, pady=5)
         return button
-    
+
     play_button_img_path = 'home/guiImages/playButtonIcon.png'
     edit_button_img_path = 'home/guiImages/editIcon.png'
-    upload_buton_img_path = 'home/guiImages/uploadIcon.png'
+    upload_buton_img_path = 'home/guiImages/uploadIcon.png
 
     buttonWidth = 90
     buttonHeight = 90
