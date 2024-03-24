@@ -92,7 +92,8 @@ def render_top_frame(root):
         image_label.image = img  # Keep a reference to prevent garbage collection
         image_label.pack(side=tk.LEFT, padx=10, pady=10)
 
-    
+
+  
 
     battery_img_path = 'home/guiImages/batteryIcon.png'
     wifi_img_path = 'home/guiImages/wifiIcon.png'
