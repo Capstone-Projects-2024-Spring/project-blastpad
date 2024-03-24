@@ -28,6 +28,24 @@ const pixel_colors = {
     2: secondaryColor
 }
 
+
+function scaleBitmap(bitmap, scaleFactor) {
+    let scaledBitmap = [];
+    for (let i = 0; i < bitmap.length; i++) {
+        let scaledRow = [];
+        for (let j = 0; j < bitmap[i].length; j++) {
+            for (let k = 0; k < scaleFactor; k++) {
+                scaledRow.push(bitmap[i][j]); // Replicate pixel values
+            }
+        }
+        for (let k = 0; k < scaleFactor; k++) {
+            scaledBitmap.push(scaledRow.slice()); // Replicate rows
+        }
+    }
+    return scaledBitmap;
+}
+
+
 var saveBitmap = (bitmap, size, name) => {
 
     // old squish approach
@@ -46,15 +64,18 @@ var saveBitmap = (bitmap, size, name) => {
     //     offset: 0
     // }
 
-    var data = bitmap.map(function(arr) {
-        return bitmap.slice();
-    });
 
-    var d = new ndarray(data, [size[0], size[1], 4]);
+    var scaleFactor = 10;
+    var scaled = [];
+
+    var scaled = scaleBitmap(bitmap, scaleFactor);
+    var data = scaled.map((arr) => {return scaled.slice();});
+
+    var d = new ndarray(data, [size[0]*scaleFactor, size[1]*scaleFactor, 4]);
     
-    for(var x in bitmap) {
-        for(var y in bitmap[x]) {
-            var color = pixel_colors[bitmap[x][y]];
+    for(var x in scaled) {
+        for(var y in scaled[x]) {
+            var color = pixel_colors[scaled[x][y]];
 
             for(var i=0;i<4;i++) {
                 d.set(y, x, i, color[i])

@@ -85,14 +85,33 @@ forBlock['metadata'] = function(block, generator) {
 # By ${value_author_name}
 # ${value_description}\n
 
-# from gpiozero import Button, LED
 import pgzrun
-# from pgzhelper import *
-# button = Button(5)
+import pygame
+from pygame import mask
+
+def collide_pixels(actor1, actor2):
+
+  # Get masks for pixel perfect collision detection:
+  for a in [actor1, actor2]:
+    if not hasattr(a, 'mask'):
+      a.mask = mask.from_surface(images.load(a.image))
+
+    # Check rectangles first, this is faster
+    if not actor1.colliderect(actor2):
+      return None
+
+    # Offsets based on current positions of actors
+    xoffset = int(actor2.left - actor1.left)
+    yoffset = int(actor2.top - actor1.top)
+
+  # Check for overlap => a collision
+  return actor1.mask.overlap(actor2.mask, (xoffset, yoffset))
 
 TITLE = "${value_game_name}"
-WIDTH = 40
-HEIGHT = 100
+WIDTH  = 500
+HEIGHT = 500
+
+# pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 \n
 \n
 `
@@ -119,7 +138,8 @@ forBlock['set_actor'] = function(block, generator) {
 forBlock['draw_actor'] = function(block, generator) {
   var value_name = generator.valueToCode(block, 'NAME', Order.ATOMIC);
   // TODO: Assemble python into code variable.
-  var code = `${value_name}.draw()\n`
+  var code = 
+`${value_name}.draw()\n`
   return code;
 };
 
@@ -129,9 +149,8 @@ forBlock['key_down'] = function(block, generator) {
   // TODO: Assemble python into code variable.
   var code = 
 `
-
 def on_key_down():
-  ${branch}
+${branch}
 `;
   return code;
 };
@@ -156,5 +175,27 @@ forBlock['large_bitmap'] = function(block, generator) {
   return [code, Order.NONE]
 };
 
+
+forBlock['if_actors_colliding'] = function(block, generator) {
+  var value_actor1 = generator.valueToCode(block, 'Actor1', Order.ATOMIC);
+  var value_actor2 = generator.valueToCode(block, 'Actor2', Order.ATOMIC);
+  var statements_do = generator.statementToCode(block, 'DO');
+
+
+  var code = 
+`if collide_pixels(${value_actor1}, ${value_actor2}):
+  ${statements_do}
+`;
+  return code;
+}
+
+forBlock['draw_text'] = function(block, generator) {
+  var value_content = generator.valueToCode(block, 'content', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `screen.draw.text(${value_content}, (${value_x}, ${value_y}))\n`
+  return code;
+};
 
 module.exports = forBlock;
