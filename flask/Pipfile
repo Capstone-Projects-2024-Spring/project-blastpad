@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-cors = "*"
+ttkbootstrap = "*"
+customtkinter = "*"
 
 [dev-packages]
 
