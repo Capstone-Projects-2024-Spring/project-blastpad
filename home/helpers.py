@@ -3,6 +3,9 @@ import webbrowser
 from PIL import Image, ImageTk
 import tkinter as tk
 
+def on_like_clicked():
+    print("Like button clicked!")
+
 # Function where it opens a new web browser tab that shows a new game page
 def open_code_editor_new_game_page():
     print("New Game Icon button clicked!")
@@ -26,9 +29,6 @@ def update_time(label):
     current_time = strftime('%H:%M %p') # Format the current time
     label.config(text=current_time) # Update the label text
     label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
-
-def settings_clicked_event(event=None):
-    print("Settings button clicked!")
 
 def create_top_button(frame, image_path, command, desired_width, desired_height):
     # Open the image file with PIL
