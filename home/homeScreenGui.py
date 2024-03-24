@@ -51,7 +51,7 @@ def render_top_frame(root):
         button.pack(side=tk.LEFT, padx=10, pady=10)
         return button
 
-    home_img_path = 'guiImages\\homeIcon.png'
+    home_img_path = 'guiImages\\homeIconPressed.png'
     community_img_path = 'guiImages\\communityHubIcon.png'
     classroom_img_path = 'guiImages\\classroomIcon.png'
     settings_img_path = 'guiImages\\settingsIcon.png'
