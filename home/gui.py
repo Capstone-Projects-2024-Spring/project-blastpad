@@ -1,17 +1,14 @@
 import tkinter as tk  
 from PIL import Image, ImageTk
+from time import strftime
   
 LARGE_FONT= ("Verdana", 12)
 
-# Methods to test if cliking widgets are responsive
-def home_button_clicked_event(event=None):
-    print("Home button clicked!")
-
-def community_hub_clicked_event(event=None):
-    print("Community Hub button clicked!")
-
-def classroom_clicked_event(event=None):
-    print("Classroom button clicked!")
+# Function that updates time
+def update_time(label):
+    current_time = strftime('%H:%M %p') # Format the current time
+    label.config(text=current_time) # Update the label text
+    label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
 
 def settings_clicked_event(event=None):
     print("Settings button clicked!")
@@ -30,6 +27,22 @@ def create_top_button(frame, image_path, command, desired_width, desired_height)
     button.image = img  # Keep a reference to the image
     button.pack(side=tk.LEFT, padx=10, pady=10)
     return button
+
+
+# Add battery and wifi icons
+def add_icon(frame, image_path, desired_width, desired_height):
+    # Open the image file with PIL
+    pil_img = Image.open(image_path)
+    # Resize the image to the desired dimensions
+    pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+    # Create a PhotoImage object from the resized PIL image
+    img = ImageTk.PhotoImage(pil_img)
+
+    # Create a label within the frame to display the image
+    image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+    image_label.image = img  # Keep a reference to prevent garbage collection
+    image_label.pack(side=tk.LEFT, padx=10, pady=10)
   
   
 class BlastPad(tk.Tk):  
@@ -46,7 +59,7 @@ class BlastPad(tk.Tk):
   
         self.frames = {}  
   
-        for F in (StartPage, PageOne, PageTwo):  
+        for F in (HomePage, CommunityHub, Classroom):  
   
             frame = F(container, self)  
   
@@ -54,7 +67,7 @@ class BlastPad(tk.Tk):
   
             frame.grid(row=0, column=0, sticky="nsew")  
   
-        self.show_frame(StartPage)  
+        self.show_frame(HomePage)  
   
     def show_frame(self, cont):  
   
@@ -62,7 +75,7 @@ class BlastPad(tk.Tk):
         frame.tkraise()  
   
           
-class StartPage(tk.Frame):  
+class HomePage(tk.Frame):  
   
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)   
@@ -81,13 +94,24 @@ class StartPage(tk.Frame):
         # Create buttons with images
         button_width = 75
         button_height = 75
-        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(StartPage), button_width, button_height)
-        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(PageOne), button_width, button_height)
-        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(PageTwo), button_width, button_height)
+        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
+        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
+        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, settings_clicked_event, button_width, button_height)
+
+        battery_img_path = 'guiImages\\batteryIcon.png'
+        wifi_img_path = 'guiImages\\wifiIcon.png'
+
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+
+        time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+        time_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+        # Call the update_time function to start updating the time
+        update_time(time_label)
   
-  
-class PageOne(tk.Frame):  
+class CommunityHub(tk.Frame):  
   
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
@@ -105,14 +129,25 @@ class PageOne(tk.Frame):
         # Create buttons with images
         button_width = 75
         button_height = 75
-        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(StartPage), button_width, button_height)
-        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(PageOne), button_width, button_height)
-        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(PageTwo), button_width, button_height)
+        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
+        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
+        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, settings_clicked_event, button_width, button_height)
 
+        battery_img_path = 'guiImages\\batteryIcon.png'
+        wifi_img_path = 'guiImages\\wifiIcon.png'
+
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+        
+        time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+        time_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+        # Call the update_time function to start updating the time
+        update_time(time_label)
   
   
-class PageTwo(tk.Frame):  
+class Classroom(tk.Frame):  
   
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
@@ -123,18 +158,29 @@ class PageTwo(tk.Frame):
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
         home_img_path = 'guiImages\\homeIcon.png'
-        community_img_path = 'guiImages\\communityHubIconPressed.png'
+        community_img_path = 'guiImages\\communityHubIcon.png'
         classroom_img_path = 'guiImages\\classroomIcon.png'
         settings_img_path = 'guiImages\\settingsIcon.png'
 
         # Create buttons with images
         button_width = 75
         button_height = 75
-        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(StartPage), button_width, button_height)
-        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(PageOne), button_width, button_height)
-        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(PageTwo), button_width, button_height)
+        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
+        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
+        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
         settings_button = create_top_button(navbar, settings_img_path, settings_clicked_event, button_width, button_height)
 
+        battery_img_path = 'guiImages\\batteryIcon.png'
+        wifi_img_path = 'guiImages\\wifiIcon.png'
+
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+
+        time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+        time_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+        # Call the update_time function to start updating the time
+        update_time(time_label)
           
 app = BlastPad()  
 app.geometry("800x450")
