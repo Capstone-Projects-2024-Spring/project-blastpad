@@ -99,6 +99,14 @@ export const toolbox = {
         {
           'kind': 'block',
           'type': 'get_property'
+        },
+        {
+          'kind': 'block',
+          'type': 'if_actors_colliding'
+        },
+        {
+          'kind': 'block',
+          'type': 'draw_text'
         }
       ],
     },

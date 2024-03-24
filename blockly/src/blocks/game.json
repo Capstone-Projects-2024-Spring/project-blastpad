@@ -175,5 +175,57 @@
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""
+},
+{
+  "type": "if_actors_colliding",
+  "message0": "If %1 touches %2 %3 %4",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor1"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "Actor2"
+    },
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "draw_text",
+  "message0": "Draw Text: %1 x %2 y %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "content",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
 }
 ]}
