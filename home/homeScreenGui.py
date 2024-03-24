@@ -215,7 +215,7 @@ def display_game_info(game_info_container, game):
 
     play_button_img_path = 'home/guiImages/playButtonIcon.png'
     edit_button_img_path = 'home/guiImages/editIcon.png'
-    upload_buton_img_path = 'home/guiImages/uploadIcon.png
+    upload_buton_img_path = 'home/guiImages/uploadIcon.png'
 
     buttonWidth = 90
     buttonHeight = 90
