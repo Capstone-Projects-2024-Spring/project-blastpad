@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
+import subprocess
 from helpers import *
 
 games = []
@@ -219,6 +220,7 @@ class HomePage(tk.Frame):
                 if return_code == 0:
                     # Compilation succeeded
                     print("Game compiled successfully!")
+                    run_game(game)
                 else:
                     # Compilation failed
                     print("Compilation failed.")
@@ -227,6 +229,10 @@ class HomePage(tk.Frame):
                 # Set the path to the game JSON file
                 # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
                 compile_game(game.path)
+            def run_game(game):
+                game_file = "./blockly/compiled_games/" + game.name + ".py"
+                subprocess.run(['python', game_file])
+
             play_button_img_path = 'home\\guiImages\\playButtonIcon.png'
             edit_button_img_path = 'home\\guiImages\\editIcon.png'
             upload_buton_img_path = 'home\\guiImages\\uploadIcon.png'
@@ -401,6 +407,7 @@ class CommunityHub(tk.Frame):
                 # Set the path to the game JSON file
                 # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
                 compile_game(game_json_path)
+
             play_button_img_path = 'home\\guiImages\\playButtonIcon.png'
             like_button_img_path = 'home\\guiImages\\likeIcon.png'
 
