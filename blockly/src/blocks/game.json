@@ -57,6 +57,7 @@
       "check": "String"
     }
   ],
+  "nextStatement": null,
   "colour": 230,
   "tooltip": "Project Metadata",
   "helpUrl": ""
@@ -78,5 +79,153 @@
   "tooltip": "Your Game Loop!",
   "helpUrl": "",
   "style": "loop_blocks"
+},
+{
+  "type": "key_down",
+  "message0": "On Key Down",
+  "message1": "DO %1 End of Game",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "Your Game Loop!",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "actor",
+  "message0": "Actor %1 Image %2",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "ImageName",
+      "check": "String"
+    }
+  ],
+  "output": null,
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "set_actor",
+  "previousStatement": null,
+  "nextStatement": null,
+  "message0": "Actor %1 Property %2 To %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    },
+    {
+      "type": "input_value",
+      "name": "property"
+    },
+    {
+      "type": "input_value",
+      "name": "to"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "draw_actor",
+  "message0": "Draw %1 Actor %2",
+  "previousStatement": null,
+  "nextStatement": null,
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "NAME",
+      "check": "String"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "get_property",
+  "message0": "Property Of %1 Property Name %2",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    },
+    {
+      "type": "input_value",
+      "name": "Property"
+    }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "if_actors_colliding",
+  "message0": "If %1 touches %2 %3 %4",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor1"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "Actor2"
+    },
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "draw_text",
+  "message0": "Draw Text: %1 x %2 y %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "content",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 290,
+  "tooltip": "",
+  "helpUrl": ""
 }
 ]}
