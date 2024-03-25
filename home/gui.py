@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
 import subprocess
-from helpers import *
+from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
 
 games = []
 
@@ -242,7 +242,7 @@ class HomePage(tk.Frame):
 
             # Create buttons with new styling
             play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game.path), buttonWidth, buttonHeight)
-            edit_button = create_button(button_frame, edit_button_img_path, open_code_editor(game.filename), buttonWidth, buttonHeight)
+            edit_button = create_button(button_frame, edit_button_img_path, lambda: open_code_editor(game.filename), buttonWidth, buttonHeight)
             upload_button = create_button(button_frame, upload_buton_img_path, None, buttonWidth, buttonHeight)
 
   
