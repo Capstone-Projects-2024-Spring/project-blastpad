@@ -40,10 +40,10 @@ class GPIO_Thread(threading.Thread):
         from gpiozero import Button
 
         # Initialize the physical GPIO inputs
-        left_button = Button(5)
-        down_button = Button(6) 
-        up_button = Button(13)
-        right_button = Button(19)
+        left_button = Button(13)
+        down_button = Button(19) 
+        up_button = Button(6)
+        right_button = Button(5)
 
         # Run continous loop checking state of inputs
         while True:
