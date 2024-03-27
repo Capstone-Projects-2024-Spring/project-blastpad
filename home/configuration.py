@@ -8,7 +8,7 @@ def get_connected_network():
         ssid = result.stdout.strip()
         return ssid if ssid else None
     except subprocess.CalledProcessError as e:
-        print(f"Error executing iwgetid command: {e}")
+        messagebox.showerror("Error", f"Failed to get currently connected network: {e}")
         return None
 
 # Retrieves a list of available WiFi networks (SSIDs) using nmcli command-line tool.
@@ -19,11 +19,8 @@ def get_available_networks():
         networks = result.stdout.splitlines()[1:]
         unique_networks = set(network for network in networks if network.strip() and network.strip() != "--" and network.strip() != connected_network)
         return list(unique_networks)
-    except FileNotFoundError:
-        print("Error: nmcli command not found.")
-        return []
     except subprocess.CalledProcessError as e:
-        print(f"Error executing nmcli command: {e}")
+        messagebox.showerror("Error", f"Failed to get available networks: {e}")
         return []
 
 # Updates the list of available Wi-Fi networks displayed in the GUI.
@@ -39,8 +36,9 @@ def disconnect_from_network():
     try:
         subprocess.run(["nmcli", "device", "disconnect", "wlan0"], check=True)
         refresh_network_list()
-    except subprocess.CalledProcessError:
-        pass
+    except subprocess.CalledProcessError as e:
+        messagebox.showerror("Error", f"Failed to disconnect from network: {e}")
+        return
 
 # Connects to a selected Wi-Fi network.
 def connect_to_network(event=None):
@@ -69,7 +67,7 @@ def connect(network, password=None):
 def is_password_required(ssid):
     connections_dir = '/etc/NetworkManager/system-connections'
     if not os.path.exists(connections_dir) or not os.path.isdir(connections_dir):
-        print("Error: NetworkManager connections directory not found.")
+        messagebox.showerror("Error", "NetworkManager connections directory not found")
         return True
 
     connection_files = os.listdir(connections_dir)
@@ -87,38 +85,32 @@ def prompt_for_password(network):
     password = simpledialog.askstring("Password", f"Enter password for {network}: ", show="*")
     return password
 
-# Create main window
-root = tk.Tk()
-root.title("WiFi Connection")
+window = tk.Tk()
+window.title("WiFi Menu")
+window.configure(bg="#383838")
 
-# Get available WiFi networks
-available_networks = get_available_networks()
+button_frame = tk.Frame(window, bg="#383838")
+button_frame.pack(pady=10)
+refresh_button = tk.Button(button_frame, text="Refresh", font=("Helvetica", 12), command=refresh_network_list, bg="#7289da", fg="white", relief=tk.FLAT, highlightthickness=0)
+refresh_button.pack(side=tk.LEFT, padx=5)
+disconnect_button = tk.Button(button_frame, text="Disconnect", font=("Helvetica", 12), command=disconnect_from_network, bg="#f04747", fg="white", relief=tk.FLAT, highlightthickness=0)
+disconnect_button.pack(side=tk.LEFT, padx=5)
 
-# WiFi SSID selection
-ssid_label = tk.Label(root, text="Select SSID:")
-ssid_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
-ssid_var = tk.StringVar(root)
-ssid_var.set(available_networks[0] if available_networks else "")  # Set default value if available networks exist
-ssid_dropdown = tk.OptionMenu(root, ssid_var, *available_networks)
-ssid_dropdown.grid(row=0, column=1, padx=10, pady=5, sticky="we")
+connected_network = tk.StringVar()
+connected_network.set("Connected Network")
 
-# WiFi Password entry
-password_label = tk.Label(root, text="Password:")
-password_label.grid(row=1, column=0, padx=10, pady=5, sticky="e")
-password_entry = tk.Entry(root, show="*")
-password_entry.grid(row=1, column=1, padx=10, pady=5, sticky="we")
+connected_label = tk.Label(window, text="Connected Network:", font=("Helvetica", 12), bg="#383838", fg="white")
+connected_label.pack()
+connected_network_label = tk.Label(window, textvariable=connected_network, font=("Helvetica", 12), bg="#383838", fg="white")
+connected_network_label.pack()
 
-# Connect button
-connect_button = tk.Button(root, text="Connect", command=connect_to_wifi)
-connect_button.grid(row=2, column=0, padx=5, pady=10, sticky="e")
+network_list = tk.Listbox(window, height=10, font=("Helvetica", 12), bg="#c4c4c4", fg="black", selectbackground="#7289da", selectforeground="black", relief=tk.FLAT, exportselection=False, highlightthickness=0)
+network_list.pack(pady=10)
+network_list.bind("<Double-Button-1>", connect_to_network)
+network_list.bind("<Motion>", on_hover)
+network_list.bind("<Leave>", on_leave)
+window.bind("<Return>", connect_to_network)
 
-# Disconnect button
-disconnect_button = tk.Button(root, text="Disconnect", command=disconnect_from_wifi)
-disconnect_button.grid(row=2, column=1, padx=5, pady=10, sticky="w")
+refresh_network_list()
 
-# Status label
-status_label = tk.Label(root, text="", fg="black")
-status_label.grid(row=3, column=0, columnspan=2)
-
-# Run the Tkinter event loop
-root.mainloop()
+window.mainloop()
