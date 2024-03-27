@@ -1,5 +1,7 @@
 import tkinter as tk
+from tkinter import simpledialog, messagebox
 import subprocess
+import os
 
 # Retrieves the currently connected Wi-Fi network SSID.
 def get_connected_network():
@@ -38,7 +40,6 @@ def disconnect_from_network():
         refresh_network_list()
     except subprocess.CalledProcessError as e:
         messagebox.showerror("Error", f"Failed to disconnect from network: {e}")
-        return
 
 # Connects to a selected Wi-Fi network.
 def connect_to_network(event=None):
@@ -50,8 +51,7 @@ def connect_to_network(event=None):
             password = prompt_for_password(selected_network)
         connect(selected_network, password)
 
-# Connects to a Wi-Fi network with or without a password.
-# Used by connect_to_network() function
+# Connects to a Wi-Fi network with or without a password (Used by connect_to_network() function)
 def connect(network, password=None):
     try:
         if password:
@@ -84,6 +84,24 @@ def is_password_required(ssid):
 def prompt_for_password(network):
     password = simpledialog.askstring("Password", f"Enter password for {network}: ", show="*")
     return password
+
+def on_hover(event):
+    # Change background color of hovered option
+    widget = event.widget
+    index = widget.nearest(event.y)
+    if index >= 0:
+        widget.selection_clear(0, tk.END)
+        widget.selection_set(index)
+        widget.activate(index)
+        widget.itemconfig(index, {'bg': 'lightgray'})
+
+def on_leave(event):
+    # Restore background color when mouse leaves option
+    widget = event.widget
+    index = widget.nearest(event.y)
+    if index >= 0:
+        widget.selection_clear(0, tk.END)
+        widget.itemconfig(index, {'bg': '#c4c4c4'})
 
 window = tk.Tk()
 window.title("WiFi Menu")
