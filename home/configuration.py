@@ -10,7 +10,6 @@ def get_connected_network():
         ssid = result.stdout.strip()
         return ssid if ssid else None
     except subprocess.CalledProcessError as e:
-        messagebox.showerror("Error", f"Failed to get currently connected network: {e}")
         return None
 
 # Retrieves a list of available WiFi networks (SSIDs) using nmcli command-line tool.
@@ -27,7 +26,13 @@ def get_available_networks():
 
 # Updates the list of available Wi-Fi networks displayed in the GUI.
 def refresh_network_list():
-    connected_network.set(get_connected_network())
+    current_network = get_connected_network()
+    if current_network is None:
+        connected_network.set("❌ " + str(current_network))
+        connected_network_label.config(fg="#ff6e6e")
+    else:
+        connected_network.set("✔ " + str(current_network))
+        connected_network_label.config(fg="#57ffa0")
     available_networks = get_available_networks()
     network_list.delete(0, tk.END)
     for network in available_networks:
@@ -35,6 +40,8 @@ def refresh_network_list():
 
 # Disconnects from the currently connected Wi-Fi network.
 def disconnect_from_network():
+    if get_connected_network() is None:
+        return
     try:
         subprocess.run(["nmcli", "device", "disconnect", "wlan0"], check=True)
         refresh_network_list()
@@ -44,31 +51,38 @@ def disconnect_from_network():
 # Connects to a selected Wi-Fi network.
 def connect_to_network(event=None):
     selected_index = network_list.curselection()
-    if selected_index:
-        selected_network = network_list.get(selected_index).strip()
-        password = None
-        if is_password_required(selected_network):
-            password = prompt_for_password(selected_network)
-        connect(selected_network, password)
+    if not selected_index:
+        return
+    
+    selected_network = network_list.get(selected_index).strip()
+    connect(selected_network)
+    refresh_network_list()
 
 # Connects to a Wi-Fi network with or without a password (Used by connect_to_network() function)
-def connect(network, password=None):
-    try:
-        if password:
-            subprocess.run(["nmcli", "device", "wifi", "connect", network, "password", password], check=True)
-        else:
+def connect(network):
+    if found_password(network):
+        try:
             subprocess.run(["nmcli", "device", "wifi", "connect", network], check=True)
-        refresh_network_list()
-        messagebox.showinfo("Connection Status", f"Connected to {network} successfully!")
-    except subprocess.CalledProcessError as e:
-        messagebox.showerror("Error", f"Failed to connect to {network}: {e}")
+            return
+        except subprocess.CalledProcessError:
+            pass
+            
+    while True:
+        password = prompt_for_password(network)
+        if password is None:
+            return
+        try:
+            subprocess.run(["nmcli", "device", "wifi", "connect", network, "password", password], check=True)
+            return
+        except subprocess.CalledProcessError:
+            continue
 
-# Checks if a password is required for a given Wi-Fi network.
-def is_password_required(ssid):
+# Checks if a password is recorded for a given WiFi network
+def found_password(ssid):
     connections_dir = '/etc/NetworkManager/system-connections'
     if not os.path.exists(connections_dir) or not os.path.isdir(connections_dir):
         messagebox.showerror("Error", "NetworkManager connections directory not found")
-        return True
+        return False
 
     connection_files = os.listdir(connections_dir)
     for filename in connection_files:
@@ -76,9 +90,8 @@ def is_password_required(ssid):
             with open(os.path.join(connections_dir, filename), 'r') as f:
                 content = f.read()
                 if 'psk=' in content:
-                    return False
-
-    return True
+                    return True
+    return False
 
 # Prompts the user for a password for a Wi-Fi network.
 def prompt_for_password(network):
@@ -119,7 +132,7 @@ connected_network.set("Connected Network")
 
 connected_label = tk.Label(window, text="Connected Network:", font=("Helvetica", 12), bg="#383838", fg="white")
 connected_label.pack()
-connected_network_label = tk.Label(window, textvariable=connected_network, font=("Helvetica", 12), bg="#383838", fg="white")
+connected_network_label = tk.Label(window, textvariable=connected_network, font=("Helvetica", 12), bg="#383838", fg="#ff6e6e")
 connected_network_label.pack()
 
 network_list = tk.Listbox(window, height=10, font=("Helvetica", 12), bg="#c4c4c4", fg="black", selectbackground="#7289da", selectforeground="black", relief=tk.FLAT, exportselection=False, highlightthickness=0)
