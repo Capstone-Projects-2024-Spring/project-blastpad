@@ -26,6 +26,14 @@ def get_available_networks():
         print(f"Error executing nmcli command: {e}")
         return []
 
+# Updates the list of available Wi-Fi networks displayed in the GUI.
+def refresh_network_list():
+    connected_network.set(get_connected_network())
+    available_networks = get_available_networks()
+    network_list.delete(0, tk.END)
+    for network in available_networks:
+        network_list.insert(tk.END, network)
+
 def connect_to_wifi():
     """
     Connects to WiFi network using nmcli command-line tool.
