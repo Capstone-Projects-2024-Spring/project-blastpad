@@ -34,30 +34,58 @@ def refresh_network_list():
     for network in available_networks:
         network_list.insert(tk.END, network)
 
-def connect_to_wifi():
-    """
-    Connects to WiFi network using nmcli command-line tool.
-    """
-    cmd = f"nmcli device wifi connect '{ssid_var.get()}' password '{password_entry.get()}'"
-    execute_command(cmd, "Connected to WiFi successfully!", "Failed to connect to WiFi")
-
-
-def disconnect_from_wifi():
-    """
-    Disconnect from WiFi network using nmcli command-line tool.
-    """
-    cmd = "nmcli device disconnect wlan0"  # Assumes wlan0 is the network interface
-    execute_command(cmd, "Disconnected from WiFi successfully!", "Failed to disconnect from WiFi")
-
-def execute_command(cmd, success_message, failure_message):
-    '''
-    Executes command using subprocess.run()
-    '''
+# Disconnects from the currently connected Wi-Fi network.
+def disconnect_from_network():
     try:
-        subprocess.run(cmd, shell=True, check=True)
-        status_label.config(text=success_message, fg="green")
+        subprocess.run(["nmcli", "device", "disconnect", "wlan0"], check=True)
+        refresh_network_list()
+    except subprocess.CalledProcessError:
+        pass
+
+# Connects to a selected Wi-Fi network.
+def connect_to_network(event=None):
+    selected_index = network_list.curselection()
+    if selected_index:
+        selected_network = network_list.get(selected_index).strip()
+        password = None
+        if is_password_required(selected_network):
+            password = prompt_for_password(selected_network)
+        connect(selected_network, password)
+
+# Connects to a Wi-Fi network with or without a password.
+# Used by connect_to_network() function
+def connect(network, password=None):
+    try:
+        if password:
+            subprocess.run(["nmcli", "device", "wifi", "connect", network, "password", password], check=True)
+        else:
+            subprocess.run(["nmcli", "device", "wifi", "connect", network], check=True)
+        refresh_network_list()
+        messagebox.showinfo("Connection Status", f"Connected to {network} successfully!")
     except subprocess.CalledProcessError as e:
-        status_label.config(text=f"{failure_message}: {e}", fg="red")
+        messagebox.showerror("Error", f"Failed to connect to {network}: {e}")
+
+# Checks if a password is required for a given Wi-Fi network.
+def is_password_required(ssid):
+    connections_dir = '/etc/NetworkManager/system-connections'
+    if not os.path.exists(connections_dir) or not os.path.isdir(connections_dir):
+        print("Error: NetworkManager connections directory not found.")
+        return True
+
+    connection_files = os.listdir(connections_dir)
+    for filename in connection_files:
+        if filename.startswith(ssid):
+            with open(os.path.join(connections_dir, filename), 'r') as f:
+                content = f.read()
+                if 'psk=' in content:
+                    return False
+
+    return True
+
+# Prompts the user for a password for a Wi-Fi network.
+def prompt_for_password(network):
+    password = simpledialog.askstring("Password", f"Enter password for {network}: ", show="*")
+    return password
 
 # Create main window
 root = tk.Tk()
