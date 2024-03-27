@@ -1,17 +1,23 @@
 import tkinter as tk
 import subprocess
 
-def get_available_networks():
-    """
-    Retrieves a list of available WiFi networks using nmcli command-line tool.
-    
-    Returns:
-        List of SSIDs for available WiFi networks.
-    """
+# Retrieves the currently connected Wi-Fi network SSID.
+def get_connected_network():
     try:
+        result = subprocess.run(["iwgetid", "-r"], capture_output=True, text=True, check=True)
+        ssid = result.stdout.strip()
+        return ssid if ssid else None
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing iwgetid command: {e}")
+        return None
+
+# Retrieves a list of available WiFi networks (SSIDs) using nmcli command-line tool.
+def get_available_networks():
+    try:
+        connected_network = get_connected_network()
         result = subprocess.run(["nmcli", "-f", "SSID", "device", "wifi", "list"], capture_output=True, text=True, check=True)
-        networks = result.stdout.strip().splitlines()[1:] # Split output and remove the header
-        unique_networks = set(network.strip() for network in networks if network.strip()) # Extract unique SSIDs
+        networks = result.stdout.splitlines()[1:]
+        unique_networks = set(network for network in networks if network.strip() and network.strip() != "--" and network.strip() != connected_network)
         return list(unique_networks)
     except FileNotFoundError:
         print("Error: nmcli command not found.")
