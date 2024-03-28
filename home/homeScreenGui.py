@@ -11,13 +11,14 @@ from ttkbootstrap.toast import ToastNotification
 
 def construct_toast(title, message, alert):
     # Use the function arguments to customize the toast notification
-    toast = ToastNotification(title=title, message=message, duration=3000,bootstyle="dark", alert=alert)
+    toast = ToastNotification(title=title, message=message, duration=10000,bootstyle="dark", alert=alert)
     
     return toast
 
 def show_toast(root, toast):
+    # toast.show_toast()
+    root.configure(bg='#33363e')
     toast.show_toast()
-    # root.configure(bg='#33363e')
 
 games = []
 
@@ -228,7 +229,7 @@ def display_game_info(game_info_container, game):
 
     play_button_img_path = 'home/guiImages/playButtonIcon.png'
     edit_button_img_path = 'home/guiImages/editIcon.png'
-    upload_buton_img_path = 'home/guiImages/uploadIcon.png
+    upload_buton_img_path = 'home/guiImages/uploadIcon.png'
 
     buttonWidth = 90
     buttonHeight = 90
