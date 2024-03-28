@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
+import datetime
 import requests
 import subprocess
 from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
@@ -551,6 +552,41 @@ def login_to_server(username, password):
     elif response.status_code == 401:
         print("Invalid username or password")
 
+def check_login_requirement():
+    try:
+        with open("login_log.txt", "r") as log_file:
+            log_entries = log_file.readlines()
+    except FileNotFoundError:
+        # If the file doesn't exist, assume the user needs to log in
+        return True
+
+    for line in reversed(log_entries):
+        parts = line.strip().split(" - ")
+        if len(parts) >= 2:
+            timestamp_str = parts[0].split(" - ")[0]
+            status_str = parts[1]
+            try:
+                timestamp = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+                status = status_str.split(": ")[1]
+                if status == "Fail":
+                    return True  # Need to log in due to previous failure
+                elif (datetime.datetime.now() - timestamp).days > 7:
+                    return True  # Need to re-log after 7 days
+                else:
+                    return False  # No need to re-log
+            except ValueError:
+                # If there's any issue parsing the timestamp or status, continue to the next line
+                continue
+    
+    # If no valid log entry is found, assume the user needs to log in
+    return True
+
+
+
+if check_login_requirement():
+    print("You need to log in.")
+else:
+    print("You do not need to log in again.")
 login_to_server('username1','password1')
 app = BlastPad()
 app.geometry("800x450")
