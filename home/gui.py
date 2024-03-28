@@ -2,10 +2,12 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
+import requests
 import subprocess
 from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
 
 games = []
+login_server = 'http://localhost:5000/login'
 
 
 class Game:
@@ -535,7 +537,21 @@ class Settings(tk.Frame):
         message = ctk.CTkLabel(class_list_frame, text="The Settings page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
 
-          
-app = BlastPad()  
+def login_to_server(username, password):
+    # Prepare login data
+    login_data = {'username': username, 'password': password}
+
+    # Send POST request to server
+    response = requests.post('http://localhost:5000/login', json=login_data)
+    
+    # Check response status code
+    if response.status_code == 200:
+        print("Login successful!")
+    
+    elif response.status_code == 401:
+        print("Invalid username or password")
+
+login_to_server('username1','password1')
+app = BlastPad()
 app.geometry("800x450")
 app.mainloop()
