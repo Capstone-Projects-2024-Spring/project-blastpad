@@ -11,6 +11,10 @@ const ndarray = require("ndarray");
 // const FieldBitmap = require("./src/field-bitmap.js");
 // console.log(FieldBitmap);
 
+
+const onlyBitmaps = (process.argv.indexOf('--bitmaps') > -1);
+
+
 class dummyField extends Blockly.Field {}
 dummyField.fromJson = () => {};
 Blockly.fieldRegistry.register('field_bitmap', dummyField);
@@ -144,8 +148,8 @@ try {
     var definitions = Blockly.common.createBlockDefinitionsFromJsonArray(definitionsArray.blocks);
     Blockly.common.defineBlocks(definitions);
 
-    // console.log(allWorkspaceBlocks);
 
+    // Save all those BitMaps.
     for(var block of allWorkspaceBlocks) {
         // save orphaned bitmaps
         if(["small_bitmap", "large_bitmap"].includes(block.type)) {
@@ -177,6 +181,11 @@ try {
 
             // return;
         }
+    }
+
+    if(onlyBitmaps) {
+        console.log("Saved Bitmaps.");
+        return 0;
     }
 
     // THIS IS HOW WE GET BLOCK GENERATION
