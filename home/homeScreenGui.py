@@ -6,9 +6,10 @@ from PIL import Image, ImageTk
 import os
 import json
 from time import strftime
+from wifiMenu import WifiMenu
 
 games = []
-
+wifi_menu_window = None
 
 class Game:
     def __init__(self, name, description, author, path, filename):
@@ -36,6 +37,15 @@ def classroom_clicked_event(event=None):
 
 def settings_clicked_event(event=None):
     print("Settings button clicked!")
+
+def wifi_clicked_event(root):
+    global wifi_menu_window
+    if wifi_menu_window is None or not wifi_menu_window.winfo_exists():
+        wifi_menu_window = tk.Toplevel(root)
+        wifi_menu = WifiMenu(wifi_menu_window)
+
+def battery_clicked_event(event=None):
+    print("Battery button clicked!")
 
 
 def on_enter(e, widget):
@@ -78,7 +88,7 @@ def render_top_frame(root):
     settings_button = create_top_button(top_frame, settings_img_path, settings_clicked_event, button_width, button_height)
 
     # Add battery and wifi icons
-    def add_icon(frame, image_path, desired_width, desired_height):
+    def add_icon(frame, image_path, desired_width, desired_height, click_handler, root=None):
         # Open the image file with PIL
         pil_img = Image.open(image_path)
         # Resize the image to the desired dimensions
@@ -88,7 +98,10 @@ def render_top_frame(root):
         img = ImageTk.PhotoImage(pil_img)
 
         # Create a label within the frame to display the image
-        image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+        image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0, cursor="hand2")
+        # Bind the click event to the label
+        image_label.bind("<Button-1>", lambda event: click_handler(root))
+
         image_label.image = img  # Keep a reference to prevent garbage collection
         image_label.pack(side=tk.LEFT, padx=10, pady=10)
 
@@ -98,8 +111,8 @@ def render_top_frame(root):
     battery_img_path = 'home/guiImages/batteryIcon.png'
     wifi_img_path = 'home/guiImages/wifiIcon.png'
 
-    battery_icon = add_icon(top_frame, battery_img_path, 75, 75)
-    wifi_icon = add_icon(top_frame, wifi_img_path, 75, 75)
+    battery_icon = add_icon(top_frame, battery_img_path, 75, 75, battery_clicked_event)
+    wifi_icon = add_icon(top_frame, wifi_img_path, 75, 75, wifi_clicked_event, root)
 
     time_label = tk.Label(top_frame, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
     time_label.pack(side=tk.LEFT, padx=10, pady=10)
