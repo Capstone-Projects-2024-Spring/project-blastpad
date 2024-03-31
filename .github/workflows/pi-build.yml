@@ -32,6 +32,15 @@ jobs:
             } && chmod +x test-stage/prerun.sh
 
       - uses: usimd/pi-gen-action@v1
+        id: build
         with:
+          enable-ssh: 1
+          keyboard-layout: English (US)
+          keyboard-keymap: us
           image-name: test
           stage-list: stage0 stage1 stage2 ./test-stage
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pi-gen-image
+          path: ${{ steps.build.outputs.image-path }}
