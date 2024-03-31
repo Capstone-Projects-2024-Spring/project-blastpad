@@ -63,7 +63,7 @@ def create_button(frame, image_path, command, desired_width, desired_height):
 
 
 # Add battery and wifi icons
-def add_icon(frame, image_path, desired_width, desired_height):
+def add_icon(frame, image_path, desired_width, desired_height, click_handler, root=None):
     # Open the image file with PIL
     pil_img = Image.open(image_path)
     # Resize the image to the desired dimensions
@@ -73,6 +73,10 @@ def add_icon(frame, image_path, desired_width, desired_height):
     img = ImageTk.PhotoImage(pil_img)
 
     # Create a label within the frame to display the image
-    image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
-    image_label.image = img  # Keep a reference to prevent garbage collection
+    #image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+    #image_label.image = img  # Keep a reference to prevent garbage collection
+    image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0, cursor="hand2")
+    image_label.image = img
+    # Bind the click event to the label
+    image_label.bind("<Button-1>", lambda event: click_handler(root))
     image_label.pack(side=tk.LEFT, padx=10, pady=10)
