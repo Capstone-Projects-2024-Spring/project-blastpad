@@ -15,7 +15,7 @@ jobs:
             #!/bin/bash
             # apt-get install -y curl
             apt install git-all -y
-            HOME="${ROOTFS_DIR}/home/blastpad
+            HOME="${ROOTFS_DIR}/home/blastpad"
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             cp -r project-blastpad "${HOME}/"
             cd project-blastpad/install
