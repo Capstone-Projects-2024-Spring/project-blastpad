@@ -1,8 +1,6 @@
 # disabled
 name: Build Image
-on:
-  push:
-    branches: ''
+on: push
     
 permissions:
   contents: write
