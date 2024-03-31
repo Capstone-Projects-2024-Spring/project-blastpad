@@ -15,7 +15,7 @@ jobs:
             #!/bin/bash
             # apt-get install -y curl
             apt install git-all -y
-            HOME="${ROOTFS_DIR}/home/pi
+            HOME="${ROOTFS_DIR}/home/blastpad
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             cp -r project-blastpad "${HOME}/"
             cd project-blastpad/install
@@ -40,6 +40,9 @@ jobs:
           keyboard-layout: English (US)
           keyboard-keymap: us
           image-name: test
+          disable-first-boot-user-rename: 1
+          password: blastpad
+          username: blastpad
           stage-list: stage0 stage1 stage2 ./test-stage
 
       - uses: actions/upload-artifact@v3
