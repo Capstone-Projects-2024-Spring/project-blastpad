@@ -5,7 +5,7 @@ import os, json
 import datetime
 import requests
 import subprocess
-from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
+from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked, login_to_server
 
 games = []
 login_server = 'http://localhost:5000/login'
@@ -42,7 +42,7 @@ class BlastPad(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")  
   
         self.show_frame(HomePage)  
-  
+
     def show_frame(self, cont):  
   
         frame = self.frames[cont]  
@@ -254,6 +254,7 @@ class CommunityHub(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
+        self.controller = controller # Reference to the main application
         navbar_container = tk.Frame(self,bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
 
@@ -311,7 +312,6 @@ class CommunityHub(tk.Frame):
         # dimensions for new game icon and games in game library
         game_lib_button_width = 125
         game_lib_button_height = 125
-
         def render_new_game_icon(game_list_frame, button_width, button_height):
             # Open the image file with PIL and resize it
             pil_img = Image.open('home/guiImages/searchIcon.png')
@@ -420,6 +420,8 @@ class CommunityHub(tk.Frame):
             # Create buttons with new styling
             play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
             edit_button = create_button(button_frame, like_button_img_path, on_like_clicked, buttonWidth, buttonHeight)
+
+        
   
   
 class Classroom(tk.Frame):  
@@ -475,9 +477,17 @@ class Classroom(tk.Frame):
         # Style the game list frame with a background color
         class_list_frame = tk.Frame(canvas, bg='#23252C')
         canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
-
+        self.check_login_requirement()
         message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
+    def check_login_requirement(self):
+        if check_login_requirement():
+            self.open_login_window()
+    def open_login_window(self):
+        login_window = LoginWindow(self,self.handle_login)
+        login_window.lift()
+    def handle_login(self, username, password):
+        login_to_server(username,password)                           
 
 
 class Settings(tk.Frame):  
@@ -533,62 +543,68 @@ class Settings(tk.Frame):
         # Style the game list frame with a background color
         class_list_frame = tk.Frame(canvas, bg='#23252C')
         canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
-
-
         message = ctk.CTkLabel(class_list_frame, text="The Settings page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
 
-def login_to_server(username, password):
-    # Prepare login data
-    login_data = {'username': username, 'password': password}
-
-    # Send POST request to server
-    response = requests.post('http://localhost:5000/login', json=login_data)
-    
-    # Check response status code
-    if response.status_code == 200:
-        print("Login successful!")
-    
-    elif response.status_code == 401:
-        print("Invalid username or password")
-
-def check_login_requirement():
-    try:
-        with open("login_log.txt", "r") as log_file:
-            log_entries = log_file.readlines()
-    except FileNotFoundError:
-        # If the file doesn't exist, assume the user needs to log in
-        return True
-
-    for line in reversed(log_entries):
-        parts = line.strip().split(" - ")
-        if len(parts) >= 2:
-            timestamp_str = parts[0].split(" - ")[0]
-            status_str = parts[1]
-            try:
-                timestamp = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
-                status = status_str.split(": ")[1]
-                if status == "Fail":
-                    return True  # Need to log in due to previous failure
-                elif (datetime.datetime.now() - timestamp).days > 7:
-                    return True  # Need to re-log after 7 days
-                else:
-                    return False  # No need to re-log
-            except ValueError:
-                # If there's any issue parsing the timestamp or status, continue to the next line
-                continue
-    
-    # If no valid log entry is found, assume the user needs to log in
-    return True
 
 
 
-if check_login_requirement():
-    print("You need to log in.")
-else:
-    print("You do not need to log in again.")
+class LoginWindow(tk.Toplevel):
+    def __init__(self, parent, login_callback):
+        super().__init__(parent)
+        self.title("Login")
+        self.config(bg='#33363E')
 
-login_to_server('username1','password1')
+        self.login_callback = login_callback
+
+        # Create labels
+        username_label = tk.Label(self, text="Username:", bg='#33363E', fg='white', font=('Helvetica', 12))
+        username_label.grid(row=0, column=0, padx=10, pady=5, sticky='w')
+        password_label = tk.Label(self, text="Password:", bg='#33363E', fg='white', font=('Helvetica', 12))
+        password_label.grid(row=1, column=0, padx=10, pady=5, sticky='w')
+
+        # Create entry widgets
+        self.username_entry = tk.Entry(self, bg='#51535B', fg='white', font=('Helvetica', 12))
+        self.username_entry.grid(row=0, column=1, padx=10, pady=5)
+        self.password_entry = tk.Entry(self, show="*", bg='#51535B', fg='white', font=('Helvetica', 12))
+        self.password_entry.grid(row=1, column=1, padx=10, pady=5)
+
+        # Create login button
+        login_button = tk.Button(self, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
+        login_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+        # Center the window
+        self.update_idletasks()
+        width = self.winfo_width()
+        height = self.winfo_height()
+        x = (self.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.winfo_screenheight() // 2) - (height // 2)
+        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
+    def close_window(self):
+        self.destroy()
+
+    def login_clicked(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        response_code = login_to_server(username,password)
+        if response_code == 200:
+            self.close_window()
+        else:
+            # Determine failure reason and display appropriate message
+            if response_code == 401:
+                failure_reason = "Invalid username or password."
+            elif response_code == 403:
+                failure_reason = "Access forbidden."
+            elif response_code == 404:
+                failure_reason = "Server not found."
+            else:
+                failure_reason = "Login failed with unknown reason."
+            messagebox.showerror("Login Failed", failure_reason)
+
+
+
+# login_to_server('username1','password1')
 app = BlastPad()
 app.geometry("800x450")
 app.mainloop()

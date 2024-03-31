@@ -2,6 +2,7 @@ from time import strftime
 import webbrowser
 from PIL import Image, ImageTk
 import tkinter as tk
+import requests
 
 def on_like_clicked():
     print("Like button clicked!")
@@ -76,3 +77,19 @@ def add_icon(frame, image_path, desired_width, desired_height):
     image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
     image_label.image = img  # Keep a reference to prevent garbage collection
     image_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+def login_to_server(username, password):
+    # Prepare login data
+    login_data = {'username': username, 'password': password}
+
+    # Send POST request to server
+    response = requests.post('http://localhost:5000/login', json=login_data)
+    
+    # Check response status code
+    if response.status_code == 200:
+        print("Login successful!")
+    
+    elif response.status_code == 401:
+        print("Invalid username or password")
+
+    return response.status_code
