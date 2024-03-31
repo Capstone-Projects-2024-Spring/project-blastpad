@@ -82,8 +82,8 @@ const defaultWorkspace = {
 
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
-  
-    var response = await fetch("http://localhost:5000/save/game", {
+
+    var response = await fetch("/save/game", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
         credentials: "same-origin", // include, *same-origin, omit
@@ -137,7 +137,7 @@ const fetchAndLoadGame = (gameName) => {
   // gamename includes .json at the end. this will need to change
   // on both the flask end and this end.
 
-  fetch(`http://localhost:5000/games/${gameName}`).then(function(response) {
+  fetch(`/games/${gameName}`).then(function(response) {
     return response.json()
   }).then((gameWorkspace) => {
     Blockly.Events.disable();
@@ -158,9 +158,16 @@ const startEditor = () => {
   selectionContainer.classList.remove("hidden");
   pageContainer.classList.add("hidden");
 
-  fetch('http://localhost:5000/games').then(function(response) {
+  console.log("fetching games");
+
+  fetch('/games').then(function(response) {
+    console.log(response)
+    console.log(response.body);
+    console.log("trying json conversion");
+    console.log(response.json());
     return response.json()
   }).then((json) => {
+
     console.log(json);
     for(var gameFileName of json.games) {
       // you would also want to display the bitmap here... generate an image perhaps
