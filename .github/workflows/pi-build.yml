@@ -14,7 +14,7 @@ jobs:
             cat > test-stage/package-test/00-run-chroot.sh <<-EOF
             #!/bin/bash
             # apt-get install -y curl
-            apt install git-all
+            apt install git-all -y
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             cd project-blastpad/install
             ./dependencies.sh
