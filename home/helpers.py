@@ -27,9 +27,10 @@ def on_leave(e, widget):
 
 # Function that updates time
 def update_time(label):
-    current_time = strftime('%H:%M %p') # Format the current time
-    label.config(text=current_time) # Update the label text
-    label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
+    current_time = strftime('%I:%M %p')  # Format the current time in 12-hour format with AM/PM
+    label.config(text=current_time)  # Update the label text
+    label.after(1000, lambda: update_time(label))  # Schedule update_time to be called after 1000 milliseconds (1 second)
+
 
 def create_top_button(frame, image_path, command, desired_width, desired_height):
     # Open the image file with PIL
