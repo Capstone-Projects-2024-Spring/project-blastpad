@@ -40,7 +40,7 @@ jobs:
             echo "python3-pygame" > blastpad-stage/00-blastpad/00-packages &&
             echo "python3-pgzero" > blastpad-stage/00-blastpad/00-packages &&
             echo "python3-tk" > blastpad-stage/00-blastpad/00-packages &&
-            echo "xorg" > blastpad-stage/00-blastpad/00-packages &&
+            echo "xserver-xorg" > blastpad-stage/00-blastpad/00-packages &&
             {
             cat > blastpad-stage/00-blastpad/prerun.sh <<-EOF
             #!/bin/bash -e
@@ -119,8 +119,7 @@ jobs:
           disable-first-boot-user-rename: 1
           password: blastpad
           username: blastpad
-          stage-list: stage0 stage1 stage2 ./blastpad-stage
-          verbose-output: true
+          stage-list: stage0 stage1 ./blastpad-stage
 
       - uses: actions/upload-artifact@v3
         with:
