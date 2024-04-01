@@ -8,6 +8,7 @@ pip3 install pillow --break-system-packages
 pip3 install tk --break-system-packages
 pip3 install customtkinter --break-system-packages
 pip3 install pygame --break-system-packages
+pip3 install pgzero --break-system-packages
 
 if which node > /dev/null
   then
