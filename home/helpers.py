@@ -28,9 +28,10 @@ def on_leave(e, widget):
 
 # Function that updates time
 def update_time(label):
-    current_time = strftime('%H:%M %p') # Format the current time
-    label.config(text=current_time) # Update the label text
-    label.after(1000, lambda: update_time(label)) # Schedule update_time to be called after 1000 milliseconds (1 second)
+    current_time = strftime('%I:%M %p')  # Format the current time in 12-hour format with AM/PM
+    label.config(text=current_time)  # Update the label text
+    label.after(1000, lambda: update_time(label))  # Schedule update_time to be called after 1000 milliseconds (1 second)
+
 
 def create_top_button(frame, image_path, command, desired_width, desired_height):
     # Open the image file with PIL
@@ -61,23 +62,7 @@ def create_button(frame, image_path, command, desired_width, desired_height):
     button.image = img  # Keep a reference to the image
     button.pack(side=tk.LEFT, padx=5, pady=5)
     return button
-
-
-# Add battery and wifi icons
-def add_icon(frame, image_path, desired_width, desired_height):
-    # Open the image file with PIL
-    pil_img = Image.open(image_path)
-    # Resize the image to the desired dimensions
-    pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
-
-    # Create a PhotoImage object from the resized PIL image
-    img = ImageTk.PhotoImage(pil_img)
-
-    # Create a label within the frame to display the image
-    image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
-    image_label.image = img  # Keep a reference to prevent garbage collection
-    image_label.pack(side=tk.LEFT, padx=10, pady=10)
-
+  
 def login_to_server(username, password):
     # Prepare login data
     login_data = {'username': username, 'password': password}
@@ -93,3 +78,25 @@ def login_to_server(username, password):
         print("Invalid username or password")
 
     return response.status_code
+
+# Add battery and wifi icons
+def add_icon(frame, image_path, desired_width, desired_height, click_handler, root=None):
+    # Open the image file with PIL
+    pil_img = Image.open(image_path)
+    # Resize the image to the desired dimensions
+    pil_img = pil_img.resize((desired_width, desired_height), Image.LANCZOS)
+
+    # Create a PhotoImage object from the resized PIL image
+    img = ImageTk.PhotoImage(pil_img)
+
+    # Create a label within the frame to display the image
+    image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+    image_label.image = img  # Keep a reference to prevent garbage collection
+    image_label.pack(side=tk.LEFT, padx=10, pady=10)
+    #image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0)
+    #image_label.image = img  # Keep a reference to prevent garbage collection
+    image_label = tk.Label(frame, image=img, bd=0, highlightthickness=0, cursor="hand2")
+    image_label.image = img
+    # Bind the click event to the label
+    image_label.bind("<Button-1>", lambda event: click_handler(root))
+    image_label.pack(side=tk.LEFT, padx=10, pady=10)

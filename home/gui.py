@@ -6,9 +6,19 @@ import datetime
 import requests
 import subprocess
 from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked, login_to_server
+from wifiMenu import WifiMenu
 
 games = []
-login_server = 'http://localhost:5000/login'
+wifi_menu_window = None
+
+def wifi_clicked_event(root):
+    global wifi_menu_window
+    if wifi_menu_window is None or not wifi_menu_window.winfo_exists():
+        wifi_menu_window = tk.Toplevel(root)
+        wifi_menu = WifiMenu(wifi_menu_window)
+
+def battery_clicked_event(event=None):
+    print("Battery button clicked!")
 
 
 class Game:
@@ -76,8 +86,8 @@ class HomePage(tk.Frame):
         battery_img_path = 'home/guiImages/batteryIcon.png'
         wifi_img_path = 'home/guiImages/wifiIcon.png'
 
-        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
-        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event, navbar)
 
         time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
         time_label.pack(side=tk.LEFT, padx=10, pady=10)
@@ -277,8 +287,8 @@ class CommunityHub(tk.Frame):
         battery_img_path = 'home/guiImages/batteryIcon.png'
         wifi_img_path = 'home/guiImages/wifiIcon.png'
 
-        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
-        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event)
         
         time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
         time_label.pack(side=tk.LEFT, padx=10, pady=10)
@@ -451,8 +461,8 @@ class Classroom(tk.Frame):
         battery_img_path = 'home/guiImages/batteryIcon.png'
         wifi_img_path = 'home/guiImages/wifiIcon.png'
 
-        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
-        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event)
 
         time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
         time_label.pack(side=tk.LEFT, padx=10, pady=10)
@@ -517,8 +527,8 @@ class Settings(tk.Frame):
         battery_img_path = 'home/guiImages/batteryIcon.png'
         wifi_img_path = 'home/guiImages/wifiIcon.png'
 
-        battery_icon = add_icon(navbar, battery_img_path, 75, 75)
-        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75)
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event)
 
         time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
         time_label.pack(side=tk.LEFT, padx=10, pady=10)
