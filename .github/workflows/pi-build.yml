@@ -43,7 +43,7 @@ jobs:
           disable-first-boot-user-rename: 1
           password: blastpad
           username: blastpad
-          stage-list: stage0 ./blastpad-stage stage1 stage2 stage3
+          stage-list: stage0 stage1 stage2 stage3 ./blastpad-stage
 
       - uses: actions/upload-artifact@v3
         with:
