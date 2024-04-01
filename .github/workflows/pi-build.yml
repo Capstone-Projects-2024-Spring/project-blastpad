@@ -13,9 +13,8 @@ jobs:
             cat > blastpad-stage/package-test/00-run-chroot.sh <<-EOF
             #!/bin/bash
             apt-get install -y curl
-            curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+            curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
             apt install git-all -y
-            HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             touch git_test
             cd project-blastpad/install

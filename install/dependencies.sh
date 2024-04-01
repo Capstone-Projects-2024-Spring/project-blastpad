@@ -10,6 +10,9 @@ pip3 install customtkinter --break-system-packages
 pip3 install pygame --break-system-packages
 pip3 install pgzero --break-system-packages
 
+
+if [ "$EUID" -ne 0 ]
+
 if which node > /dev/null
   then
     echo "##### 🚀 🎮 Node is already installed. #####"
@@ -25,6 +28,8 @@ if which node > /dev/null
     node -v
     npm -v
   fi
+
+fi
 
 echo "##### 🚀 🎮 Node Packages Incoming... #####"
 source ~/.bashrc
