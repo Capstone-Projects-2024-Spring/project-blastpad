@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-            mkdir -p blastpad-stage/files && {
-            cat > blastpad-stage/01-run.sh <<-EOF
+            mkdir -p blastpad-stage/00-blastpad/files && {
+            cat > blastpad-stage/00-blastpad/01-run.sh <<-EOF
             #!/bin/bash
             # apt-get install -y curl
             # curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -23,29 +23,33 @@ jobs:
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
             cd "${ROOTFS_DIR}/home/blastpad"
             touch userdir_test
+
+            HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
+            install -m 644 -o 1000 -g 1000 files/.profile "${HOME}/"
+            install -m 644 -o 1000 -g 1000 files/.xinitrc "${HOME}/"
             EOF
             } &&
-            chmod +x blastpad-stage/01-run.sh &&
-            echo "nodejs" > blastpad-stage/00-packages &&
-            echo "git" > blastpad-stage/00-packages &&
-            echo "python3-pip" > blastpad-stage/00-packages &&
-            echo "python3-flask" > blastpad-stage/00-packages &&
-            echo "python3-dev" > blastpad-stage/00-packages &&
-            echo "python3-pillow" > blastpad-stage/00-packages &&
-            echo "python3-pil.imagetk" > blastpad-stage/00-packages &&
-            echo "python3-pygame" > blastpad-stage/00-packages &&
-            echo "python3-pgzero" > blastpad-stage/00-packages &&
-            echo "python3-tk" > blastpad-stage/00-packages &&
-            echo "xorg" > blastpad-stage/00-packages &&
+            chmod +x blastpad-stage/00-blastpad/01-run.sh &&
+            echo "nodejs" > blastpad-stage/00-blastpad/00-packages &&
+            echo "git" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-pip" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-flask" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-dev" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-pillow" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-pil.imagetk" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-pygame" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-pgzero" > blastpad-stage/00-blastpad/00-packages &&
+            echo "python3-tk" > blastpad-stage/00-blastpad/00-packages &&
+            echo "xorg" > blastpad-stage/00-blastpad/00-packages &&
             {
-            cat > blastpad-stage/prerun.sh <<-EOF
+            cat > blastpad-stage/00-blastpad/prerun.sh <<-EOF
             #!/bin/bash -e
             if [ ! -d "\${ROOTFS_DIR}" ]; then
             copy_previous
             fi
             EOF
-            } && chmod +x blastpad-stage/prerun.sh && { 
-            cat > blastpad-stage/files/.profile <<-EOF
+            } && chmod +x blastpad-stage/00-blastpad/prerun.sh && { 
+            cat > blastpad-stage/00-blastpad/files/.profile <<-EOF
 
             # if running bash
             if [ -n "$BASH_VERSION" ]; then
@@ -84,12 +88,11 @@ jobs:
             fi
             EOF
             } && {
-            cat > blastpad-stage/files/.xinitrc <<-EOF
+            cat > blastpad-stage/00-blastpad/files/.xinitrc <<-EOF
 
             #!/usr/bin/env bash
 
             # read URL from easily accessible location
-            # URL=$(head -n 1 /boot/kiosk.url)
 
             # never blank the screen
             xset s off -dpms
