@@ -24,6 +24,7 @@ jobs:
             EOF
             } &&
             chmod +x blastpad-stage/package-test/00-run-chroot.sh &&
+            echo "nodejs" > test-stage/package-test/01-packages &&
             {
             cat > blastpad-stage/prerun.sh <<-EOF
             #!/bin/bash -e
