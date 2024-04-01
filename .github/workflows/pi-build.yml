@@ -15,7 +15,7 @@ jobs:
             #!/bin/bash
             # apt-get install -y curl
             apt install git-all -y
-            HOME="${ROOTFS_DIR}/home/blastpad"
+            HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             cd project-blastpad/install
             ./dependencies.sh
@@ -43,7 +43,7 @@ jobs:
           disable-first-boot-user-rename: 1
           password: blastpad
           username: blastpad
-          stage-list: stage0 stage1 stage2 stage3 ./blastpad-stage
+          stage-list: stage0 ./blastpad-stage stage1 stage2 stage3
 
       - uses: actions/upload-artifact@v3
         with:
