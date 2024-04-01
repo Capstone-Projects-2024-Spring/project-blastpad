@@ -16,7 +16,6 @@ jobs:
             # apt-get install -y curl
             apt install git-all -y
             HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
-            touch "${HOME}/homepath_test"
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             touch git_test
             cd project-blastpad/install
@@ -29,6 +28,7 @@ jobs:
             } &&
             chmod +x blastpad-stage/package-test/00-run-chroot.sh &&
             echo "nodejs" > blastpad-stage/package-test/01-packages &&
+            echo "git" > blastpad-stage/package-test/01-packages
             {
             cat > blastpad-stage/prerun.sh <<-EOF
             #!/bin/bash -e
