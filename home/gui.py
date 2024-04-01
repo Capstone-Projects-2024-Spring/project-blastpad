@@ -547,7 +547,34 @@ class Settings(tk.Frame):
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
 
 
+def check_login_requirement():
+    try:
+        with open("login_log.txt", "r") as log_file:
+            log_entries = log_file.readlines()
+    except FileNotFoundError:
+        # If the file doesn't exist, assume the user needs to log in
+        return True
 
+    for line in reversed(log_entries):
+        parts = line.strip().split(" - ")
+        if len(parts) >= 2:
+            timestamp_str = parts[0].split(" - ")[0]
+            status_str = parts[1]
+            try:
+                timestamp = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+                status = status_str.split(": ")[1]
+                if status == "Fail":
+                    return True  # Need to log in due to previous failure
+                elif (datetime.datetime.now() - timestamp).days > 7:
+                    return True  # Need to re-log after 7 days
+                else:
+                    return False  # No need to re-log
+            except ValueError:
+                # If there's any issue parsing the timestamp or status, continue to the next line
+                continue
+
+    # If no valid log entry is found, assume the user needs to log in
+    return True
 
 class LoginWindow(tk.Toplevel):
     def __init__(self, parent, login_callback):
