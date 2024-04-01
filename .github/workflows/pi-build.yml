@@ -8,12 +8,12 @@ jobs:
   blastpad-image:
     runs-on: ubuntu-latest
     steps:
-      # Create a stage 'blastpad-stage' instructing to add Nodesource repo and install nodejs as dependency
       - run: |
             mkdir -p blastpad-stage/package-test && {
             cat > blastpad-stage/package-test/00-run-chroot.sh <<-EOF
             #!/bin/bash
-            # apt-get install -y curl
+            apt-get install -y curl
+            curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
             apt install git-all -y
             HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
@@ -28,7 +28,15 @@ jobs:
             } &&
             chmod +x blastpad-stage/package-test/00-run-chroot.sh &&
             echo "nodejs" > blastpad-stage/package-test/01-packages &&
-            echo "git" > blastpad-stage/package-test/01-packages
+            echo "git" > blastpad-stage/package-test/01-packages &&
+            echo "python3-pip" > blastpad-stage/package-test/01-packages &&
+            echo "python3-flask" > blastpad-stage/package-test/01-packages &&
+            echo "python3-dev" > blastpad-stage/package-test/01-packages &&
+            echo "python3-pillow" > blastpad-stage/package-test/01-packages &&
+            echo "python3-pil.imagetk" > blastpad-stage/package-test/01-packages &&
+            echo "python3-pygame" > blastpad-stage/package-test/01-packages &&
+            echo "python3-pgzero" > blastpad-stage/package-test/01-packages &&
+            echo "python3-tk" > blastpad-stage/package-test/01-packages &&
             {
             cat > blastpad-stage/prerun.sh <<-EOF
             #!/bin/bash -e
