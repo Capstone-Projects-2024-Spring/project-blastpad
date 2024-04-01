@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-            mkdir -p blastpad-stage/package-test && {
-            cat > blastpad-stage/package-test/00-run-chroot.sh <<-EOF
+            mkdir -p blastpad-stage/files && {
+            cat > blastpad-stage/01-run.sh <<-EOF
             #!/bin/bash
-            apt-get install -y curl
-            curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-            apt install git-all -y
+            # apt-get install -y curl
+            # curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+            # apt install git-all -y
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             touch git_test
             cd project-blastpad/install
@@ -25,17 +25,18 @@ jobs:
             touch userdir_test
             EOF
             } &&
-            chmod +x blastpad-stage/package-test/00-run-chroot.sh &&
-            echo "nodejs" > blastpad-stage/package-test/01-packages &&
-            echo "git" > blastpad-stage/package-test/01-packages &&
-            echo "python3-pip" > blastpad-stage/package-test/01-packages &&
-            echo "python3-flask" > blastpad-stage/package-test/01-packages &&
-            echo "python3-dev" > blastpad-stage/package-test/01-packages &&
-            echo "python3-pillow" > blastpad-stage/package-test/01-packages &&
-            echo "python3-pil.imagetk" > blastpad-stage/package-test/01-packages &&
-            echo "python3-pygame" > blastpad-stage/package-test/01-packages &&
-            echo "python3-pgzero" > blastpad-stage/package-test/01-packages &&
-            echo "python3-tk" > blastpad-stage/package-test/01-packages &&
+            chmod +x blastpad-stage/01-run.sh &&
+            echo "nodejs" > blastpad-stage/00-packages &&
+            echo "git" > blastpad-stage/00-packages &&
+            echo "python3-pip" > blastpad-stage/00-packages &&
+            echo "python3-flask" > blastpad-stage/00-packages &&
+            echo "python3-dev" > blastpad-stage/00-packages &&
+            echo "python3-pillow" > blastpad-stage/00-packages &&
+            echo "python3-pil.imagetk" > blastpad-stage/00-packages &&
+            echo "python3-pygame" > blastpad-stage/00-packages &&
+            echo "python3-pgzero" > blastpad-stage/00-packages &&
+            echo "python3-tk" > blastpad-stage/00-packages &&
+            echo "xorg" > blastpad-stage/00-packages &&
             {
             cat > blastpad-stage/prerun.sh <<-EOF
             #!/bin/bash -e
@@ -44,6 +45,69 @@ jobs:
             fi
             EOF
             } && chmod +x blastpad-stage/prerun.sh
+            &&
+            {
+            cat > blastpad-stage/files/.profile <<-EOF
+
+            # if running bash
+            if [ -n "$BASH_VERSION" ]; then
+                # include .bashrc if it exists
+                if [ -f "$HOME/.bashrc" ]; then
+                    . "$HOME/.bashrc"
+                fi
+            fi
+
+            # set PATH so it includes user's private bin if it exists
+            if [ -d "$HOME/bin" ] ; then
+                PATH="$HOME/bin:$PATH"
+            fi
+
+            # set PATH so it includes user's private bin if it exists
+            if [ -d "$HOME/.local/bin" ] ; then
+                PATH="$HOME/.local/bin:$PATH"
+            fi
+
+            PS1='[\[\e[0;32m\]\u@\h \[\e[0;34m\]\W\[\e[0;00m\]]\$ ';
+
+            alias ll='ls -lhF'
+            alias la='ls -AF'
+            alias l='ls -CF'
+            alias s='sudo'
+            alias sus='sudo -s'
+
+            # first-run script
+            # [[ -f ./firstrun.sh ]] && ./firstrun.sh
+
+            # silent startx on video console
+
+            if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+              startx > /dev/null 2>&1
+              exit
+            fi
+            EOF
+            }
+            && {
+            cat > blastpad-stage/files/.xinitrc <<-EOF
+
+            #!/usr/bin/env bash
+
+            # read URL from easily accessible location
+            URL=$(head -n 1 /boot/kiosk.url)
+
+            # never blank the screen
+            xset s off -dpms
+
+            # rotate to portrait mounted TV
+            xrandr --output HDMI-1 --rotate left
+
+            # show a splash before browser kicks in
+            # feh --bg-scale splash.png
+
+            # start the cec-client & browser
+            # (cec-client | cec2kbd) & browser --fullscreen "${URL:='https://deltazero.cz'}"
+
+            EOF
+            }
 
       - uses: usimd/pi-gen-action@v1
         id: build
