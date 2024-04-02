@@ -11,28 +11,28 @@ pip3 install pygame --break-system-packages
 pip3 install pgzero --break-system-packages
 
 
-if [ "$EUID" -ne 0 ]
+# if [ "$EUID" -ne 0 ]
 
-if which node > /dev/null
-  then
-    echo "##### 🚀 🎮 Node is already installed. #####"
-    node -v
-    npm -v
-  else
-    echo "##### 🚀 🎮 Node Incoming... #####"
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.7/install.sh | bash
-    source ~/.nvm/nvm.sh
-    nvm install 20
-    nvm alias default 20
-    nvm use 20
-    node -v
-    npm -v
-  fi
+# if which node > /dev/null
+#   then
+#     echo "##### 🚀 🎮 Node is already installed. #####"
+#     node -v
+#     npm -v
+#   else
+#     echo "##### 🚀 🎮 Node Incoming... #####"
+#     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.7/install.sh | bash
+#     source ~/.nvm/nvm.sh
+#     nvm install 20
+#     nvm alias default 20
+#     nvm use 20
+#     node -v
+#     npm -v
+#   fi
 
-fi
+# fi
 
 echo "##### 🚀 🎮 Node Packages Incoming... #####"
-source ~/.bashrc
+# source ~/.bashrc
 pwd
 cd ../blockly/
 pwd
