@@ -14,8 +14,11 @@ jobs:
             #!/bin/bash
 
             HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
-            install -m 644 -o 1000 -g 1000 files/.profile "${HOME}/"
-            install -m 644 -o 1000 -g 1000 files/.xinitrc "${HOME}/"
+            ls
+            echo $HOME
+
+            install -m 644 -o 1000 -g 1000 /files/.profile "${HOME}/"
+            install -m 644 -o 1000 -g 1000 /files/.xinitrc "${HOME}/"
             apt-get update
             apt-get install -y curl
             curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -120,6 +123,7 @@ jobs:
           password: blastpad
           username: blastpad
           stage-list: stage0 stage1 ./blastpad-stage
+          verbose-output: true
 
       - uses: actions/upload-artifact@v3
         with:
