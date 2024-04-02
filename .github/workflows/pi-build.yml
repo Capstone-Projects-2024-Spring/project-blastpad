@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: |
             mkdir -p blastpad-stage/00-blastpad/files && {
-            cat > blastpad-stage/00-blastpad/01-run_chroot.sh <<-EOF
+            cat > blastpad-stage/00-blastpad/01-run-chroot.sh <<-EOF
             #!/bin/bash
 
             HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
@@ -33,14 +33,14 @@ jobs:
             touch userdir_test
 
             chown -R blastpad "${ROOTFS_DIR}/home/blastpad/project-blastpad"
-            
+
             apt-get install nodejs
             apt-get install xorg
             apt-get install x11-xserver-utils
             apt-get install xserver-xorg-video-fbdev
             EOF
             } &&
-            chmod +x blastpad-stage/00-blastpad/01-run.sh &&
+            chmod +x blastpad-stage/00-blastpad/01-run-chroot.sh &&
             {
             cat > blastpad-stage/00-blastpad/prerun.sh <<-EOF
             #!/bin/bash -e
