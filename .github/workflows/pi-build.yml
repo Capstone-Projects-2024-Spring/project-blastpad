@@ -14,11 +14,11 @@ jobs:
             #!/bin/bash
 
             HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
-            ls
+            ls /home/runner
             echo $HOME
 
-            install -m 644 -o 1000 -g 1000 /files/.profile "${HOME}/"
-            install -m 644 -o 1000 -g 1000 /files/.xinitrc "${HOME}/"
+            install -m 644 -o 1000 -g 1000 /home/runner/files/.profile "${HOME}/"
+            install -m 644 -o 1000 -g 1000 /home/runner/files/.xinitrc "${HOME}/"
             apt-get update
             apt-get install -y curl
             curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
