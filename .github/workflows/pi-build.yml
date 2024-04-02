@@ -40,14 +40,6 @@ jobs:
             echo "python3-pygame" >> blastpad-stage/00-blastpad/00-packages &&
             echo "python3-pgzero" >> blastpad-stage/00-blastpad/00-packages &&
             echo "python3-tk" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "xorg" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "x11-xserver-utils" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "xserver-xorg-video-fbdev" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "xserver-xorg-video-fbturbo" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "feh" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "gjs" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "gnome-themes-standard" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "xdotool" >> blastpad-stage/00-blastpad/00-packages &&
             {
             cat > blastpad-stage/00-blastpad/prerun.sh <<-EOF
             #!/bin/bash -e
