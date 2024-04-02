@@ -13,8 +13,8 @@ jobs:
             cat > blastpad-stage/00-blastpad/01-run-chroot.sh <<-EOF
             #!/bin/bash
 
-            HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
-            ls /home/runner
+            HOME="${ROOTFS_DIR}/home/blastpad"
+            ls /home/runner/work
             echo $HOME
 
             install -m 644 -o 1000 -g 1000 /home/runner/files/.profile "${HOME}/"
