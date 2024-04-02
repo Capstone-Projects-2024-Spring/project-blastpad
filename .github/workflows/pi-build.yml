@@ -12,6 +12,11 @@ jobs:
             mkdir -p blastpad-stage/00-blastpad/files && {
             cat > blastpad-stage/00-blastpad/01-run.sh <<-EOF
             #!/bin/bash
+
+            HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
+            install -m 644 -o 1000 -g 1000 files/.profile "${HOME}/"
+            install -m 644 -o 1000 -g 1000 files/.xinitrc "${HOME}/"
+
             apt-get update
             #apt-get install -y curl
             #curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -25,15 +30,10 @@ jobs:
             cd "${ROOTFS_DIR}/home/blastpad"
             touch userdir_test
           
-            HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
-            install -m 644 -o 1000 -g 1000 files/.profile "${HOME}/"
-            install -m 644 -o 1000 -g 1000 files/.xinitrc "${HOME}/"
-
             apt-get install nodejs
             apt-get install xorg
             apt-get install x11-xserver-utils
             apt-get install xserver-xorg-video-fbdev
-            apt-get install xserver-xorg-video-fbturbo
             EOF
             } &&
             chmod +x blastpad-stage/00-blastpad/01-run.sh &&
