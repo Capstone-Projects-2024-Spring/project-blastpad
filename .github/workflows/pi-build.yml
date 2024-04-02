@@ -12,9 +12,10 @@ jobs:
             mkdir -p blastpad-stage/00-blastpad/files && {
             cat > blastpad-stage/00-blastpad/01-run.sh <<-EOF
             #!/bin/bash
-            # apt-get install -y curl
-            # curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-            # apt install git-all -y
+            apt-get update
+            #apt-get install -y curl
+            #curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+            apt install git-all -y
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
             touch git_test
             cd project-blastpad/install
@@ -23,23 +24,19 @@ jobs:
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
             cd "${ROOTFS_DIR}/home/blastpad"
             touch userdir_test
-
+          
             HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
             install -m 644 -o 1000 -g 1000 files/.profile "${HOME}/"
             install -m 644 -o 1000 -g 1000 files/.xinitrc "${HOME}/"
+
+            apt-get install nodejs
+            apt-get install xorg
+            apt-get install x11-xserver-utils
+            apt-get install xserver-xorg-video-fbdev
+            apt-get install xserver-xorg-video-fbturbo
             EOF
             } &&
             chmod +x blastpad-stage/00-blastpad/01-run.sh &&
-            echo "nodejs" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "git" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-pip" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-flask" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-dev" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-pillow" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-pil.imagetk" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-pygame" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-pgzero" >> blastpad-stage/00-blastpad/00-packages &&
-            echo "python3-tk" >> blastpad-stage/00-blastpad/00-packages &&
             {
             cat > blastpad-stage/00-blastpad/prerun.sh <<-EOF
             #!/bin/bash -e
