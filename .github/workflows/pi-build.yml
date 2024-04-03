@@ -23,14 +23,16 @@ jobs:
             cd ../..
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
             
-            adduser ${FIRST_USER_NAME} blastpad
-            chown -R blastpad "${ROOTFS_DIR}/home/blastpad"
+            # adduser ${FIRST_USER_NAME} blastpad
+            # chown -R blastpad "${ROOTFS_DIR}/home/blastpad"
+
+            adduser --disabled-password --gecos "" blastpad
+            echo "blastpad:blastpad" | chpasswd
 
             EOF
             } &&
             chmod +x blastpad-stage/package-test/00-run.sh &&
             echo "nodejs" >> blastpad-stage/package-test/01-packages &&
-            echo "git" >> blastpad-stage/package-test/01-packages &&
             {
             cat > blastpad-stage/prerun.sh <<-EOF
             #!/bin/bash -e
