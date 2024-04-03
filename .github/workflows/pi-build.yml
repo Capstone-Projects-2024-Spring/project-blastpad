@@ -22,6 +22,8 @@ jobs:
             ./dependencies.sh
             cd ../..
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
+            
+            adduser ${FIRST_USER_NAME} blastpad
             chown -R blastpad "${ROOTFS_DIR}/home/blastpad"
 
             EOF
