@@ -20,8 +20,7 @@ jobs:
             mv Capstone-Projects* project-blastpad
 
             HOME="${ROOTFS_DIR}/home/blastpad"
-
-            git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
+          
             cd project-blastpad/install
             ./dependencies.sh
             cd ../..
