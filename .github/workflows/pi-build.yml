@@ -14,21 +14,27 @@ jobs:
             #!/bin/bash
 
             HOME="${ROOTFS_DIR}/home/blastpad"
+
+
+            ls /cwd/
             # ls -l /home/runner/work
             # ls -l */*
             # echo $HOME
-
-            # install -m 644 -o 1000 -g 1000 /home/runner/work/files/.profile "${HOME}/"
-            # install -m 644 -o 1000 -g 1000 /home/runner/work/files/.xinitrc "${HOME}/"
+            # install -m 644 -o 1000 -g 1000 /cwd/blastpad-stage/00-blastpad/files/.profile  "${HOME}/"
+            # install -m 644 -o 1000 -g 1000 /cwd/blastpad-stage/00-blastpad/files/.xinitrc  "${HOME}/"
             
-            apt-get update
 
+            apt-get update
+            
+            # setup node
             apt-get install -y curl
             curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 
-
+            # install git
             apt-get install git-all -y
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
+
+            # run dependency installer
             cd project-blastpad
             git switch BP-186-Versioned-Blastpad-Image-split-l8r
 
@@ -38,8 +44,11 @@ jobs:
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
             cd "${ROOTFS_DIR}/home/blastpad"
 
+            # own directory
             chown -R blastpad "${ROOTFS_DIR}/home/blastpad/project-blastpad"
 
+
+            # install all this other shit
             apt-get install nodejs -y
             # apt-get install xorg -y
             # apt-get install x11-xserver-utils -y
