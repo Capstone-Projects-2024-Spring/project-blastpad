@@ -5,125 +5,38 @@ on: push
 permissions:
   contents: write
 jobs:
-  blastpad-image:
+ blastpad-image:
     runs-on: ubuntu-latest
     steps:
       - run: |
-            mkdir -p blastpad-stage/00-blastpad/files && {
-            cat > blastpad-stage/00-blastpad/01-run-chroot.sh <<-EOF
+            mkdir -p blastpad-stage/package-test && {
+            cat > blastpad-stage/package-test/00-run-chroot.sh <<-EOF
             #!/bin/bash
-
-            HOME="${ROOTFS_DIR}/home/blastpad"
-
-
-            ls /cwd/
-            # ls -l /home/runner/work
-            # ls -l */*
-            # echo $HOME
-            # install -m 644 -o 1000 -g 1000 /cwd/blastpad-stage/00-blastpad/files/.profile  "${HOME}/"
-            # install -m 644 -o 1000 -g 1000 /cwd/blastpad-stage/00-blastpad/files/.xinitrc  "${HOME}/"
-            
-
-            apt-get update
-            
-            # setup node
             apt-get install -y curl
             curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-
-            # install git
-            apt-get install git-all -y
+            apt install git-all -y
             git clone https://github.com/Capstone-Projects-2024-Spring/project-blastpad
 
-            # run dependency installer
-            cd project-blastpad
-            git switch BP-186-Versioned-Blastpad-Image-split-l8r
-
-            cd install
+            cd project-blastpad/install
             ./dependencies.sh
             cd ../..
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
-            cd "${ROOTFS_DIR}/home/blastpad"
-
-            # own directory
-            chown -R blastpad "${ROOTFS_DIR}/home/blastpad/project-blastpad"
-
-
-            # install all this other shit
-            apt-get install nodejs -y
-            # apt-get install xorg -y
-            # apt-get install x11-xserver-utils -y
-            # apt-get install xserver-xorg-video-fbdev -y
-
+            chown -R blastpad "${ROOTFS_DIR}/home/blastpad"
+            
             EOF
             } &&
-            chmod +x blastpad-stage/00-blastpad/01-run-chroot.sh &&
+            chmod +x blastpad-stage/package-test/00-run-chroot.sh &&
+            echo "nodejs" >> blastpad-stage/package-test/01-packages &&
+            echo "git" >> blastpad-stage/package-test/01-packages &&
             {
-            cat > blastpad-stage/00-blastpad/prerun.sh <<-EOF
+            cat > blastpad-stage/prerun.sh <<-EOF
             #!/bin/bash -e
             if [ ! -d "\${ROOTFS_DIR}" ]; then
             copy_previous
             fi
             EOF
-            } && chmod +x blastpad-stage/00-blastpad/prerun.sh && { 
-            cat > blastpad-stage/00-blastpad/files/.profile <<-EOF
+            } && chmod +x blastpad-stage/prerun.sh
 
-            # if running bash
-            if [ -n "$BASH_VERSION" ]; then
-            # include .bashrc if it exists
-            if [ -f "$HOME/.bashrc" ]; then
-                . "$HOME/.bashrc"
-            fi
-            fi
-
-            # set PATH so it includes user's private bin if it exists
-            if [ -d "$HOME/bin" ] ; then
-            PATH="$HOME/bin:$PATH"
-            fi
-
-            # set PATH so it includes user's private bin if it exists
-            if [ -d "$HOME/.local/bin" ] ; then
-            PATH="$HOME/.local/bin:$PATH"
-            fi
-
-            PS1='[\[\e[0;32m\]\u@\h \[\e[0;34m\]\W\[\e[0;00m\]]\$ ';
-
-            alias ll='ls -lhF'
-            alias la='ls -AF'
-            alias l='ls -CF'
-            alias s='sudo'
-            alias sus='sudo -s'
-
-            # first-run script
-            # [[ -f ./firstrun.sh ]] && ./firstrun.sh
-
-            # silent startx on video console
-
-            if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-            startx > /dev/null 2>&1
-            exit
-            fi
-            EOF
-            } && {
-            cat > blastpad-stage/00-blastpad/files/.xinitrc <<-EOF
-
-            #!/usr/bin/env bash
-
-            # read URL from easily accessible location
-
-            # never blank the screen
-            xset s off -dpms
-
-            # rotate to portrait mounted TV
-            xrandr --output HDMI-1 --rotate left
-
-            # show a splash before browser kicks in
-            # feh --bg-scale splash.png
-
-            # start the cec-client & browser
-            # (cec-client | cec2kbd) & browser --fullscreen "${URL:='https://deltazero.cz'}"
-
-            EOF
-            }
 
       - uses: usimd/pi-gen-action@v1
         id: build
