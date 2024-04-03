@@ -54,7 +54,7 @@ jobs:
           password: blastpad
           username: blastpad
           stage-list: stage0 stage1 ./blastpad-stage
-          verbose-output: true
+          verbose-output: false
 
       - uses: actions/upload-artifact@v3
         with:
