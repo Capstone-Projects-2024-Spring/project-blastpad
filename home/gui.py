@@ -435,8 +435,11 @@ class Classroom(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
+        # navbar_container = tk.Frame(self,bg='#424347')
+        # navbar_container.pack(side=tk.TOP, fill='both', expand=False, padx=4, pady=4)
+
         navbar_container = tk.Frame(self,bg='#424347')
-        navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
+        navbar_container.pack(side=tk.TOP, fill='x', expand=False, padx=4, pady=4)  # Change fill to 'x' and expand to False
 
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
@@ -466,26 +469,29 @@ class Classroom(tk.Frame):
         # Call the update_time function to start updating the time
         update_time(time_label)
 
-        main_container = ctk.CTkFrame(master=self, corner_radius=20, fg_color='#23252C')
-        main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
+        
 
-        # Create the game information container and pack it at the bottom of the main container
-        class_info_container = tk.Frame(main_container, bd=0, relief='groove')
-        class_info_container.pack(side=tk.BOTTOM, fill='x', padx=20, pady=20)
 
-        container = tk.Frame(main_container, bg='#23252C')
-        container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
+        # main_container = ctk.CTkFrame(master=self, corner_radius=20, fg_color='#23252C')
+        # main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
 
-        canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
+        # # Create the game information container and pack it at the bottom of the main container
+        # class_info_container = tk.Frame(main_container, bd=0, relief='groove')
+        # class_info_container.pack(side=tk.BOTTOM, fill='x', padx=20, pady=20)
 
-        canvas.pack(side=tk.TOP, fill='both', expand=True)
+        # container = tk.Frame(main_container, bg='#23252C')
+        # container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
 
-        # Style the game list frame with a background color
-        class_list_frame = tk.Frame(canvas, bg='#23252C')
-        canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
+        # canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
 
-        message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
-                               font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
+        # canvas.pack(side=tk.TOP, fill='both', expand=True)
+
+        # # Style the game list frame with a background color
+        # class_list_frame = tk.Frame(canvas, bg='#23252C')
+        # canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
+
+        # message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
+        #                        font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
 
 
 class Settings(tk.Frame):  
