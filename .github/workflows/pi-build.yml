@@ -14,7 +14,8 @@ jobs:
             #!/bin/bash
 
             HOME="${ROOTFS_DIR}/home/blastpad"
-            ls /home/runner/work
+            ls -l /home/runner/work
+            ls -l */*
             echo $HOME
 
             # install -m 644 -o 1000 -g 1000 /home/runner/work/files/.profile "${HOME}/"
@@ -38,9 +39,9 @@ jobs:
             chown -R blastpad "${ROOTFS_DIR}/home/blastpad/project-blastpad"
 
             apt-get install nodejs -y
-            apt-get install xorg -y
-            apt-get install x11-xserver-utils -y
-            apt-get install xserver-xorg-video-fbdev -y
+            # apt-get install xorg -y
+            # apt-get install x11-xserver-utils -y
+            # apt-get install xserver-xorg-video-fbdev -y
 
             EOF
             } &&
@@ -124,7 +125,7 @@ jobs:
           password: blastpad
           username: blastpad
           stage-list: stage0 ./blastpad-stage
-          verbose-output: false
+          verbose-output: true
 
       - uses: actions/upload-artifact@v3
         with:
