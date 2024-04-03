@@ -24,10 +24,10 @@ jobs:
             cp -r project-blastpad "${ROOTFS_DIR}/home/blastpad"
             
             # adduser ${FIRST_USER_NAME} blastpad
-            # chown -R blastpad "${ROOTFS_DIR}/home/blastpad"
 
             adduser --disabled-password --gecos "" blastpad
             echo "blastpad:blastpad" | chpasswd
+            chown -R blastpad "${ROOTFS_DIR}/home/blastpad"
 
             EOF
             } &&
