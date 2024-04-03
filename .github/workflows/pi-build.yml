@@ -17,8 +17,8 @@ jobs:
             ls /home/runner/work
             echo $HOME
 
-            install -m 644 -o 1000 -g 1000 /home/runner/files/.profile "${HOME}/"
-            install -m 644 -o 1000 -g 1000 /home/runner/files/.xinitrc "${HOME}/"
+            # install -m 644 -o 1000 -g 1000 /home/runner/work/files/.profile "${HOME}/"
+            # install -m 644 -o 1000 -g 1000 /home/runner/work/files/.xinitrc "${HOME}/"
             apt-get update
             apt-get install -y curl
             curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -41,6 +41,7 @@ jobs:
             apt-get install xorg
             apt-get install x11-xserver-utils
             apt-get install xserver-xorg-video-fbdev
+
             EOF
             } &&
             chmod +x blastpad-stage/00-blastpad/01-run-chroot.sh &&
