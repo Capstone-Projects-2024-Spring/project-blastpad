@@ -264,7 +264,6 @@ class CommunityHub(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
-        self.controller = controller # Reference to the main application
         navbar_container = tk.Frame(self,bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
 
@@ -322,6 +321,7 @@ class CommunityHub(tk.Frame):
         # dimensions for new game icon and games in game library
         game_lib_button_width = 125
         game_lib_button_height = 125
+
         def render_new_game_icon(game_list_frame, button_width, button_height):
             # Open the image file with PIL and resize it
             pil_img = Image.open('home/guiImages/searchIcon.png')
@@ -431,18 +431,15 @@ class CommunityHub(tk.Frame):
             play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
             edit_button = create_button(button_frame, like_button_img_path, on_like_clicked, buttonWidth, buttonHeight)
 
-        
   
-  
-class Classroom(tk.Frame):  
+class Classroom(tk.Frame): 
+
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
-
         # Widgets for navbar
         navbar_container = tk.Frame(self, bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
-
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
@@ -493,7 +490,7 @@ class Classroom(tk.Frame):
             message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
         
-        else:
+        else: #Need to login
                 # Widgets for login
             self.username_label = tk.Label(class_list_frame, text="Username:", bg='#33363E', fg='white', font=('Helvetica', 12))
             self.username_label.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
