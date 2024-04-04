@@ -435,22 +435,24 @@ class CommunityHub(tk.Frame):
   
   
 class Classroom(tk.Frame):  
-  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
-        navbar_container = tk.Frame(self,bg='#424347')
+
+        # Widgets for navbar
+        navbar_container = tk.Frame(self, bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
 
         navbar = tk.Frame(navbar_container, bg='#33363E')
         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
+        # Create navbar buttons
         home_img_path = 'home/guiImages/homeIcon.png'
         community_img_path = 'home/guiImages/communityHubIcon.png'
         classroom_img_path = 'home/guiImages/classroomIconPressed.png'
         settings_img_path = 'home/guiImages/settingsIcon.png'
 
-        # Create buttons with images
+        # Create buttons with images using pack
         button_width = 75
         button_height = 75
         home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
@@ -481,23 +483,52 @@ class Classroom(tk.Frame):
         container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
 
         canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
-
         canvas.pack(side=tk.TOP, fill='both', expand=True)
-
+        self.check_login_requirement(canvas)
         # Style the game list frame with a background color
+    def check_login_requirement(self, canvas):
         class_list_frame = tk.Frame(canvas, bg='#23252C')
         canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
-        self.check_login_requirement()
-        message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
+        if not check_login_requirement():
+            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
-    def check_login_requirement(self):
-        if check_login_requirement():
-            self.open_login_window()
-    def open_login_window(self):
-        login_window = LoginWindow(self,self.handle_login)
-        login_window.lift()
-    def handle_login(self, username, password):
-        login_to_server(username,password)                           
+        
+        else:
+                # Widgets for login
+            self.username_label = tk.Label(class_list_frame, text="Username:", bg='#33363E', fg='white', font=('Helvetica', 12))
+            self.username_label.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
+            
+            self.password_label = tk.Label(class_list_frame, text="Password:", bg='#33363E', fg='white', font=('Helvetica', 12))
+            self.password_label.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
+
+            self.username_entry = tk.Entry(class_list_frame, bg='#51535B', fg='white', font=('Helvetica', 12))
+            self.username_entry.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
+            
+            self.password_entry = tk.Entry(class_list_frame, show="*", bg='#51535B', fg='white', font=('Helvetica', 12))
+            self.password_entry.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
+
+            login_button = tk.Button(class_list_frame, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
+            login_button.pack(side=tk.TOP, padx=10, pady=10)
+        
+    def login_clicked(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        response_code = login_to_server(username,password)
+        if response_code == 200:
+            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
+                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)    
+        else:
+            # Determine failure reason and display appropriate message
+            if response_code == 401:
+                failure_reason = "Invalid username or password."
+            elif response_code == 403:
+                failure_reason = "Access forbidden."
+            elif response_code == 404:
+                failure_reason = "Server not found."
+            else:
+                failure_reason = "Login failed with unknown reason."
+            messagebox.showerror("Login Failed", failure_reason)
+
 
 
 class Settings(tk.Frame):  
@@ -585,41 +616,6 @@ def check_login_requirement():
 
     # If no valid log entry is found, assume the user needs to log in
     return True
-
-class LoginWindow(tk.Toplevel):
-    def __init__(self, parent, login_callback):
-        super().__init__(parent)
-        self.title("Login")
-        self.config(bg='#33363E')
-
-        self.login_callback = login_callback
-
-        # Create labels
-        username_label = tk.Label(self, text="Username:", bg='#33363E', fg='white', font=('Helvetica', 12))
-        username_label.grid(row=0, column=0, padx=10, pady=5, sticky='w')
-        password_label = tk.Label(self, text="Password:", bg='#33363E', fg='white', font=('Helvetica', 12))
-        password_label.grid(row=1, column=0, padx=10, pady=5, sticky='w')
-
-        # Create entry widgets
-        self.username_entry = tk.Entry(self, bg='#51535B', fg='white', font=('Helvetica', 12))
-        self.username_entry.grid(row=0, column=1, padx=10, pady=5)
-        self.password_entry = tk.Entry(self, show="*", bg='#51535B', fg='white', font=('Helvetica', 12))
-        self.password_entry.grid(row=1, column=1, padx=10, pady=5)
-
-        # Create login button
-        login_button = tk.Button(self, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
-        login_button.grid(row=2, column=0, columnspan=2, pady=10)
-
-        # Center the window
-        self.update_idletasks()
-        width = self.winfo_width()
-        height = self.winfo_height()
-        x = (self.winfo_screenwidth() // 2) - (width // 2)
-        y = (self.winfo_screenheight() // 2) - (height // 2)
-        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-
-    def close_window(self):
-        self.destroy()
 
     def login_clicked(self):
         username = self.username_entry.get()
