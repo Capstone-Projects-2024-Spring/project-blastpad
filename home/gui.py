@@ -2,10 +2,9 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
-import datetime
 import requests
 import subprocess
-from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked, login_to_server
+from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked, login_to_server, get_last_successful_username, check_login_requirement
 from wifiMenu import WifiMenu
 
 games = []
@@ -500,8 +499,11 @@ class Classroom(tk.Frame):
             login_button = tk.Button(class_list_frame, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
             login_button.grid(row=2, columnspan=2, padx=10, pady=10)
         else: #Show default page
-            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under construction", text_color='white', 
-                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0) 
+            username_success = get_last_successful_username()
+
+            message = ctk.CTkLabel(class_list_frame, text=f"The Classroom page is under construction. Currently Logged in as {username_success}", text_color='white', 
+                        font=('Helvetica', 30, 'bold'), bg_color='#23252C', wraplength=600)
+            message.pack(side=tk.TOP, fill='x', pady=20)
 
     def login_clicked(self):
         username = self.username_entry.get()
@@ -582,39 +584,6 @@ class Settings(tk.Frame):
         canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
         message = ctk.CTkLabel(class_list_frame, text="The Settings page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
-
-def check_login_requirement():
-    try:
-        with open("login_log.txt", "r") as log_file:
-            log_entries = log_file.readlines()
-    except FileNotFoundError:
-        # If the file doesn't exist, assume the user needs to log in
-        return True
-
-    # Get the last log entry
-    last_entry = log_entries[-1].strip() if log_entries else None
-
-    if last_entry:
-        parts = last_entry.split(" - ")
-        if len(parts) >= 2:
-            timestamp_str = parts[0]
-            status_str = parts[1]
-            try:
-                timestamp = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
-                status = status_str.split(": ")[1]
-                if status == "Fail":
-                    return True  # Need to log in due to previous failure
-                elif (datetime.datetime.now() - timestamp).days > 7:
-                    return True  # Need to re-log after 7 days
-                else:
-                    return False  # No need to re-log
-            except ValueError:
-                # If there's any issue parsing the timestamp or status, assume the user needs to log in
-                return True
-
-    # If no valid log entry is found, assume the user needs to log in
-    return True
-
 
 app = BlastPad()
 app.geometry("800x450")

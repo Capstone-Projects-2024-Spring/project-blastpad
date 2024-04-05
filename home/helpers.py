@@ -3,6 +3,7 @@ import webbrowser
 from PIL import Image, ImageTk
 import tkinter as tk
 import requests
+import datetime
 
 def on_like_clicked():
     print("Like button clicked!")
@@ -101,6 +102,48 @@ def login_to_server(username, password):
         return None
 
     return response.status_code
+
+def get_last_successful_username():
+    last_successful_username = None
+    with open("login_log.txt", "r") as log_file:
+        lines = log_file.readlines()
+        for line in reversed(lines):
+            if "Success" in line:
+                last_successful_username = line.split("Username: ")[1].split(",")[0]
+                break
+    return last_successful_username
+
+def check_login_requirement():
+    try:
+        with open("login_log.txt", "r") as log_file:
+            log_entries = log_file.readlines()
+    except FileNotFoundError:
+        # If the file doesn't exist, assume the user needs to log in
+        return True
+
+    # Get the last log entry
+    last_entry = log_entries[-1].strip() if log_entries else None
+
+    if last_entry:
+        parts = last_entry.split(" - ")
+        if len(parts) >= 2:
+            timestamp_str = parts[0]
+            status_str = parts[1]
+            try:
+                timestamp = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+                status = status_str.split(": ")[1]
+                if status == "Fail":
+                    return True  # Need to log in due to previous failure
+                elif (datetime.datetime.now() - timestamp).days > 7:
+                    return True  # Need to re-log after 7 days
+                else:
+                    return False  # No need to re-log
+            except ValueError:
+                # If there's any issue parsing the timestamp or status, assume the user needs to log in
+                return True
+
+    # If no valid log entry is found, assume the user needs to log in
+    return True
 
 # Example usage
 # login_to_server('user', 'password')
