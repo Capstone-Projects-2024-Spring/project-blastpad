@@ -12,6 +12,10 @@ xrandr --output HDMI-1 --rotate left
 # show a splash before browser kicks in
 feh --bg-scale splash.png
 
+cd project-blastpad
+python home/gui.py
+
+
 # compile everything
 # ADD A STEP HERE TO SKIP THIS IF NOT THE FIRST LOAD!!!!!!!!!
 # if we already have pip then no need to run dependencies.sh as sudo

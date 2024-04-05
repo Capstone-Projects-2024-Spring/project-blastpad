@@ -87,3 +87,4 @@ gpu_mem=256
 
 [pi4]
 gpu_mem=512
+disable_splash=1
