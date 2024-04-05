@@ -1,0 +1,61 @@
+# disabled
+name: Build Image
+on: push
+    
+permissions:
+  contents: write
+jobs:
+ blastpad-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: 'project-blastpad'
+
+      - run: |
+            cat << "EOF"
+              ▄▄▄▄· ▄▄▌   ▄▄▄· .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄· ·▄▄▄▄  
+              ▐█ ▀█▪██•  ▐█ ▀█ ▐█ ▀. •██  ▐█ ▄█▐█ ▀█ ██▪ ██ 
+              ▐█▀▀█▄██▪  ▄█▀▀█ ▄▀▀▀█▄ ▐█.▪ ██▀·▄█▀▀█ ▐█· ▐█▌
+              ██▄▪▐█▐█▌▐▌▐█ ▪▐▌▐█▄▪▐█ ▐█▌·▐█▪·•▐█ ▪▐▌██. ██ 
+              ·▀▀▀▀ .▀▀▀  ▀  ▀  ▀▀▀▀  ▀▀▀ .▀    ▀  ▀ ▀▀▀▀▀• 
+            EOF
+
+            mv project-blastpad/install/test-stage blastpad-stage
+            echo "Pulled Blastpad Stage"
+
+            echo "Installing Node Moduless"
+            cd project-blastpad/install
+            sudo ./dependencies.sh
+
+            echo "Compressing Build"
+            cd ../../
+            ls
+            tar -zcvf blastpad-build.tar.gz project-blastpad
+
+            echo "Smuggling Build"
+            cp blastpad-build.tar.gz blastpad-stage/00-kiosk/files/
+
+            echo "Done!"
+
+      - uses: usimd/pi-gen-action@v1
+        id: build
+        with:
+          enable-ssh: 1
+          keyboard-layout: English (US)
+          keyboard-keymap: us
+          image-name: test
+          disable-first-boot-user-rename: 1
+          password: blastpad
+          username: blastpad
+          stage-list: stage0 stage1 stage2 ./blastpad-stage
+          verbose-output: false
+          # Wifi country code of default network to connect to.
+          wpa-country: 'US'
+          wpa-essid: 'Pocket Pita'
+          wpa-password: 'nudibranch'
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pi-gen-image
+          path: ${{ steps.build.outputs.image-path }}
