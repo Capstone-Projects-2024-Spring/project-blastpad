@@ -12,9 +12,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - run: |
-          ls
-            # curl -L https://github.com/Capstone-Projects-2024-Spring/project-blastpad/tarball/BP-186-Versioned-Blastpad-Image-split-l8r | tar zx
-            mv /install/test-stage blastpad-stage
+            mv install/test-stage blastpad-stage
 
             cd install
             sudo ./dependencies.sh
