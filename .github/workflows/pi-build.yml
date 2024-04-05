@@ -8,11 +8,9 @@ jobs:
  blastpad-image:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-        mkdir project-blastpad
-        cd project-blastpad
-
       - uses: actions/checkout@v3
+        with:
+              path: 'project-blastpad'
 
       - run: |
             cd ../
@@ -24,7 +22,7 @@ jobs:
             echo "Installing Node Moduless"
             cd project-blastpad/install
             sudo ./dependencies.sh > /dev/null
-            
+
             echo "Compressing Build"
             cd ../../
             ls
