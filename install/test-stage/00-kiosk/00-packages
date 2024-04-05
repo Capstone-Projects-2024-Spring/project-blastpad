@@ -11,3 +11,4 @@ cec-utils
 xdotool
 vim
 python3-pip
+python3-tk

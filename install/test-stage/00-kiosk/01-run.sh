@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+# get node too
+
 . "${BASE_DIR}/config"
 on_chroot << EOF
 echo -n "${FIRST_USER_NAME:='pi'}:" > /boot/userconf.txt
