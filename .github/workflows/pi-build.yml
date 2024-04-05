@@ -10,13 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-              path: 'project-blastpad'
+          path: 'project-blastpad'
 
       - run: |
-            cd ../
-            ls
-            mv project-blastpad/install/test-stage blastpad-stage
+            cat << "EOF"
+              ▄▄▄▄· ▄▄▌   ▄▄▄· .▄▄ · ▄▄▄▄▄ ▄▄▄· ▄▄▄· ·▄▄▄▄  
+              ▐█ ▀█▪██•  ▐█ ▀█ ▐█ ▀. •██  ▐█ ▄█▐█ ▀█ ██▪ ██ 
+              ▐█▀▀█▄██▪  ▄█▀▀█ ▄▀▀▀█▄ ▐█.▪ ██▀·▄█▀▀█ ▐█· ▐█▌
+              ██▄▪▐█▐█▌▐▌▐█ ▪▐▌▐█▄▪▐█ ▐█▌·▐█▪·•▐█ ▪▐▌██. ██ 
+              ·▀▀▀▀ .▀▀▀  ▀  ▀  ▀▀▀▀  ▀▀▀ .▀    ▀  ▀ ▀▀▀▀▀• 
+            EOF
 
+            mv project-blastpad/install/test-stage blastpad-stage
             echo "Pulled Blastpad Stage"
 
             echo "Installing Node Moduless"
