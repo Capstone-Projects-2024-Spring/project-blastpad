@@ -437,6 +437,7 @@ class Classroom(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
+        self.controller = controller
         # Widgets for navbar
         navbar_container = tk.Frame(self, bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
@@ -481,17 +482,10 @@ class Classroom(tk.Frame):
 
         canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
         canvas.pack(side=tk.TOP, fill='both', expand=True)
-        self.check_login_requirement(canvas)
         # Style the game list frame with a background color
-    def check_login_requirement(self, canvas):
         class_list_frame = tk.Frame(canvas, bg='#23252C')
         canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
-        if not check_login_requirement():
-            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
-                               font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
-        
-        else: #Need to login
-                # Widgets for login
+        if check_login_requirement():
             self.username_label = tk.Label(class_list_frame, text="Username:", bg='#33363E', fg='white', font=('Helvetica', 12))
             self.username_label.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
             
@@ -506,14 +500,19 @@ class Classroom(tk.Frame):
 
             login_button = tk.Button(class_list_frame, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
             login_button.pack(side=tk.TOP, padx=10, pady=10)
+        else: #Show default page
+            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
+                               font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
         
+            
+
     def login_clicked(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
         response_code = login_to_server(username,password)
         if response_code == 200:
-            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
-                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)    
+            # self.reload_class()
+            print("reloading the gui should go here")   
         else:
             # Determine failure reason and display appropriate message
             if response_code == 401:
@@ -524,7 +523,7 @@ class Classroom(tk.Frame):
                 failure_reason = "Server not found."
             else:
                 failure_reason = "Login failed with unknown reason."
-            messagebox.showerror("Login Failed", failure_reason)
+            print("Login Failed", failure_reason)
 
 
 
@@ -584,7 +583,6 @@ class Settings(tk.Frame):
         message = ctk.CTkLabel(class_list_frame, text="The Settings page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
 
-
 def check_login_requirement():
     try:
         with open("login_log.txt", "r") as log_file:
@@ -593,10 +591,13 @@ def check_login_requirement():
         # If the file doesn't exist, assume the user needs to log in
         return True
 
-    for line in reversed(log_entries):
-        parts = line.strip().split(" - ")
+    # Get the last log entry
+    last_entry = log_entries[-1].strip() if log_entries else None
+
+    if last_entry:
+        parts = last_entry.split(" - ")
         if len(parts) >= 2:
-            timestamp_str = parts[0].split(" - ")[0]
+            timestamp_str = parts[0]
             status_str = parts[1]
             try:
                 timestamp = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
@@ -608,33 +609,13 @@ def check_login_requirement():
                 else:
                     return False  # No need to re-log
             except ValueError:
-                # If there's any issue parsing the timestamp or status, continue to the next line
-                continue
+                # If there's any issue parsing the timestamp or status, assume the user needs to log in
+                return True
 
     # If no valid log entry is found, assume the user needs to log in
     return True
 
-    def login_clicked(self):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-        response_code = login_to_server(username,password)
-        if response_code == 200:
-            self.close_window()
-        else:
-            # Determine failure reason and display appropriate message
-            if response_code == 401:
-                failure_reason = "Invalid username or password."
-            elif response_code == 403:
-                failure_reason = "Access forbidden."
-            elif response_code == 404:
-                failure_reason = "Server not found."
-            else:
-                failure_reason = "Login failed with unknown reason."
-            messagebox.showerror("Login Failed", failure_reason)
 
-
-
-# login_to_server('username1','password1')
 app = BlastPad()
 app.geometry("800x450")
 app.mainloop()

@@ -103,4 +103,4 @@ def login_to_server(username, password):
     return response.status_code
 
 # Example usage
-login_to_server('user', 'password')
+# login_to_server('user', 'password')
