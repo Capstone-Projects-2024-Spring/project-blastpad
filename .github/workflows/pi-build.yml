@@ -14,12 +14,13 @@ jobs:
       - run: |
           ls
             # curl -L https://github.com/Capstone-Projects-2024-Spring/project-blastpad/tarball/BP-186-Versioned-Blastpad-Image-split-l8r | tar zx
-            mv project-blastpad/install/test-stage blastpad-stage
+            mv /install/test-stage blastpad-stage
 
-            cd project-blastpad/install
+            cd install
             sudo ./dependencies.sh
 
             cd ../..
+            ls
             tar -zcvf blastpad-build.tar.gz project-blastpad
 
             cp blastpad-build.tar.gz blastpad-stage/00-kiosk/files/
