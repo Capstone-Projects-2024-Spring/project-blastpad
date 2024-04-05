@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
 import subprocess
-from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
+from helpers import *
 from wifiMenu import WifiMenu
 
 games = []
@@ -432,11 +432,9 @@ class CommunityHub(tk.Frame):
   
 class Classroom(tk.Frame):  
   
-    def __init__(self, parent, controller):  
+    def __init__(self, parent, controller):    
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
-        # navbar_container = tk.Frame(self,bg='#424347')
-        # navbar_container.pack(side=tk.TOP, fill='both', expand=False, padx=4, pady=4)
 
         navbar_container = tk.Frame(self,bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='x', expand=False, padx=4, pady=4)  # Change fill to 'x' and expand to False
@@ -469,29 +467,45 @@ class Classroom(tk.Frame):
         # Call the update_time function to start updating the time
         update_time(time_label)
 
-        
 
+        # Creates a frame for listing classrooms, placed on the left side of the window.
+        classroom_list_frame = tk.Frame(master=self, bg='gray')
+        # Displays the frame, sticking to the left side and filling the vertical space.
+        classroom_list_frame.pack(side=tk.LEFT, fill="y")
 
-        # main_container = ctk.CTkFrame(master=self, corner_radius=20, fg_color='#23252C')
-        # main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
+        # Creates a button labeled 'Join Class' within the classroom list frame.
+        join_class_button = tk.Button(classroom_list_frame, text="Join Class", 
+                                    command=lambda: join_class())
+        # Positions the button with padding, filling the horizontal space.
+        join_class_button.pack(padx=10, pady=5, fill="x")
 
-        # # Create the game information container and pack it at the bottom of the main container
-        # class_info_container = tk.Frame(main_container, bd=0, relief='groove')
-        # class_info_container.pack(side=tk.BOTTOM, fill='x', padx=20, pady=20)
+        # A dictionary mapping classroom names to their descriptions.
+        classrooms = {
+            "Robotics Class": "Description for Robotics Class",
+            "Mr. Riley 4th Grade Tech": "Description for Mr. Riley's Class",
+            "Mrs. Susans": "Description for Mrs. Susan's Class",
+        }
 
-        # container = tk.Frame(main_container, bg='#23252C')
-        # container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
+        # Frame for classroom buttons, allowing for scrolling if needed.
+        buttons_frame = tk.Frame(classroom_list_frame, bg='gray')
+        buttons_frame.pack(fill="both", expand=False)
 
-        # canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
+        # # Scrollbar for the buttons frame (optional, remove if not needed)
+        # scrollbar = tk.Scrollbar(buttons_frame, orient="vertical")
+        # scrollbar.pack(side="right", fill="y")
 
-        # canvas.pack(side=tk.TOP, fill='both', expand=True)
+        # Creates a frame that will display the content for the selected classroom.
+        content_frame = tk.Frame(master=self, bg='white')
+        # Displays the frame, placed on the right, filling both vertical and horizontal space, and allowing expansion.
+        content_frame.pack(side="right", fill="both", expand=True)
 
-        # # Style the game list frame with a background color
-        # class_list_frame = tk.Frame(canvas, bg='#23252C')
-        # canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
-
-        # message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
-        #                        font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
+        # Iterates through the classrooms dictionary to create a button for each classroom.
+        for classroom_name, desc in classrooms.items():
+            # Each button is labeled with the classroom name and calls show_classroom_content when clicked.
+            btn = tk.Button(classroom_list_frame, text=classroom_name,
+                            command=lambda c=classroom_name: show_classroom_content(content_frame, classrooms, c))
+            # Positions each button with padding, filling the horizontal space.
+            btn.pack(padx=10, pady=5, fill="x")
 
 
 class Settings(tk.Frame):  
