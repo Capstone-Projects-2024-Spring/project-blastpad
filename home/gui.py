@@ -430,7 +430,87 @@ class CommunityHub(tk.Frame):
             play_button = create_button(button_frame, play_button_img_path, lambda: on_compile_click(game_json_path), buttonWidth, buttonHeight)
             edit_button = create_button(button_frame, like_button_img_path, on_like_clicked, buttonWidth, buttonHeight)
 
+
+## BELOW IS THE CLASSROOM CLASS WITHOUT THE LOGIN. IT IS THE BAREBONES VERSION OF THE FIGMA CONCEPT
+# class Classroom(tk.Frame):  
   
+#     def __init__(self, parent, controller):    
+#         tk.Frame.__init__(self, parent)  
+#         self.config(bg='#33363E')
+
+#         navbar_container = tk.Frame(self,bg='#424347')
+#         navbar_container.pack(side=tk.TOP, fill='x', expand=False, padx=4, pady=4)  # Change fill to 'x' and expand to False
+
+#         navbar = tk.Frame(navbar_container, bg='#33363E')
+#         navbar.pack(side=tk.TOP, fill='x', anchor='n')
+
+#         home_img_path = 'home/guiImages/homeIcon.png'
+#         community_img_path = 'home/guiImages/communityHubIcon.png'
+#         classroom_img_path = 'home/guiImages/classroomIconPressed.png'
+#         settings_img_path = 'home/guiImages/settingsIcon.png'
+
+#         # Create buttons with images
+#         button_width = 75
+#         button_height = 75
+#         home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
+#         community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
+#         classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
+#         settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
+
+#         battery_img_path = 'home/guiImages/batteryIcon.png'
+#         wifi_img_path = 'home/guiImages/wifiIcon.png'
+
+#         battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
+#         wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event)
+
+#         time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+#         time_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+#         # Call the update_time function to start updating the time
+#         update_time(time_label)
+
+
+#         # Creates a frame for listing classrooms, placed on the left side of the window.
+#         classroom_list_frame = tk.Frame(master=self, bg='gray')
+#         # Displays the frame, sticking to the left side and filling the vertical space.
+#         classroom_list_frame.pack(side=tk.LEFT, fill="y")
+
+#         # Creates a button labeled 'Join Class' within the classroom list frame.
+#         join_class_button = tk.Button(classroom_list_frame, text="Join Class", 
+#                                     command=lambda: join_class())
+#         # Positions the button with padding, filling the horizontal space.
+#         join_class_button.pack(padx=10, pady=5, fill="x")
+
+#         # A dictionary mapping classroom names to their descriptions.
+#         classrooms = {
+#             "Robotics Class": "Description for Robotics Class",
+#             "Mr. Riley 4th Grade Tech": "Description for Mr. Riley's Class",
+#             "Mrs. Susans": "Description for Mrs. Susan's Class",
+#         }
+
+#         # Frame for classroom buttons, allowing for scrolling if needed.
+#         buttons_frame = tk.Frame(classroom_list_frame, bg='gray')
+#         buttons_frame.pack(fill="both", expand=False)
+
+#         # # Scrollbar for the buttons frame (optional, remove if not needed)
+#         # scrollbar = tk.Scrollbar(buttons_frame, orient="vertical")
+#         # scrollbar.pack(side="right", fill="y")
+
+#         # Creates a frame that will display the content for the selected classroom.
+#         content_frame = tk.Frame(master=self, bg='white')
+#         # Displays the frame, placed on the right, filling both vertical and horizontal space, and allowing expansion.
+#         content_frame.pack(side="right", fill="both", expand=True)
+
+#         # Iterates through the classrooms dictionary to create a button for each classroom.
+#         for classroom_name, desc in classrooms.items():
+#             # Each button is labeled with the classroom name and calls show_classroom_content when clicked.
+#             btn = tk.Button(classroom_list_frame, text=classroom_name,
+#                             command=lambda c=classroom_name: show_classroom_content(content_frame, classrooms, c))
+#             # Positions each button with padding, filling the horizontal space.
+#             btn.pack(padx=10, pady=5, fill="x")
+
+
+
 class Classroom(tk.Frame): 
 
     def __init__(self, parent, controller):  
