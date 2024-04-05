@@ -2,6 +2,7 @@ from time import strftime
 import webbrowser
 from PIL import Image, ImageTk
 import tkinter as tk
+from plyer import notification
 
 def on_like_clicked():
     print("Like button clicked!")
@@ -81,3 +82,6 @@ def add_icon(frame, image_path, desired_width, desired_height, click_handler, ro
     # Bind the click event to the label
     image_label.bind("<Button-1>", lambda event: click_handler(root))
     image_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+def construct_notification(title,message,displayingTime):
+    notification.notify(title=title,message=message,app_name="BlastPad",app_icon="Artcore-Illustrations-Artcore-4-Games-folder.ico",timeout=displayingTime,toast=True,hints="desktop-entry""BlastPad")

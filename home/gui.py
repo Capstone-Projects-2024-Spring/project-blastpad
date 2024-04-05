@@ -3,10 +3,8 @@ from PIL import Image, ImageTk
 import customtkinter as ctk
 import os, json
 import subprocess
-from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
+from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked, construct_notification
 from wifiMenu import WifiMenu
-import ttkbootstrap as tb
-from ttkbootstrap.toast import ToastNotification
 
 games = []
 wifi_menu_window = None
@@ -18,21 +16,8 @@ def wifi_clicked_event(root):
         wifi_menu = WifiMenu(wifi_menu_window)
 
 def battery_clicked_event(event=None):
-    tm = Toast_Manager
-    the_toast = tm.construct_toast("title","message",3000,True)
-    tm.show_custom_toast(the_toast)  
     print("Battery button clicked!")
-
-class Toast_Manager():
-    def __init__(self,root):
-        self.root = root
-        self.root.title("TTK Bootstrap! Toast Message!")
-        self.root.geometry('300x200')
-    
-    def construct_toast(title, message, duration, alert):
-        return ToastNotification(title=title, message=message, duration=duration, alert=alert, position='sw',bootstyle='dark')
-    def show_custom_toast(toast):
-        toast.show_toast()
+    # construct_notification("BlastPad","Message",5)
 
 class Game:
     def __init__(self, name, description, author, path, filename):
