@@ -437,7 +437,6 @@ class Classroom(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(bg='#33363E')
-        self.controller = controller
         # Widgets for navbar
         navbar_container = tk.Frame(self, bg='#424347')
         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
@@ -484,27 +483,25 @@ class Classroom(tk.Frame):
         canvas.pack(side=tk.TOP, fill='both', expand=True)
         # Style the game list frame with a background color
         class_list_frame = tk.Frame(canvas, bg='#23252C')
-        canvas.create_window((0, 0), window=class_list_frame, anchor='nw')
+        canvas.create_window(0, 0, window=class_list_frame, anchor='nw')
         if check_login_requirement():
-            self.username_label = tk.Label(class_list_frame, text="Username:", bg='#33363E', fg='white', font=('Helvetica', 12))
-            self.username_label.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
-            
-            self.password_label = tk.Label(class_list_frame, text="Password:", bg='#33363E', fg='white', font=('Helvetica', 12))
-            self.password_label.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
+            username_label = tk.Label(class_list_frame, text="Username:", bg='#23252C', fg='white', font=('Helvetica', 12))
+            username_label.grid(row=0, column=0, padx=10, pady=10, sticky='w')
 
-            self.username_entry = tk.Entry(class_list_frame, bg='#51535B', fg='white', font=('Helvetica', 12))
-            self.username_entry.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
-            
-            self.password_entry = tk.Entry(class_list_frame, show="*", bg='#51535B', fg='white', font=('Helvetica', 12))
-            self.password_entry.pack(side=tk.TOP, padx=10, pady=5, anchor='w')
+            password_label = tk.Label(class_list_frame, text="Password:", bg='#23252C', fg='white', font=('Helvetica', 12))
+            password_label.grid(row=1, column=0, padx=10, pady=10, sticky='w')
+
+            self.username_entry = tk.Entry(class_list_frame, bg='#23252C', fg='white', font=('Helvetica', 12))
+            self.username_entry.grid(row=0, column=1, padx=10, pady=10)
+
+            self.password_entry = tk.Entry(class_list_frame, show="*", bg='#23252C', fg='white', font=('Helvetica', 12))
+            self.password_entry.grid(row=1, column=1, padx=10, pady=10)
 
             login_button = tk.Button(class_list_frame, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
-            login_button.pack(side=tk.TOP, padx=10, pady=10)
+            login_button.grid(row=2, columnspan=2, padx=10, pady=10)
         else: #Show default page
-            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under contruction", text_color='white', 
-                               font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
-        
-            
+            message = ctk.CTkLabel(class_list_frame, text="The Classroom page is under construction", text_color='white', 
+                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0) 
 
     def login_clicked(self):
         username = self.username_entry.get()
@@ -512,7 +509,9 @@ class Classroom(tk.Frame):
         response_code = login_to_server(username,password)
         if response_code == 200:
             # self.reload_class()
-            print("reloading the gui should go here")   
+            print("reloading the gui should go here")  # In the meantime....
+            self.username_entry.delete(0, 'end')  # Clear the username entry
+            self.password_entry.delete(0, 'end')  # Clear the password entry  
         else:
             # Determine failure reason and display appropriate message
             if response_code == 401:
@@ -524,6 +523,7 @@ class Classroom(tk.Frame):
             else:
                 failure_reason = "Login failed with unknown reason."
             print("Login Failed", failure_reason)
+
 
 
 
