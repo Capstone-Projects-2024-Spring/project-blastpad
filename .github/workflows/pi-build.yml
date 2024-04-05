@@ -14,14 +14,22 @@ jobs:
       - run: |
             mv install/test-stage blastpad-stage
 
-            cd install
-            sudo ./dependencies.sh
+            echo "Pulled Blastpad Stage"
+            ls blastpad-stage
 
-            cd ../..
+            echo "Installing Node Moduless"
+            cd install
+            sudo ./dependencies.sh > /dev/null
+
+            echo "Compressing Build"
+            cd ../
             ls
             tar -zcvf blastpad-build.tar.gz project-blastpad
 
+            echo "Smuggling Build"
             cp blastpad-build.tar.gz blastpad-stage/00-kiosk/files/
+
+            echo "Done!"
 
       - uses: usimd/pi-gen-action@v1
         id: build
