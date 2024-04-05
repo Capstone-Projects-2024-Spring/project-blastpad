@@ -24,6 +24,10 @@ jobs:
           username: blastpad
           stage-list: stage0 stage1 stage2 ./blastpad-stage
           verbose-output: false
+          # Wifi country code of default network to connect to.
+          wpa-country: 'US'
+          wpa-essid: 'Pocket Pita'
+          wpa-password: 'nudibranch'
 
       - uses: actions/upload-artifact@v3
         with:
