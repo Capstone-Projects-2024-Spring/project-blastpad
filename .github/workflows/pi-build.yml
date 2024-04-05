@@ -26,7 +26,7 @@ jobs:
 
             echo "Installing Node Moduless"
             cd project-blastpad/install
-            sudo ./dependencies.sh > /dev/null
+            sudo ./dependencies.sh
 
             echo "Compressing Build"
             cd ../../

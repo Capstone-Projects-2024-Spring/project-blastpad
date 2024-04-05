@@ -7,10 +7,10 @@ URL=$(head -n 1 /boot/kiosk.url)
 xset s off -dpms
 
 # rotate to portrait mounted TV
-xrandr --output HDMI-1 --rotate left
+xrandr --output HDMI-1 --rotate left # i don't think this actually works
 
 # show a splash before browser kicks in
-feh --bg-scale splash.png
+feh --bg-scale splash.jpg
 
 cd project-blastpad
 python home/gui.py

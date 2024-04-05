@@ -21,7 +21,7 @@ echo "##### 🚀 🎮 Node Packages Incoming... #####"
 pwd
 cd ../blockly/
 pwd
-npm ci
+npm ci > /dev/null
 echo "##### 🚀 🎮 Building Editor.. #####"
 npm run build
 
