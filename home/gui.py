@@ -5,6 +5,8 @@ import os, json
 import subprocess
 from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked
 from wifiMenu import WifiMenu
+import ttkbootstrap as tb
+from ttkbootstrap.toast import ToastNotification
 
 games = []
 wifi_menu_window = None
@@ -16,8 +18,21 @@ def wifi_clicked_event(root):
         wifi_menu = WifiMenu(wifi_menu_window)
 
 def battery_clicked_event(event=None):
+    tm = Toast_Manager
+    the_toast = tm.construct_toast("title","message",3000,True)
+    tm.show_custom_toast(the_toast)  
     print("Battery button clicked!")
 
+class Toast_Manager():
+    def __init__(self,root):
+        self.root = root
+        self.root.title("TTK Bootstrap! Toast Message!")
+        self.root.geometry('300x200')
+    
+    def construct_toast(title, message, duration, alert):
+        return ToastNotification(title=title, message=message, duration=duration, alert=alert, position='sw',bootstyle='dark')
+    def show_custom_toast(toast):
+        toast.show_toast()
 
 class Game:
     def __init__(self, name, description, author, path, filename):
@@ -52,10 +67,10 @@ class BlastPad(tk.Tk):
         self.show_frame(HomePage)  
   
     def show_frame(self, cont):  
-  
         frame = self.frames[cont]  
         frame.tkraise()  
-  
+    
+
           
 class HomePage(tk.Frame):  
   
@@ -545,8 +560,6 @@ class Settings(tk.Frame):
 
         message = ctk.CTkLabel(class_list_frame, text="The Settings page is under contruction", text_color='white', 
                                font=('Helvetica', 30, 'bold'),bg_color='#23252C').pack(side=tk.TOP, fill='both', pady=0)
-
-          
 app = BlastPad()  
 app.geometry("800x450")
 app.mainloop()
