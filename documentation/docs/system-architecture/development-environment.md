@@ -22,17 +22,17 @@ sidebar_position: 4
 - **HTML/CSS/JavaScript**
   - For BlastPad block code editor website
   - For community site where users share games
-- **React**
+- **React** (v TBD)
   - To build reusable components for community site
-- **Python**
-  - Flask
+- **Python** (v 3.11 )
+  - Flask (v 3.0.2)
     - To host web server that distributes BlastPad block code editor
     - To host API endpoints for getting game library information and downloading games onto the device from the code editor
   - Tkinter
     - To create the graphical user interface of the BlastPad
-  - Pygame Zero
+  - Pygame Zero (v 1.2.1)
     - Primary game creation library
-  - GPIO Zero
+  - GPIO Zero (v 2.0.1)
     - Primary GPIO interfacing library
 
 ## Testing
