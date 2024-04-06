@@ -1,0 +1,10 @@
+/* This sets the background color of the entire webpage to #2D3039 */
+body {
+    background-color: #2D3039;
+    margin: 0; /* Removes default margin */
+    height: 100vh; /* Ensures that body takes full viewport height */
+    font-family: Arial, sans-serif; /* Sets a default font */
+}
+
+
+
