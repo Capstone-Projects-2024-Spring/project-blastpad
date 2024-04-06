@@ -10,6 +10,8 @@ sudo raspi-config nonint enable_bootro
 echo
 echo ">> Unpacking Built Blastpad Package"
 tar -xf blastpad-build.tar.gz
+mv project-blastpad/start_x.sh .
+mv project-blastpad/start_flask.sh .
 
 echo
 echo ">> Enabling Auto-Login (?)"

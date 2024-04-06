@@ -46,6 +46,7 @@ jobs:
           disable-first-boot-user-rename: 1
           password: blastpad
           username: blastpad
+          hostname: blastpad
           stage-list: stage0 stage1 stage2 ./blastpad-stage
           verbose-output: false
           # Wifi country code of default network to connect to.

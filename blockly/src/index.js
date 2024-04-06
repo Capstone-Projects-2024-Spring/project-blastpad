@@ -137,16 +137,14 @@ const fetchAndLoadGame = (gameName) => {
   // gamename includes .json at the end. this will need to change
   // on both the flask end and this end.
 
-  fetch(`/games/${gameName}`).then(function(response) {
-    return response.json()
-  }).then((gameWorkspace) => {
+  fetch(`/games/${gameName}`).then(response => {response.json().then((gameWorkspace) => {
     Blockly.Events.disable();
     Blockly.serialization.workspaces.load(gameWorkspace, ws, false);
     Blockly.Events.enable();
 
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
-  }).catch((error) => {
+  })}).catch((error) => {
     console.log("No games found, loading empty workspace.")
     Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);
     selectionContainer.classList.add("hidden");
@@ -160,14 +158,7 @@ const startEditor = () => {
 
   console.log("fetching games");
 
-  fetch('/games').then(function(response) {
-    console.log(response)
-    console.log(response.body);
-    console.log("trying json conversion");
-    console.log(response.json());
-    return response.json()
-  }).then((json) => {
-
+  fetch('/games').then(response => { response.json().then((json) => {
     console.log(json);
     for(var gameFileName of json.games) {
       // you would also want to display the bitmap here... generate an image perhaps
@@ -181,7 +172,7 @@ const startEditor = () => {
       });
       gamesContainer.appendChild(gamePlaceholder);
     }
-  }).catch((err) => {
+  })}).catch((err) => {
     console.log(err);
     console.log("No games found, loading empty workspace.")
     Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);

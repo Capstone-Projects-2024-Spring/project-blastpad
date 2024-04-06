@@ -1,5 +1,3 @@
 #!/bin/bash
-cd blockly/
-npm run build
-cd ../flask
-flask --app serve run --port 8000
+cd project-blastpad/flask
+python serve.py &
