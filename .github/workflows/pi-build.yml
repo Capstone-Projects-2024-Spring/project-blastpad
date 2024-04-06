@@ -1,4 +1,3 @@
-# disabled
 name: Build Image
 on: push
     
@@ -30,7 +29,6 @@ jobs:
 
             echo "Compressing Build"
             cd ../../
-            ls
             tar -zcvf blastpad-build.tar.gz project-blastpad
 
             echo "Smuggling Build"

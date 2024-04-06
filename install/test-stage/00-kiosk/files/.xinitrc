@@ -1,1 +1,1 @@
-./kiosk.sh
+# ./kiosk.sh
