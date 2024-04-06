@@ -4,7 +4,7 @@ import customtkinter as ctk
 import os, json
 import requests
 import subprocess
-from helpers import create_button, create_top_button, add_icon, update_time, on_enter, on_leave, open_code_editor, open_code_editor_new_game_page, on_like_clicked, login_to_server, get_last_successful_username, check_login_requirement
+from helpers import *
 from wifiMenu import WifiMenu
 
 games = []
@@ -431,7 +431,185 @@ class CommunityHub(tk.Frame):
             edit_button = create_button(button_frame, like_button_img_path, on_like_clicked, buttonWidth, buttonHeight)
 
 
-## BELOW IS THE CLASSROOM CLASS WITHOUT THE LOGIN. IT IS THE BAREBONES VERSION OF THE FIGMA CONCEPT
+class Classroom(tk.Frame): 
+    def __init__(self, parent, controller):  
+        super().__init__(parent)  
+        self.config(bg='#33363E')
+        self.controller = controller
+
+        # Navbar setup
+        navbar_container = tk.Frame(self, bg='#424347')
+        navbar_container.pack(side=tk.TOP, fill='both', expand=False, padx=4, pady=4)
+        navbar = tk.Frame(navbar_container, bg='#33363E')
+        navbar.pack(side=tk.TOP, fill='x', anchor='n')
+
+        # Navbar buttons
+        home_img_path = 'home/guiImages/homeIcon.png'
+        community_img_path = 'home/guiImages/communityHubIcon.png'
+        classroom_img_path = 'home/guiImages/classroomIconPressed.png'
+        settings_img_path = 'home/guiImages/settingsIcon.png'
+
+        button_width = 75
+        button_height = 75
+        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
+        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
+        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
+        settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
+        
+        # Add battery and wifi icons using add_icon helper function
+        battery_img_path = 'home/guiImages/batteryIcon.png'
+        wifi_img_path = 'home/guiImages/wifiIcon.png'
+        battery_icon = add_icon(navbar, battery_img_path, 75, 75, self.battery_clicked_event)
+        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, self.wifi_clicked_event)
+
+        # Digital clock
+        time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+        time_label.pack(side=tk.LEFT, padx=10, pady=10)
+        update_time(time_label)
+
+
+
+
+        # Main container setup
+        self.main_container = ctk.CTkFrame(master=self, corner_radius=20, fg_color='#23252C')
+        self.main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
+
+          # Check if the login is required and show the appropriate page
+        if check_login_requirement():
+            self.show_login_page()
+        else:
+            self.show_classroom_page()
+
+    def show_login_page(self):
+        # Clear previous content if any
+        for widget in self.main_container.winfo_children():
+            widget.destroy()
+
+        # Create login widgets
+        username_label = tk.Label(self.main_container, text="Username:", bg='#23252C', fg='white', font=('Helvetica', 12))
+        username_label.grid(row=0, column=0, padx=10, pady=10, sticky='w')
+
+        self.username_entry = tk.Entry(self.main_container, bg='#23252C', fg='white', font=('Helvetica', 12))
+        self.username_entry.grid(row=0, column=1, padx=10, pady=10)
+
+        password_label = tk.Label(self.main_container, text="Password:", bg='#23252C', fg='white', font=('Helvetica', 12))
+        password_label.grid(row=1, column=0, padx=10, pady=10, sticky='w')
+
+        self.password_entry = tk.Entry(self.main_container, show="*", bg='#23252C', fg='white', font=('Helvetica', 12))
+        self.password_entry.grid(row=1, column=1, padx=10, pady=10)
+
+        login_button = tk.Button(self.main_container, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
+        login_button.grid(row=2, columnspan=2, padx=10, pady=10)
+
+    def login_clicked(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        response_code = login_to_server(username,password)
+        if response_code == 200:
+            # self.reload_class()
+            print("reloading the gui should go here")  # In the meantime....
+            self.username_entry.delete(0, 'end')  # Clear the username entry
+            self.password_entry.delete(0, 'end')  # Clear the password entry  
+        else:
+            # Determine failure reason and display appropriate message
+            if response_code == 401:
+                failure_reason = "Invalid username or password."
+            elif response_code == 403:
+                failure_reason = "Access forbidden."
+            elif response_code == 404:
+                failure_reason = "Server not found."
+            else:
+                failure_reason = "Login failed with unknown reason."
+            print("Login Failed", failure_reason)
+
+    def show_classroom_page(self):
+        # Clear previous content
+        for widget in self.main_container.winfo_children():
+            widget.destroy()
+
+        # Create the classroom view widgets
+        classroom_list_frame = tk.Frame(self.main_container, bg='gray')
+        classroom_list_frame.pack(side=tk.LEFT, fill="y")
+
+        # Join Class button
+        join_class_button = tk.Button(classroom_list_frame, text="Join Class", command=lambda: self.join_class())
+        join_class_button.pack(padx=10, pady=5, fill="x")
+
+        # Dictionary mapping classroom names to descriptions
+        classrooms = {
+            "Robotics Class": "Description for Robotics Class",
+            "Mr. Riley 4th Grade Tech": "Description for Mr. Riley's Class",
+            "Mrs. Susans": "Description for Mrs. Susan's Class",
+        }
+
+        # Frame for classroom content
+        content_frame = tk.Frame(self.main_container, bg='white')
+        content_frame.pack(side="right", fill="both", expand=True)
+
+        # Add classrooms to the classroom_list_frame
+        for classroom_name, desc in classrooms.items():
+            btn = tk.Button(classroom_list_frame, text=classroom_name,
+                            command=lambda c=classroom_name: self.show_classroom_content(content_frame, classrooms, c))
+            btn.pack(padx=10, pady=5, fill="x")
+
+    # Placeholder methods for battery and wifi clicked events
+    def battery_clicked_event(self, event=None):
+        print("Battery icon clicked")
+
+    def wifi_clicked_event(self, event=None):
+        print("WiFi icon clicked")
+
+    # Placeholder for the join_class function
+    def join_class(self):
+        print("Join class button clicked")
+
+    def show_classroom_content(self, classroom_name):
+        # Clears all current widgets from the content frame.
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+
+        # Create a new frame within content_frame for holding the title and description at the top.
+        top_frame = tk.Frame(self.content_frame, bg='white')
+        top_frame.pack(side="top", fill="both", expand=True)
+
+        # Retrieve the description for the given classroom name from the class attribute.
+        description = self.classrooms[classroom_name]
+
+        # Create a label in top_frame with the classroom name.
+        title = tk.Label(top_frame, text=classroom_name, bg='white', font=('Arial', 24))
+        title.pack(padx=10, pady=10)
+
+        # Create another label for the description below the title.
+        description_label = tk.Label(top_frame, text=description, bg='white', font=('Arial', 14))
+        description_label.pack(padx=10, pady=10)
+
+        # Create a separate frame at the bottom for the "Leave Class" button.
+        bottom_frame = tk.Frame(self.content_frame, bg='white')
+        bottom_frame.pack(side="bottom", fill="x", expand=False)
+
+        # Add a "Leave Class" button to the bottom frame.
+        leave_button = tk.Button(bottom_frame, text="Leave Class", 
+                                 command=lambda: self.leave_class(classroom_name))
+        leave_button.pack(pady=20, expand=True)
+
+    # The leave_class method (needs to be defined if not already)
+    def leave_class(self, classroom_name):
+        # Your logic for leaving a class goes here.
+        print(f"Leaving {classroom_name}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # [DO NOT DELTE UNTIL COMBINED CODE IS WORKING] BELOW IS THE CLASSROOM CLASS WITHOUT THE LOGIN. IT IS THE BAREBONES VERSION OF THE FIGMA CONCEPT
 # class Classroom(tk.Frame):  
   
 #     def __init__(self, parent, controller):    
@@ -511,100 +689,109 @@ class CommunityHub(tk.Frame):
 
 
 
-class Classroom(tk.Frame): 
+# #[DO NOT DELTE UNTIL COMBINED CODE IS WORKING] CLASSROOM CLASS WITH THE LOGIN, BUT WITHOUT THE BAREBONES
+# class Classroom(tk.Frame): 
+#     def __init__(self, parent, controller):  
+#         tk.Frame.__init__(self, parent)  
+#         self.config(bg='#33363E')
+#         # Widgets for navbar
+#         navbar_container = tk.Frame(self, bg='#424347')
+#         navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
+#         navbar = tk.Frame(navbar_container, bg='#33363E')
+#         navbar.pack(side=tk.TOP, fill='x', anchor='n')
 
-    def __init__(self, parent, controller):  
-        tk.Frame.__init__(self, parent)  
-        self.config(bg='#33363E')
-        # Widgets for navbar
-        navbar_container = tk.Frame(self, bg='#424347')
-        navbar_container.pack(side=tk.TOP, fill='both', expand=True, padx=4, pady=4)
-        navbar = tk.Frame(navbar_container, bg='#33363E')
-        navbar.pack(side=tk.TOP, fill='x', anchor='n')
+#         # Create navbar buttons
+#         home_img_path = 'home/guiImages/homeIcon.png'
+#         community_img_path = 'home/guiImages/communityHubIcon.png'
+#         classroom_img_path = 'home/guiImages/classroomIconPressed.png'
+#         settings_img_path = 'home/guiImages/settingsIcon.png'
 
-        # Create navbar buttons
-        home_img_path = 'home/guiImages/homeIcon.png'
-        community_img_path = 'home/guiImages/communityHubIcon.png'
-        classroom_img_path = 'home/guiImages/classroomIconPressed.png'
-        settings_img_path = 'home/guiImages/settingsIcon.png'
+#         # Create buttons with images using pack
+#         button_width = 75
+#         button_height = 75
+#         home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
+#         community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
+#         classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
+#         settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
 
-        # Create buttons with images using pack
-        button_width = 75
-        button_height = 75
-        home_button = create_top_button(navbar, home_img_path, lambda: controller.show_frame(HomePage), button_width, button_height)
-        community_button = create_top_button(navbar, community_img_path, lambda: controller.show_frame(CommunityHub), button_width, button_height)
-        classroom_button = create_top_button(navbar, classroom_img_path, lambda: controller.show_frame(Classroom), button_width, button_height)
-        settings_button = create_top_button(navbar, settings_img_path, lambda: controller.show_frame(Settings), button_width, button_height)
+#         battery_img_path = 'home/guiImages/batteryIcon.png'
+#         wifi_img_path = 'home/guiImages/wifiIcon.png'
 
-        battery_img_path = 'home/guiImages/batteryIcon.png'
-        wifi_img_path = 'home/guiImages/wifiIcon.png'
+#         battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
+#         wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event)
 
-        battery_icon = add_icon(navbar, battery_img_path, 75, 75, battery_clicked_event)
-        wifi_icon = add_icon(navbar, wifi_img_path, 75, 75, wifi_clicked_event)
+#         time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
+#         time_label.pack(side=tk.LEFT, padx=10, pady=10)
 
-        time_label = tk.Label(navbar, font=('calibri', 40, 'bold'), background='#33363E', foreground='white')       
-        time_label.pack(side=tk.LEFT, padx=10, pady=10)
+#         # Call the update_time function to start updating the time
+#         update_time(time_label)
 
-        # Call the update_time function to start updating the time
-        update_time(time_label)
+#         main_container = ctk.CTkFrame(master=self, corner_radius=20, fg_color='#23252C')
+#         main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
 
-        main_container = ctk.CTkFrame(master=self, corner_radius=20, fg_color='#23252C')
-        main_container.pack(side=tk.TOP, fill='both', expand=True, padx=20, pady=10)
+#         # Create the game information container and pack it at the bottom of the main container
+#         class_info_container = tk.Frame(main_container, bd=0, relief='groove')
+#         class_info_container.pack(side=tk.BOTTOM, fill='x', padx=20, pady=20)
 
-        # Create the game information container and pack it at the bottom of the main container
-        class_info_container = tk.Frame(main_container, bd=0, relief='groove')
-        class_info_container.pack(side=tk.BOTTOM, fill='x', padx=20, pady=20)
+#         container = tk.Frame(main_container, bg='#23252C')
+#         container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
 
-        container = tk.Frame(main_container, bg='#23252C')
-        container.pack(side=tk.TOP, fill='both', expand=True, padx=10, pady=10)
+#         canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
+#         canvas.pack(side=tk.TOP, fill='both', expand=True)
+#         # Style the game list frame with a background color
+#         class_list_frame = tk.Frame(canvas, bg='#23252C')
+#         canvas.create_window(0, 0, window=class_list_frame, anchor='nw')
+#         if check_login_requirement():
+#             username_label = tk.Label(class_list_frame, text="Username:", bg='#23252C', fg='white', font=('Helvetica', 12))
+#             username_label.grid(row=0, column=0, padx=10, pady=10, sticky='w')
 
-        canvas = tk.Canvas(container, bg='#23252C', highlightthickness=0)
-        canvas.pack(side=tk.TOP, fill='both', expand=True)
-        # Style the game list frame with a background color
-        class_list_frame = tk.Frame(canvas, bg='#23252C')
-        canvas.create_window(0, 0, window=class_list_frame, anchor='nw')
-        if check_login_requirement():
-            username_label = tk.Label(class_list_frame, text="Username:", bg='#23252C', fg='white', font=('Helvetica', 12))
-            username_label.grid(row=0, column=0, padx=10, pady=10, sticky='w')
+#             password_label = tk.Label(class_list_frame, text="Password:", bg='#23252C', fg='white', font=('Helvetica', 12))
+#             password_label.grid(row=1, column=0, padx=10, pady=10, sticky='w')
 
-            password_label = tk.Label(class_list_frame, text="Password:", bg='#23252C', fg='white', font=('Helvetica', 12))
-            password_label.grid(row=1, column=0, padx=10, pady=10, sticky='w')
+#             self.username_entry = tk.Entry(class_list_frame, bg='#23252C', fg='white', font=('Helvetica', 12))
+#             self.username_entry.grid(row=0, column=1, padx=10, pady=10)
 
-            self.username_entry = tk.Entry(class_list_frame, bg='#23252C', fg='white', font=('Helvetica', 12))
-            self.username_entry.grid(row=0, column=1, padx=10, pady=10)
+#             self.password_entry = tk.Entry(class_list_frame, show="*", bg='#23252C', fg='white', font=('Helvetica', 12))
+#             self.password_entry.grid(row=1, column=1, padx=10, pady=10)
 
-            self.password_entry = tk.Entry(class_list_frame, show="*", bg='#23252C', fg='white', font=('Helvetica', 12))
-            self.password_entry.grid(row=1, column=1, padx=10, pady=10)
+#             login_button = tk.Button(class_list_frame, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
+#             login_button.grid(row=2, columnspan=2, padx=10, pady=10)
+#         else: #Show default page
+#             username_success = get_last_successful_username()
 
-            login_button = tk.Button(class_list_frame, text="Login", command=self.login_clicked, bg='#1E90FF', fg='white', font=('Helvetica', 12, 'bold'))
-            login_button.grid(row=2, columnspan=2, padx=10, pady=10)
-        else: #Show default page
-            username_success = get_last_successful_username()
+#             message = ctk.CTkLabel(class_list_frame, text=f"The Classroom page is under construction. Currently Logged in as {username_success}", text_color='white', 
+#                         font=('Helvetica', 30, 'bold'), bg_color='#23252C', wraplength=600)
+#             message.pack(side=tk.TOP, fill='x', pady=20)
 
-            message = ctk.CTkLabel(class_list_frame, text=f"The Classroom page is under construction. Currently Logged in as {username_success}", text_color='white', 
-                        font=('Helvetica', 30, 'bold'), bg_color='#23252C', wraplength=600)
-            message.pack(side=tk.TOP, fill='x', pady=20)
+#     def login_clicked(self):
+#         username = self.username_entry.get()
+#         password = self.password_entry.get()
+#         response_code = login_to_server(username,password)
+#         if response_code == 200:
+#             # self.reload_class()
+#             print("reloading the gui should go here")  # In the meantime....
+#             self.username_entry.delete(0, 'end')  # Clear the username entry
+#             self.password_entry.delete(0, 'end')  # Clear the password entry  
+#         else:
+#             # Determine failure reason and display appropriate message
+#             if response_code == 401:
+#                 failure_reason = "Invalid username or password."
+#             elif response_code == 403:
+#                 failure_reason = "Access forbidden."
+#             elif response_code == 404:
+#                 failure_reason = "Server not found."
+#             else:
+#                 failure_reason = "Login failed with unknown reason."
+#             print("Login Failed", failure_reason)
 
-    def login_clicked(self):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-        response_code = login_to_server(username,password)
-        if response_code == 200:
-            # self.reload_class()
-            print("reloading the gui should go here")  # In the meantime....
-            self.username_entry.delete(0, 'end')  # Clear the username entry
-            self.password_entry.delete(0, 'end')  # Clear the password entry  
-        else:
-            # Determine failure reason and display appropriate message
-            if response_code == 401:
-                failure_reason = "Invalid username or password."
-            elif response_code == 403:
-                failure_reason = "Access forbidden."
-            elif response_code == 404:
-                failure_reason = "Server not found."
-            else:
-                failure_reason = "Login failed with unknown reason."
-            print("Login Failed", failure_reason)
+
+
+
+
+
+
+
+
 
 
 
