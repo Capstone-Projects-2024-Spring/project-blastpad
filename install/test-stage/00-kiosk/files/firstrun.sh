@@ -18,6 +18,12 @@ echo ">> Enabling Auto-Login (?)"
 sudo raspi-config nonint do_boot_behaviour B2
 
 echo
+echo ">> Installing Flask Server Service"
+sudo cp ./flask-server.service ../etc/systemd/system/flask-server.service
+sudo systemctl daemon-reload
+sudo systemctl enable flask-server
+
+echo
 echo ">> Removing First Run Script"
 rm ./firstrun.sh
 
