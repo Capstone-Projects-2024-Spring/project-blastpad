@@ -6,7 +6,7 @@ URL=$(head -n 1 /boot/kiosk.url)
 # never blank the screen
 xset s off -dpms
 
-xrandr --output HDMI-1 --mode 800x400 # set resolution to something blastpad-like
+xrandr --output HDMI-1 --mode 800x480 # set resolution to something blastpad-like
 # 800x400
 
 # show a splash before browser kicks in
