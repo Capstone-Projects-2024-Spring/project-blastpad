@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Specifies the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Sets the viewport width and initial zoom level -->
+    <title>Blast Pad</title> <!-- Sets the title of the webpage -->
+    <link rel="stylesheet" href="NavBarStyle.css"/> <!-- Links the CSS file for styling the navbar -->
+    <link rel="stylesheet" href="styles.css"/> <!-- Links the CSS file for general styling -->
+</head>
+<body>
+    <div class="navbar">
+        <img src="../guiImages/homeIcon.png" alt="Home" class="nav-item" data-active-src="../guiImages/homeIconPressed.png" /> <!-- Creates an image element for the Home icon with alternative text and a class, and a data attribute for the active state image -->
+        <img src="../guiImages/communityHubIcon.png" alt="Community Hub" class="nav-item" data-active-src="../guiImages/communityHubIconPressed.png" /> <!-- Creates an image element for the Community Hub icon with alternative text and a class, and a data attribute for the active state image -->
+        <img src="../guiImages/classroomIcon.png" alt="Classroom" class="nav-item" data-active-src="../guiImages/classroomIconPressed.png" /> <!-- Creates an image element for the Classroom icon with alternative text and a class, and a data attribute for the active state image -->
+        <img src="../guiImages/settingsIcon.png" alt="Settings" class="nav-item" data-active-src="../guiImages/settingsIconPressed.png" /> <!-- Creates an image element for the Settings icon with alternative text and a class, and a data attribute for the active state image -->
+
+        <span id="clock" class="nav-item-clock"></span> <!-- Creates a span element for the clock with an id and a class -->
+    </div>
+
+    <script src="NavBar.js"></script> <!-- Links the JavaScript file for navbar functionality -->
+</body>
+</html>

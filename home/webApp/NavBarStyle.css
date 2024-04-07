@@ -1,0 +1,47 @@
+/* Set the background of the navbar and its full width */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #2D3039; /* Dark background */
+  padding: 30px 0; /* Increased padding for top and bottom */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Style each navigation item */
+.navbar .nav-item {
+  width: 170px; /* Adjust width as needed */
+  height: 170px; /* Adjust height as needed */
+  cursor: pointer;
+  display: block; /* Make sure they are block elements to handle padding and margins correctly */
+  margin: 0 30px; /* Space out the icons */
+}
+
+/* Style the active class for when an item is selected */
+.navbar .nav-item.active {
+  outline: 0px solid #51535B; /* No outline for the active item */
+  color: #51535B;
+  border-radius: 40px;
+}
+
+/* Add a white outline on hover */
+.navbar .nav-item:hover {
+  outline: 10px solid white; /* White outline on hover */
+  outline-offset: -2px; /* Offset to keep the outline inside the element bounds */
+  border-radius: 40px;
+}
+
+/* Ensure the white outline appears when hovering over active items */
+.navbar .nav-item.active:hover {
+  outline: 10px solid white; /* White outline on hover for active items */
+}
+
+/* Style for the clock */
+.navbar .nav-item-clock {
+  color: white; /* Color for the clock text */
+  font-family: 'Arial', sans-serif; /* Change font family to match the concept */
+  font-size: 120px; /* Adjust size as needed */
+  padding: 10px; /* Padding around the clock text */
+  margin-left: auto; /* Push the clock to the right */
+}
