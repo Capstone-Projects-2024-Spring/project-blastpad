@@ -3,7 +3,7 @@ Description=Flask Server
 After=network.target
 
 [Service]
-User=admin
+User=blastpad
 WorkingDirectory=/home/blastpad/project-blastpad/flask
 ExecStart=flask --app serve run
 Restart=always
