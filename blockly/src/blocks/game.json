@@ -227,5 +227,13 @@
   "colour": 290,
   "tooltip": "",
   "helpUrl": ""
+},
+{
+  "type": "exit",
+  "message0": "Close Game",
+  "previousStatement": null,
+  "colour": 15,
+  "tooltip": "",
+  "helpUrl": ""
 }
 ]}
