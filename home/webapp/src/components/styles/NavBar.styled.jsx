@@ -11,7 +11,7 @@ export const NavBarContainer = styled.div`
   gap: 37px;
 `;
 
-export const ActionButtonsContainer = styled.div`
+export const NavButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -26,7 +26,7 @@ export const ActionButtonsContainer = styled.div`
   flex-grow: 0;
 `;
 
-export const ActionButton = styled.div`
+export const NavButton = styled.div`
   background-color: ${({ theme }) => theme.colors.foreground};
   width: 80px;
   height: 80px;
@@ -34,6 +34,10 @@ export const ActionButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:focus {
+    background-color: ${({ theme }) => theme.colors.active};
+  }
 `
 
 export const StatusIconsContainer = styled.div`

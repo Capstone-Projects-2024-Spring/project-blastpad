@@ -1,23 +1,23 @@
 import {ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon} from "./Icons";
-import { ActionButtonsContainer, NavBarContainer, ActionButton, StatusIconsContainer } from "./styles/NavBar.styled";
+import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer } from "./styles/NavBar.styled";
 
 export default function NavBar() {
   return (
     <NavBarContainer>
-      <ActionButtonsContainer>
-        <ActionButton>
+      <NavButtonsContainer>
+        <NavButton tabIndex={1}>
           <HomeIcon/>
-        </ActionButton>
-        <ActionButton>
+        </NavButton>
+        <NavButton tabIndex={2}>
           <CommunityIcon/>
-        </ActionButton>
-        <ActionButton>
+        </NavButton>
+        <NavButton tabIndex={3}>
           <ClassroomIcon/>
-        </ActionButton>
-        <ActionButton>
+        </NavButton>
+        <NavButton tabIndex={4}>
           <SettingsIcon/>
-        </ActionButton>
-      </ActionButtonsContainer>
+        </NavButton>
+      </NavButtonsContainer>
       <StatusIconsContainer>
         
       </StatusIconsContainer>
