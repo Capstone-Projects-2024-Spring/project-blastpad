@@ -1,4 +1,3 @@
-# disabled
 name: Build Image
 on: push
     
@@ -30,7 +29,6 @@ jobs:
 
             echo "Compressing Build"
             cd ../../
-            ls
             tar -zcvf blastpad-build.tar.gz project-blastpad
 
             echo "Smuggling Build"
@@ -48,6 +46,7 @@ jobs:
           disable-first-boot-user-rename: 1
           password: blastpad
           username: blastpad
+          hostname: blastpad
           stage-list: stage0 stage1 stage2 ./blastpad-stage
           verbose-output: false
           # Wifi country code of default network to connect to.

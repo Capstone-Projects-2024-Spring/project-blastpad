@@ -1,0 +1,12 @@
+[Unit]
+Description=Flask Server
+After=network.target
+
+[Service]
+User=blastpad
+WorkingDirectory=/home/blastpad/project-blastpad/flask
+ExecStart=python serve.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

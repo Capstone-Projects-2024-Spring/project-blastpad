@@ -9,14 +9,14 @@ def on_like_clicked():
 # Function where it opens a new web browser tab that shows a new game page
 def open_code_editor_new_game_page():
     print("New Game Icon button clicked!")
-    link = 'http://localhost:5000/?load=filename.json'
+    link = 'http://localhost:8000/?load=filename.json'
     webbrowser.open(link)
 
 
 # Opening an instance of the code editor
 def open_code_editor(filename):
     print(filename)
-    link = 'http://localhost:5000?load='+filename
+    link = 'http://localhost:8000?load='+filename
     webbrowser.open(link)
 
 def on_enter(e, widget):

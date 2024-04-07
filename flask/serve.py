@@ -10,12 +10,12 @@ DIST_FOLDER = "../blockly/dist"
 
 app = Flask(
     __name__,
-    static_url_path='', 
+    static_url_path='',
     static_folder=DIST_FOLDER,
     template_folder=DIST_FOLDER
 )
 
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/')
 def index():
@@ -26,7 +26,7 @@ def index():
 def save(game_name):
     if request.method == 'POST':
         gamedata = request.json
-        # parse request to find metadata 
+        # parse request to find metadata
         print(request.json)
         gamename = ""
 
@@ -37,7 +37,7 @@ def save(game_name):
 
         with open(GAMES_FOLDER+gamename+'.json', 'w', encoding='utf-8') as f:
             json.dump(gamedata, f, ensure_ascii=False, indent=4)
-            
+
             result = {'status': 'success'}
             return result, 200
 
@@ -58,5 +58,5 @@ def onegame(game_name):
     return data, 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
 

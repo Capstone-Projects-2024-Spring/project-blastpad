@@ -6,8 +6,8 @@ URL=$(head -n 1 /boot/kiosk.url)
 # never blank the screen
 xset s off -dpms
 
-# rotate to portrait mounted TV
-xrandr --output HDMI-1 --rotate left # i don't think this actually works
+xrandr --output HDMI-1 --mode 800x480 # set resolution to something blastpad-like
+# 800x400
 
 # show a splash before browser kicks in
 feh --bg-scale splash.jpg

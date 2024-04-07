@@ -548,5 +548,5 @@ class Settings(tk.Frame):
 
           
 app = BlastPad()  
-app.geometry("800x450")
+app.geometry("800x480")
 app.mainloop()

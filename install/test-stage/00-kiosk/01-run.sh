@@ -15,8 +15,8 @@ echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 export DEBIAN_FRONTEND=noninteractive
 EOF
 
-install -m 644 files/config.txt "${ROOTFS_DIR}/boot/"
-install -m 644 files/cmdline.txt "${ROOTFS_DIR}/boot/"
+install -m 644 files/config.txt "${ROOTFS_DIR}/boot/firmware/"
+install -m 644 files/cmdline.txt "${ROOTFS_DIR}/boot/firmware/"
 
 HOME="${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
 install -m 755 -o 1000 -g 1000 files/kiosk.sh "${HOME}/"
@@ -29,3 +29,4 @@ install -m 755 -o 1000 -g 1000 files/blastpad-build.tar.gz "${HOME}/"
 install -m 755 -o 1000 -g 1000 -d "${HOME}/bin/"
 install -m 755 -o 1000 -g 1000 files/bin/browser "${HOME}/bin/"
 install -m 755 -o 1000 -g 1000 files/bin/cec2kbd "${HOME}/bin/"
+install -m 755 -o 1000 -g 1000 files/flask-server.service "${HOME}/"

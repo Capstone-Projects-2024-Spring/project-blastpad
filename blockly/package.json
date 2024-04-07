@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "start": "webpack serve --open --mode development"
+    "start": "webpack serve --open --mode development --port 8000"
   },
   "keywords": [
     "blockly"
