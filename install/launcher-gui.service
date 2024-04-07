@@ -11,4 +11,4 @@ ExecStart=/bin/bash -c "cd /home/blastpad/project-blastpad && DISPLAY:=0; /usr/b
 Restart=always
 
 [Install]
-WantedBy=graphical.target
+WantedBy=default.target
