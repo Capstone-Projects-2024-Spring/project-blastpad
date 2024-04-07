@@ -1,13 +1,5 @@
 echo "🚀 🎮 BlastPad Installer V0.1"
 
-echo "##### 🚀 🐍 Python Packages Incoming... #####"
-sudo apt-get update
-sudo apt-get install python3-pip python3-dev python3-flask python3-pillow python3-pil.imagetk -y
-pip3 install flask-cors --break-system-packages
-pip3 install pillow --break-system-packages
-pip3 install tk --break-system-packages
-pip3 install customtkinter --break-system-packages
-
 if which node > /dev/null
   then
     echo "##### 🚀 🎮 Node is already installed. #####"
@@ -25,11 +17,11 @@ if which node > /dev/null
   fi
 
 echo "##### 🚀 🎮 Node Packages Incoming... #####"
-source ~/.bashrc
+# source ~/.bashrc
 pwd
 cd ../blockly/
 pwd
-npm ci
+npm ci > /dev/null
 echo "##### 🚀 🎮 Building Editor.. #####"
 npm run build
 
@@ -37,10 +29,14 @@ echo "##### 🚀 🎮 Cleaning up unnecessary stuff... #####"
 cd ..
 pwd
 
+echo "Removing Documentation"
 rm -rf documentation
+echo "Removing Examples"
 rm -rf examples
+echo "Removing Classroom Server"
 rm -rf classroom-server
 rm -rf *.png
+echo "Removing Sphinx Stuff"
 rm -rf source
 
 echo "##### 🚀 🎮 All Done! #####"
