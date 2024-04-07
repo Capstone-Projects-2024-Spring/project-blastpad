@@ -107,7 +107,11 @@ export const toolbox = {
         {
           'kind': 'block',
           'type': 'draw_text'
-        }
+        },
+        {
+          'kind': 'block',
+          'type': 'exit',
+        },
       ],
     },
     {

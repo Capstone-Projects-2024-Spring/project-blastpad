@@ -87,6 +87,7 @@ forBlock['metadata'] = function(block, generator) {
 
 import pgzrun
 import pygame
+import time
 from pygame import mask
 
 def collide_pixels(actor1, actor2):
@@ -110,7 +111,9 @@ def collide_pixels(actor1, actor2):
 TITLE = "${value_game_name}"
 WIDTH  = 500
 HEIGHT = 500
-
+# pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+# pygame.display.toggle_fullscreen()
+# pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 # pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 \n
 \n
@@ -195,6 +198,14 @@ forBlock['draw_text'] = function(block, generator) {
   var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
   // TODO: Assemble python into code variable.
   var code = `screen.draw.text(${value_content}, (${value_x}, ${value_y}))\n`
+  return code;
+};
+
+forBlock['exit'] = function(block, generator) {
+  var code = 
+`pygame.display.quit()
+pygame.quit()
+exit()`
   return code;
 };
 
