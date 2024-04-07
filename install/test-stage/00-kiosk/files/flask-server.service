@@ -1,0 +1,12 @@
+[Unit]
+Description=Flask Server
+After=network.target
+
+[Service]
+User=admin
+WorkingDirectory=/home/blastpad/project-blastpad/flask
+ExecStart=flask --app serve run
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
