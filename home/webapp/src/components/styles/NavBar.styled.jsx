@@ -34,6 +34,13 @@ export const NavButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:focus {
+    border: 3px solid ${({ theme }) => theme.colors.text};
+    border-radius: 17px;
+    outline:none;
+  }
+
 `
 
 export const StatusIconsContainer = styled.div`
