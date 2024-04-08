@@ -2,28 +2,37 @@ import styled from "styled-components";
 
 export const CommunityPageContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   width: 100%;
   height: 100%;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors.foreground};
   padding: 20px;
-  gap: 9px
+  gap: 9px;
+  justify-content: space-evenly;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const GameIcon = styled.div`
+  width: 150px;
+  height: 150px;
+  border-radius: 25px;
   display: flex;
-  background-color: ${({ theme }) => theme.colors.background};
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
   justify-content: center;
   align-items: center;
-  
+  background-color: ${({ theme }) => theme.colors.active};
+
   outline: 4px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
+
   &:focus {
     outline: none;
     outline-offset: -4px;
   }
+
+  flex-grow: 0;
+  flex-shrink: 0;
 `;
