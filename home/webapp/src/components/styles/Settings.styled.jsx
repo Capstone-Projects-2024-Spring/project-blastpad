@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const SettingsPageContainer = styled.div`
   display: flex; /* Use flexbox to arrange items */
+  flex-direction: row;
   gap: 13px;
   
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 20px;
-  padding: 0px;
 `;
 
 export const SideMenu = styled.div`
@@ -48,62 +48,64 @@ export const Button = styled.div`
   }
 `;
 
-export const NetworksListContainer = styled.div`
-  flex: 1;
+export const NetworkSettingsPageContainer = styled.div`
+  height: 100%
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 0px;
+
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
+  justify-content: space-between;
+
+  overflow: scroll-y;
 `;
 
-export const NetworksList = styled.ul`
-    background-color: ${({ theme }) => theme.colors.foreground};
-    border-radius: 20px
+export const NetworksList = styled.div`
+  background-color: ${({ theme }) => theme.colors.foreground};
+  border-radius: 20px;
+  height: 100%;
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
-export const NetworkButton = styled(Button)`
-  margin-bottom: 0;
+export const NetworkButton = styled.div`
+  height: 100%;
   width: 90%;
-  border-radius: 0px;
   margin-left: 30px;
   border-top: 1px solid white;
   border-bottom: 1px solid white;
 `;
 
-export const ConnectedNetworkContainer = styled.div`
+export const NetworkActionBar = styled.div`
   display: flex;
-  padding-top: 0px;
-  align-items: center;
+  height: 80px;
 `;
 
 export const ConnectedNetwork = styled.div`
   background-color: ${({ theme }) => theme.colors.active};
-  width: 70%;
   color: #39FF14;
   padding: 10px;
-  margin-left: 5px;
   border-radius: 5px;
   text-align: center;
   font-family: 'Inter', sans-serif;
   border: 3px solid white;
   font-size: 22px;
-  margin-right: 10px;
 `;
 
 export const DisconnectButton = styled(Button)`
-    background-color: #9c1313;
-    width: 150px;
-    height: 50px;
-    margin-top: 10px;
-    line-height: 10px;
-    padding-left: 7px;
-
+  background-color: #9c1313;
+  line-height: 10px;
+  padding-left: 7px;
 `;
 
 export const RefreshButton = styled(Button)`
   background-color: #3ebffa;
-  width: 10%;
   font-size: 40px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-left: 10px;
-  margin-top: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

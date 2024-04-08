@@ -1,44 +1,16 @@
 import React, { useState } from "react";
 import * as Styled from "./styles/Settings.styled";
+import NetworkSettingsPage from "./Settings/NetworkSettingsPage";
 
 const SettingsPage = () => {
-  let currentNetwork = "Applebaum's Network";
-  let networksList = ["tusecurewireless", "eduroam", "Stacy's iPhone", "xfinitywifi"]
   const [activeButton, setActiveButton] = useState("WiFi");
-  const [connectedNetwork, setConnectedNetwork] = useState("✔ "+currentNetwork);
-  const [wifiNetworks, setWifiNetworks] = useState(networksList);
-
-  const handleWifiButtonClick = () => {
-    setActiveButton("WiFi");
-    // Fetch or update the list of WiFi networks here
-  };
-
-  const handleDisconnectButtonClick = () => {
-    // Implement connect/disconnect logic here
-  };
-
-  const handleRefreshButtonClick = () => {
-    // Implement refresh logic here
-  };
-
-  const renderWifiContent = () => {
-    return (
-      <div>
-        <Styled.NetworksList>
-          {wifiNetworks.map((network, index) => (
-              <Styled.NetworkButton>{network}</Styled.NetworkButton>
-          ))}
-        </Styled.NetworksList>
-      </div>
-    );
-  };
 
   return (
     <Styled.SettingsPageContainer>
       <Styled.SideMenu>
         <Styled.Button
           active={activeButton === "WiFi"}
-          onClick={handleWifiButtonClick}
+          onClick={() => {setActiveButton("WiFi")}}
           tabIndex="2"
         >
           Wi-Fi
@@ -67,20 +39,7 @@ const SettingsPage = () => {
         </Styled.Button>
       </Styled.SideMenu>
       
-      {activeButton === "WiFi" && (
-        <Styled.NetworksListContainer>
-          <Styled.ConnectedNetworkContainer>
-            <Styled.ConnectedNetwork>{connectedNetwork}</Styled.ConnectedNetwork>
-            <Styled.DisconnectButton onClick={handleDisconnectButtonClick}>
-              Disconnect
-            </Styled.DisconnectButton>
-            <Styled.RefreshButton onClick={handleRefreshButtonClick}>
-              ↻
-            </Styled.RefreshButton>
-          </Styled.ConnectedNetworkContainer>
-          {renderWifiContent()}
-        </Styled.NetworksListContainer>
-      )}
+      {activeButton === "WiFi" && (<NetworkSettingsPage/>)}
 
       
     </Styled.SettingsPageContainer>
