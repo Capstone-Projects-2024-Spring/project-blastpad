@@ -17,8 +17,8 @@ export const CommunityPageContainer = styled.div`
 `;
 
 export const GameIcon = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 25px;
   display: flex;
   justify-content: center;
