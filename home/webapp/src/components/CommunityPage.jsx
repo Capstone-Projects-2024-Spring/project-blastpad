@@ -1,9 +1,10 @@
-import { HomePageContainer } from "./styles/HomePage.styled"
+import { CommunityPageContainer, GameIcon } from "./styles/CommunityPage.styled"
 
-export default function HomePage() {
+export default function CommunityPage() {
   return (
-    <HomePageContainer>
-      Community Page
-    </HomePageContainer>
+    <CommunityPageContainer>
+      <GameIcon>Test</GameIcon>
+      <GameIcon>Test</GameIcon>
+    </CommunityPageContainer>
   )
 }
