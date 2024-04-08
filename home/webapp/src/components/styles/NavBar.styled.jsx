@@ -27,17 +27,13 @@ export const NavButtonsContainer = styled.div`
 `;
 
 export const NavButton = styled.div`
-  background-color: ${({ theme }) => theme.colors.foreground};
+  background-color: ${({ theme, active }) => (active ? theme.colors.active : theme.colors.foreground)};
   width: 80px;
   height: 80px;
   border-radius: 17px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &:focus {
-    background-color: ${({ theme }) => theme.colors.active};
-  }
 `
 
 export const StatusIconsContainer = styled.div`

@@ -1,26 +1,41 @@
-import {ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon} from "./Icons";
-import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer } from "./styles/NavBar.styled";
+import React, { useState } from 'react';
+import { NavButtonsContainer, NavBarContainer, NavButton } from "./styles/NavBar.styled";
+import { ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon } from "./Icons";
 
-export default function NavBar() {
+const navIcons = {
+  home: HomeIcon,
+  community: CommunityIcon,
+  classroom: ClassroomIcon,
+  settings: SettingsIcon,
+};
+
+const NavBar = ({ onPageChange }) => {
+  const [activePage, setActivePage] = useState('home');
+
+  const handleButtonClick = (page) => {
+    setActivePage(page);
+    onPageChange(page);
+  };
+
   return (
     <NavBarContainer>
       <NavButtonsContainer>
-        <NavButton tabIndex={1}>
-          <HomeIcon/>
-        </NavButton>
-        <NavButton tabIndex={2}>
-          <CommunityIcon/>
-        </NavButton>
-        <NavButton tabIndex={3}>
-          <ClassroomIcon/>
-        </NavButton>
-        <NavButton tabIndex={4}>
-          <SettingsIcon/>
-        </NavButton>
+        {Object.keys(navIcons).map((page) => {
+          const Icon = navIcons[page];
+          return (
+            <NavButton
+              key={page}
+              active={activePage === page}
+              onClick={() => handleButtonClick(page)}
+            >
+              <Icon />
+            </NavButton>
+          );
+        })}
       </NavButtonsContainer>
-      <StatusIconsContainer>
-        
-      </StatusIconsContainer>
+      {/* StatusIconsContainer can be added here */}
     </NavBarContainer>
-  )
-}
+  );
+};
+
+export default NavBar;
