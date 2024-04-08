@@ -39,6 +39,7 @@ const SettingsPage = () => {
         <Styled.Button
           active={activeButton === "WiFi"}
           onClick={handleWifiButtonClick}
+          tabIndex="2"
         >
           Wi-Fi
         </Styled.Button>
@@ -46,18 +47,21 @@ const SettingsPage = () => {
         <Styled.Button
           active={activeButton === "Sound"}
           onClick={() => setActiveButton("Sound")}
+          tabIndex="2"
         >
           Sound
         </Styled.Button>
         <Styled.Button
           active={activeButton === "Profile"}
           onClick={() => setActiveButton("Profile")}
+          tabIndex="2"
         >
           Profile
         </Styled.Button>
         <Styled.Button
           active={activeButton === "Class"}
           onClick={() => setActiveButton("Class")}
+          tabIndex="2"
         >
           Class
         </Styled.Button>

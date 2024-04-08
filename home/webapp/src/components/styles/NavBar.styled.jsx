@@ -20,7 +20,6 @@ export const NavButtonsContainer = styled.div`
 
   width: fit-content;
 
-
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -36,9 +35,8 @@ export const NavButton = styled.div`
   align-items: center;
 
   &:focus {
-    border: 3px solid ${({ theme }) => theme.colors.text};
-    border-radius: 17px;
-    outline:none;
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
   }
 
 `

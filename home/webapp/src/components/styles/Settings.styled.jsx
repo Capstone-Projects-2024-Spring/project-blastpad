@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const SettingsPageContainer = styled.div`
   display: flex; /* Use flexbox to arrange items */
+  gap: 13px;
+  
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
@@ -14,21 +16,36 @@ export const SideMenu = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 10px;
   padding: 0px;
-  margin-right: 20px;
-  margin-left: 5px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
   width: 100%;
-  padding: 20px 10px;
-  margin-bottom: 10px;
+  height: 100%;
+
   background-color: ${(props) => (props.active ? `${props.theme.colors.active}` : `${props.theme.colors.foreground}`)};
   color: #ffffff;
-  border: ${(props) => (props.active ? "3px solid #ffffff" : "none")};
-  border-radius: 5px;
+  
   cursor: pointer;
   font-size: 22px;
   font-family: 'Inter', sans-serif;
+
+  box-sizing: border-box;
+  border-radius: 9px;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  padding: 20px;
+
+  &:focus {
+    outline: ${(props) => "4px solid #ffffff"};
+    outline-offset: -4px;
+  }
 `;
 
 export const NetworksListContainer = styled.div`
