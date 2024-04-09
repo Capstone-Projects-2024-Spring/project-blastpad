@@ -29,6 +29,8 @@ echo "##### 🚀 🎮 Cleaning up unnecessary stuff... #####"
 cd ..
 pwd
 
+# vite stuff goes here
+
 echo "Removing Documentation"
 rm -rf documentation
 echo "Removing Examples"
