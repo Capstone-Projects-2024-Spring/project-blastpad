@@ -51,7 +51,6 @@ def save(game_name):
     return result, 300
 
 
-
 @app.route('/games/', methods = ['GET'])
 def allgames():
     dir_list = os.listdir(GAMES_FOLDER)
@@ -62,6 +61,43 @@ def onegame(game_name):
     f = open(GAMES_FOLDER+'/'+game_name)
     data = json.load(f)
     return data, 200
+
+
+###########################################################
+##### Endpoint to start a game given a workspace name #####
+###########################################################
+# def compile_game(json_file_path):
+#     # Path to the compiler script
+#     compiler_script_path = os.path.join(".", "blockly", "compile.js")
+
+#     # Check if the JSON file exists
+#     if not os.path.exists(json_file_path):
+#         print(f"Error: JSON file '{json_file_path}' not found.")
+#         return
+    
+#     # Construct the command to run, enclosing json_file_path in quotes
+#     command = f"node {compiler_script_path} \"{json_file_path}\""
+
+#     # Call the compiler script using os.system()
+#     return_code = os.system(command)
+    
+#     if return_code == 0:
+#         # Compilation succeeded
+#         print("Game compiled successfully!")
+#         run_game(game)
+#     else:
+#         # Compilation failed
+#         print("Compilation failed.")
+
+# def on_compile_click(game_json_path):
+#     # Set the path to the game JSON file
+#     # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
+#     compile_game(game.path)
+# def run_game(game):
+#     game_file = "./blockly/compiled_games/" + game.name + ".py"
+#     subprocess.run(['python', game_file])
+
+
 
 ##########################################
 ##### WiFi Network Requests Handling #####
