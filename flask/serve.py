@@ -7,7 +7,7 @@ import subprocess
 # GAME FOLDER LOCATION TODO!!
 
 GAMES_FOLDER = "./saved/"
-DIST_FOLDER = "../blockly/dist"
+DIST_FOLDER = "./built_pages/"
 
 app = Flask(
     __name__,
@@ -17,6 +17,11 @@ app = Flask(
 )
 
 CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+@app.route('/editor')
+def editor():
+    return render_template('blockly.html')
+
 
 @app.route('/')
 def index():
@@ -83,7 +88,7 @@ def get_networks():
     except:
         pass
 
-    response = json.dumps({'connected_network': connected_network, 'available_networks': list(available_networks)})
+    response = json.dumps({'connected_network': "none", 'available_networks': list(available_networks)})
     print(response)
     return response
 

@@ -18,12 +18,25 @@ if which node > /dev/null
 
 echo "##### 🚀 🎮 Node Packages Incoming... #####"
 # source ~/.bashrc
-pwd
-cd ../blockly/
-pwd
-npm ci > /dev/null
+
 echo "##### 🚀 🎮 Building Editor.. #####"
+cd ../blockly/
+npm ci > /dev/null
 npm run build
+
+mv dist/index.html dist/blockly.html
+pwd
+cp -r dist/* ../flask/built_pages
+
+
+echo "##### 🚀 🎮 Building Home page #####"
+cd ../home/webapp
+npm ci > /dev/null
+npm run build
+
+
+cp -r dist/* ../../flask/built_pages
+
 
 echo "##### 🚀 🎮 Cleaning up unnecessary stuff... #####"
 cd ..
