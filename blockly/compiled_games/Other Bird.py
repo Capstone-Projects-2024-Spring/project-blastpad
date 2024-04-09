@@ -64,10 +64,15 @@ def die():
   setattr(you_ded, 'x', 250)
   setattr(you_ded, 'y', 250)
 
+  time.sleep(5)
+  pygame.display.quit()
+  pygame.quit()
+  exit()
+
 # Describe this function...
 def vary_pipe_height(pipe):
   global actor, property2, value, pipe_to_move, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
-  setattr((pipe[0]), 'y', (random.randint(0, 180)))
+  setattr((pipe[0]), 'y', (random.randint(0, 190)))
   setattr((pipe[1]), 'y', (random.randint(400, 500)))
 
 # Describe this function...
@@ -98,6 +103,7 @@ def draw_pipe(pipe):
 
 import pgzrun
 import pygame
+import time
 from pygame import mask
 
 def collide_pixels(actor1, actor2):
@@ -119,9 +125,11 @@ def collide_pixels(actor1, actor2):
   return actor1.mask.overlap(actor2.mask, (xoffset, yoffset))
 
 TITLE = "'Other Bird'"
-WIDTH  = 500
+WIDTH  = 600
 HEIGHT = 500
-
+pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+# pygame.display.toggle_fullscreen()
+# pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 # pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
 
