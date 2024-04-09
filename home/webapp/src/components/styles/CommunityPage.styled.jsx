@@ -8,8 +8,9 @@ export const CommunityPageContainer = styled.div`
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors.foreground};
   padding: 20px;
-  gap: 9px;
+  gap: 19px;
   justify-content: space-evenly;
+  align-items: center;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -17,8 +18,8 @@ export const CommunityPageContainer = styled.div`
 `;
 
 export const GameIcon = styled.div`
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 25px;
   display: flex;
   justify-content: center;
