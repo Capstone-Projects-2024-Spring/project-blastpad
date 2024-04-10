@@ -107,7 +107,7 @@ class Actor(pygame.sprite.Sprite):
       self.x = 0
       self.y = 0
 
-      self.image = pygame.image.load("./images/"+imageName+".png")
+      self.image = pygame.image.load("blockly/compiled_games/images/"+imageName+".png")
       self.surf = pygame.Surface(size)
       self.mask = mask.from_surface(self.surf)
       self.rect = self.surf.get_rect()

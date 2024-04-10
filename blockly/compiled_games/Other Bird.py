@@ -105,6 +105,10 @@ from pygame import mask
 clock = pygame.time.Clock()
 pygame.init()
 
+def is_key_pressed():
+  for event in pygame.event.get():
+    return event.type == pygame.KEYDOWN
+
 def collide_pixels(actor1, actor2):
   return False
 
@@ -115,7 +119,7 @@ class Actor(pygame.sprite.Sprite):
       self.x = 0
       self.y = 0
 
-      self.image = pygame.image.load("./images/"+imageName+".png")
+      self.image = pygame.image.load("blockly/compiled_games/images/"+imageName+".png")
       self.surf = pygame.Surface(size)
       self.mask = mask.from_surface(self.surf)
       self.rect = self.surf.get_rect()
@@ -133,12 +137,7 @@ screen = pygame.display.set_mode([800, 480])
 
 
 start_game()
-
-def is_key_pressed():
-  for event in pygame.event.get():
-    return event.type == pygame.KEYDOWN
-
-def on_key_down():
+if(is_key_pressed()):
   if is_alive == True:
     increment(flappy_bird, 'y', -70)
 
@@ -147,8 +146,6 @@ setattr(flappy_bird, 'x', 60)
 
 while True:
   screen.fill((0, 0, 0))
-  if is_key_pressed():
-    on_key_down()
   if is_alive == True:
     move_pipe(pipe_two)
     move_pipe(pipe_one)
