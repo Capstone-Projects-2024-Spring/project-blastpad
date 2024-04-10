@@ -197,7 +197,6 @@ try {
         Blockly.serialization.workspaces.load(file, workspace);
         var code = pythonGenerator.workspaceToCode(workspace);
 
-        code += `\n\n\n\npgzrun.go()`
         fs.writeFile(output, code, err => {
             if (err) {
               console.error(err);

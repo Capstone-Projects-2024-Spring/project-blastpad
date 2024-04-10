@@ -63,8 +63,6 @@ def die():
   you_ded = Actor(("xprhsxhogqgv"), (20, 50))
   setattr(you_ded, 'x', 250)
   setattr(you_ded, 'y', 250)
-
-  time.sleep(5)
   pygame.display.quit()
   pygame.quit()
   exit()
@@ -90,7 +88,7 @@ def increment(actor, property2, value):
 def draw_pipe(pipe):
   global actor, property2, value, pipe_to_move, x, is_alive, i, pipe_one, flappy_bird, you_ded, pipe_speed, pipe_two, score
   for i in pipe:
-    i.draw()
+    i.draw(screen)
 
 
 
@@ -101,41 +99,44 @@ def draw_pipe(pipe):
 # 'This is an example project.'
 
 
-import pgzrun
 import pygame
 import time
 from pygame import mask
+clock = pygame.time.Clock()
+pygame.init()
 
 def collide_pixels(actor1, actor2):
+  return False
 
-  # Get masks for pixel perfect collision detection:
-  for a in [actor1, actor2]:
-    if not hasattr(a, 'mask'):
-      a.mask = mask.from_surface(images.load(a.image))
+class Actor(pygame.sprite.Sprite):
+  def __init__(self, imageName, size):
+      super(Actor, self).__init__()
 
-    # Check rectangles first, this is faster
-    if not actor1.colliderect(actor2):
-      return None
+      self.x = 0
+      self.y = 0
 
-    # Offsets based on current positions of actors
-    xoffset = int(actor2.left - actor1.left)
-    yoffset = int(actor2.top - actor1.top)
+      self.image = pygame.image.load("./images/"+imageName+".png")
+      self.surf = pygame.Surface(size)
+      self.mask = mask.from_surface(self.surf)
+      self.rect = self.surf.get_rect()
 
-  # Check for overlap => a collision
-  return actor1.mask.overlap(actor2.mask, (xoffset, yoffset))
+  def draw(self, screen):
+      screen.blit(self.image,(self.x, self.y))
 
-TITLE = "'Other Bird'"
-WIDTH  = 600
-HEIGHT = 500
-pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-# pygame.display.toggle_fullscreen()
-# pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-# pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+font = pygame.font.Font('freesansbold.ttf', 32)
+pygame.display.set_caption("'Other Bird'")
+# screen = pygame.display.set_mode([800, 480], pygame.FULLSCREEN)
+screen = pygame.display.set_mode([800, 480])
+
 
 
 
 
 start_game()
+
+def is_key_pressed():
+  for event in pygame.event.get():
+    return event.type == pygame.KEYDOWN
 
 def on_key_down():
   if is_alive == True:
@@ -144,8 +145,10 @@ def on_key_down():
 setattr(flappy_bird, 'y', 250)
 setattr(flappy_bird, 'x', 60)
 
-def update():
-  screen.clear()
+while True:
+  screen.fill((0, 0, 0))
+  if is_key_pressed():
+    on_key_down()
   if is_alive == True:
     move_pipe(pipe_two)
     move_pipe(pipe_one)
@@ -154,14 +157,15 @@ def update():
     die()
   if (getattr(flappy_bird, 'y')) < 40:
     die()
-  flappy_bird.draw()
+  flappy_bird.draw(screen)
   draw_pipe(pipe_one)
   draw_pipe(pipe_two)
-  screen.draw.text(('your score: ' + str(score)), (0, 0))
+  text = font.render(('your score: ' + str(score)), True, (255, 255, 0))
+  textRect = text.get_rect()
+  textRect.topleft = (0, 0)
+  screen.blit(text, textRect)
   if is_alive == False:
-    you_ded.draw()
+    you_ded.draw(screen)
 
-
-
-
-pgzrun.go()
+  pygame.display.flip()
+  clock.tick(30)
