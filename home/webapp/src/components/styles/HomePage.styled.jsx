@@ -35,12 +35,14 @@ export const GameIcon = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.active};
   
-  outline: 4px solid ${({ theme }) => theme.colors.foreground};
+  outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
 
   &:focus {
-    outline: none;
-    outline-offset: -4px;
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+    // transform: scale(1.03);
+    // transition: transform 0.3s;
   }
 
   flex-grow: 0;
@@ -78,11 +80,11 @@ export const GameActionButton = styled.div`
 export const GameActionButtonBackground = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 90%;
   // transform: translate(5px, 5px); /* Adjust for desired shadow offset */
   z-index: 1;
   border-radius: 15px;
-
+  bottom: 0px;
 `;
 
 export const GameActionButtonForeground = styled.div`
@@ -95,7 +97,12 @@ export const GameActionButtonForeground = styled.div`
   border-radius: 15px;
   justify-content: center;
   align-items: center;
+  transition: transform 0.1s;
 
+  &:active {
+    transform: translateY(3px);
+    transition: transform 0.1s;
+  }
 `;
 
 export const PlayButtonBackgroundColor = styled(GameActionButtonBackground)`
