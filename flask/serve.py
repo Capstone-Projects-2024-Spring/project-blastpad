@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import json
 from flask_cors import CORS
 import os
@@ -103,8 +103,8 @@ def onegame(game_name):
 ##### WiFi Network Requests Handling #####
 ##########################################
 
-@app.route('/get_networks', methods = ['GET'])
-def get_networks():
+@app.route('/get_wifi_networks', methods = ['GET'])
+def get_wifi_networks():
     connected_network = None
     available_networks = set()
 
@@ -124,9 +124,31 @@ def get_networks():
     except:
         pass
 
-    response = json.dumps({'connected_network': "none", 'available_networks': list(available_networks)})
-    print(response)
-    return response
+    response_data = {
+        'connected_network': connected_network,
+        'available_networks': list(available_networks)
+    }
+
+    return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
+
+@app.route('/disconnect_wifi', methods=['POST'])
+def disconnect_wifi():
+    connected_network = None
+
+    try:
+        connected_network = subprocess.run(["iwgetid", "-r"], capture_output=True, text=True, check=True)
+    except subprocess.CalledProcessError:
+        pass
+
+    if connected_network is None:
+        return '', 200, {'Access-Control-Allow-Origin': '*'}
+
+    try:
+        subprocess.run(["nmcli", "device", "disconnect", "wlan0"], check=True)
+        return '', 200, {'Access-Control-Allow-Origin': '*'}
+    except subprocess.CalledProcessError:
+        return jsonify({"message": "Error: Failed to disconnect from network"}), 500, {'Access-Control-Allow-Origin': '*'}
+
 
 ##########################################
 ### WiFi Network Requests Handling END ###
