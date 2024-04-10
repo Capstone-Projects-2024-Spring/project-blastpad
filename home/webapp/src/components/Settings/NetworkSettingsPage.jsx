@@ -7,7 +7,7 @@ export default function NetworkSettingsPage() {
 
   const fetchNetworks = async () => {
     try {
-      const response = await fetch("/get_networks");
+      const response = await fetch("http://localhost:5000/get_wifi_networks");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -19,27 +19,26 @@ export default function NetworkSettingsPage() {
       console.error("Error fetching networks:", error);
     }
   };
-  
-
   useEffect(() => {
     fetchNetworks();
   }, []); // Fetch networks on component mount
 
-  const handleDisconnectButtonClick = () => {
-    // Implement connect/disconnect logic here
+  const handleDisconnectButtonClick = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/disconnect_wifi", {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error("Disconnect request failed");
+      }
+      await fetchNetworks(); // Refresh networks after successful disconnection
+    } catch (error) {
+      console.error("Error disconnecting from network:", error);
+    }
   };
 
   const handleRefreshButtonClick = async () => {
-    try {
-      const response = await fetch("/get_networks");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const responseData = await response.text();
-      console.log("Response from server:", responseData);
-    } catch (error) {
-      console.error("Error fetching networks:", error);
-    }
+    fetchNetworks();
   };
   
 
@@ -57,7 +56,9 @@ export default function NetworkSettingsPage() {
     <Styled.NetworkSettingsPageContainer>
       <Styled.NetworkActionBar>
         <Styled.ConnectedNetwork>
-          {connectedNetwork ? `✔ ${connectedNetwork}` : "Not connected"}
+          {connectedNetwork ? 
+            (<span style={{ color: '#39FF14' }}>✔ {connectedNetwork}</span>) : 
+            (<span style={{ color: '#E44a4a' }}>❌ Not Connected</span>)}
         </Styled.ConnectedNetwork>
         <Styled.DisconnectButton onClick={handleDisconnectButtonClick}>
           Disconnect
