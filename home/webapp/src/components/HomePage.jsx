@@ -1,5 +1,12 @@
-import { NewGameIcon, PlayIcon } from "./Icons"
-import { GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, GameMetaData, GameActionButtonsContainer, GameActionButton, GameActionButtonBackground, GameActionButtonForeground ,MetaDataText, MetaDataTitle} from "./styles/HomePage.styled"
+import { NewGameIcon, PlayIcon, PencilIcon, UploadIcon } from "./Icons"
+
+import {GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, 
+        GameMetaData, GameActionButtonsContainer, GameActionButton, 
+        GameActionButtonBackground, GameActionButtonForeground, 
+        MetaDataText, MetaDataTitle, PlayButtonBackgroundColor, 
+        PlayButtonForegroundColor, EditButtonBackgroundColor, 
+        EditButtonForegroundColor, ShareButtonBackgroundColor, 
+        ShareButtonForegroundColor} from "./styles/HomePage.styled"
 
 export default function HomePage() {
 
@@ -35,11 +42,31 @@ export default function HomePage() {
 
         <GameActionButtonsContainer>
           <GameActionButton>
-            <GameActionButtonForeground>
+            <PlayButtonForegroundColor>
               <PlayIcon/>
-            </GameActionButtonForeground>
+            </PlayButtonForegroundColor>
 
-            <GameActionButtonBackground></GameActionButtonBackground>
+            <PlayButtonBackgroundColor></PlayButtonBackgroundColor>
+
+          </GameActionButton>
+
+
+          <GameActionButton>
+            <EditButtonForegroundColor>
+              <PencilIcon/>
+            </EditButtonForegroundColor>
+
+            <EditButtonBackgroundColor></EditButtonBackgroundColor>
+
+          </GameActionButton>
+
+
+          <GameActionButton>
+            <ShareButtonForegroundColor>
+              <UploadIcon/>
+            </ShareButtonForegroundColor>
+
+            <ShareButtonBackgroundColor></ShareButtonBackgroundColor>
 
           </GameActionButton>
 
