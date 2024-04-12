@@ -10,13 +10,13 @@ export default function HomePage() {
 
       <GalleryContainer>
 
-        <GameIcon tabIndex={2}>
-          <NewGameIcon />
+        <GameIcon tabIndex={0} autoFocus id="NewGameIcon">
+          <NewGameIcon/>
         </GameIcon>
 
         {gameNames.map((game, index)=>{
             return(
-              <GameIcon tabIndex={2}>{game}</GameIcon>
+              <GameIcon tabIndex={0}>{game}</GameIcon>
             )
 
         })}
