@@ -10,6 +10,7 @@ import ClassroomPage from "./components/ClassroomPage.jsx";
 import SettingsPage from "./components/SettingsPage.jsx"; // Import SettingsPage component
 
 import { Layout } from './components/styles/Layout.styled.jsx'
+import CursorProvider from "./components/CursorProvider.jsx";
 
 function App() {
   const [selectedTheme, setSelectedTheme] = useState(dark);
@@ -20,19 +21,21 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={selectedTheme}>
-      <div className="App">
-        <GlobalStyles />
+    <CursorProvider>
+      <ThemeProvider theme={selectedTheme}>
+        <div className="App">
+          <GlobalStyles />
 
-        <Layout>
-          <NavBar onPageChange={handleNavButtonClick} />
-          {currentPage === 'home' && <HomePage />}
-          {currentPage === 'community' && <CommunityPage />}
-          {currentPage === 'classroom' && <ClassroomPage />}
-          {currentPage === 'settings' && <SettingsPage />}
-        </Layout>
-      </div>
-    </ThemeProvider>
+          <Layout>
+            <NavBar onPageChange={handleNavButtonClick} />
+            {currentPage === 'home' && <HomePage />}
+            {currentPage === 'community' && <CommunityPage />}
+            {currentPage === 'classroom' && <ClassroomPage />}
+            {currentPage === 'settings' && <SettingsPage />}
+          </Layout>
+        </div>
+      </ThemeProvider>
+    </CursorProvider>
   );
 }
 
