@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { NavButtonsContainer, NavBarContainer, NavButton } from "./styles/NavBar.styled";
-import { ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon } from "./Icons";
+import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer } from "./styles/NavBar.styled";
+import { BatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon,   } from "./Icons";
 
 const navIcons = {
   home: HomeIcon,
   community: CommunityIcon,
   classroom: ClassroomIcon,
   settings: SettingsIcon,
+
 };
 
 const NavBar = ({ onPageChange }) => {
@@ -35,6 +36,10 @@ const NavBar = ({ onPageChange }) => {
         })}
       </NavButtonsContainer>
       {/* StatusIconsContainer can be added here */}
+      <StatusIconsContainer>
+        <BatteryFrameIcon></BatteryFrameIcon>
+        <WiFiIcon></WiFiIcon>
+      </StatusIconsContainer>
     </NavBarContainer>
   );
 };
