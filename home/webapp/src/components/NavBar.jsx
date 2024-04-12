@@ -37,8 +37,10 @@ const NavBar = ({ onPageChange }) => {
       </NavButtonsContainer>
       {/* StatusIconsContainer can be added here */}
       <StatusIconsContainer>
-        <BatteryFrameIcon></BatteryFrameIcon>
-        <WiFiIcon></WiFiIcon>
+        <BatteryFrameIcon>
+        </BatteryFrameIcon>
+        <WiFiIcon>
+        </WiFiIcon>
       </StatusIconsContainer>
     </NavBarContainer>
   );
