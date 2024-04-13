@@ -8,35 +8,34 @@ const SettingsPage = () => {
   return (
     <Styled.SettingsPageContainer>
       <Styled.SideMenu>
-        <Styled.Button
+        <Styled.sideButton
           active={activeButton === "WiFi"}
           onClick={() => {setActiveButton("WiFi")}}
           tabIndex="2"
         >
           Wi-Fi
-        </Styled.Button>
-        {/* Add more buttons as needed */}
-        <Styled.Button
+        </Styled.sideButton>
+        <Styled.sideButton
           active={activeButton === "Sound"}
           onClick={() => setActiveButton("Sound")}
           tabIndex="2"
         >
           Sound
-        </Styled.Button>
-        <Styled.Button
+        </Styled.sideButton>
+        <Styled.sideButton
           active={activeButton === "Profile"}
           onClick={() => setActiveButton("Profile")}
           tabIndex="2"
         >
           Profile
-        </Styled.Button>
-        <Styled.Button
+        </Styled.sideButton>
+        <Styled.sideButton
           active={activeButton === "Class"}
           onClick={() => setActiveButton("Class")}
           tabIndex="2"
         >
           Class
-        </Styled.Button>
+        </Styled.sideButton>
       </Styled.SideMenu>
       
       {activeButton === "WiFi" && (<NetworkSettingsPage/>)}

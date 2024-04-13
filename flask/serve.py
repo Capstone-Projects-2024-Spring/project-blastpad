@@ -105,6 +105,19 @@ def onegame(game_name):
 
 @app.route('/get_wifi_networks', methods = ['GET'])
 def get_wifi_networks():
+    # num_networks = 10
+    # response_data = {
+    #     'connected_network': "Applebaum's Network",
+    #     'available_networks': [f"Network {i}" for i in range(1, num_networks + 1)]
+    # }
+
+    # response_data = {
+    #     'connected_network': None,
+    #     'available_networks': []
+    # }
+
+    # return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
+
     connected_network = None
     available_networks = set()
 
@@ -133,6 +146,8 @@ def get_wifi_networks():
 
 @app.route('/disconnect_wifi', methods=['POST'])
 def disconnect_wifi():
+    # return '', 200, {'Access-Control-Allow-Origin': '*'}
+
     connected_network = None
 
     try:

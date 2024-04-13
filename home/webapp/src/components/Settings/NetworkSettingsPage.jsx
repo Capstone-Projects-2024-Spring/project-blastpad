@@ -7,12 +7,12 @@ export default function NetworkSettingsPage() {
 
   const fetchNetworks = async () => {
     try {
-      const response = await fetch("http://localhost:5000/get_wifi_networks");
+      const response = await fetch("http://localhost:8000/get_wifi_networks");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log("Received data from server:", data); // Add this line
+
       setConnectedNetwork(data.connected_network);
       setWifiNetworks(data.available_networks);
     } catch (error) {
@@ -25,7 +25,7 @@ export default function NetworkSettingsPage() {
 
   const handleDisconnectButtonClick = async () => {
     try {
-      const response = await fetch("http://localhost:5000/disconnect_wifi", {
+      const response = await fetch("http://localhost:8000/disconnect_wifi", {
         method: "POST",
       });
       if (!response.ok) {
@@ -60,13 +60,11 @@ export default function NetworkSettingsPage() {
             (<span style={{ color: '#39FF14' }}>✔ {connectedNetwork}</span>) : 
             (<span style={{ color: '#E44a4a' }}>❌ Not Connected</span>)}
         </Styled.ConnectedNetwork>
-        <Styled.DisconnectButton onClick={handleDisconnectButtonClick}>
-          Disconnect
-        </Styled.DisconnectButton>
-        <Styled.RefreshButton onClick={handleRefreshButtonClick}>
-          ↻
-        </Styled.RefreshButton>
+
+        <Styled.DisconnectButton onClick={handleDisconnectButtonClick} tabIndex="2">Disconnect</Styled.DisconnectButton>
+        <Styled.RefreshButton onClick={handleRefreshButtonClick} tabIndex="2">↻</Styled.RefreshButton>
       </Styled.NetworkActionBar>
+
       {renderWifiContent()}
     </Styled.NetworkSettingsPageContainer>
   );
