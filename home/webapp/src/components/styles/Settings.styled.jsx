@@ -70,6 +70,10 @@ export const NetworksList = styled.div`
   overflow-y: scroll;
   padding: 10px;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -77,16 +81,26 @@ export const NetworksList = styled.div`
 
 export const NetworkButton = styled.div`
   height: 19%;
-  width: 100%;
-  padding: 10px;
+  width: 90%;
+  padding: 24px;
+
   margin-bottom: 5px;
-  border: 1px solid white;
-  border-radius: 5px; 
+  margin: 0;
+
+  /* Set the borders */
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-left: none;
+  border-right: none;
+  border-radius: 1px; 
+
   display: flex;
   align-items: center;
   justify-content: center;
 
   font-size: 22px;
+
+  cursor: pointer;
 `;
 
 export const NetworkActionBar = styled.div`

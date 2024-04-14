@@ -40,13 +40,54 @@ export default function NetworkSettingsPage() {
   const handleRefreshButtonClick = async () => {
     fetchNetworks();
   };
+
+  const handleConnect = async (ssid, password) => {
+    try {
+      const response = await fetch('http://localhost:8000/connect_to_wifi', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ssid, password }),
+      });
+
+      if (response.ok) {
+        console.error("Successfully connected to WiFi")
+        return true;
+      } else {
+        const errorData = await response.json();
+        console.error(errorData.error || 'Failed to connect');
+        return false;
+      }
+    } catch (error) {
+      console.error('Failed to connect', error);
+      return false;
+    }
+  };
+
+  const handleNetworkConnection = async (ssid) => {
+    let success = await connectNetwork(ssid, null);
+
+    while (!success) {
+      const password = prompt('Please enter the password for the network:');
+      // If the user cancels the prompt or doesn't enter a password, break the loop
+      if (password === null || password === '') {
+        break;
+      }
+
+      // Attempt to connect with the entered password
+      success = await handleConnect(ssid, password);
+    }
+
+    fetchNetworks();
+  };
   
 
   const renderWifiContent = () => {
     return (
       <Styled.NetworksList>
         {wifiNetworks.map((network, index) => (
-          <Styled.NetworkButton key={index}>{network}</Styled.NetworkButton>
+          <Styled.NetworkButton key={index} onDoubleClick={() => handleNetworkConnection(network)} tabIndex="2">{network}</Styled.NetworkButton>
         ))}
       </Styled.NetworksList>
     );

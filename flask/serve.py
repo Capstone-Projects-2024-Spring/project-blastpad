@@ -108,7 +108,7 @@ def get_wifi_networks():
     # num_networks = 10
     # response_data = {
     #     'connected_network': "Applebaum's Network",
-    #     'available_networks': [f"Network {i}" for i in range(1, num_networks + 1)]
+    #     'available_networks': ["xfinity-wifi", "eduroam", "tusecurewireless", "Stacy's iPhone", "VeryCoolNetwork123445"]
     # }
 
     # response_data = {
@@ -116,7 +116,7 @@ def get_wifi_networks():
     #     'available_networks': []
     # }
 
-    # return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
+    return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
 
     connected_network = None
     available_networks = set()
@@ -164,6 +164,47 @@ def disconnect_wifi():
     except subprocess.CalledProcessError:
         return jsonify({"message": "Error: Failed to disconnect from network"}), 500, {'Access-Control-Allow-Origin': '*'}
 
+# Checks if a password is recorded for a given WiFi network
+def found_password(self, ssid):
+    connections_dir = '/etc/NetworkManager/system-connections'
+    if not os.path.exists(connections_dir) or not os.path.isdir(connections_dir):
+        messagebox.showerror("Error", "NetworkManager connections directory not found")
+        return False
+
+    connection_files = os.listdir(connections_dir)
+    for filename in connection_files:
+        if filename.startswith(ssid):
+            with open(os.path.join(connections_dir, filename), 'r') as f:
+                content = f.read()
+                if 'psk=' in content:
+                    return True
+    return False
+
+@app.route('/connect_to_wifi', methods=['POST'])
+def connect_to_wifi():
+    data = request.json
+    ssid = data.get('ssid')
+    password = data.get('password')
+
+    if not ssid:
+        return jsonify({'error': 'SSID not provided'}), 400, {'Access-Control-Allow-Origin': '*'}
+
+    if password:
+        try:
+            subprocess.run(["nmcli", "device", "wifi", "connect", network, "password", password], check=True)
+            return '', 200, {'Access-Control-Allow-Origin': '*'}
+        except subprocess.CalledProcessError:
+            return jsonify({'error': 'Incorrect password'}), 401, {'Access-Control-Allow-Origin': '*'}
+
+    # No password given and found local password
+    if found_password(ssid):
+        try:
+            subprocess.run(["nmcli", "device", "wifi", "connect", ssid], check=True)
+            return '', 200, {'Access-Control-Allow-Origin': '*'}
+        except subprocess.CalledProcessError:
+            return jsonify({'error': 'Password not saved', 'request_password': True}), 404
+    
+    return jsonify({'error': 'Password required but not provided'}), 401, {'Access-Control-Allow-Origin': '*'}
 
 ##########################################
 ### WiFi Network Requests Handling END ###
