@@ -116,7 +116,7 @@ def get_wifi_networks():
     #     'available_networks': []
     # }
 
-    return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
+    # return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
 
     connected_network = None
     available_networks = set()
@@ -182,9 +182,19 @@ def found_password(self, ssid):
 
 @app.route('/connect_to_wifi', methods=['POST'])
 def connect_to_wifi():
-    data = request.json
-    ssid = data.get('ssid')
-    password = data.get('password')
+    # data = request.json
+    # print("\n\n\n" + data)
+    # ssid = data.get('ssid')
+    # password = data.get('password')
+
+    # print("Checking if printing works lol")
+    # if not password:
+    #     print(f"SSID: {ssid}, Password: <None>")
+    #     return jsonify({'error': 'Password required but not provided'}), 401, {'Access-Control-Allow-Origin': '*'}
+    # if password:
+    #     print(f"SSID: {ssid}, Password: {password}")
+    #     return '', 200, {'Access-Control-Allow-Origin': '*'}
+
 
     if not ssid:
         return jsonify({'error': 'SSID not provided'}), 400, {'Access-Control-Allow-Origin': '*'}

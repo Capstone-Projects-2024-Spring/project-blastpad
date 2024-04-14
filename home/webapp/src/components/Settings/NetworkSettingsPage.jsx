@@ -41,14 +41,12 @@ export default function NetworkSettingsPage() {
     fetchNetworks();
   };
 
-  const handleConnect = async (ssid, password) => {
+  const connectNetwork = async (ssid, password) => {
     try {
       const response = await fetch('http://localhost:8000/connect_to_wifi', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({ ssid, password }),
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -76,7 +74,7 @@ export default function NetworkSettingsPage() {
       }
 
       // Attempt to connect with the entered password
-      success = await handleConnect(ssid, password);
+      success = await connectNetwork(ssid, password);
     }
 
     fetchNetworks();
