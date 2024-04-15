@@ -5,21 +5,29 @@ export const CommunityPageContainer = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.foreground};
   border-radius: 20px;
-  padding: 17px;
+  padding: 20px 5px;
   display: flex;
-  flex-direction: column;
   overflow: hidden;
-  gap: 20px;
+  justify-content: center;
+`;
+
+export const GameIconsContainer = styled.div`
+  width: 700px;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: start;
+  gap: 8px;
 `;
 
 export const GameIcon = styled.div`
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.active};
+  background-color: ${({ theme }) => theme.colors.background};
 
   outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;

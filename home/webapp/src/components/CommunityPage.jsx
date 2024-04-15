@@ -1,4 +1,4 @@
-import { CommunityPageContainer, GameIcon } from "./styles/CommunityPage.styled"
+import { CommunityPageContainer, GameIcon, GameIconsContainer } from "./styles/CommunityPage.styled"
 
 export default function CommunityPage() {
   let gameNames = []
@@ -8,11 +8,13 @@ export default function CommunityPage() {
 
   return (
     <CommunityPageContainer>
-      {gameNames.map((game, index)=>{
-        return(
-          <GameIcon tabIndex={2}>{game}</GameIcon>
-        )
-      })}
+      <GameIconsContainer>
+        {gameNames.map((game, index)=>{
+          return(
+            <GameIcon tabIndex={2}>{game}</GameIcon>
+          )
+        })}
+      </GameIconsContainer>
     </CommunityPageContainer>
   )
 }
