@@ -2,7 +2,7 @@ import { CommunityPageContainer, GameIcon } from "./styles/CommunityPage.styled"
 
 export default function CommunityPage() {
   let gameNames = []
-  for(let i=0; i < 20; i++){
+  for(let i=0; i < 40; i++){
     gameNames.push(`Game ${i}`);
   }
 
