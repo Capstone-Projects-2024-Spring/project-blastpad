@@ -105,18 +105,18 @@ def onegame(game_name):
 
 @app.route('/get_wifi_networks', methods = ['GET'])
 def get_wifi_networks():
-    # num_networks = 10
-    # response_data = {
-    #     'connected_network': "Applebaum's Network",
-    #     'available_networks': ["xfinity-wifi", "eduroam", "tusecurewireless", "Stacy's iPhone", "VeryCoolNetwork123445"]
-    # }
+    num_networks = 10
+    response_data = {
+        'connected_network': "Applebaum's Network",
+        'available_networks': ["xfinity-wifi", "eduroam", "tusecurewireless", "Stacy's iPhone", "VeryCoolNetwork123445"]
+    }
 
     # response_data = {
     #     'connected_network': None,
     #     'available_networks': []
     # }
 
-    # return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
+    return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
 
     connected_network = None
     available_networks = set()
@@ -146,7 +146,7 @@ def get_wifi_networks():
 
 @app.route('/disconnect_wifi', methods=['POST'])
 def disconnect_wifi():
-    # return '', 200, {'Access-Control-Allow-Origin': '*'}
+    return '', 200, {'Access-Control-Allow-Origin': '*'}
 
     connected_network = None
 
@@ -182,22 +182,22 @@ def found_password(self, ssid):
 
 @app.route('/connect_to_wifi', methods=['POST'])
 def connect_to_wifi():
-    # data = request.json
+    data = request.json
     # print("\n\n\n" + data)
-    # ssid = data.get('ssid')
-    # password = data.get('password')
+    ssid = data.get('ssid')
+    password = data.get('password')
 
-    # print("Checking if printing works lol")
-    # if not password:
-    #     print(f"SSID: {ssid}, Password: <None>")
-    #     return jsonify({'error': 'Password required but not provided'}), 401, {'Access-Control-Allow-Origin': '*'}
-    # if password:
-    #     print(f"SSID: {ssid}, Password: {password}")
-    #     return '', 200, {'Access-Control-Allow-Origin': '*'}
+    print("Checking if printing works lol")
+    if not password:
+        print(f"SSID: {ssid}, Password: <None>")
+        return jsonify({'error': 'Password required but not provided'}), 401, {'Access-Control-Allow-Origin': '*'}
+    if password:
+        print(f"SSID: {ssid}, Password: {password}")
+        return '', 200, {'Access-Control-Allow-Origin': '*'}
 
 
     if not ssid:
-        return jsonify({'error': 'SSID not provided'}), 400, {'Access-Control-Allow-Origin': '*'}
+        return jsonify({'error': 'SSID not provided'}), 400, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
 
     if password:
         try:

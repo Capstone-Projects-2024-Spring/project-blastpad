@@ -46,6 +46,9 @@ export default function NetworkSettingsPage() {
       const response = await fetch('http://localhost:8000/connect_to_wifi', {
         method: 'POST',
         body: JSON.stringify({ ssid, password }),
+        headers: {
+          "Content-Type": "application/json"
+        },
         credentials: 'include'
       });
 

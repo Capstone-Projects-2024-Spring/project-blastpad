@@ -24,19 +24,16 @@ cd ../blockly/
 npm ci > /dev/null
 npm run build
 
-mv dist/index.html dist/blockly.html
-pwd
-cp -r dist/* ../flask/built_pages
+# mv dist/index.html dist/blockly.html
+# pwd
+# cp -r dist/* ../flask/built_pages
 
 
 echo "##### 🚀 🎮 Building Home page #####"
 cd ../home/webapp
 npm ci > /dev/null
 npm run build
-
-
-cp -r dist/* ../../flask/built_pages
-
+# cp -r dist/* ../../flask/built_pages
 
 echo "##### 🚀 🎮 Cleaning up unnecessary stuff... #####"
 cd ..
