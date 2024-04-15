@@ -25,7 +25,7 @@ export default function NetworkSettingsPage() {
     );
   };
 
-  return (<Styled.NetworkSettingsPageContainer>
+  return (<Styled.SettingsPageContainer>
     <Styled.NetworkActionBar>
       <Styled.ConnectedNetwork>{connectedNetwork}</Styled.ConnectedNetwork>
       <Styled.DisconnectButton onClick={handleDisconnectButtonClick}>
@@ -36,5 +36,5 @@ export default function NetworkSettingsPage() {
       </Styled.RefreshButton>
     </Styled.NetworkActionBar>
     {renderWifiContent()}
-  </Styled.NetworkSettingsPageContainer>)
+  </Styled.SettingsPageContainer>)
 }

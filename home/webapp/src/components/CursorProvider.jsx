@@ -25,7 +25,7 @@ export default function CursorProvider({children}) {
 
     let selectableObjects = document.querySelectorAll('[tabindex]')
 
-    let minDistance = 1000;
+    let minDistance = 2000;
     let closestElement;
 
     for (let i = 0; i < selectableObjects.length; i++) {
@@ -90,7 +90,7 @@ export default function CursorProvider({children}) {
   }
 
   return (
-    <div>
+    <div style={{height: "inherit"}}>
       {children}
     </div>
   )

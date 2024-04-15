@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import * as Styled from "./styles/Settings.styled";
 import NetworkSettingsPage from "./Settings/NetworkSettingsPage";
+import ProfileSettingsPage from "./Settings/ProfileSettingsPage";
 
 const SettingsPage = () => {
   const [activeButton, setActiveButton] = useState("WiFi");
 
   return (
-    <Styled.SettingsPageContainer>
+    <Styled.SettingsPageLayout>
       <Styled.SideMenu>
         <Styled.Button
           active={activeButton === "WiFi"}
@@ -40,9 +41,9 @@ const SettingsPage = () => {
       </Styled.SideMenu>
       
       {activeButton === "WiFi" && (<NetworkSettingsPage/>)}
+      {activeButton === "Profile" && (<ProfileSettingsPage/>)}
 
-      
-    </Styled.SettingsPageContainer>
+    </Styled.SettingsPageLayout>
   );
 };
 
