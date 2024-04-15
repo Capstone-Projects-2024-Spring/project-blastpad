@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as Styled from "./styles/Settings.styled";
 import NetworkSettingsPage from "./Settings/NetworkSettingsPage";
+import ClassroomSettingsPage from "./Settings/ClassroomSettingsPage";
 
 const SettingsPage = () => {
   const [activeButton, setActiveButton] = useState("WiFi");
