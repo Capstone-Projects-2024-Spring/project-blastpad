@@ -109,3 +109,24 @@ export const RefreshButton = styled(Button)`
   justify-content: center;
   align-items: center;
 `
+
+export const ClassroomSettingsPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  // outline: 3px solid #ffffff;
+  background-color: ${({ theme }) => theme.colors.foreground};
+  border-radius: 20px;
+  height: 100% fixed;
+  width: 100%;
+
+`;
+
+export const ClassroomSettingsPageClassroomTitle = styled.div`
+  outline: 2px solid red;
+  font-size: 24px;
+  text-align: center;
+`;
+
+export const ClassroomSettingsPageMetaData = styled.div`
+  otuline: 3px solid green;
+`;

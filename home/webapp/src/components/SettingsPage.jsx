@@ -40,7 +40,8 @@ const SettingsPage = () => {
         </Styled.Button>
       </Styled.SideMenu>
       
-      {activeButton === "WiFi" && (<NetworkSettingsPage/>)}
+      {(activeButton === "WiFi" && (<NetworkSettingsPage/>))
+      || (activeButton === "Class" && (<ClassroomSettingsPage/>))}
 
       
     </Styled.SettingsPageContainer>
