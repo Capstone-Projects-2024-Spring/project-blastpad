@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SettingsPageContainer = styled.div`
+export const SettingsPageLayout = styled.div`
   display: flex; /* Use flexbox to arrange items */
   flex-direction: row;
   gap: 13px;
@@ -48,21 +48,23 @@ export const Button = styled.div`
   }
 `;
 
-export const NetworkSettingsPageContainer = styled.div`
-  height: 100%
-  background-color: ${({ theme }) => theme.colors.background};
+export const SettingsPageContainer = styled.div`
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.foreground};
+
+  border-radius: 20px;
 
   display: flex;
   flex-grow: 2;
   flex-direction: column;
-  justify-content: space-between;
 
-  overflow: scroll-y;
+  gap: 15px;
+
+  padding: 30px;
 `;
 
 export const NetworksList = styled.div`
   background-color: ${({ theme }) => theme.colors.foreground};
-  border-radius: 20px;
   height: 100%;
   width: 100%;
   
