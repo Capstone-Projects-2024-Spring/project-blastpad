@@ -118,6 +118,7 @@ export const ClassroomSettingsPageContainer = styled.div`
   border-radius: 20px;
   height: 100% fixed;
   width: 100%;
+  gap: 13px;
 
 `;
 
@@ -128,5 +129,10 @@ export const ClassroomSettingsPageClassroomTitle = styled.div`
 `;
 
 export const ClassroomSettingsPageMetaData = styled.div`
-  otuline: 3px solid green;
+  outline: 3px solid green;
+
+`;
+
+export const ClassroomSettingsPageLeaveClassButton = styled.div`
+  outline: 3px solid yellow;
 `;

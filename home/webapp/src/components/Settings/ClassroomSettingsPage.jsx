@@ -9,14 +9,17 @@ export default function ClassroomSettingsPage(){
             </Styled.ClassroomSettingsPageClassroomTitle>
             
             <Styled.ClassroomSettingsPageMetaData>
-                <strong>Teacher:</strong> ruleym2034<br/>
-                <strong>Students:</strong> 24<br/>
-                <strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur 
+                <p><strong>Teacher:</strong> ruleym2034</p><br/>
+                <p><strong>Students:</strong> 24</p><br/>
+                <p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur 
                 adipiscing elit. Aliquam at augue id massa semper pretium. 
                 Vestibulum nec lacinia sapien. Praesent quis eleifend tellus. 
-                Donec eleifend sapien posuere tortor au
-                <br/>
+                Donec eleifend sapien posuere tortor au</p>
             </Styled.ClassroomSettingsPageMetaData>
+
+            <Styled.ClassroomSettingsPageLeaveClassButton>
+
+            </Styled.ClassroomSettingsPageLeaveClassButton>
             
         </Styled.ClassroomSettingsPageContainer>
     
