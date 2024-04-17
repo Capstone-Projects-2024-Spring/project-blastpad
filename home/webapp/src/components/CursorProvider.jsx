@@ -18,6 +18,12 @@ export default function CursorProvider({children}) {
 
   function detectKeyUp(event) {
     let key = event.code
+
+    if (key == "Enter" || key == "KeyA") {
+      document.activeElement.click()
+      return;
+    }
+
     let directionVector = directions[key];
 
     let activeElement = document.activeElement;
