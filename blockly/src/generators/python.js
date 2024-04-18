@@ -68,9 +68,11 @@ forBlock['game_loop'] = function (block, generator) {
   let branch = generator.statementToCode(block, 'DO');
   // branch = generator.addLoopTrap(branch, block) || generator.PASS;
   return `
-def update():
-  screen.clear()
+while True:
+  screen.fill((0, 0, 0))
 ${branch}
+  pygame.display.flip()
+  clock.tick(30)
 \n`
 };
 
@@ -85,36 +87,39 @@ forBlock['metadata'] = function(block, generator) {
 # By ${value_author_name}
 # ${value_description}\n
 
-import pgzrun
 import pygame
 import time
 from pygame import mask
+clock = pygame.time.Clock()
+pygame.init()
+
+def is_key_pressed():
+  for event in pygame.event.get():
+    return event.type == pygame.KEYDOWN
 
 def collide_pixels(actor1, actor2):
+  return False
 
-  # Get masks for pixel perfect collision detection:
-  for a in [actor1, actor2]:
-    if not hasattr(a, 'mask'):
-      a.mask = mask.from_surface(images.load(a.image))
+class Actor(pygame.sprite.Sprite):
+  def __init__(self, imageName, size):
+      super(Actor, self).__init__()
 
-    # Check rectangles first, this is faster
-    if not actor1.colliderect(actor2):
-      return None
+      self.x = 0
+      self.y = 0
 
-    # Offsets based on current positions of actors
-    xoffset = int(actor2.left - actor1.left)
-    yoffset = int(actor2.top - actor1.top)
+      self.image = pygame.image.load("blockly/compiled_games/images/"+imageName+".png")
+      self.surf = pygame.Surface(size)
+      self.mask = mask.from_surface(self.surf)
+      self.rect = self.surf.get_rect()
 
-  # Check for overlap => a collision
-  return actor1.mask.overlap(actor2.mask, (xoffset, yoffset))
+  def draw(self, screen):
+      screen.blit(self.image,(self.x, self.y))
 
-TITLE = "${value_game_name}"
-WIDTH  = 500
-HEIGHT = 500
-# pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-# pygame.display.toggle_fullscreen()
-# pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-# pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+font = pygame.font.Font('freesansbold.ttf', 32)
+pygame.display.set_caption("${value_game_name}")
+# screen = pygame.display.set_mode([800, 480], pygame.FULLSCREEN)
+screen = pygame.display.set_mode([800, 480])
+
 \n
 \n
 `
@@ -142,7 +147,7 @@ forBlock['draw_actor'] = function(block, generator) {
   var value_name = generator.valueToCode(block, 'NAME', Order.ATOMIC);
   // TODO: Assemble python into code variable.
   var code = 
-`${value_name}.draw()\n`
+`${value_name}.draw(screen)\n`
   return code;
 };
 
@@ -151,8 +156,7 @@ forBlock['key_down'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`
-def on_key_down():
+`if(is_key_pressed()):
 ${branch}
 `;
   return code;
@@ -196,8 +200,13 @@ forBlock['draw_text'] = function(block, generator) {
   var value_content = generator.valueToCode(block, 'content', Order.ATOMIC);
   var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
   var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
-  // TODO: Assemble python into code variable.
-  var code = `screen.draw.text(${value_content}, (${value_x}, ${value_y}))\n`
+
+  var code = 
+`text = font.render(${value_content}, True, (255, 255, 0))
+textRect = text.get_rect()
+textRect.topleft = (${value_x}, ${value_y})
+screen.blit(text, textRect)
+`
   return code;
 };
 
@@ -205,7 +214,8 @@ forBlock['exit'] = function(block, generator) {
   var code = 
 `pygame.display.quit()
 pygame.quit()
-exit()`
+exit()
+`
   return code;
 };
 

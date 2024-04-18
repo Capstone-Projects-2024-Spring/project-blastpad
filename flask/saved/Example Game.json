@@ -1,0 +1,427 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "metadata",
+                "id": "A$mP~29yJri+II[;(i/h",
+                "x": 23,
+                "y": 113,
+                "inputs": {
+                    "game name": {
+                        "block": {
+                            "type": "text",
+                            "id": "uL4`ChH4}lTzo~sEz[ot",
+                            "fields": {
+                                "TEXT": "Example Game"
+                            }
+                        }
+                    },
+                    "author name": {
+                        "block": {
+                            "type": "text",
+                            "id": "?)6dy[;RNRixg1lHZGed",
+                            "fields": {
+                                "TEXT": "BlastPad Team"
+                            }
+                        }
+                    },
+                    "description": {
+                        "block": {
+                            "type": "text",
+                            "id": "D?WrcH,o0F0HKfy2~GC;",
+                            "fields": {
+                                "TEXT": "This is an example project"
+                            }
+                        }
+                    }
+                },
+                "next": {
+                    "block": {
+                        "type": "variables_set",
+                        "id": "Zc]+.NzEjj!@+/PX8LQR",
+                        "fields": {
+                            "VAR": {
+                                "id": "z8LjkTv9#b2O?u)frabL"
+                            }
+                        },
+                        "inputs": {
+                            "VALUE": {
+                                "block": {
+                                    "type": "actor",
+                                    "id": "GvZ?oA(]]Wr`oP4a#D`d",
+                                    "inputs": {
+                                        "ImageName": {
+                                            "block": {
+                                                "type": "small_bitmap",
+                                                "id": "I|gC)gRw^;vOvC+B:MW{",
+                                                "fields": {
+                                                    "field": [
+                                                        [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            2,
+                                                            2,
+                                                            2,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            2,
+                                                            1,
+                                                            2,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            1,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            1,
+                                                            1,
+                                                            1,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            1,
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            1,
+                                                            0,
+                                                            1,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        [
+                                                            0,
+                                                            0,
+                                                            1,
+                                                            0,
+                                                            1,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ]
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "next": {
+                            "block": {
+                                "type": "game_loop",
+                                "id": "O`x9P:Ud;W2-VKShf/y4",
+                                "inputs": {
+                                    "DO": {
+                                        "block": {
+                                            "type": "procedures_callnoreturn",
+                                            "id": "k!Y`.gzu45AHNSHj(Qd4",
+                                            "extraState": {
+                                                "name": "increment",
+                                                "params": [
+                                                    "actor",
+                                                    "property",
+                                                    "value"
+                                                ]
+                                            },
+                                            "inputs": {
+                                                "ARG0": {
+                                                    "block": {
+                                                        "type": "variables_get",
+                                                        "id": "f}?cP5I,AG3$@%_JPyX)",
+                                                        "fields": {
+                                                            "VAR": {
+                                                                "id": "z8LjkTv9#b2O?u)frabL"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "ARG1": {
+                                                    "block": {
+                                                        "type": "text",
+                                                        "id": "tv|c9q1$Zf3O+qtN59v5",
+                                                        "fields": {
+                                                            "TEXT": "x"
+                                                        }
+                                                    }
+                                                },
+                                                "ARG2": {
+                                                    "block": {
+                                                        "type": "math_number",
+                                                        "id": "c)iMGBI[B{X{1J?[O)vu",
+                                                        "fields": {
+                                                            "NUM": 1
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "next": {
+                                                "block": {
+                                                    "type": "draw_actor",
+                                                    "id": "TJt$.^}H+vPkHIxseJUm",
+                                                    "inputs": {
+                                                        "NAME": {
+                                                            "block": {
+                                                                "type": "variables_get",
+                                                                "id": "dHF|tc1{,F2$bB2*hh0v",
+                                                                "fields": {
+                                                                    "VAR": {
+                                                                        "id": "z8LjkTv9#b2O?u)frabL"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "next": {
+                                                        "block": {
+                                                            "type": "key_down",
+                                                            "id": "azLl)bY9:4tiM.Bkl0LB",
+                                                            "inputs": {
+                                                                "DO": {
+                                                                    "block": {
+                                                                        "type": "procedures_callnoreturn",
+                                                                        "id": "zix}kzlr`(IQKxb8c;C_",
+                                                                        "extraState": {
+                                                                            "name": "increment",
+                                                                            "params": [
+                                                                                "actor",
+                                                                                "property",
+                                                                                "value"
+                                                                            ]
+                                                                        },
+                                                                        "inputs": {
+                                                                            "ARG0": {
+                                                                                "block": {
+                                                                                    "type": "variables_get",
+                                                                                    "id": "n8Dczz9|I#S1wDUSd0T.",
+                                                                                    "fields": {
+                                                                                        "VAR": {
+                                                                                            "id": "z8LjkTv9#b2O?u)frabL"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "ARG1": {
+                                                                                "block": {
+                                                                                    "type": "text",
+                                                                                    "id": "Fv0*0*[T5_am$G5WGU+E",
+                                                                                    "fields": {
+                                                                                        "TEXT": "y"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "ARG2": {
+                                                                                "block": {
+                                                                                    "type": "math_number",
+                                                                                    "id": "Y}]TC[gRkv$3vbF2@RAJ",
+                                                                                    "fields": {
+                                                                                        "NUM": 10
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "procedures_defnoreturn",
+                "id": "|?|T7!.CBG1]JgnSz3ep",
+                "x": 388,
+                "y": 74,
+                "extraState": {
+                    "params": [
+                        {
+                            "name": "actor",
+                            "id": "dovZ?1PJ4W]@3}~!%RK7"
+                        },
+                        {
+                            "name": "property",
+                            "id": ")c?eq*#Lu8}0sJ/FlMQV"
+                        },
+                        {
+                            "name": "value",
+                            "id": "x9H]]?SW%PQe3Yu=)soV"
+                        }
+                    ]
+                },
+                "icons": {
+                    "comment": {
+                        "text": "Describe this function...",
+                        "pinned": false,
+                        "height": 80,
+                        "width": 160
+                    }
+                },
+                "fields": {
+                    "NAME": "increment"
+                },
+                "inputs": {
+                    "STACK": {
+                        "block": {
+                            "type": "set_actor",
+                            "id": "D`3xJXM=dl58/M^-E$~A",
+                            "inputs": {
+                                "Actor": {
+                                    "block": {
+                                        "type": "variables_get",
+                                        "id": "iIMwNmHx%T}qMxSX_Uyc",
+                                        "fields": {
+                                            "VAR": {
+                                                "id": "dovZ?1PJ4W]@3}~!%RK7"
+                                            }
+                                        }
+                                    }
+                                },
+                                "property": {
+                                    "block": {
+                                        "type": "variables_get",
+                                        "id": "Tk0285Kl*,3z8Z|EK8u[",
+                                        "fields": {
+                                            "VAR": {
+                                                "id": ")c?eq*#Lu8}0sJ/FlMQV"
+                                            }
+                                        }
+                                    }
+                                },
+                                "to": {
+                                    "block": {
+                                        "type": "math_arithmetic",
+                                        "id": "?DyruUWoOvRKj.c/yw8)",
+                                        "fields": {
+                                            "OP": "ADD"
+                                        },
+                                        "inputs": {
+                                            "A": {
+                                                "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "8fOVU(H$IopztKU_ToGd",
+                                                    "fields": {
+                                                        "NUM": 1
+                                                    }
+                                                },
+                                                "block": {
+                                                    "type": "get_property",
+                                                    "id": "X]+3mr|Il+L-]{ZV`ugI",
+                                                    "inputs": {
+                                                        "Actor": {
+                                                            "block": {
+                                                                "type": "variables_get",
+                                                                "id": "$_|(9S?Ngk?eu{41WSS8",
+                                                                "fields": {
+                                                                    "VAR": {
+                                                                        "id": "dovZ?1PJ4W]@3}~!%RK7"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "Property": {
+                                                            "block": {
+                                                                "type": "variables_get",
+                                                                "id": "I%_p#|GS]UQU4-IH3;]N",
+                                                                "fields": {
+                                                                    "VAR": {
+                                                                        "id": ")c?eq*#Lu8}0sJ/FlMQV"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "B": {
+                                                "shadow": {
+                                                    "type": "math_number",
+                                                    "id": "wLy-+~:;=^#NQk/!bN$4",
+                                                    "fields": {
+                                                        "NUM": 1
+                                                    }
+                                                },
+                                                "block": {
+                                                    "type": "variables_get",
+                                                    "id": "^[i5PH,FpCS|wsMY94#P",
+                                                    "fields": {
+                                                        "VAR": {
+                                                            "id": "x9H]]?SW%PQe3Yu=)soV"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "variables": [
+        {
+            "name": "player",
+            "id": "z8LjkTv9#b2O?u)frabL"
+        },
+        {
+            "name": "actor",
+            "id": "dovZ?1PJ4W]@3}~!%RK7"
+        },
+        {
+            "name": "property",
+            "id": ")c?eq*#Lu8}0sJ/FlMQV"
+        },
+        {
+            "name": "value",
+            "id": "x9H]]?SW%PQe3Yu=)soV"
+        }
+    ]
+}
