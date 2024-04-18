@@ -136,3 +136,4 @@ export const ClassroomSettingsPageMetaData = styled.div`
 export const ClassroomSettingsPageLeaveClassButton = styled.div`
   outline: 3px solid yellow;
 `;
+ 
