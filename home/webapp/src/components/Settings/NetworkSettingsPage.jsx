@@ -7,7 +7,7 @@ export default function NetworkSettingsPage() {
 
   const fetchNetworks = async () => {
     try {
-      const response = await fetch("http://localhost:8000/get_wifi_networks");
+      const response = await fetch("/get_wifi_networks");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -25,7 +25,7 @@ export default function NetworkSettingsPage() {
 
   const handleDisconnectButtonClick = async () => {
     try {
-      const response = await fetch("http://localhost:8000/disconnect_wifi", {
+      const response = await fetch("/disconnect_wifi", {
         method: "POST",
       });
       if (!response.ok) {
@@ -43,7 +43,7 @@ export default function NetworkSettingsPage() {
 
   const connectNetwork = async (ssid, password) => {
     try {
-      const response = await fetch('http://localhost:8000/connect_to_wifi', {
+      const response = await fetch('/connect_to_wifi', {
         method: 'POST',
         body: JSON.stringify({ ssid, password }),
         headers: {
@@ -70,7 +70,7 @@ export default function NetworkSettingsPage() {
     let success = await connectNetwork(ssid, null);
 
     while (!success) {
-      const password = prompt('Please enter the password for the network:');
+      const password = prompt(`Please enter the password for ${ssid}:`);
       // If the user cancels the prompt or doesn't enter a password, break the loop
       if (password === null || password === '') {
         break;
