@@ -23,8 +23,8 @@ export const SideMenu = styled.div`
 `;
 
 export const Button = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 173px; /* Set a fixed width */
+  height: 78px; /* Set a fixed height */
 
   background-color: ${(props) => (props.active ? `${props.theme.colors.active}` : `${props.theme.colors.foreground}`)};
   color: #ffffff;
@@ -118,22 +118,45 @@ export const ClassroomSettingsPageContainer = styled.div`
   border-radius: 20px;
   height: 100% fixed;
   width: 100%;
-  gap: 13px;
+  gap: 10px;
+  justify-content: space-between;
 
 `;
 
 export const ClassroomSettingsPageClassroomTitle = styled.div`
-  outline: 2px solid red;
+  // outline: 2px solid red;
   font-size: 24px;
   text-align: center;
+  font-weight: 700;
+  line-height: 29.05px;
+  padding-top: 15px;
 `;
 
 export const ClassroomSettingsPageMetaData = styled.div`
-  outline: 3px solid green;
+  // outline: 3px solid green;
+  padding: 15px;
+
 
 `;
 
-export const ClassroomSettingsPageLeaveClassButton = styled.div`
-  outline: 3px solid yellow;
+export const ClassroomSettingsPageLeaveClassButtonContainer = styled.div`
+  // outline: 3px solid yellow;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 15px;
+
+`;
+
+export const ClassroomSettingsPageLeaveClassButton = styled(ClassroomSettingsPageLeaveClassButtonContainer)`
+  // outline: 3px solid white;
+  text-align: center;
+  padding: 4px 14px; 
+  font-size: 24px;
+  border-radius: 10px;
+  background-color: #CC4242;
+  width: 265px;
+  height: 48px;
 `;
  

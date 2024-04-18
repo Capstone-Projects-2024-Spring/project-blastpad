@@ -17,9 +17,13 @@ export default function ClassroomSettingsPage(){
                 Donec eleifend sapien posuere tortor au</p>
             </Styled.ClassroomSettingsPageMetaData>
 
-            <Styled.ClassroomSettingsPageLeaveClassButton>
+            <Styled.ClassroomSettingsPageLeaveClassButtonContainer>
 
-            </Styled.ClassroomSettingsPageLeaveClassButton>
+                <Styled.ClassroomSettingsPageLeaveClassButton>
+                    Leave Class
+                </Styled.ClassroomSettingsPageLeaveClassButton>
+
+            </Styled.ClassroomSettingsPageLeaveClassButtonContainer>
             
         </Styled.ClassroomSettingsPageContainer>
     
