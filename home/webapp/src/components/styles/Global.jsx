@@ -19,7 +19,7 @@ export const GlobalStyles = createGlobalStyle`
 body {
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
-  font-family: Inter;
+  font-family: Arial;
   width: 800px;
   height: 480px;
   padding: 19px;

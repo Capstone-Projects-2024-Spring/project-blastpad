@@ -27,7 +27,7 @@ const NavBar = ({ onPageChange }) => {
               key={page}
               active={activePage === page}
               onClick={() => handleButtonClick(page)}
-              tabIndex={1}
+              tabIndex={0}
             >
               <Icon />
             </NavButton>

@@ -10,7 +10,7 @@ export const dark = {
     playSecondary: '#992929',
     
     editPrimary: '#3670C7',
-    editSecondary: '#336BBD',
+    editSecondary: '#21457A',
   
     sharePrimary: '#5BC736',
     shareSecondary: "#429227"
