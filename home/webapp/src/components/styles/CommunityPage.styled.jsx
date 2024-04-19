@@ -3,6 +3,41 @@ import styled from "styled-components";
 export const CommunityPageContainer = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const SearchBarContainer = styled.div`
+  width: 100%;
+  height: 10%;
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 20px;
+  outline: 2px solid ${({ theme }) => theme.colors.foreground};
+  padding: 20px 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`;
+
+export const SearchIconContainer = styled.div`
+  width: 26px;
+  height: 27px;
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:focus {
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+  }
+`;
+
+export const GameGridContainer = styled.div`
+  width: 100%;
+  height: 90%;
   background-color: ${({ theme }) => theme.colors.foreground};
   border-radius: 20px;
   padding: 20px 5px;

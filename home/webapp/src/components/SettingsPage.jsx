@@ -9,11 +9,11 @@ const SettingsPage = () => {
   const [currentSettingsPage, setCurrentSettingsPage] = useState("WiFi");
 
   return (
-    <SettingsPageLayout>
+    <Styled.SettingsPageContainer>
       <SideMenu>
         <SideButton
-          active={currentSettingsPage === "Wi-Fi"}
-          onClick={() => {setCurrentSettingsPage("Wi-Fi")}}
+          active={activeButton === "WiFi"}
+          onClick={() => {setActiveButton("WiFi")}}
           tabIndex="0"
         >
           Wi-Fi
@@ -50,12 +50,10 @@ const SettingsPage = () => {
         </SideButton>
       </SideMenu>
       
-      {currentSettingsPage === 'Wi-Fi' && <NetworkSettingsPage/>}
-      {currentSettingsPage === 'Class' && <ClassroomSettingsPage/>}
-      {currentSettingsPage === 'Profile' && <ProfileSettingsPage/>}
-      {/* {currentSettingsPage === 'Sensors' && <SettingsPage />} */}
+      {activeButton === "WiFi" && (<NetworkSettingsPage/>)}
+      {activeButton === "Profile" && (<ProfileSettingsPage/>)}
 
-    </SettingsPageLayout>
+    </Styled.SettingsPageContainer>
   );
 };
 
