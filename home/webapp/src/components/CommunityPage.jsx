@@ -1,4 +1,4 @@
-import { CommunityPageContainer, GameGridContainer, GameIcon, GameIconsContainer, SearchBarContainer, SearchIconContainer } from "./styles/CommunityPage.styled"
+import { CommunityPageContainer, GameGridContainer, GameIcon, GameIconsContainer, SearchBarContainer, SearchBar,SearchIconContainer } from "./styles/CommunityPage.styled"
 import { SearchIcon } from "./Icons";
 
 export default function CommunityPage() {
@@ -9,9 +9,11 @@ export default function CommunityPage() {
   return (
     <CommunityPageContainer>
       <SearchBarContainer>
-        <SearchIconContainer tabIndex={2}>
-          <SearchIcon></SearchIcon>
-        </SearchIconContainer>
+        <SearchBar>
+          <SearchIconContainer tabIndex={2}>
+            <SearchIcon/>
+          </SearchIconContainer>
+        </SearchBar>
       </SearchBarContainer>
       <GameGridContainer>
         <GameIconsContainer>
