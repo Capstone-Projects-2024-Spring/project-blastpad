@@ -58,14 +58,6 @@ export const TimeContainer = styled.div`
   flex-direction: row; 
   align-items: center; 
   font-size: 44px; 
-  color: white;
-  padding: 8px 15px;
-  border-radius: 10px;
-  background-color: #2D3039;
   margin-left: auto; 
-  user-select: none; 
-  flex: none;
-  order: 2; 
-  flex-grow: 0;
-  font-family: 'Inter', sans-serif; 
+  user-select: none;
 `;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer, TimeContainer } from "./styles/NavBar.styled";
-import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon } from "./Icons";
+import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon, DynamicBatteryIcon } from "./Icons";
 
 const navIcons = {
   home: HomeIcon,
@@ -13,29 +13,16 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   const [activePage, setActivePage] = useState('home');
   const [isConnected, setIsConnected] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
-  const [batteryLevel, setBatteryLevel] = useState(1); // Default battery level
+  const [batteryLevel, setBatteryLevel] = useState(0.20); // Default battery level
 
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      hour12: true,
-      timeZone: "America/New_York"
+      hour12: true
     });
   };
-
-  const renderBatteryIcon = (level) => {
-    // Define the icons mapping
-    const icons = {
-      3: <FullBatteryFrameIcon />,
-      2: <MediumBatteryFrameIcon />,
-      1: <LowBatteryFrameIcon />
-    };
-    
-    // Return the icon based on the given level, or null if level is invalid
-    return icons[level] || null;
-  };
-
+  
   // Function to update the connection status
   const updateConnectionStatus = async () => {
     const status = await checkConnection();
@@ -51,7 +38,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   // Function to update the current time
   const updateTime = () => {
     const now = new Date();
-    setCurrentTime(formatTime(now));
+    setCurrentTime(formatTime(now).toLowerCase());
   };
 
   // Use useEffect to set up intervals for updating connection status, time, and battery level
@@ -100,13 +87,13 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
       </NavButtonsContainer>
       <StatusIconsContainer>
         {/* Use renderBatteryIcon to render the correct battery icon */}
-        {renderBatteryIcon(batteryLevel)}
+        {<DynamicBatteryIcon level={batteryLevel}/>}
         {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
         {isConnected ? <WiFiIcon /> : <NoSignalIcon />}
+        <TimeContainer>
+          {currentTime}
+        </TimeContainer>
       </StatusIconsContainer>
-      <TimeContainer>
-        {currentTime}
-      </TimeContainer>
     </NavBarContainer>
   );
 };

@@ -1,4 +1,3 @@
-
 export function HomeIcon() {
   return (<svg width="53" height="45" viewBox="0 0 53 45" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M21.2 45V29.1176H31.8V45H45.05V23.8235H53L26.5 0L0 23.8235H7.95V45H21.2Z" fill="white"/>
@@ -52,14 +51,14 @@ export function UploadIcon() {
 }
 
 export function WiFiIcon(){
-  return(<svg width="58" height="41" viewBox="0 0 58 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return(<svg width="62" height="62" viewBox="0 0 58 41" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M0.583496 12.375L5.75016 17.4583C18.5893 4.82627 39.411 4.82627 52.2502 17.4583L57.4168 12.375C41.736 -3.0529 16.2902 -3.0529 0.583496 12.375ZM21.2502 32.7083L29.0002 40.3333L36.7502 32.7083C32.4877 28.4892 25.5385 28.4892 21.2502 32.7083ZM10.9168 22.5417L16.0835 27.625C23.2135 20.61 34.7868 20.61 41.9168 27.625L47.0835 22.5417C37.1118 12.7308 20.9143 12.7308 10.9168 22.5417Z" fill="white"/>
   </svg>
   )
 }
 
 export function NoSignalIcon() {
-  return(<svg width="58" height="48" viewBox="0 0 58 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return(<svg width="62" height="62" viewBox="0 0 58 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M57.3908 19.2501C47.4707 9.3301 33.6499 5.71344 20.8366 8.34844L27.3466 14.8584C36.3107 14.4193 45.4041 17.5709 52.2241 24.4168L57.3908 19.2501ZM47.0574 29.5834C43.7249 26.2509 39.7207 24.0809 35.4583 22.9701L44.5774 32.0893L47.0574 29.5834ZM3.16659 3.87927L11.0974 11.7584C7.29992 13.6184 3.73492 16.0984 0.583252 19.2501L5.72409 24.4168C8.92742 21.2134 12.6216 18.8368 16.5741 17.2609L22.3608 23.0476C18.1758 24.1326 14.1974 26.3026 10.9166 29.5834V29.6093L16.0574 34.7501C19.5708 31.2368 24.1691 29.4801 28.7674 29.4284L47.0316 47.6668L50.3124 44.4118L6.49908 0.624268L3.16659 3.87927ZM21.2499 39.9168L28.9999 47.6668L36.7499 39.9168C32.4874 35.6284 25.5383 35.6284 21.2499 39.9168Z" fill="white"/>
   </svg>
   )
@@ -90,11 +89,43 @@ export function LowBatteryFrameIcon() {
   return (
       <svg width="67" height="30" viewBox="0 0 67 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Add a green rectangle with rounded edges under the existing frame, reduce height from the top by 1 */}
-          <rect x="1" y="1" width="15" height="28" fill="red" rx="5" ry="5" />
+          <rect x="1" y="1" width="54" height="28" fill="red" rx="5" ry="5" />
           {/* Existing frame */}
           <path d="M56.5415 29.375L3.87484 29.375C2.06442 29.375 0.583174 28.0812 0.583175 26.5L0.583176 3.5C0.583176 1.91875 2.06442 0.624997 3.87484 0.624997L56.5415 0.625C58.3519 0.625 59.8332 1.91875 59.8332 3.5L59.8332 9.25L66.4165 9.25L66.4165 20.75L59.8332 20.75L59.8332 26.5C59.8332 28.0812 58.3519 29.375 56.5415 29.375ZM53.2498 23.625L53.2498 6.375L7.16651 6.375L7.16651 23.625L53.2498 23.625Z" fill="white"/>
       </svg>
   );
+}
+
+export function DynamicBatteryIcon({level}) {
+  const lowerBound = 6;
+  const upperBound = 53;
+
+  if (!level) {
+    level = 0.5;
+  }
+
+  function getWidth() {
+    return level*(upperBound-lowerBound) + lowerBound
+  }
+
+  function getColor() {
+    if (level > 0.45) {
+      return "#5BC736"
+    } else if (level > 0.25) {
+      return "#EDA113"
+    } else {
+      return "#CC4242"
+    }
+  }
+
+  return (
+    <svg width="67" height="30" viewBox="0 0 67 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Add a green rectangle with rounded edges under the existing frame, reduce height from the top by 1 */}
+        <rect x="1" y="1" width={getWidth()} height="28" fill={getColor()} rx="5" ry="5" />
+        {/* Existing frame */}
+        <path d="M56.5415 29.375L3.87484 29.375C2.06442 29.375 0.583174 28.0812 0.583175 26.5L0.583176 3.5C0.583176 1.91875 2.06442 0.624997 3.87484 0.624997L56.5415 0.625C58.3519 0.625 59.8332 1.91875 59.8332 3.5L59.8332 9.25L66.4165 9.25L66.4165 20.75L59.8332 20.75L59.8332 26.5C59.8332 28.0812 58.3519 29.375 56.5415 29.375ZM53.2498 23.625L53.2498 6.375L7.16651 6.375L7.16651 23.625L53.2498 23.625Z" fill="white"/>
+    </svg>
+);
 }
 
 
