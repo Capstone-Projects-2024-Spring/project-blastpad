@@ -6,29 +6,39 @@ export const CommunityPageContainer = styled.div`
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  gap: 20px;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
 `;
 
 export const SearchBarContainer = styled.div`
   width: 100%;
   height: 10%;
+  padding: 0px 5px;
+`;
+
+export const SearchBar = styled.div`
+  width: 90%;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 20px;
-  outline: 2px solid ${({ theme }) => theme.colors.foreground};
-  padding: 20px 20px;
+  outline: 4px solid ${({ theme }) => theme.colors.foreground};
+  outline-offset: -4px;
+  border-radius: 40px;
   display: flex;
+  padding: 25px 20px;
   justify-content: start;
   align-items: center;
 `;
 
 export const SearchIconContainer = styled.div`
-  width: 26px;
-  height: 27px;
+  width: 40px;
+  height: 40px;
   background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+
   &:focus {
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: -3px;
@@ -37,7 +47,7 @@ export const SearchIconContainer = styled.div`
 
 export const GameGridContainer = styled.div`
   width: 100%;
-  height: 90%;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.foreground};
   border-radius: 20px;
   padding: 20px 5px;
