@@ -1,5 +1,5 @@
-import { CommunityPageContainer, GameGridContainer, GameIcon, GameIconsContainer, SearchBarContainer, SearchBar,SearchIconContainer } from "./styles/CommunityPage.styled"
-import { SearchIcon } from "./Icons";
+import { CommunityPageContainer, GameGridContainer, GameIcon, GameIconsContainer, SearchBarContainer, SearchBar,SearchIconContainer, RefreshButton, RefreshButtonContainer} from "./styles/CommunityPage.styled"
+import { SearchIcon, RefreshIcon } from "./Icons";
 
 export default function CommunityPage() {
   let gameNames = []
@@ -14,6 +14,11 @@ export default function CommunityPage() {
             <SearchIcon/>
           </SearchIconContainer>
         </SearchBar>
+        <RefreshButtonContainer>
+          <RefreshButton tabIndex={2}>
+              <RefreshIcon/>
+          </RefreshButton>
+        </RefreshButtonContainer>
       </SearchBarContainer>
       <GameGridContainer>
         <GameIconsContainer>
