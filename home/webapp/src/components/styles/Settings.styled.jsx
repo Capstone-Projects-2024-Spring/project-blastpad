@@ -20,10 +20,11 @@ export const SideMenu = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 10px;
 `;
 
-export const sideButton = styled.div`
+export const SideButton = styled.div`
   width: 100%;
   height: 100%;
 
@@ -38,16 +39,26 @@ export const sideButton = styled.div`
   border-radius: 9px;
 
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 
-  padding: 20px;
+  padding: 15px;
+
+  gap: 10px;
 
   &:focus {
     outline: ${(props) => "4px solid #ffffff"};
     outline-offset: -4px;
   }
 `;
+
+export const SideButtonIconContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 export const SettingsPageContainer = styled.div`
   height: 100%;
@@ -155,26 +166,12 @@ export const RefreshButton = styled.div`
   border-radius: 10px;
 `;
 
-export const ClassroomSettingsPageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  // outline: 3px solid #ffffff;
-  background-color: ${({ theme }) => theme.colors.foreground};
-  border-radius: 20px;
-  height: 100% fixed;
-  width: 100%;
-  gap: 10px;
-  justify-content: space-between;
-
-`;
-
 export const ClassroomSettingsPageClassroomTitle = styled.div`
   // outline: 2px solid red;
   font-size: 24px;
   text-align: center;
   font-weight: 700;
   line-height: 29.05px;
-  padding-top: 15px;
 `;
 
 export const ClassroomSettingsPageMetaData = styled.div`
@@ -190,7 +187,6 @@ export const ClassroomSettingsPageLeaveClassButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 15px;
 
 `;
 

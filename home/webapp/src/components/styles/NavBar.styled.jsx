@@ -34,6 +34,8 @@ export const NavButton = styled.div`
   justify-content: center;
   align-items: center;
 
+  padding: 15px;
+
   &:focus {
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: -3px;

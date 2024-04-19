@@ -3,7 +3,7 @@ import * as Styled from "../styles/Settings.styled";
 
 export default function ClassroomSettingsPage(){
     return (
-        <Styled.ClassroomSettingsPageContainer>
+        <Styled.SettingsPageContainer>
             <Styled.ClassroomSettingsPageClassroomTitle>
                 Mr.Riley's 4th Grade Robotics
             </Styled.ClassroomSettingsPageClassroomTitle>
@@ -25,7 +25,7 @@ export default function ClassroomSettingsPage(){
 
             </Styled.ClassroomSettingsPageLeaveClassButtonContainer>
             
-        </Styled.ClassroomSettingsPageContainer>
+        </Styled.SettingsPageContainer>
     
     );
 }
