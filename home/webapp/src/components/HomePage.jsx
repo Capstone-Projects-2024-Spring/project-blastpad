@@ -16,7 +16,7 @@ export default function HomePage() {
 
   // let gameNames = ["Mario Kart", "Legend of Zelda", "PacMan", "Tetris", "Pokemon"];
   useEffect(() => {
-    fetch("http://localhost:5173/games/", {
+    fetch(`${import.meta.env.VITE_BASE_URL}/games/`, {
       method: "GET"
     })
       .then((response) => response.json())
