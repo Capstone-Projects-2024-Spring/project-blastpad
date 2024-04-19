@@ -1,5 +1,6 @@
 # Generated files
 .docusaurus
+flask/built_pages/*
 
 # Misc
 .DS_Store
