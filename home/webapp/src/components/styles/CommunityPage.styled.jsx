@@ -21,14 +21,14 @@ export const SearchBarContainer = styled.div`
 `;
 
 export const SearchBar = styled.div`
-  width: 90%;
-  height: 50%;
+  width: 92%;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   outline: 4px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
   border-radius: 40px;
   display: flex;
-  padding: 25px 20px;
+  padding: 5px 20px;
   justify-content: start;
   align-items: center;
 `;
@@ -48,8 +48,30 @@ export const SearchIconContainer = styled.div`
   }
 `;
 
+export const SearchBarInputContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+`;
+
+export const SearchBarInput = styled.input`
+  width: 100%;
+  height: 40px;
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
+  border: none;
+  font-size: 24px;
+  outline: none;
+  textarea:focus, input:focus{
+    outline: none;
+  }
+`;
+
 export const RefreshButtonContainer = styled.div`
-  width: 10%;
+  width: 8%;
   height: 100%;
   display: flex;
   flex-direction: row;
