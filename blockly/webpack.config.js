@@ -7,8 +7,8 @@ const config = {
   output: {
     // Compile the source files into a bundle.
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    clean: true,
+    path: path.resolve(__dirname, '../flask/built_pages'),
+    clean: false,
   },
   // Enable webpack-dev-server to get hot refresh of the app.
   devServer: {
@@ -28,7 +28,8 @@ const config = {
     // This will output the same index page with the bundle we
     // created above added in a script tag.
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: 'src/blockly.html',
+      filename: 'blockly.html'
     }),
   ],
 };
