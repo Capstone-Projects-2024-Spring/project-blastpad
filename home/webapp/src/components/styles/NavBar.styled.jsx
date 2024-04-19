@@ -53,3 +53,15 @@ export const StatusIconsContainer = styled.div`
   order: 1;
   flex-grow: 0;
 `
+export const TimeContainer = styled.div`
+  display: flex; // Ensures flexibility for any content within the TimeContainer
+  flex-direction: row; // Aligns any internal content horizontally (optional)
+  align-items: center; // Centers the content vertically
+  font-size: 28px; // Sets the font size for the time display
+  color: white;
+  padding: 8px 15px;
+  border-radius: 10px;
+  background-color: #2D3039;
+  margin-left: auto;
+  user-select: none; // Disable text selection
+`;
