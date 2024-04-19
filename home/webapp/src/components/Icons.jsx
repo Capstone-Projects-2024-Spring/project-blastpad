@@ -64,7 +64,7 @@ export function NoSignalIcon() {
   </svg>
   )
 }
-export function BatteryFrameIcon() {
+export function FullBatteryFrameIcon() {
   return (
       <svg width="67" height="30" viewBox="0 0 67 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Add a green rectangle with rounded edges under the existing frame, reduce height from the top by 1 */}
@@ -74,3 +74,27 @@ export function BatteryFrameIcon() {
       </svg>
   );
 }
+
+export function MediumBatteryFrameIcon() {
+  return (
+      <svg width="67" height="30" viewBox="0 0 67 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Add a green rectangle with rounded edges under the existing frame, reduce height from the top by 1 */}
+          <rect x="1" y="1" width="30" height="28" fill="orange" rx="5" ry="5" />
+          {/* Existing frame */}
+          <path d="M56.5415 29.375L3.87484 29.375C2.06442 29.375 0.583174 28.0812 0.583175 26.5L0.583176 3.5C0.583176 1.91875 2.06442 0.624997 3.87484 0.624997L56.5415 0.625C58.3519 0.625 59.8332 1.91875 59.8332 3.5L59.8332 9.25L66.4165 9.25L66.4165 20.75L59.8332 20.75L59.8332 26.5C59.8332 28.0812 58.3519 29.375 56.5415 29.375ZM53.2498 23.625L53.2498 6.375L7.16651 6.375L7.16651 23.625L53.2498 23.625Z" fill="white"/>
+      </svg>
+  );
+}
+
+export function LowBatteryFrameIcon() {
+  return (
+      <svg width="67" height="30" viewBox="0 0 67 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Add a green rectangle with rounded edges under the existing frame, reduce height from the top by 1 */}
+          <rect x="1" y="1" width="15" height="28" fill="red" rx="5" ry="5" />
+          {/* Existing frame */}
+          <path d="M56.5415 29.375L3.87484 29.375C2.06442 29.375 0.583174 28.0812 0.583175 26.5L0.583176 3.5C0.583176 1.91875 2.06442 0.624997 3.87484 0.624997L56.5415 0.625C58.3519 0.625 59.8332 1.91875 59.8332 3.5L59.8332 9.25L66.4165 9.25L66.4165 20.75L59.8332 20.75L59.8332 26.5C59.8332 28.0812 58.3519 29.375 56.5415 29.375ZM53.2498 23.625L53.2498 6.375L7.16651 6.375L7.16651 23.625L53.2498 23.625Z" fill="white"/>
+      </svg>
+  );
+}
+
+

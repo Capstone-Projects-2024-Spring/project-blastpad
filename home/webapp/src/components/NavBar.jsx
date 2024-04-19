@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer, TimeContainer } from "./styles/NavBar.styled";
-import { BatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon } from "./Icons";
+import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon } from "./Icons";
 
 const navIcons = {
   home: HomeIcon,
@@ -9,26 +9,43 @@ const navIcons = {
   settings: SettingsIcon,
 };
 
-const NavBar = ({ onPageChange, checkConnection }) => {
+const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   const [activePage, setActivePage] = useState('home');
   const [isConnected, setIsConnected] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
+  const [batteryLevel, setBatteryLevel] = useState(1); // Default battery level
 
-  // Function to format time to AM/PM EST format
-  // Function to format time to AM/PM EST format without seconds
-const formatTime = (date) => {
-  return date.toLocaleTimeString("en-US", {
+  const formatTime = (date) => {
+    return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
       timeZone: "America/New_York"
-  });
-};
+    });
+  };
+
+  const renderBatteryIcon = (level) => {
+    // Define the icons mapping
+    const icons = {
+      3: <FullBatteryFrameIcon />,
+      2: <MediumBatteryFrameIcon />,
+      1: <LowBatteryFrameIcon />
+    };
+    
+    // Return the icon based on the given level, or null if level is invalid
+    return icons[level] || null;
+  };
 
   // Function to update the connection status
   const updateConnectionStatus = async () => {
     const status = await checkConnection();
     setIsConnected(status);
+  };
+
+  // Function to update the battery level
+  const updateBatteryLevel = async () => {
+    const level = await checkBatteryLevel();
+    setBatteryLevel(level);
   };
 
   // Function to update the current time
@@ -37,21 +54,26 @@ const formatTime = (date) => {
     setCurrentTime(formatTime(now));
   };
 
-  // Use useEffect to set up an interval for updating connection status and time
+  // Use useEffect to set up intervals for updating connection status, time, and battery level
   useEffect(() => {
-    const connectionIntervalId = setInterval(updateConnectionStatus, 60000); // Check connection every minute
-    const timeIntervalId = setInterval(updateTime, 1000); // Update time every second
+    // Update connection status every minute
+    const connectionIntervalId = setInterval(updateConnectionStatus, 60000);
+    // Update time every second
+    const timeIntervalId = setInterval(updateTime, 1000);
+    // Update battery level every 5 minutes
+    const batteryLevelIntervalId = setInterval(updateBatteryLevel, 300000);
 
     // Clean up intervals when the component unmounts
     return () => {
       clearInterval(connectionIntervalId);
       clearInterval(timeIntervalId);
+      clearInterval(batteryLevelIntervalId);
     };
   }, []);
 
-  // Initial time update on component mount
   useEffect(() => {
     updateTime();
+    updateBatteryLevel();
   }, []);
 
   const handleButtonClick = (page) => {
@@ -77,11 +99,11 @@ const formatTime = (date) => {
         })}
       </NavButtonsContainer>
       <StatusIconsContainer>
-        <BatteryFrameIcon />
+        {/* Use renderBatteryIcon to render the correct battery icon */}
+        {renderBatteryIcon(batteryLevel)}
         {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
         {isConnected ? <WiFiIcon /> : <NoSignalIcon />}
       </StatusIconsContainer>
-      {/* TimeContainer to display current time in top right */}
       <TimeContainer>
         {currentTime}
       </TimeContainer>
