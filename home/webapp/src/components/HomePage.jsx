@@ -1,3 +1,5 @@
+import { useState, useEffect} from 'react'
+
 import { NewGameIcon, PlayIcon, PencilIcon, UploadIcon } from "./Icons"
 
 import {GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, 
@@ -10,7 +12,21 @@ import {GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer,
 
 export default function HomePage() {
 
-  let gameNames = ["Mario Kart", "Legend of Zelda", "PacMan", "Tetris", "Pokemon"];
+  const [games, setGames] = useState([])
+
+  // let gameNames = ["Mario Kart", "Legend of Zelda", "PacMan", "Tetris", "Pokemon"];
+  useEffect(() => {
+    fetch("http://localhost:5173/games/", {
+      method: "GET"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setGames(data.games);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  console.log(games)
 
   return (
     <HomePageContainer>
@@ -21,7 +37,7 @@ export default function HomePage() {
           <NewGameIcon/>
         </GameIcon>
 
-        {gameNames.map((game, index)=>{
+        {games.map((game, index)=>{
             return(
               <GameIcon tabIndex={0}>{game}</GameIcon>
             )
