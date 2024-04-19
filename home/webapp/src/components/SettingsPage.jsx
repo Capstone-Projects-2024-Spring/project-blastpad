@@ -7,7 +7,7 @@ const SettingsPage = () => {
   const [activeButton, setActiveButton] = useState("WiFi");
 
   return (
-    <Styled.SettingsPageContainer>
+    <Styled.SettingsPageLayout>
       <Styled.SideMenu>
         <Styled.sideButton
           active={activeButton === "WiFi"}
@@ -42,7 +42,7 @@ const SettingsPage = () => {
       {(activeButton === "WiFi" && (<NetworkSettingsPage/>))
       || (activeButton === "Class" && (<ClassroomSettingsPage/>))}
 
-    </Styled.SettingsPageContainer>
+    </Styled.SettingsPageLayout>
   );
 };
 

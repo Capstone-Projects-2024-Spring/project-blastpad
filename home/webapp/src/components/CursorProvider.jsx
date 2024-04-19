@@ -96,7 +96,7 @@ export default function CursorProvider({children}) {
   }
 
   return (
-    <div>
+    <div style={{height: "inherit"}}>
       {children}
     </div>
   )
