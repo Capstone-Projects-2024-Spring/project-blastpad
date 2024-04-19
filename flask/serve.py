@@ -105,19 +105,6 @@ def onegame(game_name):
 
 @app.route('/get_wifi_networks', methods = ['GET'])
 def get_wifi_networks():
-    num_networks = 10
-    response_data = {
-        'connected_network': "Applebaum's Network",
-        'available_networks': ["xfinity-wifi", "eduroam", "tusecurewireless", "Stacy's iPhone", "VeryCoolNetwork123445"]
-    }
-
-    # response_data = {
-    #     'connected_network': None,
-    #     'available_networks': []
-    # }
-
-    return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
-
     connected_network = None
     available_networks = set()
 
@@ -142,12 +129,10 @@ def get_wifi_networks():
         'available_networks': list(available_networks)
     }
 
-    return jsonify(response_data), 200, {'Access-Control-Allow-Origin': '*'}
+    return jsonify(response_data), 200
 
 @app.route('/disconnect_wifi', methods=['POST'])
 def disconnect_wifi():
-    return '', 200, {'Access-Control-Allow-Origin': '*'}
-
     connected_network = None
 
     try:
@@ -156,16 +141,16 @@ def disconnect_wifi():
         pass
 
     if connected_network is None:
-        return '', 200, {'Access-Control-Allow-Origin': '*'}
+        return '', 200
 
     try:
         subprocess.run(["nmcli", "device", "disconnect", "wlan0"], check=True)
-        return '', 200, {'Access-Control-Allow-Origin': '*'}
+        return '', 200
     except subprocess.CalledProcessError:
-        return jsonify({"message": "Error: Failed to disconnect from network"}), 500, {'Access-Control-Allow-Origin': '*'}
+        return jsonify({"message": "Error: Failed to disconnect from network"}), 500
 
 # Checks if a password is recorded for a given WiFi network
-def found_password(self, ssid):
+def found_password(ssid):
     connections_dir = '/etc/NetworkManager/system-connections'
     if not os.path.exists(connections_dir) or not os.path.isdir(connections_dir):
         messagebox.showerror("Error", "NetworkManager connections directory not found")
@@ -183,38 +168,28 @@ def found_password(self, ssid):
 @app.route('/connect_to_wifi', methods=['POST'])
 def connect_to_wifi():
     data = request.json
-    # print("\n\n\n" + data)
     ssid = data.get('ssid')
     password = data.get('password')
 
-    print("Checking if printing works lol")
-    if not password:
-        print(f"SSID: {ssid}, Password: <None>")
-        return jsonify({'error': 'Password required but not provided'}), 401, {'Access-Control-Allow-Origin': '*'}
-    if password:
-        print(f"SSID: {ssid}, Password: {password}")
-        return '', 200, {'Access-Control-Allow-Origin': '*'}
-
-
     if not ssid:
-        return jsonify({'error': 'SSID not provided'}), 400, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+        return jsonify({'error': 'SSID not provided'}), 400
 
     if password:
         try:
-            subprocess.run(["nmcli", "device", "wifi", "connect", network, "password", password], check=True)
-            return '', 200, {'Access-Control-Allow-Origin': '*'}
+            subprocess.run(["nmcli", "device", "wifi", "connect", ssid, "password", password], check=True)
+            return '', 200
         except subprocess.CalledProcessError:
-            return jsonify({'error': 'Incorrect password'}), 401, {'Access-Control-Allow-Origin': '*'}
+            return jsonify({'error': 'Incorrect password'}), 401
 
     # No password given and found local password
     if found_password(ssid):
         try:
             subprocess.run(["nmcli", "device", "wifi", "connect", ssid], check=True)
-            return '', 200, {'Access-Control-Allow-Origin': '*'}
+            return '', 200
         except subprocess.CalledProcessError:
             return jsonify({'error': 'Password not saved', 'request_password': True}), 404
     
-    return jsonify({'error': 'Password required but not provided'}), 401, {'Access-Control-Allow-Origin': '*'}
+    return jsonify({'error': 'Password required but not provided'}), 401
 
 ##########################################
 ### WiFi Network Requests Handling END ###

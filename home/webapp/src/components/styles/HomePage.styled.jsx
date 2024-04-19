@@ -35,12 +35,14 @@ export const GameIcon = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.active};
   
-  outline: 4px solid ${({ theme }) => theme.colors.foreground};
+  outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
 
   &:focus {
-    outline: none;
-    outline-offset: -4px;
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+    // transform: scale(1.03);
+    // transition: transform 0.3s;
   }
 
   flex-grow: 0;
@@ -50,13 +52,13 @@ export const GameIcon = styled.div`
 export const GameInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
-  outline: 3px solid yellow;
+  // outline: 3px solid yellow;
   gap: 20px;
   align-items: center;
 `;
 
 export const GameMetaData = styled.div`
-  outline: 3px solid red;
+  // outline: 3px solid red;
   width: 50%;
   gap: 10px;
 `;
@@ -67,7 +69,6 @@ export const GameActionButtonsContainer = styled.div`
   flex-direction: row;
   gap: 10px;
   height: fit-content;
-
 `;
 
 export const GameActionButton = styled.div`
@@ -79,12 +80,11 @@ export const GameActionButton = styled.div`
 export const GameActionButtonBackground = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 90%;
   // transform: translate(5px, 5px); /* Adjust for desired shadow offset */
   z-index: 1;
-  background-color: ${({ theme }) => theme.colors.playSecondary};
   border-radius: 15px;
-
+  bottom: 0px;
 `;
 
 export const GameActionButtonForeground = styled.div`
@@ -94,16 +94,40 @@ export const GameActionButtonForeground = styled.div`
   height: 100px;
   // transform: translate(5px, 5px); /* Adjust for desired shadow offset */
   z-index: 2;
-  background-color: ${({ theme }) => theme.colors.playPrimary};
   border-radius: 15px;
   justify-content: center;
   align-items: center;
+  transition: transform 0.1s;
 
-  
-
+  &:active {
+    transform: translateY(3px);
+    transition: transform 0.1s;
+  }
 `;
 
+export const PlayButtonBackgroundColor = styled(GameActionButtonBackground)`
+  background-color: ${({ theme }) => theme.colors.playSecondary};
+`;
 
+export const PlayButtonForegroundColor = styled(GameActionButtonForeground)`
+  background-color: ${({ theme }) => theme.colors.playPrimary};
+`;
+
+export const EditButtonBackgroundColor = styled(GameActionButtonBackground)`
+  background-color: ${({ theme }) => theme.colors.editSecondary};
+`;
+
+export const EditButtonForegroundColor = styled(GameActionButtonForeground)`
+  background-color: ${({ theme }) => theme.colors.editPrimary};
+`;
+
+export const ShareButtonBackgroundColor = styled(GameActionButtonBackground)`
+  background-color: ${({ theme }) => theme.colors.shareSecondary};
+`;
+
+export const ShareButtonForegroundColor = styled(GameActionButtonForeground)`
+  background-color: ${({ theme }) => theme.colors.sharePrimary};
+`;
 
 export const MetaDataText = styled.div`
   display: flex;

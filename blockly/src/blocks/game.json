@@ -36,7 +36,7 @@
 },
 {
   "type": "metadata",
-  "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4",
+  "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4 Icon %5",
   "args0": [
     {
       "type": "input_dummy"
@@ -54,6 +54,11 @@
     {
       "type": "input_value",
       "name": "description",
+      "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "game_icon",
       "check": "String"
     }
   ],
@@ -100,7 +105,7 @@
 },
 {
   "type": "actor",
-  "message0": "Actor %1 Image %2",
+  "message0": "Actor %1 Image %2 Start Horizontal %3 Start Vertical %4",
   "args0": [
     {
       "type": "input_dummy"
@@ -109,6 +114,16 @@
       "type": "input_value",
       "name": "ImageName",
       "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "start_x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "start_y",
+      "check": "Number"
     }
   ],
   "output": null,
@@ -233,6 +248,86 @@
   "message0": "Close Game",
   "previousStatement": null,
   "colour": 15,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "move",
+  "message0": "Move Actor %1 %2 by %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "jump",
+  "message0": "Jump Actor %1 %2 by %3",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "teleport",
+  "message0": "Teleport Actor %1 %2 to: %3 x %4 y %5",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
   "tooltip": "",
   "helpUrl": ""
 }

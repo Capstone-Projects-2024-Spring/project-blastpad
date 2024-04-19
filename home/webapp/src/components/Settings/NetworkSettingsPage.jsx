@@ -70,7 +70,7 @@ export default function NetworkSettingsPage() {
     let success = await connectNetwork(ssid, null);
 
     while (!success) {
-      const password = prompt('Please enter the password for the network:');
+      const password = prompt(`Please enter the password for ${ssid}:`);
       // If the user cancels the prompt or doesn't enter a password, break the loop
       if (password === null || password === '') {
         break;
@@ -95,7 +95,7 @@ export default function NetworkSettingsPage() {
   };
 
   return (
-    <Styled.NetworkSettingsPageContainer>
+    <Styled.SettingsPageContainer>
       <Styled.NetworkActionBar>
         <Styled.ConnectedNetwork>
           {connectedNetwork ? 
@@ -108,6 +108,6 @@ export default function NetworkSettingsPage() {
       </Styled.NetworkActionBar>
 
       {renderWifiContent()}
-    </Styled.NetworkSettingsPageContainer>
+    </Styled.SettingsPageContainer>
   );
 }

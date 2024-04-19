@@ -11,7 +11,6 @@ const ndarray = require("ndarray");
 // const FieldBitmap = require("./src/field-bitmap.js");
 // console.log(FieldBitmap);
 
-
 const onlyBitmaps = (process.argv.indexOf('--bitmaps') > -1);
 
 

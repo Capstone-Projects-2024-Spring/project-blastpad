@@ -110,6 +110,18 @@ export const toolbox = {
         },
         {
           'kind': 'block',
+          'type': 'move',
+        },
+        {
+          'kind': 'block',
+          'type': 'jump',
+        },
+        {
+          'kind': 'block',
+          'type': 'teleport',
+        },
+        {
+          'kind': 'block',
           'type': 'exit',
         },
       ],

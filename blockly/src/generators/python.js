@@ -80,6 +80,7 @@ forBlock['metadata'] = function(block, generator) {
   var value_game_name = generator.valueToCode(block, 'game name', Order.ATOMIC);
   var value_author_name = generator.valueToCode(block, 'author name', Order.ATOMIC);
   var value_description = generator.valueToCode(block, 'description', Order.ATOMIC);
+  var value_icon = generator.valueToCode(block, 'game_icon', Order.ATOMIC);
   var code = `
 
 # BLASTPAD PRODUCTIONS
@@ -100,10 +101,10 @@ def is_key_pressed():
 def collide_pixels(actor1, actor2):
   return False
 
-class Actor(pygame.sprite.Sprite):
-  def __init__(self, imageName, size):
-      super(Actor, self).__init__()
+actors = [];
 
+class Actor(object):
+  def __init__(self, imageName, size):
       self.x = 0
       self.y = 0
 
@@ -115,6 +116,11 @@ class Actor(pygame.sprite.Sprite):
   def draw(self, screen):
       screen.blit(self.image,(self.x, self.y))
 
+
+def create_actor(image_name, x, y):
+  actor = Actor(image_name, (x, y))
+  actors.append(actor)
+  return actor
 font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.set_caption("${value_game_name}")
 # screen = pygame.display.set_mode([800, 480], pygame.FULLSCREEN)
@@ -128,8 +134,11 @@ screen = pygame.display.set_mode([800, 480])
 
 forBlock['actor'] = function(block, generator) {
   var value_name = generator.valueToCode(block, 'ImageName', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'start_x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'start_y', Order.ATOMIC);
+
   // TODO: Assemble python into code variable.
-  var code = `Actor(${value_name}, (20, 50))`;
+  var code = `create_actor(${value_name}, ${value_x}, ${value_y})`;
   return [code, Order.NONE];
 };
 
@@ -218,5 +227,35 @@ exit()
 `
   return code;
 };
+
+forBlock['teleport'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', python.Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', python.Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', python.Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = 
+`${value_actor}.x = ${value_x}
+${value_actor}.y = ${value_y}
+`;
+  return code;
+};
+
+forBlock['move'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', python.Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', python.Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_actor}.y = ${value_actor}.x + ${value_x}`;
+  return code;
+};
+
+
+forBlock['jump'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', python.Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', python.Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_actor}.y = ${value_actor}.y + ${value_y}`;
+  return code;
+};
+
 
 module.exports = forBlock;

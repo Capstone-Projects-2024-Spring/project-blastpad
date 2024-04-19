@@ -12,7 +12,7 @@ const config = {
   },
   // Enable webpack-dev-server to get hot refresh of the app.
   devServer: {
-    static: './build',
+    static: '../flask/built_pages',
   },
   module: {
     rules: [
