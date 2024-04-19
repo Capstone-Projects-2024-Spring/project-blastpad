@@ -8,18 +8,21 @@ export const CommunityPageContainer = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `;
 
 export const SearchBarContainer = styled.div`
   width: 100%;
-  height: 10%;
-  padding: 0px 5px;
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
 `;
 
 export const SearchBar = styled.div`
   width: 90%;
-  height: 100%;
+  height: 50%;
   background-color: ${({ theme }) => theme.colors.background};
   outline: 4px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
@@ -42,6 +45,29 @@ export const SearchIconContainer = styled.div`
   &:focus {
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: -3px;
+  }
+`;
+
+export const RefreshButtonContainer = styled.div`
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+`;
+
+export const RefreshButton = styled.div`
+  width: 42px;
+  height: 42px;
+  border-radius: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.foreground};
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -2px;
   }
 `;
 
