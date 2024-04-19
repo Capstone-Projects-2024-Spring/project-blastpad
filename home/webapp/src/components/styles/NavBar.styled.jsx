@@ -5,7 +5,7 @@ export const NavBarContainer = styled.div`
   height: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between; // Ensure children are spaced out
+  justify-content: space-between;
   align-items: center;
   padding: 0px;
   gap: 37px;
@@ -21,7 +21,7 @@ export const NavButtonsContainer = styled.div`
   width: fit-content;
 
   flex: none;
-  order: 0; // Keep order 0
+  order: 0;
   flex-grow: 0;
 `;
 
@@ -40,7 +40,8 @@ export const NavButton = styled.div`
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: -3px;
   }
-`;
+
+`
 
 export const StatusIconsContainer = styled.div`
   display: flex;
@@ -51,15 +52,6 @@ export const StatusIconsContainer = styled.div`
   gap: 13px;
 
   flex: none;
-  order: 1; // Keep order 1
+  order: 1;
   flex-grow: 0;
-`;
-
-export const TimeContainer = styled.div`
-  display: flex; 
-  flex-direction: row; 
-  align-items: center; 
-  font-size: 44px; 
-  margin-left: auto; 
-  user-select: none;
-`;
+`
