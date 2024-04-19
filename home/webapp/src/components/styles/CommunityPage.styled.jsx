@@ -21,7 +21,7 @@ export const SearchBarContainer = styled.div`
 `;
 
 export const SearchBar = styled.div`
-  width: 92%;
+  width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   outline: 4px solid ${({ theme }) => theme.colors.foreground};
@@ -48,15 +48,6 @@ export const SearchIconContainer = styled.div`
   }
 `;
 
-export const SearchBarInputContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-`;
-
 export const SearchBarInput = styled.input`
   width: 100%;
   height: 40px;
@@ -71,7 +62,7 @@ export const SearchBarInput = styled.input`
 `;
 
 export const RefreshButtonContainer = styled.div`
-  width: 8%;
+  width: 7%;
   height: 100%;
   display: flex;
   flex-direction: row;

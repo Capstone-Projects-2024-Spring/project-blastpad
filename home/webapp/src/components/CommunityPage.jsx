@@ -14,9 +14,7 @@ export default function CommunityPage() {
           <SearchIconContainer tabIndex={2}>
             <SearchIcon/>
           </SearchIconContainer>
-          <SearchBarContainer tabIndex={2}>
-            <SearchBarInput type="text"/>
-          </SearchBarContainer>
+            <SearchBarInput type="text" tabIndex={2}/>
         </SearchBar>
         <RefreshButtonContainer>
           <RefreshButton tabIndex={2}>
