@@ -1,4 +1,5 @@
-import { CommunityPageContainer, GameIcon, GameIconsContainer } from "./styles/CommunityPage.styled"
+import { CommunityPageContainer, GameGridContainer, GameIcon, GameIconsContainer, SearchBarContainer, SearchIconContainer } from "./styles/CommunityPage.styled"
+import { SearchIcon } from "./Icons";
 
 export default function CommunityPage() {
   let gameNames = []
@@ -8,13 +9,20 @@ export default function CommunityPage() {
 
   return (
     <CommunityPageContainer>
-      <GameIconsContainer>
-        {gameNames.map((game, index)=>{
-          return(
-            <GameIcon tabIndex={2}>{game}</GameIcon>
-          )
-        })}
-      </GameIconsContainer>
+      <SearchBarContainer>
+        <SearchIconContainer tabIndex={2}>
+          <SearchIcon></SearchIcon>
+        </SearchIconContainer>
+      </SearchBarContainer>
+      <GameGridContainer>
+        <GameIconsContainer>
+          {gameNames.map((game, index)=>{
+            return(
+              <GameIcon tabIndex={2}>{game}</GameIcon>
+            )
+          })}
+        </GameIconsContainer>
+      </GameGridContainer>
     </CommunityPageContainer>
   )
 }
