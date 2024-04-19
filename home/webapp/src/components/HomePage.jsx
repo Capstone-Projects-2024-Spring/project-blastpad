@@ -14,7 +14,6 @@ export default function HomePage() {
 
   const [games, setGames] = useState([])
 
-  // let gameNames = ["Mario Kart", "Legend of Zelda", "PacMan", "Tetris", "Pokemon"];
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BASE_URL}/games/`, {
       method: "GET"
@@ -25,8 +24,6 @@ export default function HomePage() {
       })
       .catch((error) => console.log(error));
   }, []);
-
-  console.log(games)
 
   return (
     <HomePageContainer>
