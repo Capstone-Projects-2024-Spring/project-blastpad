@@ -23,10 +23,13 @@ const ProfileActionButton = styled.div`
   padding: 10px;
   border-radius: 10px;
 
-  &:focus {
+  &:focus, &:hover {
     outline: ${(props) => "4px solid #ffffff"};
     outline-offset: -4px;
   }
+
+  cursor: pointer;
+  user-select: none;
 `
 
 const ProfileActionInput = styled.input`

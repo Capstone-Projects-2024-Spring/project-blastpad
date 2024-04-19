@@ -95,7 +95,7 @@ export default function NetworkSettingsPage() {
   };
 
   return (
-    <Styled.NetworkSettingsPageContainer>
+    <Styled.SettingsPageContainer>
       <Styled.NetworkActionBar>
         <Styled.ConnectedNetwork>
           {connectedNetwork ? 
@@ -108,6 +108,6 @@ export default function NetworkSettingsPage() {
       </Styled.NetworkActionBar>
 
       {renderWifiContent()}
-    </Styled.NetworkSettingsPageContainer>
+    </Styled.SettingsPageContainer>
   );
 }
