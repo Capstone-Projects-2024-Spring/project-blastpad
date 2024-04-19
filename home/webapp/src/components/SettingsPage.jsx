@@ -2,45 +2,48 @@ import React, { useState } from "react";
 import * as Styled from "./styles/Settings.styled";
 import NetworkSettingsPage from "./Settings/NetworkSettingsPage";
 import ClassroomSettingsPage from "./Settings/ClassroomSettingsPage";
+import ProfileSettingsPage from './Settings/ProfileSettingsPage'
 
 const SettingsPage = () => {
-  const [activeButton, setActiveButton] = useState("WiFi");
+  const [currentSettingsPage, setCurrentSettingsPage] = useState("WiFi");
 
   return (
     <Styled.SettingsPageLayout>
       <Styled.SideMenu>
         <Styled.sideButton
-          active={activeButton === "WiFi"}
-          onClick={() => {setActiveButton("WiFi")}}
+          active={currentSettingsPage === "Wi-Fi"}
+          onClick={() => {setCurrentSettingsPage("Wi-Fi")}}
           tabIndex="0"
         >
           Wi-Fi
         </Styled.sideButton>
         <Styled.sideButton
-          active={activeButton === "Sound"}
-          onClick={() => setActiveButton("Sound")}
+          active={currentSettingsPage === "My Class"}
+          onClick={() => setCurrentSettingsPage("My Class")}
           tabIndex="0"
         >
-          Sound
+          My Class
         </Styled.sideButton>
         <Styled.sideButton
-          active={activeButton === "Profile"}
-          onClick={() => setActiveButton("Profile")}
+          active={currentSettingsPage === "Profile"}
+          onClick={() => setCurrentSettingsPage("Profile")}
           tabIndex="0"
         >
           Profile
         </Styled.sideButton>
         <Styled.sideButton
-          active={activeButton === "Class"}
-          onClick={() => setActiveButton("Class")}
+          active={currentSettingsPage === "Sensors"}
+          onClick={() => setCurrentSettingsPage("Sensors")}
           tabIndex="0"
         >
-          Class
+          Sensors
         </Styled.sideButton>
       </Styled.SideMenu>
       
-      {(activeButton === "WiFi" && (<NetworkSettingsPage/>))
-      || (activeButton === "Class" && (<ClassroomSettingsPage/>))}
+      {currentSettingsPage === 'Wi-Fi' && <NetworkSettingsPage/>}
+      {currentSettingsPage === 'My Class' && <ClassroomSettingsPage/>}
+      {currentSettingsPage === 'Profile' && <ProfileSettingsPage/>}
+      {/* {currentSettingsPage === 'Sensors' && <SettingsPage />} */}
 
     </Styled.SettingsPageLayout>
   );

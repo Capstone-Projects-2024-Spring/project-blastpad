@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GlobalStyles } from "./components/styles/Global";
 import NavBar from "./components/NavBar.jsx";
 import { ThemeProvider } from "styled-components";
@@ -12,6 +12,8 @@ import SettingsPage from "./components/SettingsPage.jsx"; // Import SettingsPage
 import { Layout } from './components/styles/Layout.styled.jsx'
 import CursorProvider from "./components/CursorProvider.jsx";
 
+import { AuthProvider } from "./AuthContext.jsx";
+
 function App() {
   const [selectedTheme, setSelectedTheme] = useState(dark);
   const [currentPage, setCurrentPage] = useState('home');
@@ -21,21 +23,23 @@ function App() {
   };
 
   return (
-    <CursorProvider>
-      <ThemeProvider theme={selectedTheme}>
-        <div className="App">
-          <GlobalStyles />
+    <AuthProvider>
+      <CursorProvider>
+        <ThemeProvider theme={selectedTheme}>
+          <div className="App">
+            <GlobalStyles />
 
-          <Layout>
-            <NavBar onPageChange={handleNavButtonClick} />
-            {currentPage === 'home' && <HomePage />}
-            {currentPage === 'community' && <CommunityPage />}
-            {currentPage === 'classroom' && <ClassroomPage />}
-            {currentPage === 'settings' && <SettingsPage />}
-          </Layout>
-        </div>
-      </ThemeProvider>
-    </CursorProvider>
+            <Layout>
+              <NavBar onPageChange={handleNavButtonClick} />
+              {currentPage === 'home' && <HomePage />}
+              {currentPage === 'community' && <CommunityPage />}
+              {currentPage === 'classroom' && <ClassroomPage />}
+              {currentPage === 'settings' && <SettingsPage />}
+            </Layout>
+          </div>
+        </ThemeProvider>
+      </CursorProvider>
+    </AuthProvider>
   );
 }
 
