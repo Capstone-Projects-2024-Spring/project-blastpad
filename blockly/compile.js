@@ -25,14 +25,12 @@ const secondaryColor = [13, 167, 63, 255]
 const tertiaryColor = [255, 63, 63, 255]
 const backgroundColor = [0, 0, 0, 0]
 
-
 const pixel_colors = {
     0: backgroundColor,
     1: primaryColor,
     2: secondaryColor,
     3: tertiaryColor,
 }
-
 
 function scaleBitmap(bitmap, scaleFactor) {
     let scaledBitmap = [];

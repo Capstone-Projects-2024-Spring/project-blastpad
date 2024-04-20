@@ -123,8 +123,9 @@ def save():
 
 @app.route('/games/', methods = ['GET'])
 def allgames():
-    dir_list = os.listdir(GAMES_FOLDER)
-    return {"games": dir_list}, 200
+    included_extensions = ['js']
+    files = [ fi for fi in os.listdir(GAMES_FOLDER) if fi.endswith(".json") ]
+    return {"games": files}, 200
 
 @app.route('/games/<game_name>', methods = ['GET'])
 def onegame(game_name):
