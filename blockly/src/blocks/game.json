@@ -254,6 +254,25 @@
   "helpUrl": ""
 },
 {
+  "type": "change_actor_image",
+  "previousStatement": null,
+  "nextStatement": null,
+  "message0": "Change Actor %1 Image to %2",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_value",
+      "name": "image"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
   "type": "draw_actor",
   "message0": "Draw %1 Actor %2",
   "previousStatement": null,

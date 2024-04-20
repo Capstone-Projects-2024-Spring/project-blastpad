@@ -1,9 +1,15 @@
+facing_left = None
+facing_right = None
+looking_at_you = None
 Actor = None
 
 # Describe this function...
 def Start_Game():
-  global Actor
-  Actor = create_actor(("wqyecsigoqjevogl"), 30, 30, 50, 50)
+  global facing_left, facing_right, looking_at_you, Actor
+  facing_left = "wqyecsigoqjevogl"
+  facing_right = "eztbphkqjuzki"
+  looking_at_you = "bsadhrclxfhxvoj"
+  Actor = create_actor(facing_right, 30, 30, 50, 50)
 
 
 
@@ -42,6 +48,9 @@ actors = [];
 
 class Actor_Sprite_Obj(pygame.sprite.Sprite):
   def __init__(self, imageName, x, y, width, height):
+      self.width = width
+      self.height = height
+
       self.image = pygame.image.load("./images/"+imageName+".png")
       self.image = pygame.transform.scale(self.image, (width, height))
       self.rect = self.image.get_rect(center = (x, y))
@@ -54,6 +63,10 @@ class Actor_Sprite_Obj(pygame.sprite.Sprite):
 
   def moveVertical(self, pixels):
     self.rect.y += pixels
+
+  def changeImage(self, imageName):
+    self.image = pygame.image.load("./images/"+imageName+".png")
+    self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
   # add change image func
 
@@ -89,14 +102,16 @@ while True:
   screen.fill((0, 0, 0))
   for x in actors:
     x.draw(screen)
+  if(is_any_key_pressed()):
+    Actor.changeImage(looking_at_you)
   if keyState[pygame.K_b]:
     Actor.moveHorizontal(30)
     Actor.moveVertical(0)
-
+    Actor.changeImage(facing_right)
   if keyState[pygame.K_a]:
     Actor.moveHorizontal((-30))
     Actor.moveVertical(0)
-
+    Actor.changeImage(facing_left)
   if keyState[pygame.K_SPACE]:
     Actor.moveHorizontal(0)
     Actor.moveVertical(30)

@@ -120,10 +120,6 @@ export const toolbox = {
         },
         {
           'kind': 'block',
-          'type': 'get_property'
-        },
-        {
-          'kind': 'block',
           'type': 'actor_x'
         },
         {
@@ -149,7 +145,11 @@ export const toolbox = {
         {
           'kind': 'block',
           'type': 'large_bitmap',
-        }
+        },
+        {
+          'kind': 'block',
+          'type': 'change_actor_image',
+        },
       ],
     },
     {

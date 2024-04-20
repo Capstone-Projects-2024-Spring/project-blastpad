@@ -125,6 +125,9 @@ actors = [];
 
 class Actor_Sprite_Obj(pygame.sprite.Sprite):
   def __init__(self, imageName, x, y, width, height):
+      self.width = width
+      self.height = height
+
       self.image = pygame.image.load("./images/"+imageName+".png")
       self.image = pygame.transform.scale(self.image, (width, height))
       self.rect = self.image.get_rect(center = (x, y))
@@ -137,6 +140,10 @@ class Actor_Sprite_Obj(pygame.sprite.Sprite):
 
   def moveVertical(self, pixels):
     self.rect.y += pixels
+
+  def changeImage(self, imageName):
+    self.image = pygame.image.load("./images/"+imageName+".png")
+    self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
   # add change image func
 
@@ -174,13 +181,24 @@ forBlock['actor'] = function(block, generator) {
   return [code, Order.NONE];
 };
 
-forBlock['set_actor'] = function(block, generator) {
-  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
-  var value_property = generator.valueToCode(block, 'property', Order.ATOMIC);
-  var statements_to = generator.valueToCode(block, 'to', Order.ATOMIC);
+// forBlock['set_actor'] = function(block, generator) {
+//   var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+//   var value_property = generator.valueToCode(block, 'property', Order.ATOMIC);
+//   var statements_to = generator.valueToCode(block, 'to', Order.ATOMIC);
+
+//   // TODO: Assemble python into code variable.
+//   var code = `setattr(${value_actor}, ${value_property}, ${statements_to})\n`
+//   return code;
+// };
+
+
+
+forBlock['change_actor_image'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var image = generator.valueToCode(block, 'image', Order.ATOMIC);
 
   // TODO: Assemble python into code variable.
-  var code = `setattr(${value_actor}, ${value_property}, ${statements_to})\n`
+  var code = `${value_actor}.changeImage(${image})`
   return code;
 };
 
