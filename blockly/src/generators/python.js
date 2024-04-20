@@ -75,7 +75,7 @@ while True:
     pygame.display.quit()
     pygame.quit()
     exit()
-  screen.fill((0, 0, 0))
+  screen.fill(background_color)
   for x in actors:
     x.draw(screen) 
 ${branch}
@@ -108,6 +108,8 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 import sys
+
+background_color = pygame.Color("#000000")
 
 def is_key_pressed(key):
   for event in pygame.event.get():
@@ -198,7 +200,7 @@ forBlock['change_actor_image'] = function(block, generator) {
   var image = generator.valueToCode(block, 'image', Order.ATOMIC);
 
   // TODO: Assemble python into code variable.
-  var code = `${value_actor}.changeImage(${image})`
+  var code = `${value_actor}.changeImage(${image})\n`
   return code;
 };
 
@@ -359,5 +361,11 @@ forBlock['actor_y'] = function(block, generator) {
   return [code, Order.NONE]
 };
 
+forBlock['change_background_color'] = function(block, generator) {
+  var colour_background_color = block.getFieldValue('Background Color');
+  // TODO: Assemble python into code variable.
+  var code = `background_color = pygame.Color("${colour_background_color}")\n`;
+  return code;
+};
 
 module.exports = forBlock;

@@ -13,7 +13,7 @@
                             "type": "text",
                             "id": "uL4`ChH4}lTzo~sEz[ot",
                             "fields": {
-                                "TEXT": "Multiplayer Tetris"
+                                "TEXT": "Awesome Block Examples"
                             }
                         }
                     },
@@ -176,7 +176,7 @@
                                                                 "type": "change_background_color",
                                                                 "id": "4@DN:^DG6N#4leN,_,dI",
                                                                 "fields": {
-                                                                    "Background Color": "#000066"
+                                                                    "Background Color": "#660000"
                                                                 }
                                                             }
                                                         }
@@ -256,7 +256,7 @@
                                                                                 "type": "change_background_color",
                                                                                 "id": "3S[|Wkx5)we5moWfaX4S",
                                                                                 "fields": {
-                                                                                    "Background Color": "#336666"
+                                                                                    "Background Color": "#6600cc"
                                                                                 }
                                                                             }
                                                                         }

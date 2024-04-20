@@ -15,7 +15,7 @@ def Start_Game():
 
 
 # BLASTPAD PRODUCTIONS
-# 'Multiplayer Tetris'
+# 'Awesome Block Examples'
 # By 'BlastPad Team'
 # 'This is an example project.'
 
@@ -78,7 +78,7 @@ def create_actor(image_name, x, y, width, height):
   return actor
 
 font = pygame.font.Font('freesansbold.ttf', 32)
-pygame.display.set_caption("'Multiplayer Tetris'")
+pygame.display.set_caption("'Awesome Block Examples'")
 
 screen = None
 
@@ -106,13 +106,13 @@ while True:
     x.draw(screen)
   if(is_any_key_pressed()):
     Actor.changeImage(looking_at_you)
-    background_color = pygame.Color("#000066")
+    background_color = pygame.Color("#660000")
 
   if keyState[pygame.K_b]:
     Actor.moveHorizontal(30)
     Actor.moveVertical(0)
     Actor.changeImage(facing_right)
-    background_color = pygame.Color("#336666")
+    background_color = pygame.Color("#6600cc")
 
   if keyState[pygame.K_a]:
     Actor.moveHorizontal((-30))

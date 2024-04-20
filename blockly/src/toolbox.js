@@ -78,6 +78,10 @@ export const toolbox = {
         },
         {
           'kind': 'block',
+          'type': 'change_background_color',
+        },
+        {
+          'kind': 'block',
           'type': 'exit',
         },
       ],
