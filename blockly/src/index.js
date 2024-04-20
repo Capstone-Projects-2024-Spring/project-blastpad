@@ -29,6 +29,12 @@ Blockly.common.defineBlocks(blocks);
 // Set up UI elements and inject Blockly
 // const codeDiv = document.getElementById('generatedCode').firstChild;
 // const outputDiv = document.getElementById('output');
+
+const errorWindow = document.getElementById('hasErrors');
+const errorBody = document.getElementById('errorBody');
+const errorFix = document.getElementById('errorFix');
+
+
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
 
@@ -73,7 +79,7 @@ const defaultWorkspace = {
                               "TEXT": "This is an example project."
                           }
                       }
-                  }
+                  },
               }
           },
         ]
@@ -83,7 +89,7 @@ const defaultWorkspace = {
 saveGameButton.addEventListener("click", async (e) => {
     const data = Blockly.serialization.workspaces.save(ws);
 
-    var response = await fetch("/save/game", {
+    var response = await fetch("/save", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
         credentials: "same-origin", // include, *same-origin, omit
@@ -92,6 +98,11 @@ saveGameButton.addEventListener("click", async (e) => {
         },
         body: JSON.stringify(data),
       });
+
+      if(response.status == 400) {
+        var res = await response.json();
+        showError(res.error, res.fix || "No Recommended Fix.");
+      }
 
       console.log(response);
 })
@@ -192,5 +203,13 @@ var specifiedGame = params.get('load');
 if(specifiedGame) {
   fetchAndLoadGame(specifiedGame);
 }
+
+const showError = (error, fix) => {
+  errorWindow.classList.remove("hidden");
+  errorBody.innerHTML = error;
+  errorFix.innerHTML = fix;
+}
+
+
 
 startEditor();

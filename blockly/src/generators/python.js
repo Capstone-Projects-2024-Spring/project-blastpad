@@ -70,6 +70,8 @@ forBlock['game_loop'] = function (block, generator) {
   return `
 while True:
   screen.fill((0, 0, 0))
+  for x in actors:
+    x.draw(screen) 
 ${branch}
   pygame.display.flip()
   clock.tick(30)
@@ -93,38 +95,54 @@ import time
 from pygame import mask
 clock = pygame.time.Clock()
 pygame.init()
+pygame.display.init()
+import os
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+import sys
 
 def is_key_pressed():
   for event in pygame.event.get():
     return event.type == pygame.KEYDOWN
 
 def collide_pixels(actor1, actor2):
-  return False
+  return pygame.sprite.collide_mask(actor1, actor2)
 
 actors = [];
 
-class Actor(object):
-  def __init__(self, imageName, size):
-      self.x = 0
-      self.y = 0
-
-      self.image = pygame.image.load("blockly/compiled_games/images/"+imageName+".png")
-      self.surf = pygame.Surface(size)
-      self.mask = mask.from_surface(self.surf)
-      self.rect = self.surf.get_rect()
+class Actor(pygame.sprite.Sprite):
+  def __init__(self, imageName, x, y, width, height):
+      self.image = pygame.image.load("./images/"+imageName+".png")
+      self.image = pygame.transform.scale(self.image, (width, height))
+      self.rect = self.image.get_rect(center = (x, y))
 
   def draw(self, screen):
-      screen.blit(self.image,(self.x, self.y))
+      screen.blit(self.image, (self.rect.x, self.rect.y))
+    
+  def moveHorizontal(self, pixels):
+    self.rect.x += pixels
 
+  def moveVertical(self, pixels):
+    self.rect.y += pixels
 
-def create_actor(image_name, x, y):
-  actor = Actor(image_name, (x, y))
+  # add change image func
+
+def create_actor(image_name, x, y, width, height):
+  actor = Actor(image_name, x, y, width, height)
   actors.append(actor)
   return actor
+
 font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.set_caption("${value_game_name}")
-# screen = pygame.display.set_mode([800, 480], pygame.FULLSCREEN)
-screen = pygame.display.set_mode([800, 480])
+
+screen = None
+
+if sys.argv[1] == "headless":
+  screen = pygame.display.set_mode((1, 1), pygame.NOFRAME)
+
+else:
+  screen = pygame.display.set_mode((800, 480), pygame.FULLSCREEN)
 
 \n
 \n
@@ -136,9 +154,11 @@ forBlock['actor'] = function(block, generator) {
   var value_name = generator.valueToCode(block, 'ImageName', Order.ATOMIC);
   var value_x = generator.valueToCode(block, 'start_x', Order.ATOMIC);
   var value_y = generator.valueToCode(block, 'start_y', Order.ATOMIC);
+  var width = generator.valueToCode(block, 'width', Order.ATOMIC);
+  var height = generator.valueToCode(block, 'height', Order.ATOMIC);
 
   // TODO: Assemble python into code variable.
-  var code = `create_actor(${value_name}, ${value_x}, ${value_y})`;
+  var code = `create_actor(${value_name}, ${value_x}, ${value_y}, ${width}, ${height})`;
   return [code, Order.NONE];
 };
 
@@ -200,7 +220,7 @@ forBlock['if_actors_colliding'] = function(block, generator) {
 
   var code = 
 `if collide_pixels(${value_actor1}, ${value_actor2}):
-  ${statements_do}
+${statements_do}
 `;
   return code;
 }
@@ -229,32 +249,40 @@ exit()
 };
 
 forBlock['teleport'] = function(block, generator) {
-  var value_actor = generator.valueToCode(block, 'actor', python.Order.ATOMIC);
-  var value_x = generator.valueToCode(block, 'x', python.Order.ATOMIC);
-  var value_y = generator.valueToCode(block, 'y', python.Order.ATOMIC);
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
   // TODO: Assemble python into code variable.
   var code = 
-`${value_actor}.x = ${value_x}
-${value_actor}.y = ${value_y}
+`${value_actor}.rect.x = ${value_x}
+${value_actor}.rect.y = ${value_y}
 `;
   return code;
 };
 
 forBlock['move'] = function(block, generator) {
-  var value_actor = generator.valueToCode(block, 'actor', python.Order.ATOMIC);
-  var value_x = generator.valueToCode(block, 'x', python.Order.ATOMIC);
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
   // TODO: Assemble python into code variable.
-  var code = `${value_actor}.y = ${value_actor}.x + ${value_x}`;
+  var code = 
+`${value_actor}.moveHorizontal(${value_x})
+${value_actor}.moveVertical(${value_y})
+`;
   return code;
 };
 
-
-forBlock['jump'] = function(block, generator) {
-  var value_actor = generator.valueToCode(block, 'actor', python.Order.ATOMIC);
-  var value_y = generator.valueToCode(block, 'y', python.Order.ATOMIC);
+forBlock['actor_x'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
   // TODO: Assemble python into code variable.
-  var code = `${value_actor}.y = ${value_actor}.y + ${value_y}`;
-  return code;
+  var code = `${value_actor}.rect.x`;
+  return [code, Order.NONE]
+};
+forBlock['actor_y'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_actor}.rect.y`;
+  return [code, Order.NONE]
 };
 
 

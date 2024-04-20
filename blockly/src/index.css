@@ -86,3 +86,51 @@ pre, code {
     margin: 1em;
   }
   
+
+#hasErrors {
+    position:fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    width: 100vw;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.errorContent h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#errorBody {
+    color: red;
+    font-family: monospace;
+}
+
+#errorFix {
+    color: white;
+    font-family: monospace;
+}
+
+.errorContent button {
+    width: 100%;
+    padding: 1em;
+    margin-top: 3em;
+    border-radius: 20px;
+}
+
+.errorContent {
+    margin: 1em;
+    width: 500px;
+    margin: 0 auto;
+    background-color: #2D3039;
+    margin-top: 30vh;
+    padding: 2em;
+    border: 2px solid #51535B;
+    border-radius: 20px;
+  }
+  

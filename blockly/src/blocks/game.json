@@ -70,7 +70,7 @@
 {
   "type": "game_loop",
   "message0": "Game Loop",
-  "message1": "DO %1 End of Game",
+  "message1": "%1",
   "args0": [
   ],
   "args1": [
@@ -88,7 +88,7 @@
 {
   "type": "key_down",
   "message0": "On Key Down",
-  "message1": "DO %1 End of Game",
+  "message1": "%1",
   "args0": [
   ],
   "args1": [
@@ -105,7 +105,7 @@
 },
 {
   "type": "actor",
-  "message0": "Actor %1 Image %2 Start Horizontal %3 Start Vertical %4",
+  "message0": "New Actor With %1 Image %2 Start Horizontal %3 Start Vertical %4 Width %5 Height %6",
   "args0": [
     {
       "type": "input_dummy"
@@ -123,6 +123,16 @@
     {
       "type": "input_value",
       "name": "start_y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "width",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "height",
       "check": "Number"
     }
   ],
@@ -175,7 +185,7 @@
 },
 {
   "type": "get_property",
-  "message0": "Property Of %1 Property Name %2",
+  "message0": "Property Of Actor %1 called %2",
   "args0": [
     {
       "type": "input_value",
@@ -187,6 +197,37 @@
     }
   ],
   "output": null,
+  "inputsInline": true,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_x",
+  "message0": "Actor %1's Horizontal Position",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    }
+  ],
+  "output": null,
+  "inputsInline": true,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_y",
+  "message0": "Actor %1's Vertical Position",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    }
+  ],
+  "output": null,
+  "inputsInline": true,
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""
@@ -253,11 +294,8 @@
 },
 {
   "type": "move",
-  "message0": "Move Actor %1 %2 by %3",
+  "message0": "Move Actor %1 by x %2 and y %3",
   "args0": [
-    {
-      "type": "input_dummy"
-    },
     {
       "type": "input_value",
       "name": "actor"
@@ -266,25 +304,6 @@
       "type": "input_value",
       "name": "x",
       "check": "Number"
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 230,
-  "tooltip": "",
-  "helpUrl": ""
-},
-{
-  "type": "jump",
-  "message0": "Jump Actor %1 %2 by %3",
-  "args0": [
-    {
-      "type": "input_dummy"
-    },
-    {
-      "type": "input_value",
-      "name": "actor"
     },
     {
       "type": "input_value",

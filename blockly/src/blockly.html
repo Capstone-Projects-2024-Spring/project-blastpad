@@ -12,7 +12,25 @@
     </div>
     <div id="pageContainer" class="hidden">
       <button id="saveGame"> Save Game </button>
+      <div id="hasErrors" class="hidden">
+        <div class="errorContent">
+          <h2 class="errorTitle"> Your game has an error! </h2>
+          <p id="errorBody"> Error! </p>
+          <p id="errorFix"> Error! </p>
+
+          <button onclick="dismissError()" class="closeErrorWindow"> Dismiss </button> 
+        </div>
+      </div>
       <div id="blocklyDiv"></div>
     </div>
+
+    <script>
+      const errorWindow = document.getElementById('hasErrors');
+
+      function dismissError() {
+        errorWindow.classList.add("hidden");
+      }
+
+    </script>
   </body>
 </html>

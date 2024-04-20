@@ -12,7 +12,7 @@ const ndarray = require("ndarray");
 // console.log(FieldBitmap);
 
 const onlyBitmaps = (process.argv.indexOf('--bitmaps') > -1);
-
+const onlyIcon = (process.argv.indexOf('--icon') > -1);
 
 class dummyField extends Blockly.Field {}
 dummyField.fromJson = () => {};
@@ -51,7 +51,7 @@ function scaleBitmap(bitmap, scaleFactor) {
 }
 
 
-var saveBitmap = (bitmap, size, name) => {
+var saveBitmap = (bitmap, size, name, icon=false) => {
 
     // old squish approach
     
@@ -88,7 +88,11 @@ var saveBitmap = (bitmap, size, name) => {
         }
     }  
     
-    var out = fs.createWriteStream(`./blockly/compiled_games/images/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "") || "UNKNOWN"}.png`);
+    var writeLocation = `${__dirname}/compiled_games/images/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-") || "UNKNOWN"}.png`
+    if(icon) {
+        writeLocation = `${__dirname}/../flask/saved/icons/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-") || "UNKNOWN"}.png` 
+    }
+    var out = fs.createWriteStream(writeLocation);
     savePixels(d, "png").pipe(out)
 }
 
@@ -108,7 +112,7 @@ var unrollWorkspaceBlocks = (workspace) => {
             saveBlock(block.next.block)
         }
         if(block.inputs && block.inputs.DO) {
-            saveBlock(block.inputs.DO);
+            saveBlock(block.inputs.DO.block);
         }
     }
 
@@ -136,17 +140,29 @@ var getBitmapSize = (bitmap_type, definitions) => {
 try {
     const file = jsonfile.readFileSync(process.argv[2]);
     var filename = process.argv[2].replace(/^.*[\\/]/, '')
-    var output = process.argv[3] || "./blockly/compiled_games/"+filename.split('.')[0]+".py"
+    var output = process.argv[3] || `${__dirname}/compiled_games/`+filename.split('.')[0]+".py"
 
     // SAVE BITMAPS
     // PROBABLY SHOULD BE IN THEIR OWN GAME FOLDER
     var allWorkspaceBlocks = unrollWorkspaceBlocks(file)
 
     // THIS IS HOW WE GET BLOCK DEFINITIONS
-    var definitionsArray = jsonfile.readFileSync('./blockly/src/blocks/game.json')
+    var definitionsArray = jsonfile.readFileSync(`${__dirname}/src/blocks/game.json`)
     var definitions = Blockly.common.createBlockDefinitionsFromJsonArray(definitionsArray.blocks);
     Blockly.common.defineBlocks(definitions);
 
+
+    if(onlyIcon) {
+        for(var block of allWorkspaceBlocks) {
+            if(block.type == "metadata") {
+                var bitmapBlock = block.inputs.game_icon.block
+                var size = getBitmapSize(bitmapBlock.type, definitionsArray)
+                var name = "jjj"
+                saveBitmap(bitmapBlock.fields.field, size, block.inputs["game name"].block.fields.TEXT, true);
+                break;
+            }
+        }
+    }
 
     // Save all those BitMaps.
     for(var block of allWorkspaceBlocks) {
@@ -188,7 +204,7 @@ try {
     }
 
     // THIS IS HOW WE GET BLOCK GENERATION
-    const forBlock = require('../blockly/src/generators/python.js')
+    const forBlock = require(`${__dirname}/src/generators/python.js`)
     Object.assign(pythonGenerator.forBlock, forBlock);
     
     try {
@@ -203,8 +219,10 @@ try {
           });
     } catch (e) {
         console.log(e);
+        process.exit(-1)
     }
 
 } catch (e) {
     console.error(e);
+    process.exit(-1)
 }
