@@ -12,8 +12,10 @@ xrandr --output HDMI-1 --mode 800x480 # set resolution to something blastpad-lik
 # show a splash before browser kicks in
 feh --bg-scale splash.jpg
 
-cd project-blastpad
-python home/gui.py
+# cd project-blastpad
+# python home/gui.py
+
+chromium-browser --kiosk http://localhost:8000
 
 # start the cec-client & browser
 # (cec-client | cec2kbd) & browser --fullscreen "${URL:='https://deltazero.cz'}"
