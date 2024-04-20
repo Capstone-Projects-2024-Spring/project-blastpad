@@ -3,6 +3,7 @@ import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer, 
 import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon } from "./Icons";
 import { WarningOptions, SuccessOptions, ErrorOptions } from "./Toasty"
 import { ToastContainer, toast } from 'react-toastify';
+import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon, DynamicBatteryIcon } from "./Icons";
 
 const navIcons = {
   home: HomeIcon,
@@ -15,14 +16,13 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   const [activePage, setActivePage] = useState('home');
   const [isConnected, setIsConnected] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
-  const [batteryLevel, setBatteryLevel] = useState(1); // Default battery level
+  const [batteryLevel, setBatteryLevel] = useState(0.20); // Default battery level
 
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "numeric",
-      hour12: true,
-      timeZone: "America/New_York"
+      hour12: true
     });
   };
   const renderBatteryIcon = (level) => {
@@ -37,6 +37,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
     return icons[level] || null;
   };
 
+  
   // Function to update the connection status
   const updateConnectionStatus = async () => {
     const status = await checkConnection();
@@ -55,7 +56,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   // Function to update the current time
   const updateTime = () => {
     const now = new Date();
-    setCurrentTime(formatTime(now));
+    setCurrentTime(formatTime(now).toLowerCase());
   };
 
   // Use useEffect to set up intervals for updating connection status, time, and battery level

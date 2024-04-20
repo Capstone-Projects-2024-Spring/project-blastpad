@@ -1,20 +1,9 @@
-import { CommunityPageContainer, GameIcon, GameIconsContainer } from "./styles/CommunityPage.styled"
+import { HomePageContainer } from "./styles/HomePage.styled"
 
-export default function CommunityPage() {
-  let gameNames = []
-  for(let i=0; i < 40; i++){
-    gameNames.push(`Game ${i}`);
-  }
-
+export default function HomePage() {
   return (
-    <CommunityPageContainer>
-      <GameIconsContainer>
-        {gameNames.map((game, index)=>{
-          return(
-            <GameIcon tabIndex={2}>{game}</GameIcon>
-          )
-        })}
-      </GameIconsContainer>
-    </CommunityPageContainer>
+    <HomePageContainer>
+      Community Page
+    </HomePageContainer>
   )
 }

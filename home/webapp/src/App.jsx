@@ -28,6 +28,7 @@ function App() {
         <ThemeProvider theme={selectedTheme}>
           <div className="App">
             <GlobalStyles />
+            <title>{import.meta.env.VITE_APP_TITLE}</title>
 
             <Layout>
               <NavBar onPageChange={handleNavButtonClick} />
