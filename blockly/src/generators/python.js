@@ -142,8 +142,8 @@ if sys.argv[1] == "headless":
   screen = pygame.display.set_mode((1, 1), pygame.NOFRAME)
 
 else:
-  screen = pygame.display.set_mode((800, 480), pygame.FULLSCREEN)
-
+  screen = pygame.display.set_mode((pygame.display.Info().current_w, pygame.display.Info().current_h), pygame.SCALED)
+  # linux workaround
 \n
 \n
 `
