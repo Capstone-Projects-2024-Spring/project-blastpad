@@ -44,3 +44,4 @@ export const SuccessOptions = {
   };
   
 //Usage: toast("Message",TypeOfOptions)
+//Need to plaCe a <ToastContainer> component!
