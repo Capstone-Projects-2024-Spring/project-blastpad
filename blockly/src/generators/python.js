@@ -69,12 +69,19 @@ forBlock['game_loop'] = function (block, generator) {
   // branch = generator.addLoopTrap(branch, block) || generator.PASS;
   return `
 while True:
+  keyState = pygame.key.get_pressed()
+
+  if keyState[pygame.K_ESCAPE]:
+    pygame.display.quit()
+    pygame.quit()
+    exit()
   screen.fill((0, 0, 0))
   for x in actors:
     x.draw(screen) 
 ${branch}
   pygame.display.flip()
   clock.tick(30)
+  pygame.event.pump()
 \n`
 };
 
@@ -102,7 +109,12 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 import sys
 
-def is_key_pressed():
+def is_key_pressed(key):
+  for event in pygame.event.get():
+    return event.type == pygame.KEYDOWN and event.key == key
+
+
+def is_any_key_pressed():
   for event in pygame.event.get():
     return event.type == pygame.KEYDOWN
 
@@ -111,7 +123,7 @@ def collide_pixels(actor1, actor2):
 
 actors = [];
 
-class Actor(pygame.sprite.Sprite):
+class Actor_Sprite_Obj(pygame.sprite.Sprite):
   def __init__(self, imageName, x, y, width, height):
       self.image = pygame.image.load("./images/"+imageName+".png")
       self.image = pygame.transform.scale(self.image, (width, height))
@@ -129,7 +141,7 @@ class Actor(pygame.sprite.Sprite):
   # add change image func
 
 def create_actor(image_name, x, y, width, height):
-  actor = Actor(image_name, x, y, width, height)
+  actor = Actor_Sprite_Obj(image_name, x, y, width, height)
   actors.append(actor)
   return actor
 
@@ -180,12 +192,56 @@ forBlock['draw_actor'] = function(block, generator) {
   return code;
 };
 
-forBlock['key_down'] = function(block, generator) {
+forBlock['key_down_a'] = function(block, generator) {
   let branch = generator.statementToCode(block, 'DO');
 
   // TODO: Assemble python into code variable.
   var code = 
-`if(is_key_pressed()):
+`if keyState[pygame.K_a]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_b'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_b]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_space'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_SPACE]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_enter'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_RETURN]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_any'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if(is_any_key_pressed()):
 ${branch}
 `;
   return code;

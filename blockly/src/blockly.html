@@ -8,10 +8,19 @@
   <body>
     <div id="selectionContainer">
       <h2> Available Games: </h2>
-      <div id="gamesContainer"></div>
+      <div id="gamesContainer">
+        <h2 id="newGameButton" gameName="new"> <i class="fa-solid fa-plus"></i> New Game </h2>
+
+      </div>
     </div>
     <div id="pageContainer" class="hidden">
-      <button id="saveGame"> Save Game </button>
+      <div id="buttons">      
+        <div id="loader" class="lds-facebook hidden"><div></div><div></div><div></div></div>
+        <div id="flashCheckmark"> <i class="fa-solid fa-check"></i> </div>
+        <button id="saveGame"> <i class="fa-solid fa-floppy-disk"></i> Save Game </button>
+        <button id="runGame"> <i class="fa-solid fa-play"></i> Run Game </button>
+      </div>
+
       <div id="hasErrors" class="hidden">
         <div class="errorContent">
           <h2 class="errorTitle"> Your game has an error! </h2>

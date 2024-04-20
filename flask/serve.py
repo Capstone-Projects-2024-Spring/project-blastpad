@@ -110,14 +110,14 @@ def save():
 
         compile_result = compile_game(gamename)
         if compile_result.returncode != 0:
-            return {'error': 'Game does not compile.'}, 400
+            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block."}, 400
             
         game_test_result = test_run_game(gamename)
         print(game_test_result)
         if game_test_result['game_ran'] == True:
             return {'success': 'Game runs!'}, 200
         else:
-            return {'error': 'Game does not run.'}, 400
+            return {'error': 'Game does not run.', "fix": "Check your project for blocks without followup actions- for example, 'if' or 'Key Down' blocks without more blocks inside them."}, 400
         
 
 
@@ -222,7 +222,8 @@ def test_run_game(game_name):
     game_file = os.path.join(BLOCKLY, "compiled_games", game_name+".py")
     game_run_result = subprocess.run(['python', game_file, "headless", "&"],         
         capture_output = True,
-        text = True)
+        text = True,
+        timeout=5)
 
     return {'game_ran': game_run_result.returncode == 0, 'stdout': game_run_result.stdout, 'stderr': game_run_result.stderr }
 

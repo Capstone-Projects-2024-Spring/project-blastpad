@@ -49,16 +49,44 @@ pre, code {
     height: 50%;
 }
 
-#saveGame {
+#buttons {
     position: absolute;
-    width: 30em;
-    height: 3em;
-    margin: 1em;
+    width: 20em;
     top: 0;
     right: 0;
     z-index: 99;
-    border-radius: 10px;
+    margin: 2em;
+    margin-top: 0.5em;
 }
+
+#saveGame, #runGame {
+    width: 100%;
+    height: 4em;
+    margin: 0.5em;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+#saveGame:hover, #runGame:hover {
+    opacity: 0.7;
+}
+
+#runGame {
+    background-color: #CC4242;
+    border-color: #992929;
+}
+
+#saveGame {
+    background-color: #3670C7;
+    border-color: #21457A;
+}
+
+#newGameButton {
+    background-color: #5BC736 !important;
+    border-color: #429227 !important;
+}
+
 
 #selectionContainer {
     position:fixed;
@@ -80,6 +108,11 @@ pre, code {
     text-align: center;
     background-color: #3670C7;
     border: 1px solid #336BBD
+}
+
+#gamesContainer h2:hover {
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 #selectionContainer > h2:nth-child(1) {
@@ -134,3 +167,68 @@ pre, code {
     border-radius: 20px;
   }
   
+  .svg-inline--fa {
+    margin-right: 0.2em;
+  }
+
+
+  .lds-facebook,
+  .lds-facebook div {
+    box-sizing: border-box;
+  }
+  .lds-facebook, #flashCheckmark {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    color: #3670C7;
+    position: absolute;
+    left: -80px;
+    top: -10px;
+  }
+  .lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: currentColor;
+    animation: lds-facebook 0.5s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  }
+  .lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+  }
+  .lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+  }
+  .lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0s;
+  }
+  @keyframes lds-facebook {
+    0% {
+      top: 8px;
+      height: 50px;
+    }
+    50%, 100% {
+      top: 24px;
+      height: 32px;
+    }
+  }
+
+  .disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  #flashCheckmark {
+    transition: opacity 0.2s ease-in;
+    opacity: 0;
+    font-size: 4em;
+    top: 0px;   
+    color: green;
+    left: -70px;
+  }
+  .flash {
+    opacity: 1 !important;
+  }

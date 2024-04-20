@@ -3,7 +3,7 @@ Actor = None
 # Describe this function...
 def Start_Game():
   global Actor
-  Actor = create_actor(("wqyecsigoqjevogl"), 30, 30, 20, 20)
+  Actor = create_actor(("wqyecsigoqjevogl"), 30, 30, 50, 50)
 
 
 
@@ -26,7 +26,12 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 import sys
 
-def is_key_pressed():
+def is_key_pressed(key):
+  for event in pygame.event.get():
+    return event.type == pygame.KEYDOWN and event.key == key
+
+
+def is_any_key_pressed():
   for event in pygame.event.get():
     return event.type == pygame.KEYDOWN
 
@@ -35,7 +40,7 @@ def collide_pixels(actor1, actor2):
 
 actors = [];
 
-class Actor(pygame.sprite.Sprite):
+class Actor_Sprite_Obj(pygame.sprite.Sprite):
   def __init__(self, imageName, x, y, width, height):
       self.image = pygame.image.load("./images/"+imageName+".png")
       self.image = pygame.transform.scale(self.image, (width, height))
@@ -53,7 +58,7 @@ class Actor(pygame.sprite.Sprite):
   # add change image func
 
 def create_actor(image_name, x, y, width, height):
-  actor = Actor(image_name, x, y, width, height)
+  actor = Actor_Sprite_Obj(image_name, x, y, width, height)
   actors.append(actor)
   return actor
 
@@ -75,16 +80,36 @@ else:
 Start_Game()
 
 while True:
+  keyState = pygame.key.get_pressed()
+
+  if keyState[pygame.K_ESCAPE]:
+    pygame.display.quit()
+    pygame.quit()
+    exit()
   screen.fill((0, 0, 0))
   for x in actors:
     x.draw(screen)
-  Actor.moveHorizontal(30)
-  Actor.moveVertical(0)
+  if keyState[pygame.K_b]:
+    Actor.moveHorizontal(30)
+    Actor.moveVertical(0)
+
+  if keyState[pygame.K_a]:
+    Actor.moveHorizontal((-30))
+    Actor.moveVertical(0)
+
+  if keyState[pygame.K_SPACE]:
+    Actor.moveHorizontal(0)
+    Actor.moveVertical(30)
+
+  if keyState[pygame.K_RETURN]:
+    Actor.moveHorizontal(0)
+    Actor.moveVertical((-30))
+
+  if (Actor.rect.x) > 5000:
+    pygame.display.quit()
+    pygame.quit()
+    exit()
 
   pygame.display.flip()
   clock.tick(30)
-
-
-pygame.display.quit()
-pygame.quit()
-exit()
+  pygame.event.pump()

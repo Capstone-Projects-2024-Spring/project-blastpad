@@ -80,14 +80,13 @@
     }
   ],
   "previousStatement": null,
-  "nextStatement": null,
   "tooltip": "Your Game Loop!",
   "helpUrl": "",
   "style": "loop_blocks"
 },
 {
-  "type": "key_down",
-  "message0": "On Key Down",
+  "type": "key_down_a",
+  "message0": "On Pressed A",
   "message1": "%1",
   "args0": [
   ],
@@ -99,7 +98,97 @@
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "tooltip": "Your Game Loop!",
+  "tooltip": "User Pressed A",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_a",
+  "message0": "If Player Presses A...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed A",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_b",
+  "message0": "If Player Presses B...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed B",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_enter",
+  "message0": "If Player Presses Enter...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Enter",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_space",
+  "message0": "If Player Presses Space...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Space",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_any",
+  "message0": "If Player Presses Any Key...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Space",
   "helpUrl": "",
   "style": "loop_blocks"
 },

@@ -121,6 +121,42 @@ var unrollWorkspaceBlocks = (workspace) => {
     return workspaceBlocks;
 }
 
+var findPathToExit = (workspace) => {
+
+    var topLevelBlocks = workspace.blocks.blocks;
+    var eFound = false;
+
+    var traverse = (block) => {
+        if(eFound == true) { return; }
+
+        console.log(block);
+        if(block.type == "exit") {
+            eFound = true;
+        };
+
+        if(block.type.split("_").includes("procedures") && block.extraState != undefined) {
+            traverse(topLevelBlocks.filter(b => {
+                return b.fields != undefined && b.fields.NAME != undefined && b.fields.NAME == block.extraState.name
+            })[0])
+        }
+
+        if(block.inputs) {
+            for(var input of Object.keys(block.inputs)) {
+                traverse(block.inputs[input].block);
+            }
+        }
+
+        if(block.next) {
+            traverse(block.next.block)
+        }
+    }
+
+    // start from metadata block...
+    traverse(topLevelBlocks.find((b)=>b.type=="metadata"));
+
+    return eFound;
+}
+
 var getVariableName = (block_id, workspace) => {
     // console.log("looking",block_id);
     var variable_match = workspace.variables.filter((variable)=>variable.id == block_id)
@@ -155,71 +191,79 @@ try {
             if(block.type == "metadata") {
                 var bitmapBlock = block.inputs.game_icon.block
                 var size = getBitmapSize(bitmapBlock.type, definitionsArray)
-                var name = "jjj"
                 saveBitmap(bitmapBlock.fields.field, size, block.inputs["game name"].block.fields.TEXT, true);
                 break;
             }
         }
-    }
-
-    // Save all those BitMaps.
-    for(var block of allWorkspaceBlocks) {
-        // save orphaned bitmaps
-        if(["small_bitmap", "large_bitmap"].includes(block.type)) {
-            var size = getBitmapSize(block.type, definitionsArray)
-            saveBitmap(block.fields.field, size, block.id);
+        
+        setTimeout(() => [
+            process.exit(0)
+        ], 1200);
+    } else {
+        var hasExit = findPathToExit(file);
+        if(!hasExit) {
+            process.exit(-1);
         }
-        if(block.type == "variables_set") {
-            for(var key in block.inputs) {
-                var variable_id = block.fields.VAR.id;
-                var bitmapBlock = block.inputs[key].block;
-                if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
-                    // console.log("variable set...");
-                    var size = getBitmapSize(bitmapBlock.type, definitionsArray)
-                    var name = getVariableName(variable_id, file)
-                    saveBitmap(bitmapBlock.fields.field, size, name);
+
+        // Save all those BitMaps.
+        for(var block of allWorkspaceBlocks) {
+            // save orphaned bitmaps
+            if(["small_bitmap", "large_bitmap"].includes(block.type)) {
+                var size = getBitmapSize(block.type, definitionsArray)
+                saveBitmap(block.fields.field, size, block.id);
+            }
+            if(block.type == "variables_set") {
+                for(var key in block.inputs) {
+                    var variable_id = block.fields.VAR.id;
+                    var bitmapBlock = block.inputs[key].block;
+                    if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
+                        // console.log("variable set...");
+                        var size = getBitmapSize(bitmapBlock.type, definitionsArray)
+                        var name = getVariableName(variable_id, file)
+                        saveBitmap(bitmapBlock.fields.field, size, name);
+                    }
                 }
             }
+
+
+            if(block.type == "actor") {
+                var bitmapBlock = block.inputs.ImageName.block;
+
+                if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
+                    var size = getBitmapSize(bitmapBlock.type, definitionsArray)
+                    var name = getVariableName(bitmapBlock.id, file)
+                    saveBitmap(bitmapBlock.fields.field, size, name);
+                }
+
+                // return;
+            }
         }
 
-
-        if(block.type == "actor") {
-            var bitmapBlock = block.inputs.ImageName.block;
-
-            if(["small_bitmap", "large_bitmap"].includes(bitmapBlock.type)) {
-                var size = getBitmapSize(bitmapBlock.type, definitionsArray)
-                var name = getVariableName(bitmapBlock.id, file)
-                saveBitmap(bitmapBlock.fields.field, size, name);
-            }
-
-            // return;
+        if(onlyBitmaps) {
+            console.log("Saved Bitmaps.");
+            return 0;
         }
+
+        // THIS IS HOW WE GET BLOCK GENERATION
+        const forBlock = require(`${__dirname}/src/generators/python.js`)
+        Object.assign(pythonGenerator.forBlock, forBlock);
+        
+        try {
+            var workspace = new Blockly.Workspace();
+            Blockly.serialization.workspaces.load(file, workspace);
+            var code = pythonGenerator.workspaceToCode(workspace);
+
+            fs.writeFile(output, code, err => {
+                if (err) {
+                console.error(err);
+                }
+            });
+        } catch (e) {
+            console.log(e);
+            process.exit(-1)
+        }
+
     }
-
-    if(onlyBitmaps) {
-        console.log("Saved Bitmaps.");
-        return 0;
-    }
-
-    // THIS IS HOW WE GET BLOCK GENERATION
-    const forBlock = require(`${__dirname}/src/generators/python.js`)
-    Object.assign(pythonGenerator.forBlock, forBlock);
-    
-    try {
-        var workspace = new Blockly.Workspace();
-        Blockly.serialization.workspaces.load(file, workspace);
-        var code = pythonGenerator.workspaceToCode(workspace);
-
-        fs.writeFile(output, code, err => {
-            if (err) {
-              console.error(err);
-            }
-          });
-    } catch (e) {
-        console.log(e);
-        process.exit(-1)
-    }
-
 } catch (e) {
     console.error(e);
     process.exit(-1)

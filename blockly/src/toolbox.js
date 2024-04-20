@@ -89,7 +89,23 @@ export const toolbox = {
       'contents': [
         {
           'kind': 'block',
-          'type': 'key_down'
+          'type': 'key_down_a'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_b'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_space'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_enter'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_any'
         },
       ],
     },
