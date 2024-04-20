@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const SettingsPageContainer = styled.div`
-  display: flex;
+export const SettingsPageLayout = styled.div`
+  display: flex; /* Use flexbox to arrange items */
   flex-direction: row;
   gap: 13px;
   
@@ -9,7 +9,6 @@ export const SettingsPageContainer = styled.div`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 20px;
-  font-family: 'Inter', sans-serif;
 `;
 
 export const SideMenu = styled.div`
@@ -21,10 +20,11 @@ export const SideMenu = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 10px;
 `;
 
-export const sideButton = styled.div`
+export const SideButton = styled.div`
   width: 100%;
   height: 100%;
 
@@ -39,10 +39,12 @@ export const sideButton = styled.div`
   border-radius: 9px;
 
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 
-  padding: 20px;
+  padding: 15px;
+
+  gap: 10px;
 
   &:focus {
     outline: ${(props) => "4px solid #ffffff"};
@@ -50,22 +52,34 @@ export const sideButton = styled.div`
   }
 `;
 
-export const NetworkSettingsPageContainer = styled.div`
-  height: 340px;
-  background-color: ${({ theme }) => theme.colors.background};
+export const SideButtonIconContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const SettingsPageContainer = styled.div`
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.foreground};
+
+  border-radius: 20px;
 
   display: flex;
   flex-grow: 2;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  overflow: scroll-y;
+
+  gap: 15px;
+
+  padding: 30px;
 `;
 
 export const NetworksList = styled.div`
   background-color: ${({ theme }) => theme.colors.foreground};
   border-radius: 20px;
-  height: 300px;
+  
+  height: 100%;
   width: 100%;
   overflow-y: scroll;
   padding: 10px;
@@ -146,7 +160,44 @@ export const RefreshButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 80px;
 
   border-radius: 10px;
 `;
+
+export const ClassroomSettingsPageClassroomTitle = styled.div`
+  // outline: 2px solid red;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 29.05px;
+`;
+
+export const ClassroomSettingsPageMetaData = styled.div`
+  // outline: 3px solid green;
+  padding: 15px;
+
+
+`;
+
+export const ClassroomSettingsPageLeaveClassButtonContainer = styled.div`
+  // outline: 3px solid yellow;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+`;
+
+export const ClassroomSettingsPageLeaveClassButton = styled(ClassroomSettingsPageLeaveClassButtonContainer)`
+  // outline: 3px solid white;
+  text-align: center;
+  padding: 4px 14px; 
+  font-size: 24px;
+  border-radius: 10px;
+  background-color: #CC4242;
+  width: 265px;
+  height: 48px;
+`;
+ 

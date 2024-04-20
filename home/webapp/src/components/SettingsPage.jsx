@@ -1,48 +1,61 @@
 import React, { useState } from "react";
-import * as Styled from "./styles/Settings.styled";
+import { SettingsPageLayout, SideMenu, SideButton, SideButtonIconContainer } from "./styles/Settings.styled";
 import NetworkSettingsPage from "./Settings/NetworkSettingsPage";
-import ProfileSettingsPage from "./Settings/ProfileSettingsPage";
+import ClassroomSettingsPage from "./Settings/ClassroomSettingsPage";
+import ProfileSettingsPage from './Settings/ProfileSettingsPage'
+import { ClassroomIcon, ProfileIcon, SensorsIcon } from './Icons'
 
 const SettingsPage = () => {
-  const [activeButton, setActiveButton] = useState("WiFi");
+  const [currentSettingsPage, setCurrentSettingsPage] = useState("WiFi");
 
   return (
-    <Styled.SettingsPageContainer>
-      <Styled.SideMenu>
-        <Styled.sideButton
-          active={activeButton === "WiFi"}
-          onClick={() => {setActiveButton("WiFi")}}
+    <SettingsPageLayout>
+      <SideMenu>
+        <SideButton
+          active={currentSettingsPage === "Wi-Fi"}
+          onClick={() => {setCurrentSettingsPage("Wi-Fi")}}
           tabIndex="0"
         >
           Wi-Fi
-        </Styled.sideButton>
-        <Styled.sideButton
-          active={activeButton === "Sound"}
-          onClick={() => setActiveButton("Sound")}
+        </SideButton>
+        <SideButton
+          active={currentSettingsPage === "Class"}
+          onClick={() => setCurrentSettingsPage("Class")}
           tabIndex="0"
         >
-          Sound
-        </Styled.sideButton>
-        <Styled.sideButton
-          active={activeButton === "Profile"}
-          onClick={() => setActiveButton("Profile")}
-          tabIndex="0"
-        >
-          Profile
-        </Styled.sideButton>
-        <Styled.sideButton
-          active={activeButton === "Class"}
-          onClick={() => setActiveButton("Class")}
-          tabIndex="0"
-        >
+          <SideButtonIconContainer>
+            <ClassroomIcon />
+          </SideButtonIconContainer>
           Class
-        </Styled.sideButton>
-      </Styled.SideMenu>
+        </SideButton>
+        <SideButton
+          active={currentSettingsPage === "Profile"}
+          onClick={() => setCurrentSettingsPage("Profile")}
+          tabIndex="0"
+        >
+          <SideButtonIconContainer>
+            <ProfileIcon />
+          </SideButtonIconContainer>
+          Profile
+        </SideButton>
+        <SideButton
+          active={currentSettingsPage === "Sensors"}
+          onClick={() => setCurrentSettingsPage("Sensors")}
+          tabIndex="0"
+        >
+        <SideButtonIconContainer>
+          <SensorsIcon />
+        </SideButtonIconContainer>
+          Sensors
+        </SideButton>
+      </SideMenu>
       
-      {activeButton === "WiFi" && (<NetworkSettingsPage/>)}
-      {activeButton === "Profile" && (<ProfileSettingsPage/>)}
+      {currentSettingsPage === 'Wi-Fi' && <NetworkSettingsPage/>}
+      {currentSettingsPage === 'Class' && <ClassroomSettingsPage/>}
+      {currentSettingsPage === 'Profile' && <ProfileSettingsPage/>}
+      {/* {currentSettingsPage === 'Sensors' && <SettingsPage />} */}
 
-    </Styled.SettingsPageContainer>
+    </SettingsPageLayout>
   );
 };
 
