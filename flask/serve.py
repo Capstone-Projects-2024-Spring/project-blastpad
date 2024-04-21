@@ -143,7 +143,7 @@ def allgames():
                     'name': fi[:-5],
                     'workspace_filename': fi,
                     'raw_last_updated': os.path.getmtime(file_path),
-                    'last_updated': datetime.datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%d/%m/%y'),
+                    'last_updated': datetime.datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%m/%d/%y'),
                     'game_icon_path': "/icons/"+fi[:-5]+".png",
                     'metadata': [{key: obj["block"]["fields"]["TEXT"]} for key, obj in metadata["inputs"].items() if "TEXT" in obj["block"]["fields"]]
                 })
