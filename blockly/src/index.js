@@ -520,7 +520,7 @@ ws.addChangeListener((e) => {
 const fetchAndLoadGame = (gameName) => {
   // gamename includes .json at the end. this will need to change
   // on both the flask end and this end.
-
+    
   fetch(`/games/${gameName}`).then(response => {response
     .json().then((gameWorkspace) => {
     Blockly.Events.disable();

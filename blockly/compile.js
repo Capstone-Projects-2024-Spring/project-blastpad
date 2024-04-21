@@ -88,7 +88,7 @@ var saveBitmap = (bitmap, size, name, icon=false) => {
     
     var writeLocation = `${__dirname}/compiled_games/images/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-") || "UNKNOWN"}.png`
     if(icon) {
-        writeLocation = `${__dirname}/../flask/saved/icons/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-") || "UNKNOWN"}.png` 
+        writeLocation = `${__dirname}/../flask/saved/icons/${name}.png` 
     }
     var out = fs.createWriteStream(writeLocation);
     savePixels(d, "png").pipe(out)

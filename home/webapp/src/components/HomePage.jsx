@@ -1,6 +1,6 @@
 // BELOW IS THE CODE THAT DOESN'T USE API POLLING FOR LOADED GAMES. CHANGES METADATA ON GAME FOCUS. 
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NewGameIcon, PlayIcon, PencilIcon, UploadIcon } from './Icons';
 import {
   GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, GameMetaData,
@@ -10,71 +10,141 @@ import {
 } from './styles/HomePage.styled';
 
 // List of games with metadata
-let gameList = [
-  { name: 'Super Mario', author: 'Nintendo', lastUpdated: '1/13/2024' },
-  { name: 'Legend of Zelda', author: 'Nintendo', lastUpdated: '2/24/2024' },
-  { name: 'Pokemon', author: 'Game Freak', lastUpdated: '12/20/2023' },
-  { name: 'FarCry', author: 'Ubisoft', lastUpdated: '11/22/2023' },
-  { name: 'Sonic', author: 'SEGA', lastUpdated: '5/29/2023' },
-];
+var gameList = []
 
 export default function HomePage() {
-  
-  const [selectedGame, setSelectedGame] = useState(gameList[0]);
 
-  const handleSelectGame = (game) => {
-    setSelectedGame(game);
+  const [availableGames, setAvailableGames] = useState(gameList);
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedGameIndex, setSelectedGameIndex] = useState(null);
+
+  useEffect(() => {
+    fetch(`/games/`, {
+      method: "GET"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAvailableGames(data.games);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const handleSelectGame = (index) => {
+    if(selectedGame != null) {
+      availableGames[selectedGameIndex].selected = false;
+    }
+    availableGames[index].selected = true
+    console.log(availableGames);
+    setSelectedGame(availableGames[index]);
+    setSelectedGameIndex(index);
+
   };
+
+  const deselectGame = () => {
+    if(selectedGame != null) {
+      availableGames[selectedGameIndex].selected = false;
+    }
+    setSelectedGame(null);
+    setSelectedGameIndex(null);
+
+  }
+
+  const runGame = () => {
+    if(selectedGame == null) { return; }
+
+    fetch(`/run?game=${selectedGame.name}`, {
+      method: "GET"
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => console.log(error));
+  }
+
+  const editGame = () => {
+    if(selectedGame == null) { return; }
+    window.location.href = `/editor?load=${selectedGame.workspace_filename}`;
+  }
+
+  const newGame = () => {
+    window.location.href = `/editor?load=NewGame.json`;
+  }
 
   return (
     <HomePageContainer>
       <GalleryContainer>
-        <GameIcon tabIndex={0} autoFocus id='NewGameIcon'>
+        <GameIcon tabIndex={0} autoFocus id='NewGameIcon' 
+          onFocus={() => deselectGame()}
+          onClick={() => newGame()}
+        >
           <NewGameIcon />
         </GameIcon>
-        {gameList.map((game, index) => (
+        {console.log(availableGames)}
+        {availableGames.map((game, index) => (
+          <>
+          {console.log(game)}
           <GameIcon
             key={index}
             tabIndex={0}
-            onClick={() => handleSelectGame(game)}
-            onFocus={() => handleSelectGame(game)}
+            onFocus={() => handleSelectGame(index)}
+            imagepath={game.game_icon_path}
+            className={game.selected ? "inspecting" : ""}
           >
             {game.name}
           </GameIcon>
+          </>
         ))}
       </GalleryContainer>
 
       <GameInfoContainer>
-        <GameMetaData>
-          <MetaDataTitle>
-            <span>{selectedGame.name}</span>
-          </MetaDataTitle>
-          <MetaDataText> Author: {selectedGame.author}</MetaDataText>
-          <MetaDataText> Last Updated: {selectedGame.lastUpdated}</MetaDataText>
-        </GameMetaData>
+       {selectedGame != null ?
+         <>
 
-        <GameActionButtonsContainer>
-          <GameActionButton>
+        <GameMetaData>
+            <MetaDataTitle>
+              <span>{selectedGame.name}</span>
+            </MetaDataTitle>
+            <MetaDataText> Author: {selectedGame.author}</MetaDataText>
+            <MetaDataText> Last Updated: {selectedGame.lastUpdated}</MetaDataText>
+
+            </GameMetaData>
+
+
+            <GameActionButtonsContainer>
+         <GameActionButton 
+          tabIndex={0}
+          onClick={() => runGame()}
+         >
             <PlayButtonForegroundColor>
               <PlayIcon />
             </PlayButtonForegroundColor>
             <PlayButtonBackgroundColor />
           </GameActionButton>
 
-          <GameActionButton>
+          <GameActionButton 
+            tabIndex={0}
+            onClick={() => editGame()}
+            >
             <EditButtonForegroundColor>
               <PencilIcon />
             </EditButtonForegroundColor>
             <EditButtonBackgroundColor />
           </GameActionButton>
 
-          <GameActionButton>
+          <GameActionButton tabIndex={0}>
             <ShareButtonForegroundColor>
               <UploadIcon />
             </ShareButtonForegroundColor>
             <ShareButtonBackgroundColor />
           </GameActionButton>
         </GameActionButtonsContainer>
+            </>
+          : <></>
+        }
+
+
+
       </GameInfoContainer>
     </HomePageContainer>
   );
