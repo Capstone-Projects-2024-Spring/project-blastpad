@@ -43,6 +43,8 @@ const newGameButton = document.getElementById('newGameButton');
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
 const runGameButton = document.getElementById('runGame');
+const homeButton = document.getElementById('homeButton');
+
 const loader = document.getElementById('loader');
 const checkmark = document.getElementById('flashCheckmark');
 
@@ -62,15 +64,6 @@ const defaultWorkspace = {
               "x": 3,
               "y": 73,
               "inputs": {
-                  "game name": {
-                      "block": {
-                          "type": "text",
-                          "id": "uL4`ChH4}lTzo~sEz[ot",
-                          "fields": {
-                              "TEXT": "Multiplayer Tetris"
-                          }
-                      }
-                  },
                   "author name": {
                       "block": {
                           "type": "text",
@@ -520,7 +513,7 @@ ws.addChangeListener((e) => {
 const fetchAndLoadGame = (gameName) => {
   // gamename includes .json at the end. this will need to change
   // on both the flask end and this end.
-
+    
   fetch(`/games/${gameName}`).then(response => {response
     .json().then((gameWorkspace) => {
     Blockly.Events.disable();
@@ -590,6 +583,14 @@ const params = new URLSearchParams(document.location.search);
 var specifiedGame = params.get('load');
 if(specifiedGame) {
   fetchAndLoadGame(specifiedGame);
+}
+
+var fromHomescreen = params.get('fromHomescreen');
+if(fromHomescreen) {
+    homeButton.classList.remove("hidden");
+    homeButton.addEventListener("click", (e) => {
+        window.location.href = "/";
+    })
 }
 
 const showError = (error, fix) => {

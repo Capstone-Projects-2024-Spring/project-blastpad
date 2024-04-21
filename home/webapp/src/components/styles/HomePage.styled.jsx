@@ -34,11 +34,20 @@ export const GameIcon = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.active};
-  
+  background-image: url("${({ imagepath }) => imagepath}");=
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;          /* Firefox */
+  image-rendering: -o-crisp-edges;            /* Opera */
+  image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
+  -ms-interpolation-mode: nearest-neighbor;
+
   outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
 
-  &:focus {
+  &:focus, &.inspecting {
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: -3px;
     // transform: scale(1.03);
@@ -75,6 +84,13 @@ export const GameActionButton = styled.div`
   position: relative;
   width: 100px; 
   height: 110px;
+  border-radius: 15px;
+
+  &:focus {
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: 0px;
+    border-radius: 15px;
+  }
 `;
 
 export const GameActionButtonBackground = styled.div`

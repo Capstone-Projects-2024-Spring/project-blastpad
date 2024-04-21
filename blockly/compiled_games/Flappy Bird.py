@@ -1,22 +1,16 @@
-facing_left = None
-facing_right = None
-looking_at_you = None
 Actor = None
 
 # Describe this function...
 def Start_Game():
-  global facing_left, facing_right, looking_at_you, Actor
-  facing_left = "wqyecsigoqjevogl"
-  facing_right = "eztbphkqjuzki"
-  looking_at_you = "bsadhrclxfhxvoj"
-  Actor = create_actor(facing_right, 30, 30, 50, 50)
+  global Actor
+  Actor = create_actor(("wqyecsigoqjevogl"), 30, 30, 20, 20)
 
 
 
 
 # BLASTPAD PRODUCTIONS
-# 'Multiplayer Tetris'
-# By 'Ian Applebaum'
+# 'Flappy Bird'
+# By 'A Cool Guy'
 # 'This is an example project.'
 
 
@@ -78,7 +72,7 @@ def create_actor(image_name, x, y, width, height):
   return actor
 
 font = pygame.font.Font('freesansbold.ttf', 32)
-pygame.display.set_caption("'Multiplayer Tetris'")
+pygame.display.set_caption("'Flappy Bird'")
 
 screen = None
 
@@ -104,33 +98,11 @@ while True:
   screen.fill(background_color)
   for x in actors:
     x.draw(screen)
-  if(is_any_key_pressed()):
-    Actor.changeImage(looking_at_you)
-    background_color = pygame.Color("#000066")
-
-  if keyState[pygame.K_b]:
-    Actor.moveHorizontal(30)
-    Actor.moveVertical(0)
-    Actor.changeImage(facing_right)
-    background_color = pygame.Color("#336666")
-
-  if keyState[pygame.K_a]:
-    Actor.moveHorizontal((-30))
-    Actor.moveVertical(0)
-    Actor.changeImage(facing_left)
-
-  if keyState[pygame.K_SPACE]:
-    Actor.moveHorizontal(0)
-    Actor.moveVertical(30)
-
-  if keyState[pygame.K_RETURN]:
-    Actor.moveHorizontal(0)
-    Actor.moveVertical((-30))
-
-  if (Actor.rect.x) > 5000:
-    pygame.display.quit()
-    pygame.quit()
-    exit()
+  Actor.moveHorizontal(30)
+  Actor.moveVertical(0)
+  pygame.display.quit()
+  pygame.quit()
+  exit()
 
   pygame.display.flip()
   clock.tick(30)

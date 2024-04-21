@@ -6,7 +6,7 @@ import ProfileSettingsPage from './Settings/ProfileSettingsPage'
 import { ClassroomIcon, ProfileIcon, SensorsIcon } from './Icons'
 
 const SettingsPage = () => {
-  const [currentSettingsPage, setCurrentSettingsPage] = useState("WiFi");
+  const [currentSettingsPage, setCurrentSettingsPage] = useState("Wi-Fi");
 
   return (
     <SettingsPageLayout>

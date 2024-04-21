@@ -1,14 +1,15 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, send_from_directory, send_file
 import json
 from flask_cors import CORS
 import os
 import subprocess
+import datetime
 
 # GAME FOLDER LOCATION TODO!!
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-GAMES_FOLDER = os.path.join(__location__, "./saved")
-DIST_FOLDER = os.path.join(__location__, "./built_pages")
+GAMES_FOLDER = os.path.join(__location__, "saved")
+DIST_FOLDER = os.path.join(__location__, "built_pages")
 BLOCKLY = os.path.join(__location__, "../blockly")
 COMPILER_SCRIPT_PATH = os.path.join(BLOCKLY, "compile.js")
 
@@ -34,6 +35,7 @@ def unrollWorkspaceBlocks(workspace):
     return workspaceBlocks
 
 
+
 app = Flask(
     __name__,
     static_url_path='',
@@ -52,6 +54,10 @@ def editor():
 def index():
     return render_template('index.html')
 
+
+@app.route('/icons/<path>')
+def send_report(path):
+    return send_file(GAMES_FOLDER+"/icons/"+path)
 
 @app.route('/save/', methods = ['POST'])
 def save():
@@ -125,7 +131,26 @@ def save():
 def allgames():
     included_extensions = ['js']
     files = [ fi for fi in os.listdir(GAMES_FOLDER) if fi.endswith(".json") ]
-    return {"games": files}, 200
+
+    file_info = []
+    for fi in files:
+        file_path = os.path.join(GAMES_FOLDER, fi)
+        with open(file_path, 'r') as f:
+            game_data = json.load(f)
+            metadata = next((block for block in game_data["blocks"]["blocks"] if block["type"] == "metadata"), None)
+            if metadata:
+                file_info.append({
+                    'name': fi[:-5],
+                    'workspace_filename': fi,
+                    'raw_last_updated': os.path.getmtime(file_path),
+                    'last_updated': datetime.datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%m/%d/%y'),
+                    'game_icon_path': "/icons/"+fi[:-5]+".png",
+                    'metadata': [{key: obj["block"]["fields"]["TEXT"]} for key, obj in metadata["inputs"].items() if "TEXT" in obj["block"]["fields"]]
+                })
+
+    file_info.sort(key=lambda x: x['raw_last_updated'], reverse=True)
+
+    return {"games": file_info}, 200
 
 @app.route('/games/<game_name>', methods = ['GET'])
 def onegame(game_name):
@@ -187,7 +212,6 @@ def compile_and_run():
             'game_compiled': False,
             'stderr': result.stderr,
             'stdout': result.stdout
-
         }
 
     return jsonify(response_data), 200
