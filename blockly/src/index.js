@@ -62,15 +62,6 @@ const defaultWorkspace = {
               "x": 3,
               "y": 73,
               "inputs": {
-                  "game name": {
-                      "block": {
-                          "type": "text",
-                          "id": "uL4`ChH4}lTzo~sEz[ot",
-                          "fields": {
-                              "TEXT": "Multiplayer Tetris"
-                          }
-                      }
-                  },
                   "author name": {
                       "block": {
                           "type": "text",
