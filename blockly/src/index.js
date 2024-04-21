@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
+
 import * as Blockly from 'blockly';
 // import {blocks} from './blocks/text';
 
@@ -29,8 +33,19 @@ Blockly.common.defineBlocks(blocks);
 // Set up UI elements and inject Blockly
 // const codeDiv = document.getElementById('generatedCode').firstChild;
 // const outputDiv = document.getElementById('output');
+
+const errorWindow = document.getElementById('hasErrors');
+const errorBody = document.getElementById('errorBody');
+const errorFix = document.getElementById('errorFix');
+const newGameButton = document.getElementById('newGameButton');
+
+
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
+const runGameButton = document.getElementById('runGame');
+const loader = document.getElementById('loader');
+const checkmark = document.getElementById('flashCheckmark');
+
 
 const selectionContainer = document.getElementById('selectionContainer')
 const gamesContainer = document.getElementById('gamesContainer')
@@ -44,8 +59,8 @@ const defaultWorkspace = {
           {
               "type": "metadata",
               "id": "A$mP~29yJri+II[;(i/h",
-              "x": 40,
-              "y": 60,
+              "x": 3,
+              "y": 73,
               "inputs": {
                   "game name": {
                       "block": {
@@ -73,17 +88,342 @@ const defaultWorkspace = {
                               "TEXT": "This is an example project."
                           }
                       }
+                  },
+                  "game_icon": {
+                      "block": {
+                          "type": "small_bitmap",
+                          "id": "X4Cx3nyk!n5;^%t]v!h@",
+                          "fields": {
+                              "field": [
+                                  [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      2
+                                  ],
+                                  [
+                                      0,
+                                      0,
+                                      2,
+                                      2,
+                                      2,
+                                      2,
+                                      0,
+                                      0
+                                  ],
+                                  [
+                                      0,
+                                      2,
+                                      2,
+                                      1,
+                                      1,
+                                      2,
+                                      2,
+                                      0
+                                  ],
+                                  [
+                                      0,
+                                      2,
+                                      1,
+                                      0,
+                                      0,
+                                      1,
+                                      2,
+                                      0
+                                  ],
+                                  [
+                                      0,
+                                      2,
+                                      1,
+                                      0,
+                                      0,
+                                      1,
+                                      2,
+                                      0
+                                  ],
+                                  [
+                                      0,
+                                      2,
+                                      2,
+                                      1,
+                                      1,
+                                      2,
+                                      2,
+                                      0
+                                  ],
+                                  [
+                                      0,
+                                      0,
+                                      2,
+                                      2,
+                                      2,
+                                      2,
+                                      0,
+                                      0
+                                  ],
+                                  [
+                                      2,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      2
+                                  ]
+                              ]
+                          }
+                      }
+                  }
+              },
+              "next": {
+                  "block": {
+                      "type": "procedures_callnoreturn",
+                      "id": "KQhe;5r3h1M4Ox;#vQz0",
+                      "extraState": {
+                          "name": "Start Game"
+                      },
+                      "next": {
+                          "block": {
+                              "type": "game_loop",
+                              "id": "86d_D8;/4N~aV7tNH6~-",
+                              "inputs": {
+                                  "DO": {
+                                      "block": {
+                                          "type": "move",
+                                          "id": "xBy]CE^JAC:X%~OQ5Cul",
+                                          "inputs": {
+                                              "actor": {
+                                                  "block": {
+                                                      "type": "variables_get",
+                                                      "id": "0pIK^!Cx.Wr,1l}~q4(g",
+                                                      "fields": {
+                                                          "VAR": {
+                                                              "id": "k;Uf!p8Cc_^Gp!R$UvQW"
+                                                          }
+                                                      }
+                                                  }
+                                              },
+                                              "x": {
+                                                  "block": {
+                                                      "type": "math_number",
+                                                      "id": "!]wAS/Q9xI|-IF;LlB/%",
+                                                      "fields": {
+                                                          "NUM": 30
+                                                      }
+                                                  }
+                                              },
+                                              "y": {
+                                                  "block": {
+                                                      "type": "math_number",
+                                                      "id": "Q^]SWTy/0mWHnOVOzk_h",
+                                                      "fields": {
+                                                          "NUM": 0
+                                                      }
+                                                  }
+                                              }
+                                          },
+                                          "next": {
+                                              "block": {
+                                                  "type": "exit",
+                                                  "id": "bYWFe9KW8aT68o.*=Gtx"
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
                   }
               }
           },
-        ]
+          {
+              "type": "procedures_defnoreturn",
+              "id": "vc~SadWEO0H$O43jvHEb",
+              "x": 485,
+              "y": 131,
+              "icons": {
+                  "comment": {
+                      "text": "Describe this function...",
+                      "pinned": false,
+                      "height": 80,
+                      "width": 160
+                  }
+              },
+              "fields": {
+                  "NAME": "Start Game"
+              },
+              "inputs": {
+                  "STACK": {
+                      "block": {
+                          "type": "variables_set",
+                          "id": "^X1yt]muzF*Z_xi$qvB2",
+                          "fields": {
+                              "VAR": {
+                                  "id": "k;Uf!p8Cc_^Gp!R$UvQW"
+                              }
+                          },
+                          "inputs": {
+                              "VALUE": {
+                                  "block": {
+                                      "type": "actor",
+                                      "id": "avabmJ%.,d*}?~se*3K8",
+                                      "inputs": {
+                                          "ImageName": {
+                                              "block": {
+                                                  "type": "small_bitmap",
+                                                  "id": "WQyeC9=sIGoqjEV-O@Gl",
+                                                  "fields": {
+                                                      "field": [
+                                                          [
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              1,
+                                                              1,
+                                                              1,
+                                                              1,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              2,
+                                                              2,
+                                                              2,
+                                                              1,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              2,
+                                                              2,
+                                                              2,
+                                                              1,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              1,
+                                                              1,
+                                                              1,
+                                                              1,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              1,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              1,
+                                                              0,
+                                                              0
+                                                          ],
+                                                          [
+                                                              0,
+                                                              1,
+                                                              1,
+                                                              0,
+                                                              0,
+                                                              1,
+                                                              1,
+                                                              0
+                                                          ]
+                                                      ]
+                                                  }
+                                              }
+                                          },
+                                          "start_x": {
+                                              "block": {
+                                                  "type": "math_number",
+                                                  "id": "?uCRN`sx`xTm5PQFnSWz",
+                                                  "fields": {
+                                                      "NUM": 30
+                                                  }
+                                              }
+                                          },
+                                          "start_y": {
+                                              "block": {
+                                                  "type": "math_number",
+                                                  "id": "ZTo).juN6(:T8+C0qb2x",
+                                                  "fields": {
+                                                      "NUM": 30
+                                                  }
+                                              }
+                                          },
+                                          "width": {
+                                              "block": {
+                                                  "type": "math_number",
+                                                  "id": "uSH7X2,V#[WLH*`C+Rq7",
+                                                  "fields": {
+                                                      "NUM": 20
+                                                  }
+                                              }
+                                          },
+                                          "height": {
+                                              "block": {
+                                                  "type": "math_number",
+                                                  "id": "34*rfZfZF+(3KWrM/H8l",
+                                                  "fields": {
+                                                      "NUM": 20
+                                                  }
+                                              }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      ]
+  },
+  "variables": [
+      {
+          "name": "Actor",
+          "id": "k;Uf!p8Cc_^Gp!R$UvQW"
       }
-    };
+  ]
+}
+
 
 saveGameButton.addEventListener("click", async (e) => {
+    startLoading();
     const data = Blockly.serialization.workspaces.save(ws);
+    runGameButton.classList.add("disabled");
 
-    var response = await fetch("/save/game", {
+    var response = await fetch("/save", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
         credentials: "same-origin", // include, *same-origin, omit
@@ -93,8 +433,52 @@ saveGameButton.addEventListener("click", async (e) => {
         body: JSON.stringify(data),
       });
 
+      if(response.status == 400) {
+        var res = await response.json();
+        showError(res.error, res.fix || "No Recommended Fix.");
+      } else {
+        saveSuccess();
+        runGameButton.classList.remove("disabled");
+      }
+
+      stopLoading();
       console.log(response);
 })
+
+
+
+runGameButton.addEventListener("click", async (e) => {
+  startLoading();
+  const data = Blockly.serialization.workspaces.save(ws);
+  console.log(data);
+  var metadata = data.blocks.blocks.find((b)=>b.type=="metadata")
+  
+  console.log(metadata);
+  var gamename = metadata.inputs["game name"].block.fields.TEXT
+  console.log(gamename);
+  runGameButton.classList.add("disabled");
+
+  var response = await fetch("/run?"+ new URLSearchParams({
+    game: gamename
+}), {
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if(response.status == 400) {
+      var res = await response.json();
+      showError(res.error, "Game did not run!");
+    } else {
+      runGameButton.classList.remove("disabled");
+    }
+
+    stopLoading();
+    console.log(response);
+})
+
 
 // This function resets the code and output divs, shows the
 // generated code from the workspace, and evals the code.
@@ -137,19 +521,30 @@ const fetchAndLoadGame = (gameName) => {
   // gamename includes .json at the end. this will need to change
   // on both the flask end and this end.
 
-  fetch(`/games/${gameName}`).then(response => {response.json().then((gameWorkspace) => {
+  fetch(`/games/${gameName}`).then(response => {response
+    .json().then((gameWorkspace) => {
     Blockly.Events.disable();
     Blockly.serialization.workspaces.load(gameWorkspace, ws, false);
     Blockly.Events.enable();
 
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
-  })}).catch((error) => {
+  }).catch((error) => {
     console.log("No games found, loading empty workspace.")
-    Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);
-    selectionContainer.classList.add("hidden");
-    pageContainer.classList.remove("hidden");
-  })
+    loadNewGame();
+  })})
+}
+
+
+
+newGameButton.addEventListener('click', (e) => {
+  loadNewGame();
+});
+
+const loadNewGame = () => {
+  Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);
+  selectionContainer.classList.add("hidden");
+  pageContainer.classList.remove("hidden");
 }
 
 const startEditor = () => {
@@ -158,27 +553,34 @@ const startEditor = () => {
 
   console.log("fetching games");
 
-  fetch('/games').then(response => { response.json().then((json) => {
-    console.log(json);
+  fetch('/games').then(response => { 
+    response.json()
+    .then((json) => {
     for(var gameFileName of json.games) {
       // you would also want to display the bitmap here... generate an image perhaps
+      var icon = document.createElement("i")
+      icon.className = "fa-solid fa-pen-to-square"
+
       var gamePlaceholder = document.createElement("h2");
       gamePlaceholder.innerHTML = gameFileName;
       gamePlaceholder.setAttribute("gameName", gameFileName)
+      gamePlaceholder.prepend(icon);
 
+      
       gamePlaceholder.addEventListener('click', (e) => {
         var gameToLoad = e.target.getAttribute("gameName")
         fetchAndLoadGame(gameToLoad);
       });
       gamesContainer.appendChild(gamePlaceholder);
     }
-  })}).catch((err) => {
+  }
+).catch((err) => {
     console.log(err);
     console.log("No games found, loading empty workspace.")
     Blockly.serialization.workspaces.load(defaultWorkspace, ws, false);
     selectionContainer.classList.add("hidden");
     pageContainer.classList.remove("hidden");
-  })
+  })})
 
   // load(ws);
 // runCode();
@@ -190,4 +592,31 @@ if(specifiedGame) {
   fetchAndLoadGame(specifiedGame);
 }
 
+const showError = (error, fix) => {
+  errorWindow.classList.remove("hidden");
+  errorBody.innerHTML = error;
+  errorFix.innerHTML = fix;
+}
+
+const startLoading = () => {
+  saveGameButton.classList.add("disabled");
+  loader.classList.remove("hidden");
+}
+
+const stopLoading = () => {
+  saveGameButton.classList.remove("disabled");
+  loader.classList.add("hidden");
+}
+
+const saveSuccess = () => {
+  checkmark.classList.add("flash");
+
+  setTimeout(() => {
+    checkmark.classList.remove("flash");
+  }, 1500);
+}
+
+
+
 startEditor();
+

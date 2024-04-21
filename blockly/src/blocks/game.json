@@ -36,7 +36,7 @@
 },
 {
   "type": "metadata",
-  "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4",
+  "message0": "Project Metadata %1 Game Name %2 Author %3 Description %4 Icon %5",
   "args0": [
     {
       "type": "input_dummy"
@@ -55,6 +55,11 @@
       "type": "input_value",
       "name": "description",
       "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "game_icon",
+      "check": "String"
     }
   ],
   "nextStatement": null,
@@ -65,7 +70,7 @@
 {
   "type": "game_loop",
   "message0": "Game Loop",
-  "message1": "DO %1 End of Game",
+  "message1": "%1",
   "args0": [
   ],
   "args1": [
@@ -75,15 +80,14 @@
     }
   ],
   "previousStatement": null,
-  "nextStatement": null,
   "tooltip": "Your Game Loop!",
   "helpUrl": "",
   "style": "loop_blocks"
 },
 {
-  "type": "key_down",
-  "message0": "On Key Down",
-  "message1": "DO %1 End of Game",
+  "type": "key_down_a",
+  "message0": "On Pressed A",
+  "message1": "%1",
   "args0": [
   ],
   "args1": [
@@ -94,13 +98,103 @@
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "tooltip": "Your Game Loop!",
+  "tooltip": "User Pressed A",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_a",
+  "message0": "If Player Presses A...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed A",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_b",
+  "message0": "If Player Presses B...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed B",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_enter",
+  "message0": "If Player Presses Enter...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Enter",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_space",
+  "message0": "If Player Presses Space...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Space",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_any",
+  "message0": "If Player Presses Any Key...",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Space",
   "helpUrl": "",
   "style": "loop_blocks"
 },
 {
   "type": "actor",
-  "message0": "Actor %1 Image %2",
+  "message0": "New Actor With %1 Image %2 Start Horizontal %3 Start Vertical %4 Width %5 Height %6",
   "args0": [
     {
       "type": "input_dummy"
@@ -109,6 +203,26 @@
       "type": "input_value",
       "name": "ImageName",
       "check": "String"
+    },
+    {
+      "type": "input_value",
+      "name": "start_x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "start_y",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "width",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "height",
+      "check": "Number"
     }
   ],
   "output": null,
@@ -140,6 +254,25 @@
   "helpUrl": ""
 },
 {
+  "type": "change_actor_image",
+  "previousStatement": null,
+  "nextStatement": null,
+  "message0": "Change Actor %1 Image to %2",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_value",
+      "name": "image"
+    }
+  ],
+  "colour": 270,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
   "type": "draw_actor",
   "message0": "Draw %1 Actor %2",
   "previousStatement": null,
@@ -160,7 +293,7 @@
 },
 {
   "type": "get_property",
-  "message0": "Property Of %1 Property Name %2",
+  "message0": "Property Of Actor %1 called %2",
   "args0": [
     {
       "type": "input_value",
@@ -172,6 +305,37 @@
     }
   ],
   "output": null,
+  "inputsInline": true,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_x",
+  "message0": "Actor %1's Horizontal Position",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    }
+  ],
+  "output": null,
+  "inputsInline": true,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "actor_y",
+  "message0": "Actor %1's Vertical Position",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "Actor"
+    }
+  ],
+  "output": null,
+  "inputsInline": true,
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""
@@ -233,6 +397,81 @@
   "message0": "Close Game",
   "previousStatement": null,
   "colour": 15,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "move",
+  "message0": "Move Actor %1 by x %2 and y %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "teleport",
+  "message0": "Teleport Actor %1 %2 to: %3 x %4 y %5",
+  "args0": [
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "change_background_color",
+  "message0": "Change Background Color To %1",
+  "args0": [
+    {
+      "type": "field_colour",
+      "name": "Background Color",
+      "colour": "#ff0000"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
   "tooltip": "",
   "helpUrl": ""
 }

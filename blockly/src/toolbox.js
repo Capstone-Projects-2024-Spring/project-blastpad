@@ -35,7 +35,7 @@ export const toolbox = {
   'contents': [
     {
       'kind': 'category',
-      'name': 'Custom',
+      'name': 'Game Logic',
       'categorystyle': 'logic_category',
       'contents': [
         {
@@ -70,6 +70,80 @@ export const toolbox = {
         },
         {
           'kind': 'block',
+          'type': 'game_loop',
+        },
+        {
+          'kind': 'block',
+          'type': 'draw_text'
+        },
+        {
+          'kind': 'block',
+          'type': 'change_background_color',
+        },
+        {
+          'kind': 'block',
+          'type': 'exit',
+        },
+      ],
+    },
+    {
+      'kind': 'category',
+      'name': 'Input & Sensors',
+      'categorystyle': 'logic_category',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'key_down_a'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_b'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_space'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_enter'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_any'
+        },
+      ],
+    },
+    {
+      'kind': 'category',
+      'name': 'Actors',
+      'categorystyle': 'logic_category',
+      'contents': [
+        {
+          'kind': 'block',
+          'type': 'actor',
+        },
+        {
+          'kind': 'block',
+          'type': 'actor_x'
+        },
+        {
+          'kind': 'block',
+          'type': 'actor_y'
+        },
+        {
+          'kind': 'block',
+          'type': 'if_actors_colliding'
+        },
+        {
+          'kind': 'block',
+          'type': 'move',
+        },
+        {
+          'kind': 'block',
+          'type': 'teleport',
+        },
+        {
+          'kind': 'block',
           'type': 'small_bitmap',
         },
         {
@@ -78,39 +152,7 @@ export const toolbox = {
         },
         {
           'kind': 'block',
-          'type': 'game_loop',
-        },
-        {
-          'kind': 'block',
-          'type': 'set_actor',
-        },
-        {
-          'kind': 'block',
-          'type': 'actor',
-        },
-        {
-          'kind': 'block',
-          'type': 'draw_actor',
-        },
-        {
-          'kind': 'block',
-          'type': 'key_down'
-        },
-        {
-          'kind': 'block',
-          'type': 'get_property'
-        },
-        {
-          'kind': 'block',
-          'type': 'if_actors_colliding'
-        },
-        {
-          'kind': 'block',
-          'type': 'draw_text'
-        },
-        {
-          'kind': 'block',
-          'type': 'exit',
+          'type': 'change_actor_image',
         },
       ],
     },

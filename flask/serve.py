@@ -6,8 +6,33 @@ import subprocess
 
 # GAME FOLDER LOCATION TODO!!
 
-GAMES_FOLDER = "./saved/"
-DIST_FOLDER = "./built_pages/"
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+GAMES_FOLDER = os.path.join(__location__, "./saved")
+DIST_FOLDER = os.path.join(__location__, "./built_pages")
+BLOCKLY = os.path.join(__location__, "../blockly")
+COMPILER_SCRIPT_PATH = os.path.join(BLOCKLY, "compile.js")
+
+def unrollWorkspaceBlocks(workspace):
+    workspaceBlocks = []
+
+    def saveBlock(block):
+        workspaceBlocks.append(block)
+        if "inputs" in block:
+            for input in block["inputs"]:
+                saveBlock(block["inputs"][input]["block"])
+        
+        if "next" in block:
+            saveBlock(block["next"]["block"])
+        
+        if "inputs" in block and "DO" in block["inputs"]:
+            saveBlock(block["inputs"]['DO']["block"])
+    
+
+    for block in workspace['blocks']['blocks']:
+        saveBlock(block)
+    
+    return workspaceBlocks
+
 
 app = Flask(
     __name__,
@@ -28,33 +53,79 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/save/<game_name>', methods = ['POST'])
-def save(game_name):
+@app.route('/save/', methods = ['POST'])
+def save():
     if request.method == 'POST':
         gamedata = request.json
-        # parse request to find metadata
-        print(request.json)
+
+        # actually unnecessary to find gamename thru metadata, but keeping for legacy
         gamename = ""
+        metadataFound = False
+        loopFound = False
+        closeFound = False
+        iconFound = False
+        validMetadata = False
 
-        for x in request.json["blocks"]["blocks"]:
+        # Iterate through workspace to find metadata
+
+        blocks = unrollWorkspaceBlocks(gamedata)
+        
+        for x in blocks:
+            if(x["type"]=="exit"):
+                print(x)
+                closeFound = True
+            if(x["type"]=="game_loop"):
+                loopFound = True   
+
+        for x in gamedata["blocks"]["blocks"]:
             if(x["type"]=="metadata"):
-                gamename = x["inputs"]["game name"]["block"]["fields"]["TEXT"]
-                break
+                iconFound = "game_icon" in x["inputs"]
+                validMetadata = "game name" in x["inputs"] and "author name" in x["inputs"] and "description" in x["inputs"]
 
-        with open(GAMES_FOLDER+gamename+'.json', 'w', encoding='utf-8') as f:
+                if(validMetadata == False):
+                    break
+
+                gamename = x["inputs"]["game name"]["block"]["fields"]["TEXT"]
+                metadataFound = True
+
+        
+        if validMetadata == False:
+            return {"error": "Invalid Metadata.", "fix": "Make sure you have a name, author, and description in your metadata block."}, 400
+        if metadataFound == False:
+            return {"error": "Metadata Block Missing", "fix": "Make sure your project has a metadata block. You can find it under the Game Logic category."}, 400
+        if iconFound == False:
+            return {"error": "Game Icon Missing", "fix": "Make sure your project has a game icon attached to its metadata block. You can find bitmaps under the Actors category."}, 400
+        if loopFound == False:
+            return {"error": "Game Loop Block Missing", "fix": "Make sure your project has a game loop block. You can find it under the Game Logic category."}, 400
+        if closeFound == False:
+            return {"error": "Exit Game Block Missing", "fix": "Make sure your project has a reachable exit block. You can find it under the Game Logic category."}, 400
+
+            
+        with open(os.path.join(GAMES_FOLDER, gamename+".json"), 'w', encoding='utf-8') as f:
             json.dump(gamedata, f, ensure_ascii=False, indent=4)
 
-            result = {'status': 'success'}
-            return result, 200
+        save_icon_result = save_game_icon(gamename)
+        if save_icon_result.returncode != 0:
+            return {'error': 'Could not save game icon.'}, 400
 
-    result = {'status': 'error...'}
-    return result, 300
+        compile_result = compile_game(gamename)
+        if compile_result.returncode != 0:
+            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block."}, 400
+            
+        game_test_result = test_run_game(gamename)
+        print(game_test_result)
+        if game_test_result['game_ran'] == True:
+            return {'success': 'Game runs!'}, 200
+        else:
+            return {'error': 'Game does not run.', "fix": "Check your project for blocks without followup actions- for example, 'if' or 'Key Down' blocks without more blocks inside them."}, 400
+        
 
 
 @app.route('/games/', methods = ['GET'])
 def allgames():
-    dir_list = os.listdir(GAMES_FOLDER)
-    return {"games": dir_list}, 200
+    included_extensions = ['js']
+    files = [ fi for fi in os.listdir(GAMES_FOLDER) if fi.endswith(".json") ]
+    return {"games": files}, 200
 
 @app.route('/games/<game_name>', methods = ['GET'])
 def onegame(game_name):
@@ -66,36 +137,95 @@ def onegame(game_name):
 ###########################################################
 ##### Endpoint to start a game given a workspace name #####
 ###########################################################
-# def compile_game(json_file_path):
-#     # Path to the compiler script
-#     compiler_script_path = os.path.join(".", "blockly", "compile.js")
 
-#     # Check if the JSON file exists
-#     if not os.path.exists(json_file_path):
-#         print(f"Error: JSON file '{json_file_path}' not found.")
-#         return
+def compile_game(game_name):
+    json_file_path = os.path.join(GAMES_FOLDER, game_name+".json")
+
+    if not os.path.exists(json_file_path):
+        print(f"Error: JSON file '{json_file_path}' not found.")
+        return False
     
-#     # Construct the command to run, enclosing json_file_path in quotes
-#     command = f"node {compiler_script_path} \"{json_file_path}\""
+    result = subprocess.run(
+        ['node', COMPILER_SCRIPT_PATH, json_file_path],
+        capture_output = True,
+        text = True
+    )
 
-#     # Call the compiler script using os.system()
-#     return_code = os.system(command)
+    return result
+
+def save_game_icon(game_name):
+    json_file_path = os.path.join(GAMES_FOLDER, game_name+".json")
+
+    if not os.path.exists(json_file_path):
+        print(f"Error: JSON file '{json_file_path}' not found.")
+        return False
     
-#     if return_code == 0:
-#         # Compilation succeeded
-#         print("Game compiled successfully!")
-#         run_game(game)
-#     else:
-#         # Compilation failed
-#         print("Compilation failed.")
+    result = subprocess.run(
+        ['node', COMPILER_SCRIPT_PATH, json_file_path, "--icon"],
+        capture_output = True,
+        text = True
+    )
 
-# def on_compile_click(game_json_path):
-#     # Set the path to the game JSON file
-#     # json_file_path = os.path.join(".", "flask", "saved", "Multiplayer Tetris.json")
-#     compile_game(game.path)
-# def run_game(game):
-#     game_file = "./blockly/compiled_games/" + game.name + ".py"
-#     subprocess.run(['python', game_file])
+    print(result.stdout)
+    print(result.stderr)
+
+    return result
+
+
+
+@app.route('/run', methods = ['GET'])
+def compile_and_run():
+    game_name = request.args.get('game')
+    
+    response_data = {}
+
+    result = compile_game(game_name)
+    if result.returncode == 0:
+        response_data = run_game(game_name)
+    else:
+        response_data = {
+            'game_compiled': False,
+            'stderr': result.stderr,
+            'stdout': result.stdout
+
+        }
+
+    return jsonify(response_data), 200
+
+
+def run_game(game_name):
+    game_file = os.path.join(BLOCKLY, "compiled_games", game_name+".py")
+    game_run_result = subprocess.run(['python', game_file, "not_headless"],         
+        capture_output = True,
+        text = True)
+
+    return {'game_ran': game_run_result.returncode == 0, 'stdout': game_run_result.stdout, 'stderr': game_run_result.stderr }
+
+
+@app.route('/test', methods = ['GET'])
+def test_game():
+    game_name = request.args.get('game')
+    response_data = {}
+    result = compile_game(game_name)
+    if result.returncode == 0:
+        response_data = test_run_game(game_name)
+    else:
+        response_data = {
+            'game_compiled': False,
+            'stderr': result.stderr,
+            'stdout': result.stdout
+        }
+
+    return jsonify(response_data), 200
+
+def test_run_game(game_name):
+    game_file = os.path.join(BLOCKLY, "compiled_games", game_name+".py")
+    game_run_result = subprocess.run(['python', game_file, "headless", "&"],         
+        capture_output = True,
+        text = True,
+        timeout=5)
+
+    return {'game_ran': game_run_result.returncode == 0, 'stdout': game_run_result.stdout, 'stderr': game_run_result.stderr }
 
 
 
