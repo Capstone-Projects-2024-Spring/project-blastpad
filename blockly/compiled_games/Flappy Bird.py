@@ -10,7 +10,7 @@ def Start_Game():
 
 # BLASTPAD PRODUCTIONS
 # 'Flappy Bird'
-# By 'BlastPad Team'
+# By 'A Cool Guy'
 # 'This is an example project.'
 
 

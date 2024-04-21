@@ -105,8 +105,8 @@ export default function HomePage() {
             <MetaDataTitle>
               <span>{selectedGame.name}</span>
             </MetaDataTitle>
-            <MetaDataText> Author: {selectedGame.author}</MetaDataText>
-            <MetaDataText> Last Updated: {selectedGame.lastUpdated}</MetaDataText>
+            <MetaDataText> Author: {selectedGame.metadata[1]["author name"]}</MetaDataText>
+            <MetaDataText> Last Updated: {selectedGame.last_updated}</MetaDataText>
 
             </GameMetaData>
 

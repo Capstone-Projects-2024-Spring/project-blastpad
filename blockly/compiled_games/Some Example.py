@@ -16,7 +16,7 @@ def Start_Game():
 
 # BLASTPAD PRODUCTIONS
 # 'Some Example'
-# By 'BlastPad Team'
+# By 'Neil C'
 # 'This is an example project.'
 
 

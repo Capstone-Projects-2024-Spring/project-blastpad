@@ -16,7 +16,7 @@ def Start_Game():
 
 # BLASTPAD PRODUCTIONS
 # 'Multiplayer Tetris'
-# By 'BlastPad Team'
+# By 'Ian Applebaum'
 # 'This is an example project.'
 
 

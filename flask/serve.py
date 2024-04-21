@@ -148,7 +148,7 @@ def allgames():
                     'metadata': [{key: obj["block"]["fields"]["TEXT"]} for key, obj in metadata["inputs"].items() if "TEXT" in obj["block"]["fields"]]
                 })
 
-    file_info.sort(key=lambda x: x['raw_last_updated'])
+    file_info.sort(key=lambda x: x['raw_last_updated'], reverse=True)
 
     return {"games": file_info}, 200
 
