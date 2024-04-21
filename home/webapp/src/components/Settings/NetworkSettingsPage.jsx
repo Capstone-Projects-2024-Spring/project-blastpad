@@ -88,7 +88,7 @@ export default function NetworkSettingsPage() {
     return (
       <Styled.NetworksList>
         {wifiNetworks.map((network, index) => (
-          <Styled.NetworkButton key={index} onDoubleClick={() => handleNetworkConnection(network)} tabIndex="2">{network}</Styled.NetworkButton>
+          <Styled.NetworkButton key={index} onDoubleClick={() => handleNetworkConnection(network)} tabIndex="0">{network}</Styled.NetworkButton>
         ))}
       </Styled.NetworksList>
     );
@@ -103,8 +103,8 @@ export default function NetworkSettingsPage() {
             (<span style={{ color: '#E44a4a' }}>❌ Not Connected</span>)}
         </Styled.ConnectedNetwork>
 
-        <Styled.DisconnectButton onClick={handleDisconnectButtonClick} tabIndex="2">Disconnect</Styled.DisconnectButton>
-        <Styled.RefreshButton onClick={handleRefreshButtonClick} tabIndex="2">↻</Styled.RefreshButton>
+        <Styled.DisconnectButton onClick={handleDisconnectButtonClick} tabIndex="0">Disconnect</Styled.DisconnectButton>
+        <Styled.RefreshButton onClick={handleRefreshButtonClick} tabIndex="0">↻</Styled.RefreshButton>
       </Styled.NetworkActionBar>
 
       {renderWifiContent()}

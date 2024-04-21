@@ -11,13 +11,13 @@ export default function CommunityPage() {
     <CommunityPageContainer>
       <SearchBarContainer>
         <SearchBar>
-          <SearchIconContainer tabIndex={2}>
+          <SearchIconContainer tabIndex={0}>
             <SearchIcon/>
           </SearchIconContainer>
-            <SearchBarInput type="text" tabIndex={2}/>
+            <SearchBarInput type="text" tabIndex={0}/>
         </SearchBar>
         <RefreshButtonContainer>
-          <RefreshButton tabIndex={2}>
+          <RefreshButton tabIndex={0}>
               <RefreshIcon/>
           </RefreshButton>
         </RefreshButtonContainer>
@@ -26,7 +26,7 @@ export default function CommunityPage() {
         <GameIconsContainer>
           {gameNames.map((game, index)=>{
             return(
-              <GameIcon tabIndex={2}>{game}</GameIcon>
+              <GameIcon tabIndex={0}>{game}</GameIcon>
             )
           })}
         </GameIconsContainer>

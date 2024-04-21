@@ -1,22 +1,79 @@
 // BELOW IS THE CODE THAT DOESN'T USE API POLLING FOR LOADED GAMES. CHANGES METADATA ON GAME FOCUS. 
 
-import { useState, useEffect, useRef } from 'react';
-import { NewGameIcon, PlayIcon, PencilIcon, UploadIcon } from './Icons';
+import { useState, useEffect } from 'react';
+import { NewGameIcon, PlayIcon, PencilIcon, UploadIcon, ClassroomIcon, CommunityIcon } from './Icons';
 import {
   GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, GameMetaData,
   GameActionButtonsContainer, GameActionButton, MetaDataText, MetaDataTitle,
   PlayButtonBackgroundColor, PlayButtonForegroundColor, EditButtonBackgroundColor,
-  EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor,
+  EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, ShareMenu, ShareMenuButton
 } from './styles/HomePage.styled';
 
 // List of games with metadata
-var gameList = []
+var gameList = [
+  {
+    "game_icon_path": "/icons/Some Example.png",
+    "last_updated": "04/21/24",
+    "metadata": [
+      {
+        "game name": "Some Example"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Some Example",
+    "raw_last_updated": 1713692083.9243083,
+    "workspace_filename": "Some Example.json"
+  },
+  {
+    "game_icon_path": "/icons/Multiplayer Tetris.png",
+    "last_updated": "04/21/24",
+    "metadata": [
+      {
+        "game name": "Multiplayer Tetris"
+      },
+      {
+        "author name": "Ian Applebaum"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Multiplayer Tetris",
+    "raw_last_updated": 1713692083.9228544,
+    "workspace_filename": "Multiplayer Tetris.json"
+  },
+  {
+    "game_icon_path": "/icons/Flappy Bird.png",
+    "last_updated": "04/21/24",
+    "metadata": [
+      {
+        "game name": "Flappy Bird"
+      },
+      {
+        "author name": "A Cool Guy"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Flappy Bird",
+    "raw_last_updated": 1713692083.922059,
+    "workspace_filename": "Flappy Bird.json"
+  }
+]
 
 export default function HomePage() {
 
   const [availableGames, setAvailableGames] = useState(gameList);
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
+
+  const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
   useEffect(() => {
     fetch(`/games/`, {
@@ -98,6 +155,20 @@ export default function HomePage() {
       </GalleryContainer>
 
       <GameInfoContainer>
+
+        {shareMenuOpen?
+            <ShareMenu>
+            <ShareMenuButton tabIndex={1}> <ClassroomIcon/> My Classroom </ShareMenuButton>
+            <ShareMenuButton tabIndex={1}> <CommunityIcon/> Community Hub </ShareMenuButton>
+            <ShareMenuButton tabIndex={1} onClick={()=>{
+              setShareMenuOpen(false);
+              document.getElementById("shareButton").focus()
+            }}> Nevermind </ShareMenuButton>
+          </ShareMenu>
+          
+        :<></>}
+
+
        {selectedGame != null ?
          <>
 
@@ -132,7 +203,11 @@ export default function HomePage() {
             <EditButtonBackgroundColor />
           </GameActionButton>
 
-          <GameActionButton tabIndex={0}>
+          <GameActionButton
+           tabIndex={0}
+          onClick={() => setShareMenuOpen(true)}
+          id="shareButton"
+           >
             <ShareButtonForegroundColor>
               <UploadIcon />
             </ShareButtonForegroundColor>
