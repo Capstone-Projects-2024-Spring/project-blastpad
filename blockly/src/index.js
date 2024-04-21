@@ -45,9 +45,11 @@ const saveGameButton = document.getElementById('saveGame');
 const runGameButton = document.getElementById('runGame');
 const homeButton = document.getElementById('homeButton');
 
+const homeButtonContents = document.getElementById('homeButtonContents');
+
+
 const loader = document.getElementById('loader');
 const checkmark = document.getElementById('flashCheckmark');
-
 
 const selectionContainer = document.getElementById('selectionContainer')
 const gamesContainer = document.getElementById('gamesContainer')
@@ -549,13 +551,16 @@ const startEditor = () => {
   fetch('/games').then(response => { 
     response.json()
     .then((json) => {
-    for(var gameFileName of json.games) {
+    for(var game of json.games) {
+      var gameName = game.name;
+      var gameFileName = game.workspace_filename;
+
       // you would also want to display the bitmap here... generate an image perhaps
       var icon = document.createElement("i")
       icon.className = "fa-solid fa-pen-to-square"
 
       var gamePlaceholder = document.createElement("h2");
-      gamePlaceholder.innerHTML = gameFileName;
+      gamePlaceholder.innerHTML = gameName;
       gamePlaceholder.setAttribute("gameName", gameFileName)
       gamePlaceholder.prepend(icon);
 
@@ -590,6 +595,12 @@ if(fromHomescreen) {
     homeButton.classList.remove("hidden");
     homeButton.addEventListener("click", (e) => {
         window.location.href = "/";
+    })
+} else {
+    homeButton.classList.remove("hidden");
+    homeButtonContents.innerHTML = "Back to Game Selection";
+    homeButton.addEventListener("click", (e) => {
+        window.location.reload();
     })
 }
 

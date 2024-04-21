@@ -96,6 +96,8 @@ export const GameGridContainer = styled.div`
 `;
 
 export const GameIconsContainer = styled.div`
+// outline: 3px solid blue;
+
   width: 700px;
   height: 100%;
   display: flex;
@@ -111,8 +113,11 @@ export const GameIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};
-
+  background-color: ${({ theme }) => theme.colors.background};\
+  background-image: url("${({ imagepath }) => imagepath}");
+  background-repeat: no-repeat;
+  background-size: contain;
+  
   outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
 
@@ -123,4 +128,62 @@ export const GameIcon = styled.div`
 
   flex-grow: 0;
   flex-shrink: 0;
+`;
+
+export const GameInfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+`;
+
+
+export const GameMetaData = styled.div`
+  // outline: 3px solid red;
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const GameActionButtonsContainer = styled.div`
+  // outline: 3px solid green;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: fit-content;
+`;
+
+export const GameActionButton = styled.div`
+  position: relative;
+  width: 100%; 
+  height: 90px;
+  border-radius: 15px;
+  background-color: red;
+  
+  &:focus {
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: 0px;
+    border-radius: 15px;
+  }
+
+  &.active div {
+    transform: translateY(3px);
+    transition: transform 0.1s;
+  }
+`;
+
+export const MetaDataText = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 28px;
+  font-weight: 600;
+`;
+
+export const MetaDataTitle = styled(MetaDataText)`
+  font-size: 39px;
+  font-weight:700;
 `;

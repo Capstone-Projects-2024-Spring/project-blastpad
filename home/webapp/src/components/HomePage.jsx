@@ -68,13 +68,12 @@ var gameList = [
 ]
 
 export default function HomePage() {
-
   const [availableGames, setAvailableGames] = useState(gameList);
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
 
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
-
+  
   useEffect(() => {
     fetch(`/games/`, {
       method: "GET"
@@ -103,7 +102,6 @@ export default function HomePage() {
     }
     setSelectedGame(null);
     setSelectedGameIndex(null);
-
   }
 
   const runGame = () => {
@@ -139,18 +137,13 @@ export default function HomePage() {
         </GameIcon>
         {console.log(availableGames)}
         {availableGames.map((game, index) => (
-          <>
-          {console.log(game)}
           <GameIcon
             key={index}
             tabIndex={0}
             onFocus={() => handleSelectGame(index)}
             imagepath={game.game_icon_path}
             className={game.selected ? "inspecting" : ""}
-          >
-            {game.name}
-          </GameIcon>
-          </>
+          />
         ))}
       </GalleryContainer>
 
@@ -182,7 +175,7 @@ export default function HomePage() {
             </GameMetaData>
 
 
-            <GameActionButtonsContainer>
+          <GameActionButtonsContainer>
          <GameActionButton 
           tabIndex={0}
           onClick={() => runGame()}

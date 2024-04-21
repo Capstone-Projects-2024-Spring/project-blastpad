@@ -97,6 +97,11 @@ export const GameActionButton = styled.div`
     outline-offset: 0px;
     border-radius: 15px;
   }
+
+  &.active div {
+    transform: translateY(3px);
+    transition: transform 0.1s;
+  }
 `;
 
 export const GameActionButtonBackground = styled.div`
