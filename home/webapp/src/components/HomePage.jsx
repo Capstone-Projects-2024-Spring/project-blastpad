@@ -64,11 +64,11 @@ export default function HomePage() {
 
   const editGame = () => {
     if(selectedGame == null) { return; }
-    window.location.href = `/editor?load=${selectedGame.workspace_filename}`;
+    window.location.href = `/editor?load=${selectedGame.workspace_filename}&fromHomescreen=true`;
   }
 
   const newGame = () => {
-    window.location.href = `/editor?load=NewGame.json`;
+    window.location.href = `/editor?load=NewGame.json&fromHomescreen=true`;
   }
 
   return (

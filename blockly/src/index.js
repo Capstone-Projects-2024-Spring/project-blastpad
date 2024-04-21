@@ -43,6 +43,8 @@ const newGameButton = document.getElementById('newGameButton');
 const blocklyDiv = document.getElementById('blocklyDiv');
 const saveGameButton = document.getElementById('saveGame');
 const runGameButton = document.getElementById('runGame');
+const homeButton = document.getElementById('homeButton');
+
 const loader = document.getElementById('loader');
 const checkmark = document.getElementById('flashCheckmark');
 
@@ -581,6 +583,14 @@ const params = new URLSearchParams(document.location.search);
 var specifiedGame = params.get('load');
 if(specifiedGame) {
   fetchAndLoadGame(specifiedGame);
+}
+
+var fromHomescreen = params.get('fromHomescreen');
+if(fromHomescreen) {
+    homeButton.classList.remove("hidden");
+    homeButton.addEventListener("click", (e) => {
+        window.location.href = "/";
+    })
 }
 
 const showError = (error, fix) => {
