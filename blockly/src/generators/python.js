@@ -69,10 +69,19 @@ forBlock['game_loop'] = function (block, generator) {
   // branch = generator.addLoopTrap(branch, block) || generator.PASS;
   return `
 while True:
-  screen.fill((0, 0, 0))
+  keyState = pygame.key.get_pressed()
+
+  if keyState[pygame.K_ESCAPE]:
+    pygame.display.quit()
+    pygame.quit()
+    exit()
+  screen.fill(background_color)
+  for x in actors:
+    x.draw(screen) 
 ${branch}
   pygame.display.flip()
   clock.tick(30)
+  pygame.event.pump()
 \n`
 };
 
@@ -80,6 +89,7 @@ forBlock['metadata'] = function(block, generator) {
   var value_game_name = generator.valueToCode(block, 'game name', Order.ATOMIC);
   var value_author_name = generator.valueToCode(block, 'author name', Order.ATOMIC);
   var value_description = generator.valueToCode(block, 'description', Order.ATOMIC);
+  var value_icon = generator.valueToCode(block, 'game_icon', Order.ATOMIC);
   var code = `
 
 # BLASTPAD PRODUCTIONS
@@ -92,34 +102,69 @@ import time
 from pygame import mask
 clock = pygame.time.Clock()
 pygame.init()
+pygame.display.init()
+import os
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+import sys
 
-def is_key_pressed():
+background_color = pygame.Color("#000000")
+
+def is_key_pressed(key):
+  for event in pygame.event.get():
+    return event.type == pygame.KEYDOWN and event.key == key
+
+
+def is_any_key_pressed():
   for event in pygame.event.get():
     return event.type == pygame.KEYDOWN
 
 def collide_pixels(actor1, actor2):
-  return False
+  return pygame.sprite.collide_mask(actor1, actor2)
 
-class Actor(pygame.sprite.Sprite):
-  def __init__(self, imageName, size):
-      super(Actor, self).__init__()
+actors = [];
 
-      self.x = 0
-      self.y = 0
+class Actor_Sprite_Obj(pygame.sprite.Sprite):
+  def __init__(self, imageName, x, y, width, height):
+      self.width = width
+      self.height = height
 
-      self.image = pygame.image.load("blockly/compiled_games/images/"+imageName+".png")
-      self.surf = pygame.Surface(size)
-      self.mask = mask.from_surface(self.surf)
-      self.rect = self.surf.get_rect()
+      self.image = pygame.image.load("./images/"+imageName+".png")
+      self.image = pygame.transform.scale(self.image, (width, height))
+      self.rect = self.image.get_rect(center = (x, y))
 
   def draw(self, screen):
-      screen.blit(self.image,(self.x, self.y))
+      screen.blit(self.image, (self.rect.x, self.rect.y))
+    
+  def moveHorizontal(self, pixels):
+    self.rect.x += pixels
+
+  def moveVertical(self, pixels):
+    self.rect.y += pixels
+
+  def changeImage(self, imageName):
+    self.image = pygame.image.load("./images/"+imageName+".png")
+    self.image = pygame.transform.scale(self.image, (self.width, self.height))
+
+  # add change image func
+
+def create_actor(image_name, x, y, width, height):
+  actor = Actor_Sprite_Obj(image_name, x, y, width, height)
+  actors.append(actor)
+  return actor
 
 font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.set_caption("${value_game_name}")
-# screen = pygame.display.set_mode([800, 480], pygame.FULLSCREEN)
-screen = pygame.display.set_mode([800, 480])
 
+screen = None
+
+if sys.argv[1] == "headless":
+  screen = pygame.display.set_mode((1, 1), pygame.NOFRAME)
+
+else:
+  screen = pygame.display.set_mode((pygame.display.Info().current_w, pygame.display.Info().current_h), pygame.SCALED)
+  # linux workaround
 \n
 \n
 `
@@ -128,18 +173,34 @@ screen = pygame.display.set_mode([800, 480])
 
 forBlock['actor'] = function(block, generator) {
   var value_name = generator.valueToCode(block, 'ImageName', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'start_x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'start_y', Order.ATOMIC);
+  var width = generator.valueToCode(block, 'width', Order.ATOMIC);
+  var height = generator.valueToCode(block, 'height', Order.ATOMIC);
+
   // TODO: Assemble python into code variable.
-  var code = `Actor(${value_name}, (20, 50))`;
+  var code = `create_actor(${value_name}, ${value_x}, ${value_y}, ${width}, ${height})`;
   return [code, Order.NONE];
 };
 
-forBlock['set_actor'] = function(block, generator) {
-  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
-  var value_property = generator.valueToCode(block, 'property', Order.ATOMIC);
-  var statements_to = generator.valueToCode(block, 'to', Order.ATOMIC);
+// forBlock['set_actor'] = function(block, generator) {
+//   var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+//   var value_property = generator.valueToCode(block, 'property', Order.ATOMIC);
+//   var statements_to = generator.valueToCode(block, 'to', Order.ATOMIC);
+
+//   // TODO: Assemble python into code variable.
+//   var code = `setattr(${value_actor}, ${value_property}, ${statements_to})\n`
+//   return code;
+// };
+
+
+
+forBlock['change_actor_image'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var image = generator.valueToCode(block, 'image', Order.ATOMIC);
 
   // TODO: Assemble python into code variable.
-  var code = `setattr(${value_actor}, ${value_property}, ${statements_to})\n`
+  var code = `${value_actor}.changeImage(${image})\n`
   return code;
 };
 
@@ -151,12 +212,56 @@ forBlock['draw_actor'] = function(block, generator) {
   return code;
 };
 
-forBlock['key_down'] = function(block, generator) {
+forBlock['key_down_a'] = function(block, generator) {
   let branch = generator.statementToCode(block, 'DO');
 
   // TODO: Assemble python into code variable.
   var code = 
-`if(is_key_pressed()):
+`if keyState[pygame.K_a]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_b'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_b]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_space'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_SPACE]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_enter'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_RETURN]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_any'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if(is_any_key_pressed()):
 ${branch}
 `;
   return code;
@@ -191,7 +296,7 @@ forBlock['if_actors_colliding'] = function(block, generator) {
 
   var code = 
 `if collide_pixels(${value_actor1}, ${value_actor2}):
-  ${statements_do}
+${statements_do}
 `;
   return code;
 }
@@ -216,6 +321,50 @@ forBlock['exit'] = function(block, generator) {
 pygame.quit()
 exit()
 `
+  return code;
+};
+
+forBlock['teleport'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = 
+`${value_actor}.rect.x = ${value_x}
+${value_actor}.rect.y = ${value_y}
+`;
+  return code;
+};
+
+forBlock['move'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = 
+`${value_actor}.moveHorizontal(${value_x})
+${value_actor}.moveVertical(${value_y})
+`;
+  return code;
+};
+
+forBlock['actor_x'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_actor}.rect.x`;
+  return [code, Order.NONE]
+};
+forBlock['actor_y'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_actor}.rect.y`;
+  return [code, Order.NONE]
+};
+
+forBlock['change_background_color'] = function(block, generator) {
+  var colour_background_color = block.getFieldValue('Background Color');
+  // TODO: Assemble python into code variable.
+  var code = `background_color = pygame.Color("${colour_background_color}")\n`;
   return code;
 };
 
