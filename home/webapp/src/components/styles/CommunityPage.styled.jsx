@@ -9,6 +9,7 @@ export const CommunityPageContainer = styled.div`
   justify-content: start;
   align-items: center;
   gap: 10px;
+  position: relative;
 `;
 
 export const SearchBarContainer = styled.div`
@@ -91,8 +92,10 @@ export const GameGridContainer = styled.div`
   border-radius: 20px;
   padding: 20px 5px;
   display: flex;
+  flex-direction: column;
   overflow: hidden;
   justify-content: center;
+  padding-top: 50px;
 `;
 
 export const GameIconsContainer = styled.div`
@@ -104,6 +107,8 @@ export const GameIconsContainer = styled.div`
   flex-flow: row wrap;
   justify-content: start;
   gap: 8px;
+  padding-bottom: 300px;
+
 `;
 
 export const GameIcon = styled.div`
@@ -118,6 +123,12 @@ export const GameIcon = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;          /* Firefox */
+  image-rendering: -o-crisp-edges;            /* Opera */
+  image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
+  -ms-interpolation-mode: nearest-neighbor;
+
   outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
 
@@ -130,37 +141,67 @@ export const GameIcon = styled.div`
   flex-shrink: 0;
 `;
 
-export const GameInfoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-`;
 
+export const PreviewGameIcon = styled(GameIcon)`
+  width: 150px;
+  height: 150px;
+  margin-left: 20px;
+  margin-right: 50px;
+`
 
 export const GameMetaData = styled.div`
+  position: absolute;
+  bottom: 0px;
   // outline: 3px solid red;
-  width: 100%;
+  height: 290px;
   gap: 10px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  border-radius: 15px;
+  background-color: ${({ theme }) => theme.colors.foreground};
+
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+  & .div1 { grid-area: 1 / 1 / 2 / 2; }
+  & .div2 { grid-area: 1 / 2 / 2 / 5; }
+  & .div3 { 
+    
+    grid-area: 5 / 1 / 5 / 5; 
+    display: flex;
+    flex-direction: row;
+  }
+
+    
+
 `;
 
 export const GameActionButtonsContainer = styled.div`
   // outline: 3px solid green;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   height: fit-content;
+  margin-right: 20px;
 `;
 
 export const GameActionButton = styled.div`
   position: relative;
-  width: 100%; 
-  height: 90px;
+  width: 200px; 
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 15px;
-  background-color: red;
+  background-color: #429227;
   
   &:focus {
     outline: 3px solid ${({ theme }) => theme.colors.text};
