@@ -95,7 +95,6 @@ export default function HomePage() {
         >
           <NewGameIcon />
         </GameIcon>
-        {console.log(availableGames)}
         {availableGames.map((game, index) => (
           <GameIcon
             key={index}
@@ -109,8 +108,10 @@ export default function HomePage() {
 
       <GameInfoContainer>
 
-        {shareMenuOpen?
-            <ShareMenu>
+        {
+          shareMenuOpen
+          ?
+          <ShareMenu>
             <ShareMenuButton tabIndex={1}> <ClassroomIcon/> My Classroom </ShareMenuButton>
             <ShareMenuButton tabIndex={1} onClick={()=>shareToCommunity()}> <CommunityIcon/> Community Hub </ShareMenuButton>
             <ShareMenuButton tabIndex={1} onClick={()=>{
@@ -118,61 +119,59 @@ export default function HomePage() {
               document.getElementById("shareButton").focus()
             }}> Nevermind </ShareMenuButton>
           </ShareMenu>
-          
-        :<></>}
-
-
-       {selectedGame != null ?
-         <>
-
-        <GameMetaData>
-            <MetaDataTitle>
-              <span>{selectedGame.name}</span>
-            </MetaDataTitle>
-            <MetaDataText> Author: {selectedGame.metadata[1]["author name"]}</MetaDataText>
-            <MetaDataText> Last Updated: {selectedGame.last_updated}</MetaDataText>
-
-            </GameMetaData>
-
-
-          <GameActionButtonsContainer>
-         <GameActionButton 
-          tabIndex={0}
-          onClick={() => runGame()}
-         >
-            <PlayButtonForegroundColor>
-              <PlayIcon />
-            </PlayButtonForegroundColor>
-            <PlayButtonBackgroundColor />
-          </GameActionButton>
-
-          <GameActionButton 
-            tabIndex={0}
-            onClick={() => editGame()}
-            >
-            <EditButtonForegroundColor>
-              <PencilIcon />
-            </EditButtonForegroundColor>
-            <EditButtonBackgroundColor />
-          </GameActionButton>
-
-          <GameActionButton
-           tabIndex={0}
-          onClick={() => setShareMenuOpen(true)}
-          id="shareButton"
-           >
-            <ShareButtonForegroundColor>
-              <UploadIcon />
-            </ShareButtonForegroundColor>
-            <ShareButtonBackgroundColor />
-          </GameActionButton>
-        </GameActionButtonsContainer>
-            </>
-          : <></>
+        :
+        <></>
         }
 
 
+        {
+          selectedGame != null
+          ? 
+          <>
+            <GameMetaData>
+              <MetaDataTitle>
+                <span>{selectedGame.name}</span>
+              </MetaDataTitle>
+              <MetaDataText> Author: {selectedGame.metadata[1]["author name"]}</MetaDataText>
+              <MetaDataText> Last Updated: {selectedGame.last_updated}</MetaDataText>
+            </GameMetaData>
 
+
+            <GameActionButtonsContainer>
+              <GameActionButton 
+                tabIndex={0}
+                onClick={() => runGame()}
+              >
+                <PlayButtonForegroundColor>
+                  <PlayIcon />
+                </PlayButtonForegroundColor>
+                <PlayButtonBackgroundColor />
+              </GameActionButton>
+              <GameActionButton 
+                tabIndex={0}
+                onClick={() => editGame()}
+              >
+                <EditButtonForegroundColor>
+                  <PencilIcon />
+                </EditButtonForegroundColor>
+                <EditButtonBackgroundColor />
+              </GameActionButton>
+
+              <GameActionButton
+                tabIndex={0}
+                onClick={() => setShareMenuOpen(true)}
+                id="shareButton"
+              >
+                <ShareButtonForegroundColor>
+                  <UploadIcon />
+                </ShareButtonForegroundColor>
+                <ShareButtonBackgroundColor />
+              </GameActionButton>
+            </GameActionButtonsContainer>
+          </>
+          : 
+          <></>
+        }
       </GameInfoContainer>
     </HomePageContainer>
   );
