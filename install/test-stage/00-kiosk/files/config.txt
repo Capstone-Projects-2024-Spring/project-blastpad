@@ -7,10 +7,10 @@
 
 # uncomment the following to adjust overscan. Use positive numbers if console
 # goes off screen, and negative if there is too much border
-#overscan_left=16
-#overscan_right=16
-#overscan_top=16
-#overscan_bottom=16
+overscan_left=16
+overscan_right=16
+overscan_top=16
+overscan_bottom=16
 
 # uncomment to force a console size. By default it will be display's size minus
 # overscan.
@@ -57,6 +57,14 @@ camera_auto_detect=0
 
 # Automatically load overlays for detected DSI displays
 display_auto_detect=1
+
+dtoverlay=gpio-key,gpio=5,active_low=0,gpio_pull=down,keycode=103,label=GPIO_Up
+dtoverlay=gpio-key,gpio=6,active_low=0,gpio_pull=down,keycode=108,label=GPIO_Down
+dtoverlay=gpio-key,gpio=13,active_low=0,gpio_pull=down,keycode=105,label=GPIO_Left
+dtoverlay=gpio-key,gpio=19,active_low=0,gpio_pull=down,keycode=106,label=GPIO_Right
+
+dtoverlay=gpio-key,gpio=16,active_low=0,gpio_pull=down,keycode=30,label=GPIO_A
+dtoverlay=gpio-key,gpio=20,active_low=0,gpio_pull=down,keycode=48,label=GPIO_B
 
 # Enable DRM VC4 V3D driver
 dtoverlay=vc4-kms-v3d
