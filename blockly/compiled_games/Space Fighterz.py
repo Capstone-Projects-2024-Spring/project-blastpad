@@ -1,3 +1,4 @@
+from numbers import Number
 import random
 
 x = None
@@ -6,33 +7,55 @@ Actor = None
 WaveStarted = None
 CurrentDirections = None
 Projectiles = None
+numProjectiles = None
 shot = None
+UserShots = None
+yourShots = None
 CurrentWave = None
-j = None
 i = None
+life = None
+yourScore = None
+j = None
 alien = None
 direction = None
 k = None
 
 # Describe this function...
 def Start_Game():
-  global x, y, Actor, WaveStarted, CurrentDirections, Projectiles, shot, CurrentWave, j, i, alien, direction, k
+  global x, y, Actor, WaveStarted, CurrentDirections, Projectiles, numProjectiles, shot, UserShots, yourShots, CurrentWave, i, life, yourScore, j, alien, direction, k
   Actor = create_actor(("wqyecsigoqjevogl"), 30, 400, 20, 20)
   CurrentDirections = [True] * 12
   CurrentWave = [''] * 12
   WaveStarted = False
-  Projectiles = [None] * 500
+  Projectiles = [create_actor(("llnbzczbzzf"), 0, 0, 20, 20)] * 500
+  UserShots = [create_actor(("mpxwkcpzs"), 0, 0, 20, 20)] * 500
   shot = False
+  numProjectiles = 0
+  yourShots = 0
+  life = 3
+  yourScore = 0
 
 # Describe this function...
 def Shoot(x, y):
-  global Actor, WaveStarted, CurrentDirections, Projectiles, shot, CurrentWave, j, i, alien, direction, k
-  Projectiles[int(len(Projectiles) - 1)] = create_actor(("ybciiguusuxnhe"), x, y, 20, 20)
+  global Actor, WaveStarted, CurrentDirections, Projectiles, numProjectiles, shot, UserShots, yourShots, CurrentWave, i, life, yourScore, j, alien, direction, k
+  Projectiles[int(numProjectiles - 1)] = create_actor(("ybciiguusuxnhe"), x, y, 20, 20)
   shot = True
+  numProjectiles = (numProjectiles if isinstance(numProjectiles, Number) else 0) + 1
+  if numProjectiles >= 499:
+    numProjectiles = 0
+
+# Describe this function...
+def UserShoot(x, y):
+  global Actor, WaveStarted, CurrentDirections, Projectiles, numProjectiles, shot, UserShots, yourShots, CurrentWave, i, life, yourScore, j, alien, direction, k
+  UserShots[int(yourShots - 1)] = create_actor(("xpwrztzyx"), x, y, 20, 20)
+  shot = True
+  yourShots = (yourShots if isinstance(yourShots, Number) else 0) + 1
+  if yourShots >= 499:
+    yourShots = 0
 
 # Describe this function...
 def Spawn_Wave():
-  global x, y, Actor, WaveStarted, CurrentDirections, Projectiles, shot, CurrentWave, j, i, alien, direction, k
+  global x, y, Actor, WaveStarted, CurrentDirections, Projectiles, numProjectiles, shot, UserShots, yourShots, CurrentWave, i, life, yourScore, j, alien, direction, k
   WaveStarted = True
   CurrentDirections = [True] * 12
   CurrentWave = [''] * 12
@@ -44,8 +67,8 @@ def Spawn_Wave():
 
 # BLASTPAD PRODUCTIONS
 # 'Space Fighterz'
-# By 'BlastPad Team'
-# 'This is an example project.'
+# By 'Neil C'
+# 'This project does not compile... yet!'
 
 
 import pygame
@@ -132,10 +155,35 @@ while True:
   screen.fill(background_color)
   for x in actors:
     x.draw(screen)
+  text = font.render((''.join([str(x2) for x2 in ['Life: ', life, 'Score', yourScore]])), True, (255, 255, 0))
+  textRect = text.get_rect()
+  textRect.topleft = (30, 30)
+  screen.blit(text, textRect)
+  if keyState[pygame.K_a]:
+    Actor.moveHorizontal(10)
+    Actor.moveVertical(0)
+
+  if keyState[pygame.K_b]:
+    Actor.moveHorizontal((-10))
+    Actor.moveVertical(0)
+
+  if keyState[pygame.K_SPACE]:
+    UserShoot(Actor.rect.x, Actor.rect.y)
+
   if WaveStarted == True:
     for j in range(1, 11):
       alien = CurrentWave[int(j - 1)]
       direction = CurrentDirections[int(j - 1)]
+      if (alien.rect.y) > 400:
+        pygame.display.quit()
+        pygame.quit()
+        exit()
+      for k in UserShots:
+        if collide_pixels(k, alien):
+          alien.rect.x = 0
+          alien.rect.y = 20
+          yourScore = (yourScore if isinstance(yourScore, Number) else 0) + 100
+
       if (alien.rect.x) >= 800:
         CurrentDirections[int(j - 1)] = True
         alien.moveHorizontal(0)
@@ -150,15 +198,24 @@ while True:
       else:
         alien.moveHorizontal(10)
         alien.moveVertical(0)
-      if collide_pixels(alien, Actor):
-        pygame.display.quit()
-        pygame.quit()
-        exit()
-
+      if random.randint(0, 40) == 1:
+        Shoot(alien.rect.x, alien.rect.y)
     if shot == True:
       for k in Projectiles:
         k.moveHorizontal(0)
         k.moveVertical(5)
+        if collide_pixels(k, Actor):
+          k.rect.x = (-200)
+          k.rect.y = 0
+          life = (life if isinstance(life, Number) else 0) + -1
+          if life <= 0:
+            pygame.display.quit()
+            pygame.quit()
+            exit()
+
+      for k in UserShots:
+        k.moveHorizontal(0)
+        k.moveVertical((-10))
   else:
     Spawn_Wave()
 

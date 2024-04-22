@@ -128,8 +128,7 @@ var findPathToExit = (workspace) => {
 
     var traverse = (block) => {
         if(eFound == true) { return; }
-
-        console.log(block);
+        if(block == undefined) { return; }
         if(block.type == "exit") {
             eFound = true;
         };
