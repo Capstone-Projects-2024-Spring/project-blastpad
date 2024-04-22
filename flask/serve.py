@@ -121,7 +121,7 @@ def save():
 
         compile_result = compile_game(gamename)
         if compile_result.returncode != 0:
-            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block."}, 400
+            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block.", "err": compile_result.stderr}, 400
             
         game_test_result = test_run_game(gamename)
         print(game_test_result)
