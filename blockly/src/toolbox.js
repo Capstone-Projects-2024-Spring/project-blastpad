@@ -105,6 +105,22 @@ export const toolbox = {
         },
         {
           'kind': 'block',
+          'type': 'key_down_left'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_right'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_up'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_down_down'
+        },
+        {
+          'kind': 'block',
           'type': 'key_down_enter'
         },
         {

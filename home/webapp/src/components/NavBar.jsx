@@ -11,9 +11,9 @@ const navIcons = {
 
 const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   const [activePage, setActivePage] = useState('home');
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
   const [currentTime, setCurrentTime] = useState("");
-  const [batteryLevel, setBatteryLevel] = useState(0.20); // Default battery level
+  const [batteryLevel, setBatteryLevel] = useState(0.8); // Default battery level
 
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {

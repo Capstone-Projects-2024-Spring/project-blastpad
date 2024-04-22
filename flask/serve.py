@@ -4,6 +4,11 @@ from flask_cors import CORS
 import os
 import subprocess
 import datetime
+from supabase import create_client, Client
+
+url: str = "https://klexzeldnyavipasmvvl.supabase.co"
+key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsZXh6ZWxkbnlhdmlwYXNtdnZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTMxMjg1MjMsImV4cCI6MjAyODcwNDUyM30.A2uS9JLBYLEwO85Ol-F4k760zVTX_dGbTaG4Hq2BuVA"
+supabase: Client = create_client(url, key)
 
 # GAME FOLDER LOCATION TODO!!
 
@@ -116,7 +121,7 @@ def save():
 
         compile_result = compile_game(gamename)
         if compile_result.returncode != 0:
-            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block."}, 400
+            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block.", "err": compile_result.stderr}, 400
             
         game_test_result = test_run_game(gamename)
         print(game_test_result)
@@ -348,6 +353,75 @@ def connect_to_wifi():
 ##########################################
 ### WiFi Network Requests Handling END ###
 ##########################################
+
+###############################
+##### SUPABASE !!!!!!!!!! #####
+###############################
+
+@app.route('/get/community/', methods = ['GET'])
+def communityhubgames():
+    games = supabase.table('game_metadata').select("*").execute().data
+    print(games)
+
+    for game in games:
+        game['game_icon_path'] = "https://klexzeldnyavipasmvvl.supabase.co/storage/v1/object/public/images/"+game['id']+'.png'
+
+    return {"games": games}, 200
+
+@app.route('/share/community/<game_name>', methods = ['GET'])
+def sharetocommunityhub(game_name):
+    fpath = GAMES_FOLDER+"/"+game_name+".json"
+    iconpath = GAMES_FOLDER+"/icons/"+game_name+".png"
+
+    print(fpath)
+    print(iconpath)
+
+    fileMetadata = None;
+
+    with open(fpath, 'r') as f:
+        game_data = json.load(f)
+        metadata = next((block for block in game_data["blocks"]["blocks"] if block["type"] == "metadata"), None)
+        if metadata:
+            fileMetadata = {
+                'id': game_name,
+                'author': metadata["inputs"]["author name"]["block"]["fields"]["TEXT"],
+                'description': metadata["inputs"]["description"]["block"]["fields"]["TEXT"]
+            }
+
+    data, count = supabase.table('game_metadata').insert(fileMetadata).execute()
+
+    try:
+        with open(fpath, 'rb') as f:
+            supabase.storage.from_("games").upload(file=f,path=game_name+".json", file_options={"content-type": "application/json", "upsert":"true"})
+
+        with open(iconpath, 'rb') as f:
+            supabase.storage.from_("images").upload(file=f,path=game_name+".png", file_options={"content-type": "image/x-png", "upsert":"true"})
+
+    except:
+        return {"error":"upload failed"}, 400
+
+    return {"success":"upload successful!"}, 200
+
+
+@app.route('/download/community/<game_name>', methods = ['GET'])
+def downloadfromcommunityhub(game_name):
+    fpath = GAMES_FOLDER+"/"+game_name+".json"
+    iconpath = GAMES_FOLDER+"/icons/"+game_name+".png"
+
+    try:
+        with open(fpath, 'wb+') as f:
+            res = supabase.storage.from_('games').download(game_name+".json")
+            f.write(res)
+
+        with open(iconpath, 'wb+') as f:
+            res = supabase.storage.from_('images').download(game_name+".png")
+            f.write(res)
+        
+    except:
+        return {"error":"download failed"}, 400
+
+    return {"success":"download successful!"}, 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)

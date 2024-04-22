@@ -45,8 +45,6 @@ echo "Removing Documentation"
 rm -rf documentation
 echo "Removing Examples"
 rm -rf examples
-echo "Removing Classroom Server"
-rm -rf classroom-server
 rm -rf *.png
 echo "Removing Sphinx Stuff"
 rm -rf source

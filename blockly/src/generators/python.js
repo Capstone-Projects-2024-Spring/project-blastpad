@@ -245,6 +245,57 @@ ${branch}
   return code;
 };
 
+
+
+forBlock['key_down_left'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_LEFT]:
+${branch}
+`;
+  return code;
+};
+
+forBlock['key_down_right'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_RIGHT]:
+${branch}
+`;
+  return code;
+};
+
+
+forBlock['key_down_up'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_UP]:
+${branch}
+`;
+  return code;
+};
+
+
+forBlock['key_down_down'] = function(block, generator) {
+  let branch = generator.statementToCode(block, 'DO');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`if keyState[pygame.K_DOWN]:
+${branch}
+`;
+  return code;
+};
+
+
+
+
 forBlock['key_down_enter'] = function(block, generator) {
   let branch = generator.statementToCode(block, 'DO');
 

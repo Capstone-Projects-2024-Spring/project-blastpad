@@ -35,6 +35,11 @@ export default function CursorProvider({children}) {
 
     let selectableObjects = document.querySelectorAll('[tabindex]')
 
+    // prioritize higher tab index objects if there are any on the page
+    let tabIndexes = Array.from(selectableObjects).map((node) => node.tabIndex)
+    const max = Math.max(...tabIndexes);
+    selectableObjects = [...selectableObjects].filter((node) => node.tabIndex >= max);
+
     let minDistance = 1000;
     let closestElement;
 

@@ -34,7 +34,7 @@ export const GameIcon = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.active};
-  background-image: url("${({ imagepath }) => imagepath}");=
+  background-image: url("${({ imagepath }) => imagepath}");
   background-repeat: no-repeat;
   background-size: contain;
 
@@ -43,6 +43,7 @@ export const GameIcon = styled.div`
   image-rendering: -o-crisp-edges;            /* Opera */
   image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming)*/
   -ms-interpolation-mode: nearest-neighbor;
+  transition: transform 0.25s ease-in-out;
 
   outline: 5px solid ${({ theme }) => theme.colors.foreground};
   outline-offset: -4px;
@@ -52,6 +53,10 @@ export const GameIcon = styled.div`
     outline-offset: -3px;
     // transform: scale(1.03);
     // transition: transform 0.3s;
+  }
+
+  &.inspecting:not(:focus) {
+    transform: scale(0.9);
   }
 
   flex-grow: 0;
@@ -64,6 +69,7 @@ export const GameInfoContainer = styled.div`
   // outline: 3px solid yellow;
   gap: 20px;
   align-items: center;
+  position: relative;
 `;
 
 export const GameMetaData = styled.div`
@@ -90,6 +96,11 @@ export const GameActionButton = styled.div`
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: 0px;
     border-radius: 15px;
+  }
+
+  &.active div {
+    transform: translateY(3px);
+    transition: transform 0.1s;
   }
 `;
 
@@ -157,4 +168,41 @@ export const MetaDataText = styled.div`
 export const MetaDataTitle = styled(MetaDataText)`
   font-size: 39px;
   font-weight:700;
+`;
+
+export const ShareMenu = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.foreground};
+  bottom: 120px;
+  right: 0px;
+  border-radius: 15px;
+`;
+
+export const ShareMenuButton = styled.div`
+  position: relative;
+  width: 200px; 
+  border-radius: 15px;
+  padding: 1em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  
+  &:focus {
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: 0px;
+    border-radius: 15px;
+  }
+
+  & svg {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+  }
+
+  &:not(:focus) {
+    opacity: 0.5
+  }
 `;
