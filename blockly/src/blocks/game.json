@@ -175,6 +175,78 @@
   "style": "loop_blocks"
 },
 {
+  "type": "key_down_left",
+  "message0": "On Pressed Left",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Left",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_right",
+  "message0": "On Pressed Right",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Right",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_up",
+  "message0": "On Pressed Up",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Up",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
+  "type": "key_down_down",
+  "message0": "On Pressed Down",
+  "message1": "%1",
+  "args0": [
+  ],
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "DO"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "tooltip": "User Pressed Down",
+  "helpUrl": "",
+  "style": "loop_blocks"
+},
+{
   "type": "key_down_any",
   "message0": "If Player Presses Any Key...",
   "message1": "%1",
