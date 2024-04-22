@@ -79,7 +79,7 @@ function LoginPage() {
     <h1> Profile </h1>
 
     
-    <label for="email">Email:</label>
+    <label htmlFor="email">Email:</label>
     <ProfileActionInput
       type="email"
       tabIndex={0}
@@ -87,7 +87,7 @@ function LoginPage() {
       value={email}
     />
 
-    <label for="password">Password:</label>
+    <label htmlFor="password">Password:</label>
     <ProfileActionInput
       type="password"
       tabIndex={0}
