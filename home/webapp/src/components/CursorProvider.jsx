@@ -7,6 +7,8 @@ const directions = {
   "ArrowDown": [0, 1]
 }
 
+const directionsKeys = Object.keys(directions)
+
 export default function CursorProvider({children}) {
 
   useEffect(() => {
@@ -23,6 +25,8 @@ export default function CursorProvider({children}) {
       document.activeElement.click()
       return;
     }
+
+    if (!directionsKeys.includes(key)) return;
 
     let directionVector = directions[key];
 
