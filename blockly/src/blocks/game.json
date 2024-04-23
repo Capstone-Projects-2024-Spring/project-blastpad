@@ -266,7 +266,7 @@
 },
 {
   "type": "actor",
-  "message0": "New Actor With %1 Image %2 Start Horizontal %3 Start Vertical %4 Width %5 Height %6",
+  "message0": "New Actor With %1 Image %2 Start Horizontal %3 Start Vertical %4 Width %5 Height %6 Layer Name %7",
   "args0": [
     {
       "type": "input_dummy"
@@ -295,6 +295,11 @@
       "type": "input_value",
       "name": "height",
       "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "collision_layer",
+      "check": "String"
     }
   ],
   "output": null,
@@ -499,6 +504,32 @@
   "helpUrl": ""
 },
 {
+  "type": "velocity",
+  "message0": "Set Actor %1 velocity to x %2 and y %3",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor"
+    },
+    {
+      "type": "input_value",
+      "name": "x",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "y",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
   "type": "teleport",
   "message0": "Teleport Actor %1 %2 to: %3 x %4 y %5",
   "args0": [
@@ -543,6 +574,45 @@
   "inputsInline": true,
   "previousStatement": null,
   "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "layer_collide",
+  "message0": "%1 %2 %3 %4 using %5 %6",
+  "args0": [
+    {
+      "type": "field_label_serializable",
+      "name": "layer1",
+      "text": "actor in layer"
+    },
+    {
+      "type": "input_value",
+      "name": "layer1"
+    },
+    {
+      "type": "field_label_serializable",
+      "name": "layer2",
+      "text": "collides with actor in"
+    },
+    {
+      "type": "input_value",
+      "name": "layer2"
+    },
+    {
+      "type": "field_variable",
+      "name": "actor one",
+      "variable": "actor one"
+    },
+    {
+      "type": "field_variable",
+      "name": "actor two",
+      "variable": "actor two"
+    }
+  ],
+  "inputsInline": true,
+  "output": null,
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""

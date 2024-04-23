@@ -124,6 +124,7 @@ def collide_pixels(actor1, actor2):
   return pygame.sprite.collide_mask(actor1, actor2)
 
 actors = [];
+collisions = {};
 
 class Actor_Sprite_Obj(pygame.sprite.Sprite):
   def __init__(self, imageName, x, y, width, height):
@@ -149,9 +150,15 @@ class Actor_Sprite_Obj(pygame.sprite.Sprite):
 
   # add change image func
 
-def create_actor(image_name, x, y, width, height):
+def create_actor(image_name, x, y, width, height, collision_layer):
   actor = Actor_Sprite_Obj(image_name, x, y, width, height)
   actors.append(actor)
+
+  if collision_layer not in collisions.keys():
+    collisions[collision_layer] = pygame.sprite.Group()
+
+  collisions[collision_layer].add(actor)
+
   return actor
 
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -399,6 +406,19 @@ ${value_actor}.moveVertical(${value_y})
   return code;
 };
 
+
+forBlock['velocity'] = function(block, generator) {
+  var value_actor = generator.valueToCode(block, 'actor', Order.ATOMIC);
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = 
+`${value_actor}.horizontalVelocity(${value_x})
+${value_actor}.verticalVelocity(${value_y})
+`;
+  return code;
+};
+
 forBlock['actor_x'] = function(block, generator) {
   var value_actor = generator.valueToCode(block, 'Actor', Order.ATOMIC);
   // TODO: Assemble python into code variable.
@@ -417,6 +437,19 @@ forBlock['change_background_color'] = function(block, generator) {
   // TODO: Assemble python into code variable.
   var code = `background_color = pygame.Color("${colour_background_color}")\n`;
   return code;
+};
+
+forBlock['layer_collide'] = function(block, generator) {
+  var field_layer1 = block.getFieldValue('layer1');
+  var value_layer1 = generator.valueToCode(block, 'layer1', Order.ATOMIC);
+  var field_layer2 = block.getFieldValue('layer2');
+  var value_layer2 = generator.valueToCode(block, 'layer2', Order.ATOMIC);
+  var variable_actor_one = generator.nameDB_.getName(block.getFieldValue('actor one'), Blockly.Variables.NAME_TYPE);
+  var variable_actor_two = generator.nameDB_.getName(block.getFieldValue('actor two'), Blockly.Variables.NAME_TYPE);
+  // TODO: Assemble python into code variable.
+  var code = '...';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.python.ORDER_NONE];
 };
 
 module.exports = forBlock;
