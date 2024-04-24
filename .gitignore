@@ -10,6 +10,10 @@ flask/built_pages/*
 .env.production.local
 flask/__pycache__/*
 
+
+flask/saved/*
+blockly/compiled_games/*
+
 # Logs
 logs
 *.log
