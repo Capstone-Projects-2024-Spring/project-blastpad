@@ -266,7 +266,7 @@
 },
 {
   "type": "actor",
-  "message0": "New Actor With %1 Image %2 Start Horizontal %3 Start Vertical %4 Width %5 Height %6 Layer Name %7",
+  "message0": "New Actor With %1 Image %2 Start Horizontal %3 Start Vertical %4 Width %5 Height %6 Layer Name? %7 On Collision between %8 \n and %9 \n on %10 %11 Draw Priority %12",
   "args0": [
     {
       "type": "input_dummy"
@@ -300,8 +300,32 @@
       "type": "input_value",
       "name": "collision_layer",
       "check": "String"
+    },
+    {
+      "type": "field_variable",
+      "name": "me",
+      "variable": "me"
+    },
+    {
+      "type": "field_variable",
+      "name": "other",
+      "variable": "other actor"
+    },
+    {
+      "type": "field_variable",
+      "name": "layer",
+      "variable": "other layer"
+    },
+    {
+      "type": "input_statement",
+      "name": "collide_with"
+    },
+    {
+      "type": "input_value",
+      "name": "draw_priority"
     }
   ],
+  "inputsInline": false,
   "output": null,
   "colour": 270,
   "tooltip": "",
@@ -579,40 +603,224 @@
   "helpUrl": ""
 },
 {
-  "type": "layer_collide",
-  "message0": "%1 %2 %3 %4 using %5 %6",
+  "type": "for_pixel_in_bitmap",
+  "message0": "%1 %2 For each \n %3 and %4 \n with %5 do: %6",
   "args0": [
     {
       "type": "field_label_serializable",
-      "name": "layer1",
-      "text": "actor in layer"
+      "name": "bitmap",
+      "text": "In Bitmap"
     },
     {
       "type": "input_value",
-      "name": "layer1"
+      "name": "in_bitmap"
+    },
+    {
+      "type": "field_variable",
+      "name": "x",
+      "variable": "pixel_x"
+    },
+    {
+      "type": "field_variable",
+      "name": "y",
+      "variable": "pixel_y"
+    },
+    {
+      "type": "field_variable",
+      "name": "color",
+      "variable": "pixel_color"
+    },
+    {
+      "type": "input_statement",
+      "name": "do_for_pixels"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "inputsInline": false,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "spawn_actor",
+  "message0": "Spawn Actor %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "spawn"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 345,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "occupied_by",
+  "message0": "%1 %2 %3 %4 is occupied by %5 %6 %7 %8 %9",
+  "args0": [
+    {
+      "type": "field_label_serializable",
+      "name": "x",
+      "text": "If position x"
+    },
+    {
+      "type": "input_value",
+      "name": "x"
     },
     {
       "type": "field_label_serializable",
-      "name": "layer2",
-      "text": "collides with actor in"
+      "name": "y",
+      "text": "y"
     },
     {
       "type": "input_value",
-      "name": "layer2"
+      "name": "y"
     },
     {
       "type": "field_variable",
-      "name": "actor one",
-      "variable": "actor one"
+      "name": "NAME",
+      "variable": "occupier"
     },
     {
-      "type": "field_variable",
-      "name": "actor two",
-      "variable": "actor two"
+      "type": "input_dummy"
+    },
+    {
+      "type": "field_label_serializable",
+      "name": "layer",
+      "text": "in layer"
+    },
+    {
+      "type": "input_value",
+      "name": "layer"
+    },
+    {
+      "type": "input_statement",
+      "name": "do"
     }
   ],
   "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "simple_occupied_by",
+  "message0": "%1 %2 %3 %4 %5 %6",
+  "args0": [
+    {
+      "type": "field_label_serializable",
+      "name": "x",
+      "text": "Actor at position x"
+    },
+    {
+      "type": "input_value",
+      "name": "x"
+    },
+    {
+      "type": "field_label_serializable",
+      "name": "y",
+      "text": "y"
+    },
+    {
+      "type": "input_value",
+      "name": "y"
+    },
+    {
+      "type": "field_label_serializable",
+      "name": "layer",
+      "text": "in layer"
+    },
+    {
+      "type": "input_value",
+      "name": "layer"
+    }
+  ],
+  "inputsInline": false,
   "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "key_repeat_mode",
+  "message0": "Set Key Repeat Delay To %1",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "delay",
+      "value": 1,
+      "min": 0,
+      "max": 10
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "remove_all_in_layer",
+  "message0": "Remove all actors in layer %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "content",
+      "check": "String"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "remove_actor",
+  "message0": "Remove actor %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor_to_remove"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "disable_collisions",
+  "message0": "Disable actor %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor_to_disable"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "enable_collisions",
+  "message0": "Enable actor %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "actor_to_enable"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
   "colour": 230,
   "tooltip": "",
   "helpUrl": ""

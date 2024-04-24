@@ -13,6 +13,7 @@ const ndarray = require("ndarray");
 
 const onlyBitmaps = (process.argv.indexOf('--bitmaps') > -1);
 const onlyIcon = (process.argv.indexOf('--icon') > -1);
+var bitmaps = {};
 
 class dummyField extends Blockly.Field {}
 dummyField.fromJson = () => {};
@@ -23,6 +24,9 @@ Blockly.setLocale(en);
 const primaryColor = [54, 61, 128, 255]
 const secondaryColor = [13, 167, 63, 255]
 const tertiaryColor = [255, 63, 63, 255]
+const quaternaryColor = [0, 0, 0, 255]
+const pentaneryColor = [118, 55, 206, 255]
+
 const backgroundColor = [0, 0, 0, 0]
 
 const pixel_colors = {
@@ -30,6 +34,35 @@ const pixel_colors = {
     1: primaryColor,
     2: secondaryColor,
     3: tertiaryColor,
+    4: quaternaryColor,
+    5: pentaneryColor,
+}
+
+
+function bmap_representation(bmap) {
+    var str = '['
+    for(var x in bmap) {
+        str += '['
+        for(var y of bmap[x]) {
+            str += `${y},`
+        }
+        str += '],'
+    }
+    str += ']'
+    return str;
+}
+
+function append_bitmaps_to_code(code) {
+    var bitmaps_in_py = `bitmap_data_dict = {`;
+
+
+    for(var bitmapName in bitmaps) {
+        var data = bitmaps[bitmapName]
+        var bmap_array = `${bmap_representation(data)}`;
+        bitmaps_in_py += `"${bitmapName}" : ${bmap_array},`
+    }
+    bitmaps_in_py += "}"
+    return code.replace("### BITMAP INSERTION POINT", bitmaps_in_py)
 }
 
 function scaleBitmap(bitmap, scaleFactor) {
@@ -66,8 +99,7 @@ var saveBitmap = (bitmap, size, name, icon=false) => {
     //     stride: [size[0], 1],
     //     offset: 0
     // }
-
-
+    bitmaps[name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-")] = bitmap;
     var scaleFactor = 10;
     var scaled = [];
 
@@ -125,8 +157,13 @@ var findPathToExit = (workspace) => {
 
     var topLevelBlocks = workspace.blocks.blocks;
     var eFound = false;
-
+    var currDepth = 0;
     var traverse = (block) => {
+        currDepth++;
+        if(currDepth > 500) {
+            eFound = true;
+            return;
+        }
         if(eFound == true) { return; }
         if(block == undefined) { return; }
         if(block.type == "exit") {
@@ -251,6 +288,23 @@ try {
             var workspace = new Blockly.Workspace();
             Blockly.serialization.workspaces.load(file, workspace);
             var code = pythonGenerator.workspaceToCode(workspace);
+            code = append_bitmaps_to_code(code);
+
+            console.log(code);
+
+            var collidefun = code.match(/# def CollideFun([\s\S]*?)# endCollideFun/g);
+            if (collidefun) {
+                for(var extractedCode of collidefun) {
+
+                    var cleanedExtraction = extractedCode.replace(/# def CollideFun|# endCollideFun/g, '');
+                    var leadingSpaces = cleanedExtraction.match(/^\s*/)[0].length;
+                    cleanedExtraction = cleanedExtraction.split("\n").map((s) => s.substring(leadingSpaces-1)).join("\n")
+                    console.log(cleanedExtraction);
+                    code = cleanedExtraction + code;
+                }
+            }
+
+            code = code.replace(/# def CollideFun([\s\S]*?)# endCollideFun/g, '');
 
             fs.writeFile(output, code, err => {
                 if (err) {

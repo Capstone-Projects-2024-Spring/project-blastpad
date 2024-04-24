@@ -388,7 +388,7 @@ def sharetocommunityhub(game_name):
                 'description': metadata["inputs"]["description"]["block"]["fields"]["TEXT"]
             }
 
-    data, count = supabase.table('game_metadata').insert(fileMetadata).execute()
+    data, count = supabase.table('game_metadata').upsert(fileMetadata).execute()
 
     try:
         with open(fpath, 'rb') as f:

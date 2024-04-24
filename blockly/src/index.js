@@ -15,6 +15,10 @@ import * as Blockly from 'blockly';
 import data from './blocks/game.json';
 const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(data.blocks);
 
+
+console.log(Blockly.Variables);
+console.log(Blockly.Variables.NAME_TYPE);
+
 // import {forBlock} from './generators/python';
 // import {pythonGenerator} from 'blockly/python';
 // import {FieldBitmap} from '@blockly/blockly-field-bitmap';

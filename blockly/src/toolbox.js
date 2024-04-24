@@ -84,6 +84,18 @@ export const toolbox = {
           'kind': 'block',
           'type': 'exit',
         },
+        {
+          'kind': 'block',
+          'type': 'for_pixel_in_bitmap',
+        },
+        {
+          'kind': 'block',
+          'type': 'spawn_actor'
+        },
+        {
+          'kind': 'block',
+          'type': 'key_repeat_mode'
+        }
       ],
     },
     {
@@ -169,6 +181,26 @@ export const toolbox = {
         {
           'kind': 'block',
           'type': 'change_actor_image',
+        },
+        {
+          'kind': 'block',
+          'type': 'simple_occupied_by',
+        },
+        {
+          'kind': 'block',
+          'type': 'remove_actor',
+        },
+        {
+          'kind': 'block',
+          'type': 'remove_all_in_layer',
+        },
+        {
+          'kind': 'block',
+          'type': 'disable_collisions',
+        },
+        {
+          'kind': 'block',
+          'type': 'enable_collisions',
         },
       ],
     },

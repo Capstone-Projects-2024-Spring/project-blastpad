@@ -32,6 +32,14 @@ const Order = {
   NONE: 99,              // (...)
 }
 
+
+const Variables = {
+  DEVELOPER_VARIABLE: 'DEVELOPER_VARIABLE',
+  VARIABLE: 'VARIABLE',
+  PROCEDURE: 'PROCEDURE',
+}
+
+
 // Export all the code generators for our custom blocks,
 // but don't register them with Blockly yet.
 // This file has no side effects!
@@ -69,14 +77,27 @@ forBlock['game_loop'] = function (block, generator) {
   // branch = generator.addLoopTrap(branch, block) || generator.PASS;
   return `
 while True:
-  keyState = pygame.key.get_pressed()
 
-  if keyState[pygame.K_ESCAPE]:
+  keyState = {}
+  for ev in pygame.event.get():
+    if ev.type == pygame.KEYDOWN:
+      keyState[ev.key] = 1
+
+  for actor1 in actors:
+    for actor2 in actors:
+      if actor1 != actor2 and collide_pixels(actor1, actor2):
+        # Actors collided, handle collision logic here
+        actor1.onCollide(actor2, actor2.collision_layer)
+        actor2.onCollide(actor1, actor1.collision_layer)
+
+
+  if pygame.K_ESCAPE in keyState:
     pygame.display.quit()
     pygame.quit()
     exit()
   screen.fill(background_color)
-  for x in actors:
+  sorted_actors = sorted(actors, key=lambda x: x.z)
+  for x in sorted_actors:
     x.draw(screen) 
 ${branch}
   pygame.display.flip()
@@ -109,6 +130,8 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 import sys
 
+### BITMAP INSERTION POINT
+
 background_color = pygame.Color("#000000")
 
 def is_key_pressed(key):
@@ -121,16 +144,33 @@ def is_any_key_pressed():
     return event.type == pygame.KEYDOWN
 
 def collide_pixels(actor1, actor2):
-  return pygame.sprite.collide_mask(actor1, actor2)
+  if(pygame.sprite.collide_rect(actor1, actor2)):
+    return pygame.sprite.collide_mask(actor1, actor2)
+  return False
 
 actors = [];
 collisions = {};
 
+
+def actor_in_layer_at_position(x, y, layer):
+  if layer not in collisions.keys():
+    return None
+  for actor in collisions[layer]:
+    if actor.rect.collidepoint(x, y):
+      return actor
+  
+  return None
+
 class Actor_Sprite_Obj(pygame.sprite.Sprite):
-  def __init__(self, imageName, x, y, width, height):
+  def __init__(self, imageName, x, y, width, height, collision_layer, onCollide, z):
+      super(Actor_Sprite_Obj, self).__init__()
       self.width = width
       self.height = height
-
+      self.onCollide_func = onCollide
+      self.collision_layer = collision_layer
+      self.collisionsDisabled = False
+      self.z = z
+      
       self.image = pygame.image.load("./images/"+imageName+".png")
       self.image = pygame.transform.scale(self.image, (width, height))
       self.rect = self.image.get_rect(center = (x, y))
@@ -138,32 +178,40 @@ class Actor_Sprite_Obj(pygame.sprite.Sprite):
   def draw(self, screen):
       screen.blit(self.image, (self.rect.x, self.rect.y))
     
-  def moveHorizontal(self, pixels):
-    self.rect.x += pixels
+  def move(self, x, y):
+    self.rect.x += x
+    self.rect.y += y
 
-  def moveVertical(self, pixels):
-    self.rect.y += pixels
 
   def changeImage(self, imageName):
     self.image = pygame.image.load("./images/"+imageName+".png")
     self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
-  # add change image func
+  def onCollide(self, other, layer):
+    if not self.collisionsDisabled:
+      self.onCollide_func(self, other, layer)
+  
+  def disableCollisions(self):
+    self.collisionsDisabled = True
 
-def create_actor(image_name, x, y, width, height, collision_layer):
-  actor = Actor_Sprite_Obj(image_name, x, y, width, height)
+  def enableCollisions(self):
+    self.collisionsDisabled = False
+
+def create_actor(image_name, x, y, width, height, collision_layer, collide_func, z):
+  actor = Actor_Sprite_Obj(image_name, x, y, width, height, collision_layer, collide_func, z)
   actors.append(actor)
 
   if collision_layer not in collisions.keys():
-    collisions[collision_layer] = pygame.sprite.Group()
+    collisions[collision_layer] = []
 
-  collisions[collision_layer].add(actor)
+  collisions[collision_layer].append(actor)
 
   return actor
 
+
+pygame.key.set_repeat(1)
 font = pygame.font.Font('freesansbold.ttf', 32)
 pygame.display.set_caption("${value_game_name}")
-
 screen = None
 
 if sys.argv[1] == "headless":
@@ -184,9 +232,31 @@ forBlock['actor'] = function(block, generator) {
   var value_y = generator.valueToCode(block, 'start_y', Order.ATOMIC);
   var width = generator.valueToCode(block, 'width', Order.ATOMIC);
   var height = generator.valueToCode(block, 'height', Order.ATOMIC);
+  var collision_layer = generator.valueToCode(block, 'collision_layer', Order.ATOMIC) || `"default"`;
+  var variable_me = generator.nameDB_.getName(block.getFieldValue('me'), Variables.VARIABLE);
+  var variable_other = generator.nameDB_.getName(block.getFieldValue('other'), Variables.VARIABLE);
+  var variable_layer = generator.nameDB_.getName(block.getFieldValue('layer'), Variables.VARIABLE);
+  var draw_priority = generator.valueToCode(block, 'draw_priority', Order.ATOMIC) || 1;
 
+  var statements_collide_with = generator.statementToCode(block, 'collide_with');
+
+  var regex = /(\w+)\s*=(?!=)/g;
+  var matches = statements_collide_with.matchAll(regex);
+  var words = [];
+  for (const match of matches) {
+    words.push(match[1]);
+  }
+
+  var globals = words.length != 0 ? 'global ' + words.join(', ') : ''
+
+  var funcName = "collide_"+block.id.toLowerCase().replace(/[^a-zA-Z ]/g, "")
   // TODO: Assemble python into code variable.
-  var code = `create_actor(${value_name}, ${value_x}, ${value_y}, ${width}, ${height})`;
+  var jank_declaration = `# def CollideFun
+def ${funcName}(${variable_me}, ${variable_other}, ${variable_layer}):
+  ${globals}
+${statements_collide_with || '  pass'}
+# endCollideFun`
+  var code = `${jank_declaration}create_actor(${value_name}, ${value_x}, ${value_y}, ${width}, ${height}, ${collision_layer}, ${funcName}, ${draw_priority})`;
   return [code, Order.NONE];
 };
 
@@ -224,7 +294,7 @@ forBlock['key_down_a'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_a]:
+`if pygame.K_a in keyState:
 ${branch}
 `;
   return code;
@@ -235,7 +305,7 @@ forBlock['key_down_b'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_b]:
+`if pygame.K_b in keyState:
 ${branch}
 `;
   return code;
@@ -246,7 +316,7 @@ forBlock['key_down_space'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_SPACE]:
+`if pygame.K_SPACE in keyState:
 ${branch}
 `;
   return code;
@@ -259,7 +329,7 @@ forBlock['key_down_left'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_LEFT]:
+`if pygame.K_LEFT in keyState:
 ${branch}
 `;
   return code;
@@ -270,7 +340,7 @@ forBlock['key_down_right'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_RIGHT]:
+`if pygame.K_RIGHT in keyState:
 ${branch}
 `;
   return code;
@@ -282,7 +352,7 @@ forBlock['key_down_up'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_UP]:
+`if pygame.K_UP in keyState:
 ${branch}
 `;
   return code;
@@ -294,7 +364,7 @@ forBlock['key_down_down'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_DOWN]:
+`if pygame.K_DOWN in keyState:
 ${branch}
 `;
   return code;
@@ -308,7 +378,7 @@ forBlock['key_down_enter'] = function(block, generator) {
 
   // TODO: Assemble python into code variable.
   var code = 
-`if keyState[pygame.K_RETURN]:
+`if pygame.K_RETURN in keyState:
 ${branch}
 `;
   return code;
@@ -400,8 +470,7 @@ forBlock['move'] = function(block, generator) {
   var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
   // TODO: Assemble python into code variable.
   var code = 
-`${value_actor}.moveHorizontal(${value_x})
-${value_actor}.moveVertical(${value_y})
+`${value_actor}.move(${value_x}, ${value_y})
 `;
   return code;
 };
@@ -439,17 +508,115 @@ forBlock['change_background_color'] = function(block, generator) {
   return code;
 };
 
-forBlock['layer_collide'] = function(block, generator) {
-  var field_layer1 = block.getFieldValue('layer1');
-  var value_layer1 = generator.valueToCode(block, 'layer1', Order.ATOMIC);
-  var field_layer2 = block.getFieldValue('layer2');
-  var value_layer2 = generator.valueToCode(block, 'layer2', Order.ATOMIC);
-  var variable_actor_one = generator.nameDB_.getName(block.getFieldValue('actor one'), Blockly.Variables.NAME_TYPE);
-  var variable_actor_two = generator.nameDB_.getName(block.getFieldValue('actor two'), Blockly.Variables.NAME_TYPE);
+
+forBlock['for_pixel_in_bitmap'] = function(block, generator) {
+  var value_in_bitmap = generator.valueToCode(block, 'in_bitmap', Order.ATOMIC);
+  value_in_bitmap = value_in_bitmap.replace(/['"()]/g, ''); // make it a variable name
+  // console.log(value_in_bitmap)
+  var variable_x = generator.nameDB_.getName(block.getFieldValue('x'), Variables.VARIABLE);
+  var variable_y = generator.nameDB_.getName(block.getFieldValue('y'), Variables.VARIABLE);
+  var variable_color = generator.nameDB_.getName(block.getFieldValue('color'), Variables.VARIABLE);
+
+  var statements_do_for_pixels = generator.statementToCode(block, 'do_for_pixels');
+
+  // HOLY FUCKING JANK
+  if(value_in_bitmap[0] != `"` && value_in_bitmap.length > 7) {
+    value_in_bitmap = `"${value_in_bitmap}"`
+  }
   // TODO: Assemble python into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.python.ORDER_NONE];
+return `for ${variable_x} in range(len(bitmap_data_dict[${value_in_bitmap}])):
+  for ${variable_y} in range(len(bitmap_data_dict[${value_in_bitmap}][${variable_x}])):
+    ${variable_color} = bitmap_data_dict[${value_in_bitmap}][${variable_y}][${variable_x}]
+
+${statements_do_for_pixels.split("\n").map(l=>"  "+l).join("\n")}\n`
 };
+
+
+forBlock['spawn_actor'] = function(block, generator) {
+  var value_spawn = generator.valueToCode(block, 'spawn', Order.ATOMIC);
+  // TODO: Assemble python into code variable.
+  var code = `${value_spawn}\n`;
+  return code;
+};
+
+
+forBlock['occupied_by'] = function(block, generator) {
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
+  var variable_name = generator.nameDB_.getName(block.getFieldValue('NAME'), Variables.VARIABLE);
+  var value_layer = generator.valueToCode(block, 'layer', Order.ATOMIC);
+  var statements_do = generator.statementToCode(block, 'do');
+
+  // TODO: Assemble python into code variable.
+  var code = 
+`
+test = actor_in_layer_at_position(${value_x}, ${value_y}, ${value_layer})
+
+if test != None:
+  ${variable_name} = test
+  ${statements_do}
+`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Order.NONE];
+};
+
+forBlock['simple_occupied_by'] = function(block, generator) {
+  var value_x = generator.valueToCode(block, 'x', Order.ATOMIC);
+  var value_y = generator.valueToCode(block, 'y', Order.ATOMIC);
+  var value_layer = generator.valueToCode(block, 'layer', Order.ATOMIC);
+
+  // TODO: Assemble python into code variable.
+  var code = `(actor_in_layer_at_position(${value_x}, ${value_y}, ${value_layer}))`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Order.NONE];
+};
+
+forBlock['key_repeat_mode'] = function(block, generator) {
+  var number_delay = block.getFieldValue('delay');
+  // TODO: Assemble python into code variable.
+  var code = `pygame.key.set_repeat(${parseInt(number_delay)*1000})\n`
+  return code;
+};
+
+forBlock['remove_all_in_layer'] = function(block, generator) {
+  var value_content = generator.valueToCode(block, 'content', Order.ATOMIC);
+
+  var code = 
+`if ${value_content} in collisions.keys():
+  for actor_to_remove in collisions[${value_content}]:
+    actors.remove(actor_to_remove)
+  collisions[${value_content}] = []\n`
+  return code;
+};
+
+forBlock['remove_actor'] = function(block, generator) {
+  var value_content = generator.valueToCode(block, 'actor_to_remove', Order.ATOMIC);
+
+  var code = 
+`for layer in collisions.keys():
+  if ${value_content} in collisions[layer]:
+    collisions[layer].remove(${value_content})
+if ${value_content} in actors:  
+  actors.remove(${value_content})\n`
+  return code;
+};
+
+
+forBlock['disable_collisions'] = function(block, generator) {
+  var value_content = generator.valueToCode(block, 'actor_to_disable', Order.ATOMIC);
+
+  var code = 
+`${value_content}.disableCollisions()\n`
+  return code;
+};
+
+forBlock['enable_collisions'] = function(block, generator) {
+  var value_content = generator.valueToCode(block, 'actor_to_enable', Order.ATOMIC);
+
+  var code = 
+`${value_content}.enableCollisions()\n`
+  return code;
+};
+
 
 module.exports = forBlock;
