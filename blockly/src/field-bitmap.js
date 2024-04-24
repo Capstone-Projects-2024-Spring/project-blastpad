@@ -21,7 +21,9 @@ const PIXEL_COLORS = {
     0: "#fff",
     1: "#363d80",
     2: "#0da73f",
-    3: "#FF0000"
+    3: "#FF0000",
+    4: "#000000",
+    5: "#7637CE"
 }
 
 /**
@@ -138,7 +140,7 @@ export class FieldBitmap extends Blockly.Field {
     // Check if all contents of the arrays are either 0 or 1
     for (const row of newValue) {
       for (const cell of row) {
-        if (cell !== 0 && cell !== 1 && cell !== 2 && cell !== 3) {
+        if (cell !== 0 && cell !== 1 && cell !== 2 && cell !== 3 && cell !== 4 && cell !== 5 && cell !== 6) {
           return null;
         }
       }
@@ -430,11 +432,10 @@ export class FieldBitmap extends Blockly.Field {
 
     var value = this.getValue()[r][c];
     var newValue = 0;
-    
-
     newValue = value+1;
 
-    if(newValue == 4) {
+    console.log(newValue);
+    if(newValue >= Object.keys(PIXEL_COLORS).length) {
       newValue = 0;
     }
 
