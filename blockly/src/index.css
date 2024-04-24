@@ -244,3 +244,7 @@ pre, code {
   .flash {
     opacity: 1 !important;
   }
+
+  .blocklyDropDownContent {
+    max-height: none !important;
+  }

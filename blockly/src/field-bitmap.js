@@ -13,18 +13,23 @@ import Blockly from 'blockly/core';
 
 export const DEFAULT_HEIGHT = 5;
 export const DEFAULT_WIDTH = 5;
-const PIXEL_SIZE = 15;
+const PIXEL_SIZE = 30;
 const FILLED_PIXEL_COLOR = '#363d80';
 const EMPTY_PIXEL_COLOR = '#fff';
 
-const PIXEL_COLORS = {
-    0: "#fff",
-    1: "#363d80",
-    2: "#0da73f",
-    3: "#FF0000",
-    4: "#000000",
-    5: "#7637CE"
-}
+
+
+let PIXEL_COLORS = ["#FFFFFF", "#000000","#4b5461","#97a9c4","#e6e5e0","#e8cb8e","#ba783d","#823b3b","#40263c","#7d5540","#c29f2d","#e2e697","#9abd31","#3c6347","#3c3045","#355a7a","#8db3b2","#e3deac","#a17886","#6e3b6a","#3e2447"]
+
+// const PIXEL_COLORS = {
+//     0: "#fff",
+//     1: "#363d80",
+//     2: "#0da73f",
+//     3: "#FF0000",
+//     4: "#000000",
+//     5: "#7637CE"
+// }
+
 
 /**
  * Field for inputting a small bitmap image.
@@ -74,7 +79,7 @@ export class FieldBitmap extends Blockly.Field {
 
     /** Stateful variables */
     this.mouseIsDown_ = false;
-    this.valToPaintWith_ = undefined;
+    this.valToPaintWith_ = 0;
   }
 
   /**
@@ -140,8 +145,8 @@ export class FieldBitmap extends Blockly.Field {
     // Check if all contents of the arrays are either 0 or 1
     for (const row of newValue) {
       for (const cell of row) {
-        if (cell !== 0 && cell !== 1 && cell !== 2 && cell !== 3 && cell !== 4 && cell !== 5 && cell !== 6) {
-          return null;
+        if(cell > PIXEL_COLORS.length) {
+          return null
         }
       }
     }
@@ -253,7 +258,12 @@ export class FieldBitmap extends Blockly.Field {
       'div',
       'pixelContainer',
     );
+    const paletteContainer = this.createElementWithClassname_(
+      'div',
+      'paletteContainer'
+    )
     dropdownEditor.appendChild(pixelContainer);
+    dropdownEditor.appendChild(paletteContainer);
 
     this.bindEvent_(dropdownEditor, 'mouseup', this.onMouseUp_);
     this.bindEvent_(dropdownEditor, 'mouseleave', this.onMouseUp_);
@@ -293,7 +303,10 @@ export class FieldBitmap extends Blockly.Field {
     // Add control buttons below the pixel grid
     this.addControlButton_(dropdownEditor, 'Randomize', this.randomizePixels_);
     this.addControlButton_(dropdownEditor, 'Clear', this.clearPixels_);
-
+    for(var i = 0; i <Object.keys(PIXEL_COLORS).length; i++) {
+      this.addPaletteButton(paletteContainer, PIXEL_COLORS[i],i);
+    }
+    
     if (this.blockDisplayPixels_) {
       this.forAllCells_((r, c) => {
         const pixel = this.getValue()[r][c];
@@ -376,6 +389,19 @@ export class FieldBitmap extends Blockly.Field {
     this.bindEvent_(button, 'click', onClick);
   }
 
+  switchPaint(event) {
+    this.valToPaintWith_ = event.target.color_id
+    console.log(this.valToPaintWith_);
+  }
+
+  addPaletteButton(parent, color, id) {
+    const button = this.createElementWithClassname_('div', 'paletteButton');
+    // button.innerHTML = buttonText;
+    button.style.backgroundColor = color;
+    button.color_id = id;
+    parent.appendChild(button);
+    this.bindEvent_(button, 'click', this.switchPaint);
+  }
   /**
    * Disposes of events belonging to the bitmap editor.
    * @private
@@ -430,14 +456,14 @@ export class FieldBitmap extends Blockly.Field {
   onMouseDownInPixel_(r, c) {
     // Toggle that pixel to the opposite of its value
 
-    var value = this.getValue()[r][c];
-    var newValue = 0;
-    newValue = value+1;
+    // var value = this.getValue()[r][c];
+    // var newValue = 0;
+    // newValue = value+1;
 
-    console.log(newValue);
-    if(newValue >= Object.keys(PIXEL_COLORS).length) {
-      newValue = 0;
-    }
+    // console.log(newValue);
+    // if(newValue >= Object.keys(PIXEL_COLORS).length) {
+    //   newValue = 0;
+    // }
 
     // if(value == 0) {
     //     newValue = 1;
@@ -449,9 +475,10 @@ export class FieldBitmap extends Blockly.Field {
 
     // const newPixelValue = 1 - this.getValue()[r][c];
     
-    this.setPixel_(r, c, newValue);
+    console.log(this.valToPaintWith_);
+    this.setPixel_(r, c, this.valToPaintWith_);
     this.mouseIsDown_ = true;
-    this.valToPaintWith_ = newValue;
+    // this.valToPaintWith_ = newValue;
   }
 
   /**
@@ -476,7 +503,7 @@ export class FieldBitmap extends Blockly.Field {
    */
   onMouseUp_() {
     this.mouseIsDown_ = false;
-    this.valToPaintWith_ = undefined;
+    // this.valToPaintWith_ = undefined;
   }
 
   /**
@@ -615,5 +642,14 @@ Blockly.Css.register(`
 }
 .controlButton {
   margin: 5px 0;
+}
+.paletteButton {
+  width: 32px;
+  height: 32px;
+}
+.paletteContainer {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 2px solid black;
 }
 `);
