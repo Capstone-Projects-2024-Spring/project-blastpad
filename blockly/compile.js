@@ -21,6 +21,24 @@ Blockly.fieldRegistry.register('field_bitmap', dummyField);
 
 Blockly.setLocale(en);
 
+
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+  
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+        parseInt(result[1], 16),
+        parseInt(result[2], 16),
+        parseInt(result[3], 16),
+        255
+     ] : null;
+  }
+
+  
 const primaryColor = [54, 61, 128, 255]
 const secondaryColor = [13, 167, 63, 255]
 const tertiaryColor = [255, 63, 63, 255]
@@ -29,14 +47,19 @@ const pentaneryColor = [118, 55, 206, 255]
 
 const backgroundColor = [0, 0, 0, 0]
 
-const pixel_colors = {
-    0: backgroundColor,
-    1: primaryColor,
-    2: secondaryColor,
-    3: tertiaryColor,
-    4: quaternaryColor,
-    5: pentaneryColor,
-}
+
+var pixel_colors = ["#FFFFFF", "#000000","#4b5461","#97a9c4","#e6e5e0","#e8cb8e","#ba783d","#823b3b","#40263c","#7d5540","#c29f2d","#e2e697","#9abd31","#3c6347","#3c3045","#355a7a","#8db3b2","#e3deac","#a17886","#6e3b6a","#3e2447"]
+pixel_colors = pixel_colors.map((c) => hexToRgb(c));
+pixel_colors[0] = [0, 0, 0, 0];
+
+// const pixel_colors = {
+//     0: backgroundColor,
+//     1: primaryColor,
+//     2: secondaryColor,
+//     3: tertiaryColor,
+//     4: quaternaryColor,
+//     5: pentaneryColor,
+// }
 
 
 function bmap_representation(bmap) {
@@ -111,6 +134,7 @@ var saveBitmap = (bitmap, size, name, icon=false) => {
     for(var x in scaled) {
         for(var y in scaled[x]) {
             var color = pixel_colors[scaled[x][y]];
+            console.log(color);
 
             for(var i=0;i<4;i++) {
                 d.set(y, x, i, color[i])
