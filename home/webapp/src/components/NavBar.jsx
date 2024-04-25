@@ -91,7 +91,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
         {/* Use renderBatteryIcon to render the correct battery icon */}
         {<DynamicBatteryIcon level={batteryLevel} theme={theme}/>}
         {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
-        {isConnected ? <WiFiIcon /> : <NoSignalIcon />}
+        {isConnected ? <WiFiIcon color={theme.colors.text}/> : <NoSignalIcon color={theme.colors.text}/>}
         <TimeContainer>
           {currentTime}
         </TimeContainer>
