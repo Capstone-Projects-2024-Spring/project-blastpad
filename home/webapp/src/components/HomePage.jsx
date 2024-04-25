@@ -8,6 +8,7 @@ import {
   PlayButtonBackgroundColor, PlayButtonForegroundColor, EditButtonBackgroundColor,
   EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, ShareMenu, ShareMenuButton
 } from './styles/HomePage.styled';
+import { useTheme } from 'styled-components'
 
 // List of games with metadata
 var gameList = []
@@ -18,6 +19,8 @@ export default function HomePage() {
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
 
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
+
+  const theme = useTheme()
   
 
   const shareToCommunity = () => {
@@ -93,7 +96,7 @@ export default function HomePage() {
           onFocus={() => deselectGame()}
           onClick={() => newGame()}
         >
-          <NewGameIcon />
+          <NewGameIcon color={theme.colors.textActive}/>
         </GameIcon>
         {availableGames.map((game, index) => (
           <GameIcon
@@ -143,7 +146,7 @@ export default function HomePage() {
                 onClick={() => runGame()}
               >
                 <PlayButtonForegroundColor>
-                  <PlayIcon />
+                  <PlayIcon color={theme.colors.text}/>
                 </PlayButtonForegroundColor>
                 <PlayButtonBackgroundColor />
               </GameActionButton>
@@ -152,7 +155,7 @@ export default function HomePage() {
                 onClick={() => editGame()}
               >
                 <EditButtonForegroundColor>
-                  <PencilIcon />
+                  <PencilIcon color={theme.colors.text}/>
                 </EditButtonForegroundColor>
                 <EditButtonBackgroundColor />
               </GameActionButton>
@@ -163,7 +166,7 @@ export default function HomePage() {
                 id="shareButton"
               >
                 <ShareButtonForegroundColor>
-                  <UploadIcon />
+                  <UploadIcon color={theme.colors.text}/>
                 </ShareButtonForegroundColor>
                 <ShareButtonBackgroundColor />
               </GameActionButton>

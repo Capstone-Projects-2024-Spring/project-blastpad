@@ -3,57 +3,43 @@ import { SettingsPageLayout, SideMenu, SideButton, SideButtonIconContainer } fro
 import NetworkSettingsPage from "./Settings/NetworkSettingsPage";
 import ClassroomSettingsPage from "./Settings/ClassroomSettingsPage";
 import ProfileSettingsPage from './Settings/ProfileSettingsPage'
-import { ClassroomIcon, ProfileIcon, SensorsIcon } from './Icons'
+import { ClassroomIcon, ProfileIcon, ThemeIcon, WiFiIcon } from './Icons'
+import ThemeSettingsPage from "./Settings/ThemeSettingsPage";
+import { useTheme } from "styled-components";
+
+const settingsNavIcons = {
+  "Wi-Fi": WiFiIcon,
+  "Class": ClassroomIcon,
+  "Profile": ProfileIcon,
+  "Themes": ThemeIcon
+}
 
 const SettingsPage = () => {
   const [currentSettingsPage, setCurrentSettingsPage] = useState("Wi-Fi");
+  const theme = useTheme();
 
   return (
     <SettingsPageLayout>
       <SideMenu>
-        <SideButton
-          active={currentSettingsPage === "Wi-Fi"}
-          onClick={() => {setCurrentSettingsPage("Wi-Fi")}}
-          tabIndex="0"
-        >
-          Wi-Fi
-        </SideButton>
-        <SideButton
-          active={currentSettingsPage === "Class"}
-          onClick={() => setCurrentSettingsPage("Class")}
-          tabIndex="0"
-        >
-          <SideButtonIconContainer>
-            <ClassroomIcon />
-          </SideButtonIconContainer>
-          Class
-        </SideButton>
-        <SideButton
-          active={currentSettingsPage === "Profile"}
-          onClick={() => setCurrentSettingsPage("Profile")}
-          tabIndex="0"
-        >
-          <SideButtonIconContainer>
-            <ProfileIcon />
-          </SideButtonIconContainer>
-          Profile
-        </SideButton>
-        <SideButton
-          active={currentSettingsPage === "Sensors"}
-          onClick={() => setCurrentSettingsPage("Sensors")}
-          tabIndex="0"
-        >
-        <SideButtonIconContainer>
-          <SensorsIcon />
-        </SideButtonIconContainer>
-          Sensors
-        </SideButton>
+        {Object.keys(settingsNavIcons).map((page) => {
+          const Icon = settingsNavIcons[page];
+          
+          return (<SideButton
+          active={currentSettingsPage === page}
+          onClick={() => {setCurrentSettingsPage(page)}}
+          tabIndex="0">
+            <SideButtonIconContainer>
+              <Icon color={currentSettingsPage === page ? theme.colors.textActive : theme.colors.text}/>
+            </SideButtonIconContainer>
+            {page}
+          </SideButton>)
+        })}
       </SideMenu>
       
       {currentSettingsPage === 'Wi-Fi' && <NetworkSettingsPage/>}
       {currentSettingsPage === 'Class' && <ClassroomSettingsPage/>}
       {currentSettingsPage === 'Profile' && <ProfileSettingsPage/>}
-      {/* {currentSettingsPage === 'Sensors' && <SettingsPage />} */}
+      {currentSettingsPage === 'Themes' && <ThemeSettingsPage />}
 
     </SettingsPageLayout>
   );

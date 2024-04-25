@@ -1,7 +1,7 @@
 import { PreviewGameIcon, MetaDataText, MetaDataTitle, GameActionButton, GameMetaData, CommunityPageContainer, GameGridContainer, GameIcon, GameIconsContainer, SearchBarContainer, SearchBar, SearchIconContainer, SearchBarInput, RefreshButton, RefreshButtonContainer, GameActionButtonsContainer} from "./styles/CommunityPage.styled"
 import { SearchIcon, RefreshIcon } from "./Icons";
 import { useState, useEffect } from 'react';
-
+import { useTheme } from "styled-components";
 
 var defaultGames = []
 
@@ -15,6 +15,8 @@ export default function CommunityPage() {
   const [availableGames, setAvailableGames] = useState(defaultGames);
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
+
+  const theme = useTheme();
 
   const downloadFromCommunity = () => {
     if(selectedGame == null) { return; }
@@ -70,13 +72,13 @@ export default function CommunityPage() {
       <SearchBarContainer>
         <SearchBar>
           <SearchIconContainer tabIndex={0}>
-            <SearchIcon/>
+            <SearchIcon color={theme.colors.text}/>
           </SearchIconContainer>
             <SearchBarInput type="text" tabIndex={0}/>
         </SearchBar>
         <RefreshButtonContainer>
           <RefreshButton tabIndex={0}>
-              <RefreshIcon/>
+              <RefreshIcon color={theme.colors.text}/>
           </RefreshButton>
         </RefreshButtonContainer>
       </SearchBarContainer>

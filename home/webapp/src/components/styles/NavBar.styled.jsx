@@ -27,6 +27,7 @@ export const NavButtonsContainer = styled.div`
 
 export const NavButton = styled.div`
   background-color: ${({ theme, active }) => (active ? theme.colors.active : theme.colors.foreground)};
+  color: ${({ theme, active }) => (active ? theme.colors.textActive : theme.colors.text)};
   width: 80px;
   height: 80px;
   border-radius: 17px;

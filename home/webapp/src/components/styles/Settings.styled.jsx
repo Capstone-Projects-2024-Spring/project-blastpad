@@ -7,13 +7,11 @@ export const SettingsPageLayout = styled.div`
   
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 20px;
 `;
 
 export const SideMenu = styled.div`
   width: 170px;
-  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 10px;
   padding: 0px;
 
@@ -28,9 +26,9 @@ export const SideButton = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: ${(props) => (props.active ? `${props.theme.colors.active}` : `${props.theme.colors.foreground}`)};
-  color: #ffffff;
-  
+  background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.foreground}`)};
+  color: ${({active, theme}) => (active ? `${theme.colors.textActive}` : `${theme.colors.text}`)};
+
   cursor: pointer;
   font-size: 22px;
   font-family: 'Inter', sans-serif;
@@ -47,7 +45,7 @@ export const SideButton = styled.div`
   gap: 10px;
 
   &:focus {
-    outline: ${(props) => "4px solid #ffffff"};
+    background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.foreground}`)};
     outline-offset: -4px;
   }
 `;
@@ -124,21 +122,21 @@ export const NetworkActionBar = styled.div`
 `;
 
 export const ConnectedNetwork = styled.div`
-  background-color: ${({ theme }) => theme.colors.active};
-  color: #39FF14;
+  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 5px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: 3px solid white;
   font-size: 26px;
   flex-grow: 1;
+
+  user-select: none;
 `;
 
 export const DisconnectButton = styled.div`
-  background-color: #9c1313;
+  background-color: ${({ theme }) => theme.colors.playPrimary};
   width: 150px;
   cursor: pointer;
   font-size: 25px;
@@ -154,7 +152,7 @@ export const DisconnectButton = styled.div`
 
 
 export const RefreshButton = styled.div`
-  background-color: #3ebffa;
+  background-color: ${({ theme }) => theme.colors.editPrimary};
   font-size: 50px;
   cursor: pointer;
   display: flex;
@@ -196,8 +194,10 @@ export const ClassroomSettingsPageLeaveClassButton = styled(ClassroomSettingsPag
   padding: 4px 14px; 
   font-size: 24px;
   border-radius: 10px;
-  background-color: #CC4242;
+  background-color: ${({ theme }) => theme.colors.playPrimary};
   width: 265px;
   height: 48px;
+  user-select: none;
+  cursor: pointer;
 `;
  

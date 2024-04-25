@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: ${({ theme }) => theme.colors.text};
 }
 
 #root, .App {
@@ -23,9 +24,5 @@ body {
   width: 800px;
   height: 480px;
   padding: 19px;
-}
-
-.dark {
-  background-color: ${theme.dark.colors.header};
 }
 `;
