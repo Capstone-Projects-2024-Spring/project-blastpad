@@ -259,6 +259,27 @@ export const thanh = {
   },
 }
 
+export const bury = {
+  name: "Bury Purple",
+  colors: {
+    background: '#370622',
+    foreground: '#B91372',
+    active: '#5C0A39',
+    text: '#F9C8E4',
+    textActive: "#F9C8E4",
+  
+    playPrimary: '#2947E0',
+    playSecondary: '#1D3ACF',
+    
+    editPrimary: '#2947E0',
+    editSecondary: '#1D3ACF',
+  
+    sharePrimary: '#2947E0',
+    shareSecondary: "#1D3ACF"
+  },
+}
+
+
 
 export const Themes = {
   "Dark": dark,
@@ -273,5 +294,6 @@ export const Themes = {
   "Latte": latte,
   "Chocolate": chocolate,
   "Banana": banana,
-  "Thanh": thanh
+  "Thanh": thanh,
+  "Bury Purple": bury,
 }
