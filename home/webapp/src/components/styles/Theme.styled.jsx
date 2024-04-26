@@ -239,6 +239,26 @@ export const banana = {
   },
 }
 
+export const thanh = {
+  name: "Thanh",
+  colors: {
+    background: '#5F8D4F',
+    foreground: '#496c3d',
+    active: '#2f2a1e',
+    text: '#2f2a1e',
+    textActive: "#5F8D4F",
+  
+    playPrimary: '#5F8D4F',
+    playSecondary: '#28431F',
+    
+    editPrimary: '#5F8D4F',
+    editSecondary: '#28431F',
+  
+    sharePrimary: '#5F8D4F',
+    shareSecondary: "#28431F"
+  },
+}
+
 
 export const Themes = {
   "Dark": dark,
@@ -252,5 +272,6 @@ export const Themes = {
   "Strawberry Acai": strawberryAcai,
   "Latte": latte,
   "Chocolate": chocolate,
-  "Banana": banana
+  "Banana": banana,
+  "Thanh": thanh
 }

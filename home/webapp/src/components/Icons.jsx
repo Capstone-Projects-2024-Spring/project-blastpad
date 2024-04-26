@@ -145,7 +145,7 @@ export function DynamicBatteryIcon({level, theme}) {
 
   function getColor() {
     if (theme.name != "Dark" && theme.name != "Light") {
-      return "#FFFFFF"
+      return theme.colors.text
     }
 
     if (level > 0.45) {

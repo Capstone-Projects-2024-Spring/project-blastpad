@@ -117,7 +117,7 @@ export const GameIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};\
+  background-color: ${({ theme }) => theme.colors.active};
   background-image: url("${({ imagepath }) => imagepath}");
   background-repeat: no-repeat;
   background-size: contain;
