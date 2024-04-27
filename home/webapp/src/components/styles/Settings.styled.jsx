@@ -46,7 +46,8 @@ export const SideButton = styled.div`
 
   &:focus {
     background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.foreground}`)};
-    outline-offset: -4px;
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
   }
 `;
 
