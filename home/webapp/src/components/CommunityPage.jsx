@@ -25,6 +25,8 @@ export default function CommunityPage() {
   const [gameDownloading, setGameDownloading] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   const theme = useTheme();
 
   const downloadFromCommunity = () => {
@@ -49,8 +51,12 @@ export default function CommunityPage() {
       });
   }
 
-  useEffect(() => {
-    fetch(`/get/community/`, {
+
+  const getGamesWithTerm = (term) => {
+    if(term == "") {
+      term = "all";
+    }
+    fetch(`/get/community/${term}`, {
       method: "GET"
     })
       .then((response) => response.json())
@@ -58,6 +64,10 @@ export default function CommunityPage() {
         setAvailableGames(data.games);
       })
       .catch((error) => console.log(error));
+  }
+
+  useEffect(() => {
+    getGamesWithTerm("all");
   }, []);
 
 
@@ -100,15 +110,17 @@ export default function CommunityPage() {
         }
       </GameLoadingContainer>
 
-
       <SearchBarContainer>
         <SearchBar>
-          <SearchIconContainer tabIndex={0}>
+          <SearchIconContainer>
             <SearchIcon color={theme.colors.text}/>
           </SearchIconContainer>
-            <SearchBarInput type="text" tabIndex={0}/>
+            <SearchBarInput type="text" tabIndex={0} value={searchQuery} onChange={(event)=>{setSearchQuery(event.target.value);}} />
         </SearchBar>
-        <RefreshButtonContainer>
+        <RefreshButtonContainer
+        onClick={()=>{ getGamesWithTerm(searchQuery)}}
+        
+        >
           <RefreshButton tabIndex={0}>
               <RefreshIcon color={theme.colors.text}/>
           </RefreshButton>

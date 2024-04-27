@@ -32,6 +32,11 @@ export const SearchBar = styled.div`
   padding: 5px 20px;
   justify-content: start;
   align-items: center;
+  
+  &:focus {
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+  }
 `;
 
 export const SearchIconContainer = styled.div`
