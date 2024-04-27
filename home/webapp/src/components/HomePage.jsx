@@ -23,7 +23,8 @@ export default function HomePage() {
   const theme = useTheme()
   
   const scrollIntoView = (index) => {
-    document.getElementById(index).scrollIntoView(true)
+    console.log("scrolling")
+    document.getElementById(index).scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
   }
 
   const shareToCommunity = () => {
@@ -115,7 +116,7 @@ export default function HomePage() {
             key={index}
             id={index}
             tabIndex={0}
-            onFocus={() => {handleSelectGame(index)}}
+            onFocus={() => {handleSelectGame(index); scrollIntoView(index)}}
             imagepath={game.game_icon_path}
             className={game.selected ? "inspecting" : ""}
           />

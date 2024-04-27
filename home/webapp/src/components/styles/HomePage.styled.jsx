@@ -17,7 +17,7 @@ export const GalleryContainer = styled.div`
   gap: 9px;
   // outline: 3px solid red;
   width: 100%;
-  overflow: scroll;
+  overflow: hidden;
   
   &::-webkit-scrollbar {
     display: none;
