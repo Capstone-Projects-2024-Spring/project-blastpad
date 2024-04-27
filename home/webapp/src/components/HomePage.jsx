@@ -23,7 +23,6 @@ export default function HomePage() {
   const theme = useTheme()
   
   const scrollIntoView = (index) => {
-    console.log("scrolling")
     document.getElementById(index).scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
   }
 
@@ -54,8 +53,10 @@ export default function HomePage() {
   }, []);
 
   const handleSelectGame = (index) => {
-    console.log("selecting");
     if(index == -1) {
+      if(selectedGame != null && selectedGameIndex != -1) {
+        availableGames[selectedGameIndex].selected = false;
+      }
       setSelectedGameIndex(index);
       return;
     }
@@ -64,7 +65,6 @@ export default function HomePage() {
       availableGames[selectedGameIndex].selected = false;
     }
     availableGames[index].selected = true
-    console.log(availableGames);
     setSelectedGame(availableGames[index]);
     setSelectedGameIndex(index);
 
