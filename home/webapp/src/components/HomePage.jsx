@@ -1,6 +1,6 @@
 // BELOW IS THE CODE THAT DOESN'T USE API POLLING FOR LOADED GAMES. CHANGES METADATA ON GAME FOCUS. 
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { NewGameIcon, PlayIcon, PencilIcon, UploadIcon, ClassroomIcon, CommunityIcon } from './Icons';
 import {
   GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, GameMetaData,
@@ -11,11 +11,14 @@ import {
   ShareLoader, Checkmark
 } from './styles/HomePage.styled';
 import { useTheme } from 'styled-components'
+import { AuthContext } from "../AuthContext";
 
 // List of games with metadata
 var gameList = []
 
 export default function HomePage() {
+  const { classroom } = useContext(AuthContext)
+
   const [availableGames, setAvailableGames] = useState(gameList);
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
@@ -51,6 +54,29 @@ export default function HomePage() {
       .catch((error) => {
         console.log(error)
         setStatusMessage(`Could not share to community hub.`)
+      })
+      .finally(() => {
+        setTimeout(() => {setGameSharing(false); setSuccess(false)}, 2500)
+      });
+  }
+
+  const shareToClassroom = () => {
+    if(selectedGame == null || classroom == null) { return; }
+    setGameSharing(true)
+    setStatusMessage(`Sharing ${selectedGame.name} to ${classroom.title}...`)
+
+    fetch(`/share/classroom/${classroom.id}/${selectedGame.name}`, {
+      method: "GET"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setSuccess(true)
+        setStatusMessage("Shared Successfully!")
+      })
+      .catch((error) => {
+        console.log(error)
+        setStatusMessage(`Could not share to ${classroom.title}`)
       })
       .finally(() => {
         setTimeout(() => {setGameSharing(false); setSuccess(false)}, 2500)
@@ -184,7 +210,9 @@ export default function HomePage() {
           shareMenuOpen
           ?
           <ShareMenu>
-            <ShareMenuButton tabIndex={1}> <ClassroomIcon/> My Classroom </ShareMenuButton>
+            {classroom != null?
+            <ShareMenuButton tabIndex={1} onClick={()=>shareToClassroom()}> <ClassroomIcon/> My Classroom </ShareMenuButton>
+            : <></>}
             <ShareMenuButton tabIndex={1} onClick={()=>shareToCommunity()}> <CommunityIcon/> Community Hub </ShareMenuButton>
             <ShareMenuButton tabIndex={1} onClick={()=>{
               setShareMenuOpen(false);
