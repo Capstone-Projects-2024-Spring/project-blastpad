@@ -361,7 +361,7 @@ def connect_to_wifi():
 @app.route('/get/community/<search>', methods = ['GET'])
 def communityhubgames(search):
     games = []
-    if search != "all" :
+    if search != "all" and search != '':
         games = supabase.table('game_metadata').select('*').ilike('id', search).execute().data
     else:
         games = supabase.table('game_metadata').select("*").execute().data
@@ -370,6 +370,37 @@ def communityhubgames(search):
         game['game_icon_path'] = "https://klexzeldnyavipasmvvl.supabase.co/storage/v1/object/public/images/"+game['id']+'.png'
 
     return {"games": games}, 200
+
+
+@app.route('/get/classroom/<classroom>/<search>', methods = ['GET'])
+def classroomgames(classroom, search):
+    games = []
+    if search != "all" and search != '':
+        games = supabase.table('classroom_game_metadata').select('*').eq('classroom', classroom).ilike('id', search).execute().data
+    else:
+        games = supabase.table('classroom_game_metadata').select("*").eq('classroom', classroom).execute().data
+
+    for game in games:
+        game['game_icon_path'] = "https://klexzeldnyavipasmvvl.supabase.co/storage/v1/object/public/images/classroom"+classroom+game['id']+'.png'
+
+    return {"games": games}, 200
+
+
+
+@app.route('/create/classroom/', methods = ['POST'])
+def createclassroom():
+    print(request)
+    if request.method == 'POST':
+        print(request.json)
+        print(request.json)
+        classroom_data = request.json
+
+        data = supabase.table('Classrooms').insert({"invite_code": classroom_data["invite_code"], "teacher": classroom_data["teacher"], "title": classroom_data["title"], "description": classroom_data["description"]}).execute().data
+        print(data)
+        return {"classroom": data}, 200
+
+
+
 
 @app.route('/share/community/<game_name>', methods = ['GET'])
 def sharetocommunityhub(game_name):
@@ -406,6 +437,71 @@ def sharetocommunityhub(game_name):
     return {"success":"upload successful!"}, 200
 
 
+
+
+@app.route('/share/classroom/<classroom>/<game_name>', methods = ['GET'])
+def sharetoclassroom(classroom, game_name):
+    fpath = GAMES_FOLDER+"/"+game_name+".json"
+    iconpath = GAMES_FOLDER+"/icons/"+game_name+".png"
+    # classroom id
+
+    print(fpath)
+    print(iconpath)
+
+    fileMetadata = None;
+
+    with open(fpath, 'r') as f:
+        game_data = json.load(f)
+        metadata = next((block for block in game_data["blocks"]["blocks"] if block["type"] == "metadata"), None)
+        if metadata:
+            fileMetadata = {
+                'id': game_name,
+                'author': metadata["inputs"]["author name"]["block"]["fields"]["TEXT"],
+                'description': metadata["inputs"]["description"]["block"]["fields"]["TEXT"],
+                'classroom': classroom
+            }
+
+    data, count = supabase.table('classroom_game_metadata').upsert(fileMetadata).execute()
+
+    try:
+        with open(fpath, 'rb') as f:
+            supabase.storage.from_("games").upload(file=f,path="classroom"+classroom+game_name+".json", file_options={"content-type": "application/json", "upsert":"true"})
+
+        with open(iconpath, 'rb') as f:
+            supabase.storage.from_("images").upload(file=f,path="classroom"+classroom+game_name+".png", file_options={"content-type": "image/x-png", "upsert":"true"})
+
+    except:
+        return {"error":"upload failed"}, 400
+
+    return {"success":"upload successful!"}, 200
+
+
+
+
+@app.route('/join/classroom/<invite>', methods = ['GET'])
+def joinclassroom(invite):
+    classroom = supabase.table('Classrooms').select("*").eq('invite_code', invite).execute().data
+    print(classroom)
+    print(invite)
+    # probably add to user in some way here too
+    # increment students
+    if(len(classroom) > 0):
+        return {"classroom": classroom}, 200
+    return {"classroom": "none"}, 400
+
+
+
+@app.route('/leave/classroom/<invite>', methods = ['GET'])
+def leaveclassroom(invite):
+    classroom = supabase.table('Classrooms').select("*").eq('invite_code', invite).execute().data
+    # probably add to user in some way here too
+    # increment students
+    if(len(classroom) > 0):
+        return {"classroom": classroom}, 200
+    return {"classroom": "none"}, 400
+
+
+
 @app.route('/download/community/<game_name>', methods = ['GET'])
 def downloadfromcommunityhub(game_name):
     fpath = GAMES_FOLDER+"/"+game_name+".json"
@@ -425,6 +521,27 @@ def downloadfromcommunityhub(game_name):
 
     return {"success":"download successful!"}, 200
 
+
+
+
+@app.route('/download/classroom/<classroom>/<game_name>', methods = ['GET'])
+def downloadfromclassroom(classroom, game_name):
+    fpath = GAMES_FOLDER+"/"+game_name+".json"
+    iconpath = GAMES_FOLDER+"/icons/"+game_name+".png"
+
+    try:
+        with open(fpath, 'wb+') as f:
+            res = supabase.storage.from_('games').download("classroom"+classroom+game_name+".json")
+            f.write(res)
+
+        with open(iconpath, 'wb+') as f:
+            res = supabase.storage.from_('images').download("classroom"+classroom+game_name+".png")
+            f.write(res)
+        
+    except:
+        return {"error":"download failed"}, 400
+
+    return {"success":"download successful!"}, 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)

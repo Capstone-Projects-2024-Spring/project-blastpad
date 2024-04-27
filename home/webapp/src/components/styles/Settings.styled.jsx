@@ -167,7 +167,7 @@ export const RefreshButton = styled.div`
 
 export const ClassroomSettingsPageClassroomTitle = styled.div`
   // outline: 2px solid red;
-  font-size: 24px;
+  font-size: 22px;
   text-align: center;
   font-weight: 700;
   line-height: 29.05px;
@@ -200,5 +200,118 @@ export const ClassroomSettingsPageLeaveClassButton = styled(ClassroomSettingsPag
   height: 48px;
   user-select: none;
   cursor: pointer;
+
+  
+  &:focus {
+    background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.foreground}`)};
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+  }
+`;
+
+
+
+export const CreateClassroomButton = styled.button`
+  // outline: 3px solid white;
+  text-align: center;
+  padding: 4px 14px; 
+  font-size: 24px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.playPrimary};
+  width: 265px;
+  height: 48px;
+  user-select: none;
+  cursor: pointer;
+  grid-column: span 2;
+  border: none;
+
+  &:focus {
+    background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.foreground}`)};
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+  }
 `;
  
+
+export const SearchBarInput = styled.input`
+  width: 100%;
+  height: 40px;
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 20px;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.text};
+  border: none;
+  font-size: 24px;
+  outline: none;
+  textarea:focus, input:focus{
+    outline: none;
+  }
+`;
+
+
+export const ClassroomSettingsPageFormField = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  & input {
+    width: 100%;
+    height: 40px;
+    background-color: ${({ theme }) => theme.colors.background};
+    border-radius: 20px;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.text};
+    border: none;
+    font-size: 24px;
+    outline: none;
+    textarea:focus, input:focus{
+      outline: none;
+    }
+`;
+
+export const ClassroomSettingsPageFormContainer = styled.form`
+  width: 100%;
+  gap: 10px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+`;
+
+export const TopButtonContainer = styled.div`
+  margin-top: -20px;
+  display: flex;
+  gap: 10px;
+`
+
+export const TopButtonInContainer = styled.div`
+  width: 100%;
+  background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.foreground}`)};
+  color: ${({active, theme}) => (active ? `${theme.colors.textActive}` : `${theme.colors.text}`)};
+
+  cursor: pointer;
+  font-size: 22px;
+  font-family: 'Inter', sans-serif;
+
+  box-sizing: border-box;
+  border-radius: 9px;
+
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 15px;
+
+  gap: 10px;
+  outline: 3px solid ${({ theme }) => theme.colors.text};
+
+  &:focus, &:active {
+    background-color: ${({active, theme}) => (active ? `${theme.colors.active}` : `${theme.colors.background}`)};
+    outline: 3px solid ${({ theme }) => theme.colors.text};
+    outline-offset: -3px;
+  }
+`;
+
+
