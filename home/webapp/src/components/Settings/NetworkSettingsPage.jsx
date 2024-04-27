@@ -3,7 +3,7 @@ import * as Styled from "../styles/Settings.styled";
 
 export default function NetworkSettingsPage() {
   const [connectedNetwork, setConnectedNetwork] = useState(null);
-  const [wifiNetworks, setWifiNetworks] = useState([]);
+  const [wifiNetworks, setWifiNetworks] = useState(["Network1", "Network2"]);
 
   const fetchNetworks = async () => {
     try {
@@ -99,8 +99,8 @@ export default function NetworkSettingsPage() {
       <Styled.NetworkActionBar>
         <Styled.ConnectedNetwork>
           {connectedNetwork ? 
-            (<span style={{ color: '#39FF14' }}>✔ {connectedNetwork}</span>) : 
-            (<span style={{ color: '#E44a4a' }}>❌ Not Connected</span>)}
+            (<span>✔ {connectedNetwork}</span>) : 
+            (<span>✗ Not Connected</span>)}
         </Styled.ConnectedNetwork>
 
         <Styled.DisconnectButton onClick={handleDisconnectButtonClick} tabIndex="0">Disconnect</Styled.DisconnectButton>

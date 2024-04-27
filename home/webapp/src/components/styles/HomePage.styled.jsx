@@ -17,7 +17,7 @@ export const GalleryContainer = styled.div`
   gap: 9px;
   // outline: 3px solid red;
   width: 100%;
-  overflow: scroll;
+  overflow: hidden;
   
   &::-webkit-scrollbar {
     display: none;
@@ -26,13 +26,13 @@ export const GalleryContainer = styled.div`
 `;
 
 export const GameIcon = styled.div`
-  // outline: 3px solid green;
   width: 165px;
   height: 165px;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
+
   background-color: ${({ theme }) => theme.colors.active};
   background-image: url("${({ imagepath }) => imagepath}");
   background-repeat: no-repeat;

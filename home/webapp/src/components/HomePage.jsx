@@ -8,9 +8,10 @@ import {
   PlayButtonBackgroundColor, PlayButtonForegroundColor, EditButtonBackgroundColor,
   EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, ShareMenu, ShareMenuButton
 } from './styles/HomePage.styled';
+import { useTheme } from 'styled-components'
 
 // List of games with metadata
-var gameList = []
+var gameList = [];
 
 export default function HomePage() {
   const [availableGames, setAvailableGames] = useState(gameList);
@@ -18,7 +19,12 @@ export default function HomePage() {
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
 
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
+
+  const theme = useTheme()
   
+  const scrollIntoView = (index) => {
+    document.getElementById(index).scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+  }
 
   const shareToCommunity = () => {
     if(selectedGame == null) { return; }
@@ -41,23 +47,31 @@ export default function HomePage() {
       .then((response) => response.json())
       .then((data) => {
         setAvailableGames(data.games);
+        console.log(data.games);
       })
       .catch((error) => console.log(error));
   }, []);
 
   const handleSelectGame = (index) => {
-    if(selectedGame != null) {
+    if(index == -1) {
+      if(selectedGame != null && selectedGameIndex != -1) {
+        availableGames[selectedGameIndex].selected = false;
+      }
+      setSelectedGameIndex(index);
+      return;
+    }
+
+    if(selectedGame != null && selectedGameIndex != -1) {
       availableGames[selectedGameIndex].selected = false;
     }
     availableGames[index].selected = true
-    console.log(availableGames);
     setSelectedGame(availableGames[index]);
     setSelectedGameIndex(index);
 
   };
 
   const deselectGame = () => {
-    if(selectedGame != null) {
+    if(selectedGame != null && selectedGame != -1) {
       availableGames[selectedGameIndex].selected = false;
     }
     setSelectedGame(null);
@@ -89,17 +103,20 @@ export default function HomePage() {
   return (
     <HomePageContainer>
       <GalleryContainer>
-        <GameIcon tabIndex={0} autoFocus id='NewGameIcon' 
-          onFocus={() => deselectGame()}
-          onClick={() => newGame()}
+        <GameIcon tabIndex={0} 
+        autoFocus 
+        id='NewGameIcon' 
+        onFocus={() => {handleSelectGame(-1); scrollIntoView("NewGameIcon")}}
+        onClick={() => newGame()}  
         >
-          <NewGameIcon />
+          <NewGameIcon color={theme.colors.textActive}/>
         </GameIcon>
         {availableGames.map((game, index) => (
           <GameIcon
             key={index}
+            id={index}
             tabIndex={0}
-            onFocus={() => handleSelectGame(index)}
+            onFocus={() => {handleSelectGame(index); scrollIntoView(index)}}
             imagepath={game.game_icon_path}
             className={game.selected ? "inspecting" : ""}
           />
@@ -125,12 +142,25 @@ export default function HomePage() {
 
 
         {
-          selectedGame != null
+          selectedGameIndex == -1
+          ?
+          <>
+            <GameMetaData>
+              <MetaDataTitle>
+                <span>Create a Game</span>
+              </MetaDataTitle>
+            </GameMetaData>
+          </>
+          : <></>
+        }
+
+        {
+          selectedGame != null && selectedGameIndex != -1
           ? 
           <>
             <GameMetaData>
               <MetaDataTitle>
-                <span>{selectedGame.name}</span>
+                <marquee>{selectedGame.name}</marquee>
               </MetaDataTitle>
               <MetaDataText> Author: {selectedGame.metadata[1]["author name"]}</MetaDataText>
               <MetaDataText> Last Updated: {selectedGame.last_updated}</MetaDataText>
@@ -143,7 +173,7 @@ export default function HomePage() {
                 onClick={() => runGame()}
               >
                 <PlayButtonForegroundColor>
-                  <PlayIcon />
+                  <PlayIcon color={theme.colors.text}/>
                 </PlayButtonForegroundColor>
                 <PlayButtonBackgroundColor />
               </GameActionButton>
@@ -152,7 +182,7 @@ export default function HomePage() {
                 onClick={() => editGame()}
               >
                 <EditButtonForegroundColor>
-                  <PencilIcon />
+                  <PencilIcon color={theme.colors.text}/>
                 </EditButtonForegroundColor>
                 <EditButtonBackgroundColor />
               </GameActionButton>
@@ -163,7 +193,7 @@ export default function HomePage() {
                 id="shareButton"
               >
                 <ShareButtonForegroundColor>
-                  <UploadIcon />
+                  <UploadIcon color={theme.colors.text}/>
                 </ShareButtonForegroundColor>
                 <ShareButtonBackgroundColor />
               </GameActionButton>

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer, TimeContainer } from "./styles/NavBar.styled";
 import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon, DynamicBatteryIcon } from "./Icons";
+import { useTheme } from 'styled-components';
 
 const navIcons = {
   home: HomeIcon,
@@ -14,6 +15,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   const [isConnected, setIsConnected] = useState(true);
   const [currentTime, setCurrentTime] = useState("");
   const [batteryLevel, setBatteryLevel] = useState(0.8); // Default battery level
+  const theme = useTheme()
 
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {
@@ -80,16 +82,16 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
               onClick={() => handleButtonClick(page)}
               tabIndex={0}
             >
-              <Icon />
+              <Icon color={activePage === page ? theme.colors.textActive : theme.colors.text}/>
             </NavButton>
           );
         })}
       </NavButtonsContainer>
       <StatusIconsContainer>
         {/* Use renderBatteryIcon to render the correct battery icon */}
-        {<DynamicBatteryIcon level={batteryLevel}/>}
+        {<DynamicBatteryIcon level={batteryLevel} theme={theme}/>}
         {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
-        {isConnected ? <WiFiIcon /> : <NoSignalIcon />}
+        {isConnected ? <WiFiIcon color={theme.colors.text}/> : <NoSignalIcon color={theme.colors.text}/>}
         <TimeContainer>
           {currentTime}
         </TimeContainer>

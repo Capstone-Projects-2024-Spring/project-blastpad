@@ -19,7 +19,8 @@ const ProfileActionButton = styled.div`
   width: 100px;
   text-align: center;
 
-  background-color: ${({ theme }) => theme.colors.active};
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   padding: 10px;
   border-radius: 10px;
 
@@ -34,6 +35,7 @@ const ProfileActionButton = styled.div`
 
 const ProfileActionInput = styled.input`
   background-color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.background};
   padding: 10px;
   border-radius: 10px;
 `

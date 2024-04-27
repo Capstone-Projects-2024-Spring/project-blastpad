@@ -574,7 +574,7 @@ forBlock['simple_occupied_by'] = function(block, generator) {
 forBlock['key_repeat_mode'] = function(block, generator) {
   var number_delay = block.getFieldValue('delay');
   // TODO: Assemble python into code variable.
-  var code = `pygame.key.set_repeat(${parseInt(number_delay)*1000})\n`
+  var code = `pygame.key.set_repeat(${number_delay*1000})\n`
   return code;
 };
 

@@ -24,8 +24,8 @@ export const SearchBarContainer = styled.div`
 export const SearchBar = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
-  outline: 4px solid ${({ theme }) => theme.colors.foreground};
+  background-color: ${({ theme }) => theme.colors.foreground};
+  // outline: 4px solid ${({ theme }) => theme.colors.active};
   outline-offset: -4px;
   border-radius: 40px;
   display: flex;
@@ -37,7 +37,6 @@ export const SearchBar = styled.div`
 export const SearchIconContainer = styled.div`
   width: 40px;
   height: 40px;
-  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -52,7 +51,7 @@ export const SearchIconContainer = styled.div`
 export const SearchBarInput = styled.input`
   width: 100%;
   height: 40px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.foreground};
   color: ${({ theme }) => theme.colors.text};
   border: none;
   font-size: 24px;
@@ -118,7 +117,7 @@ export const GameIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};\
+  background-color: ${({ theme }) => theme.colors.active};
   background-image: url("${({ imagepath }) => imagepath}");
   background-repeat: no-repeat;
   background-size: contain;
@@ -218,8 +217,7 @@ export const GameActionButton = styled.div`
 export const MetaDataText = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  color: ${({ theme }) => theme.colors.text};
+  justify-content: space-between; 
   font-size: 28px;
   font-weight: 600;
 `;
