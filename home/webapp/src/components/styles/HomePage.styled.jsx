@@ -200,9 +200,140 @@ export const ShareMenuButton = styled.div`
     height: 30px;
     width: 30px;
     margin-right: 10px;
+    fill: ${({ theme }) => theme.colors.text} !important;
+  }
+
+  & path {
+    fill: ${({ theme }) => theme.colors.text} !important;
   }
 
   &:not(:focus) {
     opacity: 0.5
   }
 `;
+
+
+
+export const GameLoadingContainer = styled.div`
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: ${({ theme }) => theme.colors.background};
+  z-index: 100;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  opacity: 1;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  &.notActive {
+    opacity: 0;
+  }
+  
+`;
+
+export const Loader = styled.span`
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+
+&::after,
+&::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 4px solid ${({ theme }) => theme.colors.playPrimary};
+  opacity: 0.8;
+  border-radius: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  animation: rotation 15s infinite ease-in-out;
+}
+&::after {
+  border-color: ${({ theme }) => theme.colors.playSecondary};
+  animation-delay: -6s;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0
+  }
+  50% {
+    opacity: 1
+  }
+  100% {
+    transform: rotate(359deg);
+    opacity: 0
+  }
+}`
+
+
+
+export const ShareLoader = styled.span`
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+
+&::after,
+&::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 4px solid ${({ theme }) => theme.colors.sharePrimary};
+  opacity: 0.8;
+  border-radius: 50px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  animation: rotation 15s infinite ease-in-out;
+}
+&::after {
+  border-color: ${({ theme }) => theme.colors.shareSecondary};
+  animation-delay: -6s;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0
+  }
+  50% {
+    opacity: 1
+  }
+  100% {
+    transform: rotate(359deg);
+    opacity: 0
+  }
+}`
+
+export const Checkmark = styled.div`
+  display: inline-block;
+  position: absolute;
+  transform: rotate(35deg);
+  height: 70px;
+  width: 30px;
+  border-bottom: 10px solid ${({ theme }) => theme.colors.sharePrimary};
+  border-right: 10px solid ${({ theme }) => theme.colors.sharePrimary};
+  opacity: 1;
+  transition: opacity 0.5s;
+  
+  &.notActive {
+    opacity: 0;
+  }
+`

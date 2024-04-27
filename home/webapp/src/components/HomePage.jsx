@@ -6,12 +6,14 @@ import {
   GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, GameMetaData,
   GameActionButtonsContainer, GameActionButton, MetaDataText, MetaDataTitle,
   PlayButtonBackgroundColor, PlayButtonForegroundColor, EditButtonBackgroundColor,
-  EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, ShareMenu, ShareMenuButton
+  EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, 
+  ShareMenu, ShareMenuButton, GameLoadingContainer, Loader,
+  ShareLoader, Checkmark
 } from './styles/HomePage.styled';
 import { useTheme } from 'styled-components'
 
 // List of games with metadata
-var gameList = [];
+var gameList = []
 
 export default function HomePage() {
   const [availableGames, setAvailableGames] = useState(gameList);
@@ -19,6 +21,11 @@ export default function HomePage() {
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
 
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
+  
+  const [gameLoading, setGameLoading] = useState(false);
+  const [gameSharing, setGameSharing] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const theme = useTheme()
   
@@ -28,6 +35,8 @@ export default function HomePage() {
 
   const shareToCommunity = () => {
     if(selectedGame == null) { return; }
+    setGameSharing(true)
+    setStatusMessage(`Sharing ${selectedGame.name} to the Community Hub...`)
 
     fetch(`/share/community/${selectedGame.name}`, {
       method: "GET"
@@ -36,8 +45,16 @@ export default function HomePage() {
       .then((data) => {
         console.log("share complete!")
         console.log(data);
+        setSuccess(true)
+        setStatusMessage("Shared Successfully!")
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+        setStatusMessage(`Could not share to community hub.`)
+      })
+      .finally(() => {
+        setTimeout(() => {setGameSharing(false); setSuccess(false)}, 2500)
+      });
   }
 
   useEffect(() => {
@@ -80,6 +97,8 @@ export default function HomePage() {
 
   const runGame = () => {
     if(selectedGame == null) { return; }
+    setGameLoading(true);
+    setStatusMessage(`Launching ${selectedGame.name}...`)
 
     fetch(`/run?game=${selectedGame.name}`, {
       method: "GET"
@@ -87,8 +106,17 @@ export default function HomePage() {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      // setStatusMessage("Game ran successfully.");
+      setSuccess(true)
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      setStatusMessage(`${selectedGame.name} encountered an error.`)
+      setSuccess(false);
+      console.log(error)
+    })
+    .finally(() => {
+      setTimeout(() => {setGameLoading(false); setSuccess(false)}, 500)
+    });
   }
 
   const editGame = () => {
@@ -102,6 +130,33 @@ export default function HomePage() {
 
   return (
     <HomePageContainer>
+      <GameLoadingContainer className={gameLoading ? '' : 'notActive'}>
+        {gameLoading ? 
+          <>
+            <GameIcon imagepath={selectedGame.game_icon_path}>
+              <Loader/>
+              <Checkmark className={success ? '' : 'notActive'}/>
+            </GameIcon>
+            <MetaDataTitle>{statusMessage}</MetaDataTitle>
+          </>
+          : <></>
+        }
+      </GameLoadingContainer>
+
+      <GameLoadingContainer className={gameSharing ? '' : 'notActive'}>
+        {gameSharing ? 
+          <>
+            <GameIcon imagepath={selectedGame.game_icon_path}>
+              <ShareLoader/>
+              <Checkmark className={success ? '' : 'notActive'}/>
+            </GameIcon>
+            <MetaDataTitle>{statusMessage}</MetaDataTitle>
+          </>
+          : <></>
+        }
+      </GameLoadingContainer>
+
+
       <GalleryContainer>
         <GameIcon tabIndex={0} 
         autoFocus 

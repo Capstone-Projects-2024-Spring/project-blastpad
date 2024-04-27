@@ -358,10 +358,13 @@ def connect_to_wifi():
 ##### SUPABASE !!!!!!!!!! #####
 ###############################
 
-@app.route('/get/community/', methods = ['GET'])
-def communityhubgames():
-    games = supabase.table('game_metadata').select("*").execute().data
-    print(games)
+@app.route('/get/community/<search>', methods = ['GET'])
+def communityhubgames(search):
+    games = []
+    if search != "all" :
+        games = supabase.table('game_metadata').select('*').ilike('id', search).execute().data
+    else:
+        games = supabase.table('game_metadata').select("*").execute().data
 
     for game in games:
         game['game_icon_path'] = "https://klexzeldnyavipasmvvl.supabase.co/storage/v1/object/public/images/"+game['id']+'.png'
