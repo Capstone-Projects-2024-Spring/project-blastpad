@@ -9,6 +9,7 @@ export const GlobalStyles = createGlobalStyle`
   padding: 0;
   box-sizing: border-box;
   color: ${({ theme }) => theme.colors.text};
+  font-weight: 600;
 }
 
 #root, .App {

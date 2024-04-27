@@ -6,12 +6,271 @@ import {
   GalleryContainer, GameIcon, GameInfoContainer, HomePageContainer, GameMetaData,
   GameActionButtonsContainer, GameActionButton, MetaDataText, MetaDataTitle,
   PlayButtonBackgroundColor, PlayButtonForegroundColor, EditButtonBackgroundColor,
-  EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, ShareMenu, ShareMenuButton
+  EditButtonForegroundColor, ShareButtonBackgroundColor, ShareButtonForegroundColor, 
+  ShareMenu, ShareMenuButton, GameLoadingContainer, Loader,
+  ShareLoader, Checkmark
 } from './styles/HomePage.styled';
 import { useTheme } from 'styled-components'
 
 // List of games with metadata
-var gameList = [];
+var gameList = [
+  {
+    "game_icon_path": "/icons/Golf.png",
+    "last_updated": "04/26/24",
+    "metadata": [
+      {
+        "game name": "Golf"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "It's golf."
+      }
+    ],
+    "name": "Golf",
+    "raw_last_updated": 1714109316.1808586,
+    "workspace_filename": "Golf.json",
+    "selected": false
+  },
+  {
+    "game_icon_path": "/icons/Soul Bridge.png",
+    "last_updated": "04/26/24",
+    "metadata": [
+      {
+        "game name": "Soul Bridge"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Soul Bridge",
+    "raw_last_updated": 1714109231.1237273,
+    "workspace_filename": "Soul Bridge.json",
+    "selected": false
+  },
+  {
+    "game_icon_path": "/icons/Block Dude Colored.png",
+    "last_updated": "04/25/24",
+    "metadata": [
+      {
+        "game name": "Block Dude Colored"
+      },
+      {
+        "author name": "Mustafa Malik"
+      },
+      {
+        "description": "Funny calculator game. Get to the door to win!"
+      }
+    ],
+    "name": "Block Dude Colored",
+    "raw_last_updated": 1714091164.2478032,
+    "workspace_filename": "Block Dude Colored.json",
+    "selected": false
+  },
+  {
+    "game_icon_path": "/icons/Miniban.png",
+    "last_updated": "04/25/24",
+    "metadata": [
+      {
+        "game name": "Miniban"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "Soko Boy in Soko World. Place boxes on all targets to complete a level. Author Par: 379 Steps"
+      }
+    ],
+    "name": "Miniban",
+    "raw_last_updated": 1714091054.8827517,
+    "workspace_filename": "Miniban.json",
+    "selected": false
+  },
+  {
+    "game_icon_path": "/icons/DVD Logo.png",
+    "last_updated": "04/24/24",
+    "metadata": [
+      {
+        "game name": "DVD Logo"
+      },
+      {
+        "author name": "Snarr"
+      },
+      {
+        "description": "A DVD logo screen! Wait for it to hit the corner for a surrpise"
+      }
+    ],
+    "name": "DVD Logo",
+    "raw_last_updated": 1714005367.0768354,
+    "workspace_filename": "DVD Logo.json"
+  },
+  {
+    "game_icon_path": "/icons/Brickbreaker.png",
+    "last_updated": "04/24/24",
+    "metadata": [
+      {
+        "game name": "Brickbreaker"
+      },
+      {
+        "author name": "Niaz Baharudeen"
+      },
+      {
+        "description": "Work In Progress"
+      }
+    ],
+    "name": "Brickbreaker",
+    "raw_last_updated": 1713978441.0911129,
+    "workspace_filename": "Brickbreaker.json"
+  },
+  {
+    "game_icon_path": "/icons/Block Dude.png",
+    "last_updated": "04/24/24",
+    "metadata": [
+      {
+        "game name": "Block Dude"
+      },
+      {
+        "author name": "Mustafa Malik"
+      },
+      {
+        "description": "Funny calculator game. Get to the door to win!"
+      }
+    ],
+    "name": "Block Dude",
+    "raw_last_updated": 1713970596.794138,
+    "workspace_filename": "Block Dude.json"
+  },
+  {
+    "game_icon_path": "/icons/Space Fighterz.png",
+    "last_updated": "04/24/24",
+    "metadata": [
+      {
+        "game name": "Space Fighterz"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "Vanquish your enemies... in SPACE!"
+      }
+    ],
+    "name": "Space Fighterz",
+    "raw_last_updated": 1713970548.01735,
+    "workspace_filename": "Space Fighterz.json"
+  },
+  {
+    "game_icon_path": "/icons/Miniban copy.png",
+    "last_updated": "04/23/24",
+    "metadata": [
+      {
+        "game name": "Miniban"
+      },
+      {
+        "author name": "BlastPad Team"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Miniban copy",
+    "raw_last_updated": 1713924507.5857697,
+    "workspace_filename": "Miniban copy.json"
+  },
+  {
+    "game_icon_path": "/icons/Layer Test.png",
+    "last_updated": "04/23/24",
+    "metadata": [
+      {
+        "game name": "Layer Test"
+      },
+      {
+        "author name": "BlastPad Team"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Layer Test",
+    "raw_last_updated": 1713920006.0744035,
+    "workspace_filename": "Layer Test.json"
+  },
+  {
+    "game_icon_path": "/icons/Wildlife Odyssey.png",
+    "last_updated": "04/22/24",
+    "metadata": [
+      {
+        "game name": "Wildlife Odyssey"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "A game with RPG Elements..."
+      }
+    ],
+    "name": "Wildlife Odyssey",
+    "raw_last_updated": 1713843577.3303485,
+    "workspace_filename": "Wildlife Odyssey.json"
+  },
+  {
+    "game_icon_path": "/icons/Flappy Bird.png",
+    "last_updated": "04/22/24",
+    "metadata": [
+      {
+        "game name": "Flappy Bird"
+      },
+      {
+        "author name": "A Cool Guy"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Flappy Bird",
+    "raw_last_updated": 1713798511.5179813,
+    "workspace_filename": "Flappy Bird.json"
+  },
+  {
+    "game_icon_path": "/icons/Some Example.png",
+    "last_updated": "04/22/24",
+    "metadata": [
+      {
+        "game name": "Some Example"
+      },
+      {
+        "author name": "Neil C"
+      },
+      {
+        "description": "Guy Walking Around Simulator"
+      }
+    ],
+    "name": "Some Example",
+    "raw_last_updated": 1713762413.0602725,
+    "workspace_filename": "Some Example.json"
+  },
+  {
+    "game_icon_path": "/icons/Snake.png",
+    "last_updated": "04/22/24",
+    "metadata": [
+      {
+        "game name": "Snake"
+      },
+      {
+        "author name": "Snarr"
+      },
+      {
+        "description": "This is an example project."
+      }
+    ],
+    "name": "Snake",
+    "raw_last_updated": 1713762172.4333525,
+    "workspace_filename": "Snake.json"
+  }
+];
 
 export default function HomePage() {
   const [availableGames, setAvailableGames] = useState(gameList);
@@ -19,6 +278,11 @@ export default function HomePage() {
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
 
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
+  
+  const [gameLoading, setGameLoading] = useState(false);
+  const [gameSharing, setGameSharing] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const theme = useTheme()
   
@@ -28,6 +292,8 @@ export default function HomePage() {
 
   const shareToCommunity = () => {
     if(selectedGame == null) { return; }
+    setGameSharing(true)
+    setStatusMessage(`Sharing ${selectedGame.name} to the Community Hub...`)
 
     fetch(`/share/community/${selectedGame.name}`, {
       method: "GET"
@@ -36,8 +302,16 @@ export default function HomePage() {
       .then((data) => {
         console.log("share complete!")
         console.log(data);
+        setSuccess(true)
+        setStatusMessage("Shared Successfully!")
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+        setStatusMessage(`Could not share to community hub.`)
+      })
+      .finally(() => {
+        setTimeout(() => {setGameSharing(false); setSuccess(false)}, 2500)
+      });
   }
 
   useEffect(() => {
@@ -80,6 +354,8 @@ export default function HomePage() {
 
   const runGame = () => {
     if(selectedGame == null) { return; }
+    setGameLoading(true);
+    setStatusMessage(`Launching ${selectedGame.name}...`)
 
     fetch(`/run?game=${selectedGame.name}`, {
       method: "GET"
@@ -87,8 +363,17 @@ export default function HomePage() {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      // setStatusMessage("Game ran successfully.");
+      setSuccess(true)
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      setStatusMessage(`${selectedGame.name} encountered an error.`)
+      setSuccess(false);
+      console.log(error)
+    })
+    .finally(() => {
+      setTimeout(() => {setGameLoading(false); setSuccess(false)}, 500)
+    });
   }
 
   const editGame = () => {
@@ -102,6 +387,33 @@ export default function HomePage() {
 
   return (
     <HomePageContainer>
+      <GameLoadingContainer className={gameLoading ? '' : 'notActive'}>
+        {gameLoading ? 
+          <>
+            <GameIcon imagepath={selectedGame.game_icon_path}>
+              <Loader/>
+              <Checkmark className={success ? '' : 'notActive'}/>
+            </GameIcon>
+            <MetaDataTitle>{statusMessage}</MetaDataTitle>
+          </>
+          : <></>
+        }
+      </GameLoadingContainer>
+
+      <GameLoadingContainer className={gameSharing ? '' : 'notActive'}>
+        {gameSharing ? 
+          <>
+            <GameIcon imagepath={selectedGame.game_icon_path}>
+              <ShareLoader/>
+              <Checkmark className={success ? '' : 'notActive'}/>
+            </GameIcon>
+            <MetaDataTitle>{statusMessage}</MetaDataTitle>
+          </>
+          : <></>
+        }
+      </GameLoadingContainer>
+
+
       <GalleryContainer>
         <GameIcon tabIndex={0} 
         autoFocus 

@@ -152,7 +152,7 @@ export const GameMetaData = styled.div`
   position: absolute;
   bottom: 0px;
   // outline: 3px solid red;
-  height: 290px;
+  height: 283px;
   gap: 10px;
   width: 100%;
   display: flex;
@@ -187,7 +187,8 @@ export const GameActionButtonsContainer = styled.div`
   // outline: 3px solid green;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
+  margin-top: 10px;
   height: fit-content;
   margin-right: 20px;
 `;
@@ -195,15 +196,16 @@ export const GameActionButtonsContainer = styled.div`
 export const GameActionButton = styled.div`
   position: relative;
   width: 200px; 
-  height: 50px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 15px;
-  background-color: #429227;
-  
+  background-color: ${({ theme }) => theme.colors.background};
+
   &:focus {
     outline: 3px solid ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.textActive};
     outline-offset: 0px;
     border-radius: 15px;
   }

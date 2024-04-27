@@ -2,6 +2,11 @@ import { PreviewGameIcon, MetaDataText, MetaDataTitle, GameActionButton, GameMet
 import { SearchIcon, RefreshIcon } from "./Icons";
 import { useState, useEffect } from 'react';
 import { useTheme } from "styled-components";
+import {
+  GameLoadingContainer,
+  ShareLoader, Checkmark
+} from './styles/HomePage.styled';
+
 
 var defaultGames = []
 
@@ -16,20 +21,32 @@ export default function CommunityPage() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedGameIndex, setSelectedGameIndex] = useState(null);
 
+  const [success, setSuccess] = useState(false);
+  const [gameDownloading, setGameDownloading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+
   const theme = useTheme();
 
   const downloadFromCommunity = () => {
     if(selectedGame == null) { return; }
-
+    setGameDownloading(true);
+    setStatusMessage(`Downloading ${selectedGame.id}`);
     fetch(`/download/community/${selectedGame.id}`, {
       method: "GET"
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log("download complete!")
-        console.log(data);
+      .then(() => {
+        // console.log(data);
+        setSuccess(true);
+        setStatusMessage("Download Successful!");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.error(error);
+        setStatusMessage("Could not download.");
+      })
+      .finally(() => {
+        setTimeout(() => {setGameDownloading(false); setSuccess(false)}, 2500)
+      });
   }
 
   useEffect(() => {
@@ -69,6 +86,21 @@ export default function CommunityPage() {
 
   return (
     <CommunityPageContainer>
+
+      <GameLoadingContainer className={gameDownloading ? '' : 'notActive'}>
+        {gameDownloading ? 
+          <>
+            <GameIcon imagepath={selectedGame.game_icon_path}>
+              <ShareLoader/>
+              <Checkmark className={success ? '' : 'notActive'}/>
+            </GameIcon>
+            <MetaDataTitle> {statusMessage} </MetaDataTitle>
+          </>
+          : <></>
+        }
+      </GameLoadingContainer>
+
+
       <SearchBarContainer>
         <SearchBar>
           <SearchIconContainer tabIndex={0}>
