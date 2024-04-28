@@ -41,6 +41,10 @@ export const NavButton = styled.div`
     outline: 3px solid ${({ theme }) => theme.colors.text};
     outline-offset: -3px;
   }
+
+  &.disabled_nav {
+    opacity: 0.1
+  }
 `;
 
 export const StatusIconsContainer = styled.div`

@@ -3,7 +3,7 @@ import * as Styled from "../styles/Settings.styled";
 
 export default function NetworkSettingsPage() {
   const [connectedNetwork, setConnectedNetwork] = useState(null);
-  const [wifiNetworks, setWifiNetworks] = useState(["Network1", "Network2"]);
+  const [wifiNetworks, setWifiNetworks] = useState(["Network1", "Network2", "n3", "n4", "n5", "n6", "n7", "n8"]);
 
   const fetchNetworks = async () => {
     try {
@@ -103,8 +103,8 @@ export default function NetworkSettingsPage() {
             (<span>✗ Not Connected</span>)}
         </Styled.ConnectedNetwork>
 
-        <Styled.DisconnectButton onClick={handleDisconnectButtonClick} tabIndex="0">Disconnect</Styled.DisconnectButton>
-        <Styled.RefreshButton onClick={handleRefreshButtonClick} tabIndex="0">↻</Styled.RefreshButton>
+        <Styled.DisconnectButton onClick={handleDisconnectButtonClick} tabIndex={0}>Disconnect</Styled.DisconnectButton>
+        <Styled.RefreshButton onClick={handleRefreshButtonClick} tabIndex={0}>↻</Styled.RefreshButton>
       </Styled.NetworkActionBar>
 
       {renderWifiContent()}
