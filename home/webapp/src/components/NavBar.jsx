@@ -10,9 +10,11 @@ const navIcons = {
   settings: SettingsIcon,
 };
 
-const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
+const wifiPages = ['community', 'classroom'];
+
+const NavBar = ({ onPageChange, checkBatteryLevel }) => {
   const [activePage, setActivePage] = useState('home');
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(navigator.onLine);
   const [currentTime, setCurrentTime] = useState("");
   const [batteryLevel, setBatteryLevel] = useState(0.8); // Default battery level
   const theme = useTheme()
@@ -25,12 +27,6 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
     });
   };
   
-  // Function to update the connection status
-  const updateConnectionStatus = async () => {
-    const status = await checkConnection();
-    setIsConnected(status);
-  };
-
   // Function to update the battery level
   const updateBatteryLevel = async () => {
     const level = await checkBatteryLevel();
@@ -46,15 +42,21 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   // Use useEffect to set up intervals for updating connection status, time, and battery level
   useEffect(() => {
     // Update connection status every minute
-    const connectionIntervalId = setInterval(updateConnectionStatus, 60000);
-    // Update time every second
+
+    window.ononline = function() {
+      setIsConnected(true);
+    }
+
+    window.onoffline = function() {
+      setIsConnected(false)
+  }
+
     const timeIntervalId = setInterval(updateTime, 1000);
     // Update battery level every 5 minutes
     const batteryLevelIntervalId = setInterval(updateBatteryLevel, 300000);
 
     // Clean up intervals when the component unmounts
     return () => {
-      clearInterval(connectionIntervalId);
       clearInterval(timeIntervalId);
       clearInterval(batteryLevelIntervalId);
     };
@@ -75,12 +77,15 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
       <NavButtonsContainer>
         {Object.keys(navIcons).map((page) => {
           const Icon = navIcons[page];
+          const pageSelectable = !wifiPages.includes(page) || wifiPages.includes(page) && isConnected
           return (
             <NavButton
               key={page}
               active={activePage === page}
               onClick={() => handleButtonClick(page)}
-              tabIndex={0}
+              tabIndex={pageSelectable ? 0 : -1}
+              disabled={pageSelectable}
+              className={pageSelectable ? "" : 'disabled_nav'}
             >
               <Icon color={activePage === page ? theme.colors.textActive : theme.colors.text}/>
             </NavButton>
@@ -92,6 +97,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
         {<DynamicBatteryIcon level={batteryLevel} theme={theme}/>}
         {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
         {isConnected ? <WiFiIcon color={theme.colors.text}/> : <NoSignalIcon color={theme.colors.text}/>}
+
         <TimeContainer>
           {currentTime}
         </TimeContainer>
