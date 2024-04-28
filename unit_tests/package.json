@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --silent --verbose"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "isomorphic-fetch": "^3.0.0",
     "jest": "^29.7.0"
   },
   "dependencies": {

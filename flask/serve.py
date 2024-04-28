@@ -222,6 +222,22 @@ def compile_and_run():
     return jsonify(response_data), 200
 
 
+@app.route('/compile', methods = ['GET'])
+def just_compile():
+    game_name = request.args.get('game')
+    
+    response_data = {}
+
+    result = compile_game(game_name)
+    response_data = {
+        'game_compiled': result.returncode == 0,
+        'stderr': result.stderr,
+        'stdout': result.stdout
+    }
+
+    return jsonify(response_data), 200
+
+
 def run_game(game_name):
     game_file = os.path.join(BLOCKLY, "compiled_games", game_name+".py")
     game_run_result = subprocess.run(['python', game_file, "not_headless"],         
@@ -521,9 +537,6 @@ def downloadfromcommunityhub(game_name):
 
     return {"success":"download successful!"}, 200
 
-
-
-
 @app.route('/download/classroom/<classroom>/<game_name>', methods = ['GET'])
 def downloadfromclassroom(classroom, game_name):
     fpath = GAMES_FOLDER+"/"+game_name+".json"
@@ -542,6 +555,10 @@ def downloadfromclassroom(classroom, game_name):
         return {"error":"download failed"}, 400
 
     return {"success":"download successful!"}, 200
+
+@app.route('/running', methods = ['GET'])
+def running_test():
+    return {"success":"successful!"}, 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
