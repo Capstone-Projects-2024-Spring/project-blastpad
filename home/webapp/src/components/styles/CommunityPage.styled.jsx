@@ -166,6 +166,10 @@ export const GameMetaData = styled.div`
   padding-bottom: 10px;
   padding-left: 10px;
   border-radius: 15px;
+  
+  & * {
+    font-size: 22px !important;
+  }
   background-color: ${({ theme }) => theme.colors.foreground};
 
 
@@ -225,7 +229,7 @@ export const MetaDataText = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between; 
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
 `;
 

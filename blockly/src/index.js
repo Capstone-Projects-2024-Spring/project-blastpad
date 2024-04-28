@@ -61,359 +61,401 @@ const pageContainer = document.getElementById('pageContainer')
 
 const ws = Blockly.inject(blocklyDiv, {toolbox});
 const defaultWorkspace = {
-  "blocks": {
-      "languageVersion": 0,
-      "blocks": [
-          {
-              "type": "metadata",
-              "id": "A$mP~29yJri+II[;(i/h",
-              "x": 3,
-              "y": 73,
-              "inputs": {
-                  "author name": {
-                      "block": {
-                          "type": "text",
-                          "id": "?)6dy[;RNRixg1lHZGed",
-                          "fields": {
-                              "TEXT": "BlastPad Team"
-                          }
-                      }
-                  },
-                  "description": {
-                      "block": {
-                          "type": "text",
-                          "id": "D?WrcH,o0F0HKfy2~GC;",
-                          "fields": {
-                              "TEXT": "This is an example project."
-                          }
-                      }
-                  },
-                  "game_icon": {
-                      "block": {
-                          "type": "small_bitmap",
-                          "id": "X4Cx3nyk!n5;^%t]v!h@",
-                          "fields": {
-                              "field": [
-                                  [
-                                      2,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      2
-                                  ],
-                                  [
-                                      0,
-                                      0,
-                                      2,
-                                      2,
-                                      2,
-                                      2,
-                                      0,
-                                      0
-                                  ],
-                                  [
-                                      0,
-                                      2,
-                                      2,
-                                      1,
-                                      1,
-                                      2,
-                                      2,
-                                      0
-                                  ],
-                                  [
-                                      0,
-                                      2,
-                                      1,
-                                      0,
-                                      0,
-                                      1,
-                                      2,
-                                      0
-                                  ],
-                                  [
-                                      0,
-                                      2,
-                                      1,
-                                      0,
-                                      0,
-                                      1,
-                                      2,
-                                      0
-                                  ],
-                                  [
-                                      0,
-                                      2,
-                                      2,
-                                      1,
-                                      1,
-                                      2,
-                                      2,
-                                      0
-                                  ],
-                                  [
-                                      0,
-                                      0,
-                                      2,
-                                      2,
-                                      2,
-                                      2,
-                                      0,
-                                      0
-                                  ],
-                                  [
-                                      2,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                      2
-                                  ]
-                              ]
-                          }
-                      }
-                  }
-              },
-              "next": {
-                  "block": {
-                      "type": "procedures_callnoreturn",
-                      "id": "KQhe;5r3h1M4Ox;#vQz0",
-                      "extraState": {
-                          "name": "Start Game"
-                      },
-                      "next": {
-                          "block": {
-                              "type": "game_loop",
-                              "id": "86d_D8;/4N~aV7tNH6~-",
-                              "inputs": {
-                                  "DO": {
-                                      "block": {
-                                          "type": "move",
-                                          "id": "xBy]CE^JAC:X%~OQ5Cul",
-                                          "inputs": {
-                                              "actor": {
-                                                  "block": {
-                                                      "type": "variables_get",
-                                                      "id": "0pIK^!Cx.Wr,1l}~q4(g",
-                                                      "fields": {
-                                                          "VAR": {
-                                                              "id": "k;Uf!p8Cc_^Gp!R$UvQW"
-                                                          }
-                                                      }
-                                                  }
-                                              },
-                                              "x": {
-                                                  "block": {
-                                                      "type": "math_number",
-                                                      "id": "!]wAS/Q9xI|-IF;LlB/%",
-                                                      "fields": {
-                                                          "NUM": 30
-                                                      }
-                                                  }
-                                              },
-                                              "y": {
-                                                  "block": {
-                                                      "type": "math_number",
-                                                      "id": "Q^]SWTy/0mWHnOVOzk_h",
-                                                      "fields": {
-                                                          "NUM": 0
-                                                      }
-                                                  }
-                                              }
-                                          },
-                                          "next": {
-                                              "block": {
-                                                  "type": "exit",
-                                                  "id": "bYWFe9KW8aT68o.*=Gtx"
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  }
-              }
-          },
-          {
-              "type": "procedures_defnoreturn",
-              "id": "vc~SadWEO0H$O43jvHEb",
-              "x": 485,
-              "y": 131,
-              "icons": {
-                  "comment": {
-                      "text": "Describe this function...",
-                      "pinned": false,
-                      "height": 80,
-                      "width": 160
-                  }
-              },
-              "fields": {
-                  "NAME": "Start Game"
-              },
-              "inputs": {
-                  "STACK": {
-                      "block": {
-                          "type": "variables_set",
-                          "id": "^X1yt]muzF*Z_xi$qvB2",
-                          "fields": {
-                              "VAR": {
-                                  "id": "k;Uf!p8Cc_^Gp!R$UvQW"
-                              }
-                          },
-                          "inputs": {
-                              "VALUE": {
-                                  "block": {
-                                      "type": "actor",
-                                      "id": "avabmJ%.,d*}?~se*3K8",
-                                      "inputs": {
-                                          "ImageName": {
-                                              "block": {
-                                                  "type": "small_bitmap",
-                                                  "id": "WQyeC9=sIGoqjEV-O@Gl",
-                                                  "fields": {
-                                                      "field": [
-                                                          [
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              1,
-                                                              1,
-                                                              1,
-                                                              1,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              2,
-                                                              2,
-                                                              2,
-                                                              1,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              2,
-                                                              2,
-                                                              2,
-                                                              1,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              1,
-                                                              1,
-                                                              1,
-                                                              1,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              1,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              1,
-                                                              0,
-                                                              0
-                                                          ],
-                                                          [
-                                                              0,
-                                                              1,
-                                                              1,
-                                                              0,
-                                                              0,
-                                                              1,
-                                                              1,
-                                                              0
-                                                          ]
-                                                      ]
-                                                  }
-                                              }
-                                          },
-                                          "start_x": {
-                                              "block": {
-                                                  "type": "math_number",
-                                                  "id": "?uCRN`sx`xTm5PQFnSWz",
-                                                  "fields": {
-                                                      "NUM": 30
-                                                  }
-                                              }
-                                          },
-                                          "start_y": {
-                                              "block": {
-                                                  "type": "math_number",
-                                                  "id": "ZTo).juN6(:T8+C0qb2x",
-                                                  "fields": {
-                                                      "NUM": 30
-                                                  }
-                                              }
-                                          },
-                                          "width": {
-                                              "block": {
-                                                  "type": "math_number",
-                                                  "id": "uSH7X2,V#[WLH*`C+Rq7",
-                                                  "fields": {
-                                                      "NUM": 20
-                                                  }
-                                              }
-                                          },
-                                          "height": {
-                                              "block": {
-                                                  "type": "math_number",
-                                                  "id": "34*rfZfZF+(3KWrM/H8l",
-                                                  "fields": {
-                                                      "NUM": 20
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                  }
-              }
-          }
-      ]
-  },
-  "variables": [
-      {
-          "name": "Actor",
-          "id": "k;Uf!p8Cc_^Gp!R$UvQW"
-      }
-  ]
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "metadata",
+                "id": "A$mP~29yJri+II[;(i/h",
+                "x": 3,
+                "y": 73,
+                "inputs": {
+                    "game name": {
+                    },
+                    "author name": {
+                        "block": {
+                            "type": "text",
+                            "id": "?)6dy[;RNRixg1lHZGed",
+                            "fields": {
+                                "TEXT": "BlastPad Team"
+                            }
+                        }
+                    },
+                    "description": {
+                        "block": {
+                            "type": "text",
+                            "id": "D?WrcH,o0F0HKfy2~GC;",
+                            "fields": {
+                                "TEXT": "This is an example project."
+                            }
+                        }
+                    },
+                    "game_icon": {
+                        "block": {
+                            "type": "small_bitmap",
+                            "id": "X4Cx3nyk!n5;^%t]v!h@",
+                            "fields": {
+                                "field": [
+                                    [
+                                        2,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        2
+                                    ],
+                                    [
+                                        0,
+                                        0,
+                                        2,
+                                        2,
+                                        2,
+                                        2,
+                                        0,
+                                        0
+                                    ],
+                                    [
+                                        0,
+                                        2,
+                                        2,
+                                        1,
+                                        1,
+                                        2,
+                                        2,
+                                        0
+                                    ],
+                                    [
+                                        0,
+                                        2,
+                                        1,
+                                        0,
+                                        0,
+                                        1,
+                                        2,
+                                        0
+                                    ],
+                                    [
+                                        0,
+                                        2,
+                                        1,
+                                        0,
+                                        0,
+                                        1,
+                                        2,
+                                        0
+                                    ],
+                                    [
+                                        0,
+                                        2,
+                                        2,
+                                        1,
+                                        1,
+                                        2,
+                                        2,
+                                        0
+                                    ],
+                                    [
+                                        0,
+                                        0,
+                                        2,
+                                        2,
+                                        2,
+                                        2,
+                                        0,
+                                        0
+                                    ],
+                                    [
+                                        2,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        2
+                                    ]
+                                ]
+                            }
+                        }
+                    }
+                },
+                "next": {
+                    "block": {
+                        "type": "procedures_callnoreturn",
+                        "id": "KQhe;5r3h1M4Ox;#vQz0",
+                        "extraState": {
+                            "name": "Start Game"
+                        },
+                        "next": {
+                            "block": {
+                                "type": "game_loop",
+                                "id": "86d_D8;/4N~aV7tNH6~-",
+                                "inputs": {
+                                    "DO": {
+                                        "block": {
+                                            "type": "change_background_color",
+                                            "id": "cJcZ?Z.b](#d?vdP(/?@",
+                                            "fields": {
+                                                "Background Color": "#ffffff"
+                                            },
+                                            "next": {
+                                                "block": {
+                                                    "type": "move",
+                                                    "id": "xBy]CE^JAC:X%~OQ5Cul",
+                                                    "inputs": {
+                                                        "actor": {
+                                                            "block": {
+                                                                "type": "variables_get",
+                                                                "id": "0pIK^!Cx.Wr,1l}~q4(g",
+                                                                "fields": {
+                                                                    "VAR": {
+                                                                        "id": "k;Uf!p8Cc_^Gp!R$UvQW"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "x": {
+                                                            "block": {
+                                                                "type": "math_number",
+                                                                "id": "!]wAS/Q9xI|-IF;LlB/%",
+                                                                "fields": {
+                                                                    "NUM": 30
+                                                                }
+                                                            }
+                                                        },
+                                                        "y": {
+                                                            "block": {
+                                                                "type": "math_number",
+                                                                "id": "Q^]SWTy/0mWHnOVOzk_h",
+                                                                "fields": {
+                                                                    "NUM": 0
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "next": {
+                                                        "block": {
+                                                            "type": "key_down_b",
+                                                            "id": "maZ[?H|-w#Z/f3F+{^6j",
+                                                            "inputs": {
+                                                                "DO": {
+                                                                    "block": {
+                                                                        "type": "exit",
+                                                                        "id": "bYWFe9KW8aT68o.*=Gtx"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "type": "procedures_defnoreturn",
+                "id": "vc~SadWEO0H$O43jvHEb",
+                "x": 485,
+                "y": 131,
+                "icons": {
+                    "comment": {
+                        "text": "Describe this function...",
+                        "pinned": false,
+                        "height": 80,
+                        "width": 160
+                    }
+                },
+                "fields": {
+                    "NAME": "Start Game"
+                },
+                "inputs": {
+                    "STACK": {
+                        "block": {
+                            "type": "variables_set",
+                            "id": "^X1yt]muzF*Z_xi$qvB2",
+                            "fields": {
+                                "VAR": {
+                                    "id": "k;Uf!p8Cc_^Gp!R$UvQW"
+                                }
+                            },
+                            "inputs": {
+                                "VALUE": {
+                                    "block": {
+                                        "type": "actor",
+                                        "id": "avabmJ%.,d*}?~se*3K8",
+                                        "fields": {
+                                            "me": {
+                                                "id": "XdVI}Q2vY|fOoyWn_Smb"
+                                            },
+                                            "other": {
+                                                "id": "8lbQrf#in@SK5fSe`P=^"
+                                            },
+                                            "layer": {
+                                                "id": "yYvzMy_4$=o?/]Q^s/Mp"
+                                            }
+                                        },
+                                        "inputs": {
+                                            "ImageName": {
+                                                "block": {
+                                                    "type": "small_bitmap",
+                                                    "id": "WQyeC9=sIGoqjEV-O@Gl",
+                                                    "fields": {
+                                                        "field": [
+                                                            [
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                1,
+                                                                1,
+                                                                1,
+                                                                1,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                2,
+                                                                2,
+                                                                2,
+                                                                1,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                2,
+                                                                2,
+                                                                2,
+                                                                1,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                1,
+                                                                1,
+                                                                1,
+                                                                1,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                1,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                0,
+                                                                0,
+                                                                0,
+                                                                1,
+                                                                0,
+                                                                0
+                                                            ],
+                                                            [
+                                                                0,
+                                                                1,
+                                                                1,
+                                                                0,
+                                                                0,
+                                                                1,
+                                                                1,
+                                                                0
+                                                            ]
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "start_x": {
+                                                "block": {
+                                                    "type": "math_number",
+                                                    "id": "?uCRN`sx`xTm5PQFnSWz",
+                                                    "fields": {
+                                                        "NUM": 400
+                                                    }
+                                                }
+                                            },
+                                            "start_y": {
+                                                "block": {
+                                                    "type": "math_number",
+                                                    "id": "ZTo).juN6(:T8+C0qb2x",
+                                                    "fields": {
+                                                        "NUM": 250
+                                                    }
+                                                }
+                                            },
+                                            "width": {
+                                                "block": {
+                                                    "type": "math_number",
+                                                    "id": "uSH7X2,V#[WLH*`C+Rq7",
+                                                    "fields": {
+                                                        "NUM": 80
+                                                    }
+                                                }
+                                            },
+                                            "height": {
+                                                "block": {
+                                                    "type": "math_number",
+                                                    "id": "34*rfZfZF+(3KWrM/H8l",
+                                                    "fields": {
+                                                        "NUM": 80
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "variables": [
+        {
+            "name": "Actor",
+            "id": "k;Uf!p8Cc_^Gp!R$UvQW"
+        },
+        {
+            "name": "me",
+            "id": "XdVI}Q2vY|fOoyWn_Smb"
+        },
+        {
+            "name": "other actor",
+            "id": "8lbQrf#in@SK5fSe`P=^"
+        },
+        {
+            "name": "other layer",
+            "id": "yYvzMy_4$=o?/]Q^s/Mp"
+        }
+    ]
 }
 
 
