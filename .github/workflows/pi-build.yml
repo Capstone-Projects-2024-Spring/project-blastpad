@@ -51,8 +51,7 @@ jobs:
           verbose-output: false
           # Wifi country code of default network to connect to.
           wpa-country: 'US'
-          wpa-essid: 'Pocket Pita'
-          wpa-password: 'nudibranch'
+          timezone: America/Detroit
 
       - uses: actions/upload-artifact@v3
         with:
