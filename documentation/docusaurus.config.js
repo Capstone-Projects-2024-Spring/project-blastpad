@@ -8,7 +8,7 @@
  * The URL or reference to your projects logo!
  * @type {string}
  */
-const logo = 'https://github.com/Capstone-Projects-2024-Spring/project-blastpad/blob/assets/BlastPad%20Logo%20300px.png';
+const logo = 'https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/BlastPad%20Logo%20300px.png';
 
 const main_template_jira_scripts = () => {
   if (process.env.ORG_NAME === 'ApplebaumIan'){
