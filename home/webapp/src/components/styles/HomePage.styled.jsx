@@ -10,6 +10,10 @@ export const HomePageContainer = styled.div`
   flex-direction: column;
   overflow: hidden;
   gap: 20px;
+
+  & * {
+    font-size: 26px !important;
+  }
 `;
 
 export const GalleryContainer = styled.div`
@@ -229,6 +233,7 @@ export const GameLoadingContainer = styled.div`
   left: 0px;
   background-color: ${({ theme }) => theme.colors.background};
   z-index: 100;
+  font-size: 24px !important;
   &::-webkit-scrollbar {
     display: none;
   }
