@@ -87,6 +87,8 @@ export const NetworksList = styled.div`
   flex-direction: column;
   align-items: center;
 
+  max-height: 180px;
+
   &::-webkit-scrollbar {
     display: none;
   }
