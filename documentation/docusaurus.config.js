@@ -8,7 +8,7 @@
  * The URL or reference to your projects logo!
  * @type {string}
  */
-const logo = 'https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/BlastPad%20Logo%20300px.png';
+const logo = 'https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png';
 
 const main_template_jira_scripts = () => {
   if (process.env.ORG_NAME === 'ApplebaumIan'){
@@ -19,23 +19,20 @@ const main_template_jira_scripts = () => {
   }
 }
 
-// You can change the title here. The default is the name of the repository.
-const title = ''+process.env.PROJECT_NAME.replaceAll('-',' ').split(' ').map((word) => {
-  return word[0].toUpperCase() + word.substring(1);
-}).join(' ');
+const title = "BlastPad"
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   /*TODO: Change to your project's title and tagline*/
   title: title,
-  tagline: 'Owls are cool',
+  tagline: 'Play, create, and share powerful games on the go with BlastPad',
   /*Unless you move this website to a seperate repo don't change url and baseurl.*/
   url: 'https://'+process.env.ORG_NAME+'.github.io/',
   baseUrl: '/'+process.env.PROJECT_NAME+'/',
   trailingSlash: false,
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/Logo.ico',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
