@@ -14,7 +14,314 @@ import { useTheme } from 'styled-components'
 import { AuthContext } from "../AuthContext";
 
 // List of games with metadata
-var gameList = []
+var gameList = [
+    {
+      "game_icon_path": "/icons/BlastPad Team.png",
+      "last_updated": "04/28/24",
+      "metadata": [
+        {
+          "game name": "BlastPad Team"
+        },
+        {
+          "author name": "BlastPad Team"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "BlastPad Team",
+      "raw_last_updated": 1714333963.3623626,
+      "workspace_filename": "BlastPad Team.json"
+    },
+    {
+      "game_icon_path": "/icons/eg.png",
+      "last_updated": "04/28/24",
+      "metadata": [
+        {
+          "game name": "eg"
+        },
+        {
+          "author name": "BlastPad Team"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "eg",
+      "raw_last_updated": 1714333833.195093,
+      "workspace_filename": "eg.json"
+    },
+    {
+      "game_icon_path": "/icons/Miniban.png",
+      "last_updated": "04/28/24",
+      "metadata": [
+        {
+          "game name": "Miniban"
+        },
+        {
+          "author name": "Neil C"
+        },
+        {
+          "description": "Soko Boy in Soko World. Place boxes on all targets to complete a level. Author Par: 379 Steps"
+        }
+      ],
+      "name": "Miniban",
+      "raw_last_updated": 1714333530.936699,
+      "workspace_filename": "Miniban.json"
+    },
+    {
+      "game_icon_path": "/icons/Multiplayer Tetris.png",
+      "last_updated": "04/28/24",
+      "metadata": [
+        {
+          "game name": "Multiplayer Tetris"
+        },
+        {
+          "author name": "Ian Applebaum"
+        },
+        {
+          "description": "MULTIPLAYER TETRIS!"
+        }
+      ],
+      "name": "Multiplayer Tetris",
+      "raw_last_updated": 1714328797.151689,
+      "workspace_filename": "Multiplayer Tetris.json"
+    },
+    {
+      "game_icon_path": "/icons/Block Dude.png",
+      "last_updated": "04/27/24",
+      "metadata": [
+        {
+          "game name": "Block Dude"
+        },
+        {
+          "author name": "Mustafa Malik"
+        },
+        {
+          "description": "Funny calculator game. Get to the door to win!________ Author PB: 01:25.50"
+        }
+      ],
+      "name": "Block Dude",
+      "raw_last_updated": 1714260457.4800224,
+      "workspace_filename": "Block Dude.json"
+    },
+    {
+      "game_icon_path": "/icons/Golf.png",
+      "last_updated": "04/27/24",
+      "metadata": [
+        {
+          "game name": "Golf"
+        },
+        {
+          "author name": "Neil C"
+        },
+        {
+          "description": "It's golf."
+        }
+      ],
+      "name": "Golf",
+      "raw_last_updated": 1714260406.310833,
+      "workspace_filename": "Golf.json"
+    },
+    {
+      "game_icon_path": "/icons/Multiplayer Tetris 2.png",
+      "last_updated": "04/27/24",
+      "metadata": [
+        {
+          "game name": "Multiplayer Tetris 2"
+        },
+        {
+          "author name": "Ian Applebaum"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "Multiplayer Tetris 2",
+      "raw_last_updated": 1714254842.9828577,
+      "workspace_filename": "Multiplayer Tetris 2.json"
+    },
+    {
+      "game_icon_path": "/icons/Brickbreaker.png",
+      "last_updated": "04/26/24",
+      "metadata": [
+        {
+          "game name": "brickbreaker"
+        },
+        {
+          "author name": "Niaz Baharudeen"
+        },
+        {
+          "description": "Can't trust saving"
+        }
+      ],
+      "name": "Brickbreaker",
+      "raw_last_updated": 1714189681.510625,
+      "workspace_filename": "Brickbreaker.json"
+    },
+    {
+      "game_icon_path": "/icons/Snake.png",
+      "last_updated": "04/26/24",
+      "metadata": [
+        {
+          "game name": "Snake"
+        },
+        {
+          "author name": "Snarr"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "Snake",
+      "raw_last_updated": 1714189078.0160055,
+      "workspace_filename": "Snake.json"
+    },
+    {
+      "game_icon_path": "/icons/DVD Logo.png",
+      "last_updated": "04/26/24",
+      "metadata": [
+        {
+          "game name": "DVD Logo"
+        },
+        {
+          "author name": "Snarr"
+        },
+        {
+          "description": "A DVD logo screen! Wait for it to hit the corner for a surrpise"
+        }
+      ],
+      "name": "DVD Logo",
+      "raw_last_updated": 1714188960.9627304,
+      "workspace_filename": "DVD Logo.json"
+    },
+    {
+      "game_icon_path": "/icons/Soul Bridge.png",
+      "last_updated": "04/26/24",
+      "metadata": [
+        {
+          "game name": "Soul Bridge"
+        },
+        {
+          "author name": "Neil C"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "Soul Bridge",
+      "raw_last_updated": 1714109231.1237273,
+      "workspace_filename": "Soul Bridge.json"
+    },
+    {
+      "game_icon_path": "/icons/Block Dude Colored.png",
+      "last_updated": "04/25/24",
+      "metadata": [
+        {
+          "game name": "Block Dude Colored"
+        },
+        {
+          "author name": "Mustafa Malik"
+        },
+        {
+          "description": "Funny calculator game. Get to the door to win!"
+        }
+      ],
+      "name": "Block Dude Colored",
+      "raw_last_updated": 1714091164.2478032,
+      "workspace_filename": "Block Dude Colored.json"
+    },
+    {
+      "game_icon_path": "/icons/Space Fighterz.png",
+      "last_updated": "04/24/24",
+      "metadata": [
+        {
+          "game name": "Space Fighterz"
+        },
+        {
+          "author name": "Neil C"
+        },
+        {
+          "description": "Vanquish your enemies... in SPACE!"
+        }
+      ],
+      "name": "Space Fighterz",
+      "raw_last_updated": 1713970548.01735,
+      "workspace_filename": "Space Fighterz.json"
+    },
+    {
+      "game_icon_path": "/icons/Miniban copy.png",
+      "last_updated": "04/23/24",
+      "metadata": [
+        {
+          "game name": "Miniban"
+        },
+        {
+          "author name": "BlastPad Team"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "Miniban copy",
+      "raw_last_updated": 1713924507.5857697,
+      "workspace_filename": "Miniban copy.json"
+    },
+    {
+      "game_icon_path": "/icons/Layer Test.png",
+      "last_updated": "04/23/24",
+      "metadata": [
+        {
+          "game name": "Layer Test"
+        },
+        {
+          "author name": "BlastPad Team"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "Layer Test",
+      "raw_last_updated": 1713920006.0744035,
+      "workspace_filename": "Layer Test.json"
+    },
+    {
+      "game_icon_path": "/icons/Flappy Bird.png",
+      "last_updated": "04/22/24",
+      "metadata": [
+        {
+          "game name": "Flappy Bird"
+        },
+        {
+          "author name": "A Cool Guy"
+        },
+        {
+          "description": "This is an example project."
+        }
+      ],
+      "name": "Flappy Bird",
+      "raw_last_updated": 1713798511.5179813,
+      "workspace_filename": "Flappy Bird.json"
+    },
+    {
+      "game_icon_path": "/icons/Some Example.png",
+      "last_updated": "04/22/24",
+      "metadata": [
+        {
+          "game name": "Some Example"
+        },
+        {
+          "author name": "Neil C"
+        },
+        {
+          "description": "Guy Walking Around Simulator"
+        }
+      ],
+      "name": "Some Example",
+      "raw_last_updated": 1713762413.0602725,
+      "workspace_filename": "Some Example.json"
+    }
+]
 
 export default function HomePage() {
   const { classroom } = useContext(AuthContext)
