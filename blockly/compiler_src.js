@@ -14,6 +14,10 @@ const onlyBitmaps = (process.argv.indexOf('--bitmaps') > -1);
 const onlyIcon = (process.argv.indexOf('--icon') > -1);
 var bitmaps = {};
 
+
+let imagedestination = null;
+let testing = false;
+
 class dummyField extends Blockly.Field {}
 dummyField.fromJson = () => {};
 Blockly.fieldRegistry.register('field_bitmap', dummyField);
@@ -105,10 +109,17 @@ var saveBitmap = (bitmap, size, name, icon=false) => {
         }
     }  
     
+
+
     var writeLocation = `${__dirname}/compiled_games/images/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-") || "UNKNOWN"}.png`
     if(icon) {
         writeLocation = `${__dirname}/../flask/saved/icons/${name}.png` 
     }
+
+    if(imagedestination != null) {
+        writeLocation = `${imagedestination}/${name.toLowerCase().replace(/[^a-zA-Z ]/g, "").replace(" ", "-")}.png`;
+    }
+
     var out = fs.createWriteStream(writeLocation);
     savePixels(d, "png").pipe(out)
 }
@@ -193,7 +204,9 @@ var getBitmapSize = (bitmap_type, definitions) => {
     return [size.width, size.height]
 }
 
-var compile = (filepath, filedestination) => {
+var compile = (filepath, filedestination, _imagedestination = null, _testing = false) => {
+    imagedestination = _imagedestination;
+    testing = _testing;
     try {
         var fpath = filepath || process.argv[2]
         const file = jsonfile.readFileSync(fpath);
@@ -226,7 +239,11 @@ var compile = (filepath, filedestination) => {
         } else {
             var hasExit = findPathToExit(file);
             if(!hasExit) {
-                process.exit(-1);
+                if(!testing) {
+                    process.exit(-1);
+                } else {
+                    throw new Error("failed to find exit")
+                }
             }
 
             // Save all those BitMaps.
@@ -299,13 +316,20 @@ var compile = (filepath, filedestination) => {
                 });
             } catch (e) {
                 console.log(e);
-                process.exit(-1)
+                if(!testing) {
+                    process.exit(-1);
+                } else {
+                    // throw new Error("failed to find exit")
+                }
             }
 
         }
     } catch (e) {
-        console.error(e);
-        process.exit(-1)
+        if(!testing) {
+            process.exit(-1);
+        } else {
+            // throw new Error("failed to find exit")
+        }
     }
 }
 
