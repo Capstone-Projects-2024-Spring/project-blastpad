@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ClassroomSettingsPage from './ClassroomSettingsPage';
-import { AuthContext } from '../../AuthContext';
+import { ClassroomSettingsPage } from './home/webapp/src/components/Settings/ClassroomSettingsPage';
+import { AuthContext } from './home/webapp/src/AuthContext';
 
 // Mock fetch globally
 global.fetch = jest.fn();
@@ -80,3 +80,5 @@ describe('ClassroomSettingsPage', () => {
 
   // Additional tests can be added here to test for creating a classroom or leaving a classroom
 });
+
+
