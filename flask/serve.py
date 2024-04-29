@@ -66,9 +66,12 @@ def send_report(path):
 
 @app.route('/save/', methods = ['POST'])
 def save():
+    print(request)
+    print(request.method)
     if request.method == 'POST':
+        print(request.json)
         gamedata = request.json
-
+        print(gamedata)
         # actually unnecessary to find gamename thru metadata, but keeping for legacy
         gamename = ""
         metadataFound = False
@@ -111,7 +114,80 @@ def save():
         if closeFound == False:
             return {"error": "Exit Game Block Missing", "fix": "Make sure your project has a reachable exit block. You can find it under the Game Logic category."}, 400
 
-            
+        
+        with open(os.path.join(GAMES_FOLDER, gamename+".json"), 'w', encoding='utf-8') as f:
+            json.dump(gamedata, f, ensure_ascii=False, indent=4)
+
+        save_icon_result = save_game_icon(gamename)
+        if save_icon_result.returncode != 0:
+            return {'error': 'Could not save game icon.'}, 400
+
+        print(save_icon_result.returncode)
+
+        compile_result = compile_game(gamename)
+        if compile_result.returncode != 0:
+            return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block.", "err": compile_result.stderr}, 400
+        
+        print(compile_result.returncode)
+
+        game_test_result = test_run_game(gamename)
+        print(game_test_result['game_ran'])
+        if game_test_result['game_ran'] == True:
+            return {'success': 'Game runs!'}, 200
+        else:
+            return {'error': 'Game does not run.', "fix": "Check your project for blocks without followup actions- for example, 'if' or 'Key Down' blocks without more blocks inside them."}, 400
+        
+
+
+@app.route('/saveWithoutRun/', methods = ['POST'])
+def saveWithoutRun():
+    if request.method == 'POST':
+        print(request.json)
+        gamedata = request.json
+        print(gamedata)
+        # actually unnecessary to find gamename thru metadata, but keeping for legacy
+        gamename = ""
+        metadataFound = False
+        loopFound = False
+        closeFound = False
+        iconFound = False
+        validMetadata = False
+
+        # Iterate through workspace to find metadata
+
+        blocks = unrollWorkspaceBlocks(gamedata)
+        
+        for x in blocks:
+            if(x["type"]=="exit"):
+                print(x)
+                closeFound = True
+            if(x["type"]=="game_loop"):
+                loopFound = True   
+
+        for x in gamedata["blocks"]["blocks"]:
+            if(x["type"]=="metadata"):
+                iconFound = "game_icon" in x["inputs"]
+                validMetadata = "game name" in x["inputs"] and "author name" in x["inputs"] and "description" in x["inputs"]
+
+                if(validMetadata == False):
+                    break
+
+                gamename = x["inputs"]["game name"]["block"]["fields"]["TEXT"]
+                metadataFound = True
+
+        
+        if validMetadata == False:
+            return {"error": "Invalid Metadata.", "fix": "Make sure y   ou have a name, author, and description in your metadata block."}, 400
+        if metadataFound == False:
+            return {"error": "Metadata Block Missing", "fix": "Make sure your project has a metadata block. You can find it under the Game Logic category."}, 400
+        if iconFound == False:
+            return {"error": "Game Icon Missing", "fix": "Make sure your project has a game icon attached to its metadata block. You can find bitmaps under the Actors category."}, 400
+        if loopFound == False:
+            return {"error": "Game Loop Block Missing", "fix": "Make sure your project has a game loop block. You can find it under the Game Logic category."}, 400
+        if closeFound == False:
+            return {"error": "Exit Game Block Missing", "fix": "Make sure your project has a reachable exit block. You can find it under the Game Logic category."}, 400
+
+        
         with open(os.path.join(GAMES_FOLDER, gamename+".json"), 'w', encoding='utf-8') as f:
             json.dump(gamedata, f, ensure_ascii=False, indent=4)
 
@@ -122,13 +198,8 @@ def save():
         compile_result = compile_game(gamename)
         if compile_result.returncode != 0:
             return {'error': 'Game does not compile.', "fix": "Make sure you have a reachable exit block.", "err": compile_result.stderr}, 400
-            
-        game_test_result = test_run_game(gamename)
-        print(game_test_result)
-        if game_test_result['game_ran'] == True:
-            return {'success': 'Game runs!'}, 200
-        else:
-            return {'error': 'Game does not run.', "fix": "Check your project for blocks without followup actions- for example, 'if' or 'Key Down' blocks without more blocks inside them."}, 400
+        
+        return {'success': 'Game Saved!'}, 200
         
 
 

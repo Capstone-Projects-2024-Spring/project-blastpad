@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --silent --verbose"
+    "test": "jest --verbose --silent"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
+    "jest-html-reporter": "^3.10.2",
     "jsonfile": "^6.1.0"
   }
 }
