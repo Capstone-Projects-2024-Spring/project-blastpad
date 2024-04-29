@@ -171,7 +171,7 @@ def next_level():
 
 
 # BLASTPAD PRODUCTIONS
-# 'Miniban'
+# 'Testiban'
 # By 'Neil C'
 # 'Soko Boy in Soko World. Place boxes on all targets to complete a level. Author Par: 379 Steps'
 
@@ -269,7 +269,7 @@ def create_actor(image_name, x, y, width, height, collision_layer, collide_func,
 
 pygame.key.set_repeat(1)
 font = pygame.font.Font('freesansbold.ttf', 32)
-pygame.display.set_caption("'Miniban'")
+pygame.display.set_caption("'Testiban'")
 screen = None
 
 if sys.argv[1] == "headless":

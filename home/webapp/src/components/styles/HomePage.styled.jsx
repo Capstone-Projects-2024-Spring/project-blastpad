@@ -11,9 +11,6 @@ export const HomePageContainer = styled.div`
   overflow: hidden;
   gap: 20px;
 
-  & * {
-    font-size: 26px !important;
-  }
 `;
 
 export const GalleryContainer = styled.div`
@@ -79,6 +76,10 @@ export const GameInfoContainer = styled.div`
 export const GameMetaData = styled.div`
   // outline: 3px solid red;
   width: 50%;
+
+  & * {
+    font-size: 26px !important;
+  }
   gap: 10px;
 `;
 
