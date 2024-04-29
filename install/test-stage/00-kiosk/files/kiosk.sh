@@ -17,7 +17,7 @@ feh --bg-scale splash.png
 
 python project-blastpad/flask/serve.py & # game running does not work when started as a service
 
-chromium-browser --kiosk http://localhost:8000
+chromium-browser --kiosk http://localhost:8000 --window-position=0,0 --window-size=800,480 --force-device-scale-factor=0.999
 
 # start the cec-client & browser
 # (cec-client | cec2kbd) & browser --fullscreen "${URL:='https://deltazero.cz'}"
