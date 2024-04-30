@@ -3,8 +3,20 @@ sidebar_position: 2
 ---
 
 # System Block Diagram
-![System Block Diagram For Blast Pad](https://i.imgur.com/tLLx8KO.jpeg)
+![System Block Diagram For Blast Pad](https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/SystemBlockDiagram.svg)
 
-This diagram depicts the high-level design of the application from a user's BlastPad device or their laptop/pc. They will navigate the BlastPad's Tkinter based GUI. The block code editor will be distributed through an on-device Flask server. From there they can create Pygame programs/games using the editor and publish or download their creations.
+This diagram depicts the high-level design of the application from a user's BlastPad device.
 
-The user will access a website that stores their creations, which they can share with their friends. The website will make a call to the backend server, which will query the SQL database for their creations.
+**Buttons** at the hardware level will be used to interface with the device.
+
+All internal BlastPad code will sit on Raspberry Pi 4 **Hardware** running the Linux **Operating System**.
+
+A Flask **Local Server** will serve as the primary interface for getting and setting information on the **Operating System**.
+
+On the BlastPad itself, the Flask **Local Server** will serve the BlastUI main interface and the Blockly Editor via a **Browser**.
+
+On the BlastPad itself, Flask **Local Server** will also execute the **Python** code for games developed by users.
+
+For a **Companion Device**, the BlastPad's Flask **Local Server** will serve the Blockly Editor via a **Browser**.
+
+The Flask **Local Server** will also store and recall data from a **Supabase** database on the **Internet**.
