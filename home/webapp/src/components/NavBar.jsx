@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavButtonsContainer, NavBarContainer, NavButton, StatusIconsContainer, TimeContainer } from "./styles/NavBar.styled";
-import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon } from "./Icons";
-import { WarningOptions, SuccessOptions, ErrorOptions } from "./Toasty"
+import { FullBatteryFrameIcon, MediumBatteryFrameIcon, LowBatteryFrameIcon, ClassroomIcon, CommunityIcon, HomeIcon, SettingsIcon, WiFiIcon, NoSignalIcon, DynamicBatteryIcon } from "./Icons";import { WarningOptions, SuccessOptions, ErrorOptions } from "./Toasty"
 import { ToastContainer, toast } from 'react-toastify';
 
 const navIcons = {
@@ -15,7 +14,7 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   const [activePage, setActivePage] = useState('home');
   const [isConnected, setIsConnected] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
-  const [batteryLevel, setBatteryLevel] = useState(1); // Default battery level
+  const [batteryLevel, setBatteryLevel] = useState(0.20); // Default battery level
 
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {
@@ -86,35 +85,33 @@ const NavBar = ({ onPageChange, checkConnection, checkBatteryLevel }) => {
   };
 
   return (
-      <NavBarContainer>
-        <NavButtonsContainer>
-          {Object.keys(navIcons).map((page) => {
-            const Icon = navIcons[page];
-            return (
-              <NavButton
-                key={page}
-                active={activePage === page}
-                onClick={() => handleButtonClick(page)}
-                tabIndex={0}
-              >
-                <Icon />
-              </NavButton>
-            );
-          })}
-        </NavButtonsContainer>
-        <StatusIconsContainer>
-          {/* Use renderBatteryIcon to render the correct battery icon */}
-          {renderBatteryIcon(batteryLevel)}
-          {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
-          {isConnected ? <WiFiIcon /> : <NoSignalIcon />}
-        </StatusIconsContainer>
+    <NavBarContainer>
+      <NavButtonsContainer>
+        {Object.keys(navIcons).map((page) => {
+          const Icon = navIcons[page];
+          return (
+            <NavButton
+              key={page}
+              active={activePage === page}
+              onClick={() => handleButtonClick(page)}
+              tabIndex={0}
+            >
+              <Icon />
+            </NavButton>
+          );
+        })}
+      </NavButtonsContainer>
+      <StatusIconsContainer>
+        {/* Use renderBatteryIcon to render the correct battery icon */}
+        {<DynamicBatteryIcon level={batteryLevel}/>}
+        {/* Conditionally render WiFiIcon or NoSignalIcon based on isConnected */}
+        {isConnected ? <WiFiIcon /> : <NoSignalIcon />}
         <TimeContainer>
           {currentTime}
         </TimeContainer>
-        <ToastContainer></ToastContainer>
-      </NavBarContainer>
-
-  );
-};
-
+      </StatusIconsContainer>
+    </NavBarContainer>
+     );
+    };
+    
 export default NavBar;
