@@ -197,14 +197,12 @@ Gallery-->>-User: Display Successful Join Message
 ```
 
 
-## Use Case 7 - Viewing and playing a published game
+## Use Case 6 - Viewing and playing a published game
 A user would like to view their classmate's games and play one.
 
 1. The user turns on the BlastPad.
 2. Then connects a keyboard and mouse to the BlastPad.
 3. Then selects the “Classroom” option on the main menu of the home screen.
-4. Then selects the “View Classroom(s)” button from the “Classroom” page menu.
-5. Then the user scrolls through the list of Classrooms they have joined and selects one.
 6. The user scrolls through the list of published games in the Classroom and selects one for download.
 7. The user plays the downloaded game on their BlastPad.
 
@@ -225,16 +223,7 @@ Gallery-->>-User: Display Home Screen
 User->>+Blastpad: Attach Keyboard & Mouse
 Blastpad-->>-User: Acknowledge new input device
 
-User->>+Gallery: Press "Classrooms" Button
-Gallery-->>-User: Display "View Classrooms/Join Classroom" Menu
-User->>+Gallery: Select "View Classrooms"
-Gallery->>+Classrooms: GET User's Classrooms
-Classrooms->>+Classrooms Database: Database Query for User's Classrooms
-Classrooms Database-->>-Classrooms: Successful Retrieval of User's Classrooms
-Classrooms-->>-Gallery: Respond with User's Classrooms
-Gallery-->>-User: Display User's Classrooms as list
-
-User->>+Gallery: Select a Classroom
+User->>+Gallery: Press "Classroom" Button
 Gallery->>+Classrooms: GET Classroom information & uploaded games
 Classrooms->>+Classrooms Database: Database Query for Classroom & Uploaded Games
 Classrooms Database-->>-Classrooms: Successful Classroom Retrieval
@@ -273,8 +262,8 @@ A user would like to upload a game to a Classroom
 1. The user turns on the BlastPad.
 2. Then connects a keyboard and mouse to the BlastPad.
 3. Then selects the menu to publish a game file.
-4. Then the user selects the "Upload to Classroom" button and selects the specific Classroom for upload.
-5. The user receives a confirmation message that the game was uploaded to the Classroom pending approval if that was set.
+4. Then the user selects the "Upload to Classroom" button.
+5. The user receives a confirmation message that the game was uploaded to the Classroom.
 
 ```mermaid
 ---
