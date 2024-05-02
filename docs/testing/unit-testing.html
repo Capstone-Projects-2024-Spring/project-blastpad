@@ -4,176 +4,394 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.1.1">
 <title data-rh="true">Unit tests | BlastPad</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://Capstone-Projects-2024-Spring.github.io/project-blastpad/docs/testing/unit-testing"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Unit tests | BlastPad"><meta data-rh="true" name="description" content="Unit Test Reports"><meta data-rh="true" property="og:description" content="Unit Test Reports"><link data-rh="true" rel="icon" href="/project-blastpad/img/Logo.ico"><link data-rh="true" rel="canonical" href="https://Capstone-Projects-2024-Spring.github.io/project-blastpad/docs/testing/unit-testing"><link data-rh="true" rel="alternate" href="https://Capstone-Projects-2024-Spring.github.io/project-blastpad/docs/testing/unit-testing" hreflang="en"><link data-rh="true" rel="alternate" href="https://Capstone-Projects-2024-Spring.github.io/project-blastpad/docs/testing/unit-testing" hreflang="x-default"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><link rel="stylesheet" href="/project-blastpad/assets/css/styles.090d5472.css">
-<script src="/project-blastpad/assets/js/runtime~main.9cdd051c.js" defer="defer"></script>
-<script src="/project-blastpad/assets/js/main.5c960411.js" defer="defer"></script>
+<script src="/project-blastpad/assets/js/runtime~main.1e038de3.js" defer="defer"></script>
+<script src="/project-blastpad/assets/js/main.63727d6e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/project-blastpad/"><div class="navbar__logo"><img src="https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">BlastPad</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/project-blastpad/docs/intro">Documentation</a><a class="navbar__item navbar__link" href="/project-blastpad/tutorial/Intro">Docusaurus Tutorial</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/Capstone-Projects-2024-Spring/project-blastpad" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/project-blastpad/docs/intro">Introduction</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/project-blastpad/docs/category/requirements-specification">Requirements Specification</a><button aria-label="Expand sidebar category &#x27;Requirements Specification&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/project-blastpad/docs/category/system-architecture">System Architecture</a><button aria-label="Expand sidebar category &#x27;System Architecture&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/project-blastpad/docs/category/api-specification">API Specification</a><button aria-label="Expand sidebar category &#x27;API Specification&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" aria-expanded="true" href="/project-blastpad/docs/category/test-procedures">Test Procedures</a><button aria-label="Collapse sidebar category &#x27;Test Procedures&#x27;" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/project-blastpad/docs/testing/unit-testing">Unit tests</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/project-blastpad/docs/testing/integration-testing">Integration tests</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/project-blastpad/docs/testing/acceptance-testing">Acceptance test</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/project-blastpad/docs/category/meeting-minutes">Meeting Minutes</a><button aria-label="Expand sidebar category &#x27;Meeting Minutes&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/project-blastpad/docs/category/miscelleanous">Miscelleanous</a><button aria-label="Expand sidebar category &#x27;Miscelleanous&#x27;" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/project-blastpad/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/project-blastpad/docs/category/test-procedures"><span itemprop="name">Test Procedures</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Unit tests</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><h1>Unit tests</h1>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="unit-test-reports">Unit Test Reports<a href="#unit-test-reports" class="hash-link" aria-label="Direct link to Unit Test Reports" title="Direct link to Unit Test Reports">​</a></h2>
 <p>You can find the generated unit test report <a href="https://htmlpreview.github.io/?https://github.com/Capstone-Projects-2024-Spring/project-blastpad/blob/assets/test-report.html" target="_blank" rel="noopener noreferrer">here.</a></p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="blocklyeditor">BlocklyEditor<a href="#blocklyeditor" class="hash-link" aria-label="Direct link to BlocklyEditor" title="Direct link to BlocklyEditor">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="saveworkspace">+saveWorkspace()<a href="#saveworkspace" class="hash-link" aria-label="Direct link to +saveWorkspace()" title="Direct link to +saveWorkspace()">​</a></h3>
-<p>Stubbed test class: blocklyEditor
-Requires access to sandboxed filesystem.</p>
-<p>Unit test checks if a workspace&#x27;s contents have been updated after method is called.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="loadworkspace">+loadWorkspace()<a href="#loadworkspace" class="hash-link" aria-label="Direct link to +loadWorkspace()" title="Direct link to +loadWorkspace()">​</a></h3>
-<p>Stubbed test class: blocklyEditor
-Requires some sort of sandboxed browser. Cypress is ideal for this.</p>
-<p>Unit test checks that the correct workspace has been loaded and displayed in the editor.</p>
-<h1>DeviceManager Class</h1>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="loadgallerytest">+loadGalleryTest()<a href="#loadgallerytest" class="hash-link" aria-label="Direct link to +loadGalleryTest()" title="Direct link to +loadGalleryTest()">​</a></h3>
-<p>This unit test is for the loadGallery() method in the DeviceManager class. The test calls the loadGallery method and tests if the &quot;currentScreen&quot; variable was changed to &quot;Gallery&quot;.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="blockly-compiler">Blockly Compiler<a href="#blockly-compiler" class="hash-link" aria-label="Direct link to Blockly Compiler" title="Direct link to Blockly Compiler">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="hex-to-rgb-conversion">Hex to RGB Conversion<a href="#hex-to-rgb-conversion" class="hash-link" aria-label="Direct link to Hex to RGB Conversion" title="Direct link to Hex to RGB Conversion">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to convert Hexadecimal color values into a 4-tuple of red, green, blue, and alpha values in the range 0-255.<!-- -->
 <ul>
-<li>Stubbed test class: instance of DeviceManager class</li>
-<li>Input: Void</li>
-<li>Expected Output: True</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action">Input / User action<a href="#input--user-action" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Hexadecimal color value. E.g: #000000</li>
 </ul>
-<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">public loadGalleryTest(Void) -&gt; Boolean</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    deviceManager = New DeviceManager()</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    deviceManager.loadGallery()</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    return deviceManager.currentScreen == &quot;Gallery&quot;</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="classroommanager">ClassroomManager<a href="#classroommanager" class="hash-link" aria-label="Direct link to ClassroomManager" title="Direct link to ClassroomManager">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="joinclassroomc-classroom">+joinClassroom(c: Classroom)<a href="#joinclassroomc-classroom" class="hash-link" aria-label="Direct link to +joinClassroom(c: Classroom)" title="Direct link to +joinClassroom(c: Classroom)">​</a></h3>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result">Expected Result<a href="#expected-result" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
 <ul>
-<li>Creates an empty list of <code>Classroom</code> objects.</li>
-<li><code>expected_size</code> is set to the current list size plus one.</li>
-<li>A <code>Classroom</code> object is instantiated with random IDs and a <code>Game</code> list.</li>
-<li>Calls <code>joinClassroom()</code> with the <code>Classroom</code> object.</li>
-<li>Checks if the <code>Classroom</code> list size has increased by one.</li>
+<li>A 4-tuple is returned. E.g: [0, 0, 0, 255]</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="leaveclassroomc-classroom">+leaveClassroom(c: Classroom)<a href="#leaveclassroomc-classroom" class="hash-link" aria-label="Direct link to +leaveClassroom(c: Classroom)" title="Direct link to +leaveClassroom(c: Classroom)">​</a></h3>
-<ul>
-<li>Creates an empty list of <code>Classroom</code> objects.</li>
-<li><code>expected_size</code> is set to the current list size minus one.</li>
-<li>A <code>Classroom</code> object is instantiated with random IDs and a <code>Game</code> list.</li>
-<li>Calls <code>leaveClassroom()</code> with the <code>Classroom</code> object.</li>
-<li>Checks if the <code>Classroom</code> list size has decreased by one.</li>
+</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="viewclassrooms">+viewClassrooms()<a href="#viewclassrooms" class="hash-link" aria-label="Direct link to +viewClassrooms()" title="Direct link to +viewClassrooms()">​</a></h3>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="scale-bitmap">Scale Bitmap<a href="#scale-bitmap" class="hash-link" aria-label="Direct link to Scale Bitmap" title="Direct link to Scale Bitmap">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to scale a bitmap to a new size.<!-- -->
 <ul>
-<li>Instantiates several <code>Classroom</code> objects and stores them in a list.</li>
-<li>Calls <code>viewClassrooms()</code>.</li>
-<li>Passes if all <code>Classroom</code> objects are displayed.</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-1">Input / User action<a href="#input--user-action-1" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Bitmap in 2d array form and a whole integer scaling factor.</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="classroom">Classroom<a href="#classroom" class="hash-link" aria-label="Direct link to Classroom" title="Direct link to Classroom">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="deletegameuserid-int-bool">+deleteGame(userID: int): bool<a href="#deletegameuserid-int-bool" class="hash-link" aria-label="Direct link to +deleteGame(userID: int): bool" title="Direct link to +deleteGame(userID: int): bool">​</a></h3>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-1">Expected Result<a href="#expected-result-1" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
 <ul>
-<li>Instantiates a <code>Classroom</code> and two <code>Game</code> objects.</li>
-<li><code>userID</code> matches one of the <code>Game</code> objects&#x27; author attribute.</li>
-<li>Calls <code>deleteGame()</code> with <code>userID</code>.</li>
-<li>Passes if it returns <code>True</code>.</li>
+<li>A 2d array of the same bitmap, scaled to new dimensions.</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="approvegameuserid-int-bool">+approveGame(userID: int): bool<a href="#approvegameuserid-int-bool" class="hash-link" aria-label="Direct link to +approveGame(userID: int): bool" title="Direct link to +approveGame(userID: int): bool">​</a></h3>
-<ul>
-<li>Creates a <code>Classroom</code> and a <code>Game</code> object.</li>
-<li>Sets <code>userID</code> to the <code>Game</code> object&#x27;s author.</li>
-<li>Calls <code>approveGame()</code>.</li>
-<li>Passes if it returns <code>True</code>.</li>
+</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="uploadgamegame-game">+uploadGame(game: Game)<a href="#uploadgamegame-game" class="hash-link" aria-label="Direct link to +uploadGame(game: Game)" title="Direct link to +uploadGame(game: Game)">​</a></h3>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bitmap-string-representation">Bitmap String Representation<a href="#bitmap-string-representation" class="hash-link" aria-label="Direct link to Bitmap String Representation" title="Direct link to Bitmap String Representation">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to convert a 2d array bitmap into a string representing that 2d array. This is used to insert bitmap data into python code.<!-- -->
 <ul>
-<li>Creates a <code>Classroom</code> with a <code>Game</code> list.</li>
-<li>Sets <code>expected</code> to the <code>Game</code> list&#x27;s size plus one.</li>
-<li>Instantiates a <code>Game</code> object with random attributes.</li>
-<li>Calls <code>uploadGame()</code> with the <code>Game</code> object.</li>
-<li>Passes if <code>Game</code> list size equals <code>expected</code>.</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-2">Input / User action<a href="#input--user-action-2" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Bitmap in 2d array form.</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="game">Game<a href="#game" class="hash-link" aria-label="Direct link to Game" title="Direct link to Game">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="startgame">+startGame()<a href="#startgame" class="hash-link" aria-label="Direct link to +startGame()" title="Direct link to +startGame()">​</a></h3>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-2">Expected Result<a href="#expected-result-2" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
 <ul>
-<li>Creates a <code>Game</code> object with random attributes.</li>
-<li>Calls <code>startGame()</code>.</li>
-<li>Passes if it returns <code>True</code>.</li>
+<li>A string representing that bitmap in the form &quot;[[0,0,],[x,x], ... ]&quot;</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="pausegame">+pauseGame()<a href="#pausegame" class="hash-link" aria-label="Direct link to +pauseGame()" title="Direct link to +pauseGame()">​</a></h3>
-<ul>
-<li>Creates a <code>Game</code> object with random attributes.</li>
-<li>Calls <code>startGame()</code> then <code>pauseGame()</code>.</li>
-<li>Passes if it returns <code>True</code>.</li>
+</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="quitgame">+quitGame()<a href="#quitgame" class="hash-link" aria-label="Direct link to +quitGame()" title="Direct link to +quitGame()">​</a></h3>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="unroll-workspace-blocks">Unroll Workspace Blocks<a href="#unroll-workspace-blocks" class="hash-link" aria-label="Direct link to Unroll Workspace Blocks" title="Direct link to Unroll Workspace Blocks">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to convert a nested workspace structure into an iterable list of blocks.<!-- -->
 <ul>
-<li>Creates a <code>Game</code> object with random attributes.</li>
-<li>Calls <code>startGame()</code> then <code>quitGame()</code>.</li>
-<li>Passes if it returns <code>True</code>.</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-3">Input / User action<a href="#input--user-action-3" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Blockly workspace JSON</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="uploadtoclassroomclassroom">+uploadToClassroom(Classroom)<a href="#uploadtoclassroomclassroom" class="hash-link" aria-label="Direct link to +uploadToClassroom(Classroom)" title="Direct link to +uploadToClassroom(Classroom)">​</a></h3>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-3">Expected Result<a href="#expected-result-3" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
 <ul>
-<li>Instantiates a <code>Classroom</code> with a <code>Game</code> list.</li>
-<li>Creates a <code>Game</code> object.</li>
-<li><code>expected</code> is set to the <code>Game</code> list&#x27;s size plus one.</li>
-<li>Calls <code>uploadToClassroom()</code> with the <code>Classroom</code>.</li>
-<li>Passes if <code>Game</code> list size equals <code>expected</code>.</li>
+<li>An array of blocks contained in the workspace.</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="compilegame">+compileGame()<a href="#compilegame" class="hash-link" aria-label="Direct link to +compileGame()" title="Direct link to +compileGame()">​</a></h3>
-<ul>
-<li>Creates a <code>Game</code> object with random attributes.</li>
-<li>Calls <code>compileGame()</code>.</li>
-<li>Passes if it returns <code>True</code>.</li>
+</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="sensor">Sensor<a href="#sensor" class="hash-link" aria-label="Direct link to Sensor" title="Direct link to Sensor">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="getsensordata">+getSensorData()<a href="#getsensordata" class="hash-link" aria-label="Direct link to +getSensorData()" title="Direct link to +getSensorData()">​</a></h3>
-<p>Stubbed Test Class: sensor
-Requires hardware to be connected to a sensor</p>
-<p>This unit test checks if sensorData is a non-empty array and if the calibration parameter is set to false.</p>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="find-path-to-exit">Find Path to Exit<a href="#find-path-to-exit" class="hash-link" aria-label="Direct link to Find Path to Exit" title="Direct link to Find Path to Exit">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to navigate a nested workspace structure and determine if the a Close Game block is reached.<!-- -->
 <ul>
-<li>Creates a <code>Sensor</code> object</li>
-<li>Calls <code>getSensorData()</code></li>
-<li>Passes if it returns a non-zero integer array and calibration is set to false</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-4">Input / User action<a href="#input--user-action-4" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Blockly workspace JSON</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="recalibratesensor">+recalibrateSensor()<a href="#recalibratesensor" class="hash-link" aria-label="Direct link to +recalibrateSensor()" title="Direct link to +recalibrateSensor()">​</a></h3>
-<p>Stubbed Test Class: sensor
-Requires hardware to be connected to a sensor</p>
-<p>This unit test checks if the calibration parameter has been changed to True.</p>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-4">Expected Result<a href="#expected-result-4" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
 <ul>
-<li>Creates a <code>Sensor</code> object</li>
-<li>Calls <code>getSensorData()</code></li>
-<li>Passes if the calibration parameter is set to True.</li>
+<li>A boolean value indicating that the Close Game block is reachable.</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="clearsensordata">+clearSensorData()<a href="#clearsensordata" class="hash-link" aria-label="Direct link to +clearSensorData()" title="Direct link to +clearSensorData()">​</a></h3>
-<p>Stubbed Test Class: sensor
-Requires hardware to be connected to a sensor</p>
-<p>This unit test checks if the sensorData array is set to all zeroes.</p>
-<ul>
-<li>Creates a <code>Sensor</code> object</li>
-<li>Calls <code>clearSensorData()</code></li>
-<li>Passes if the sensorData array is composed of all zeroes.</li>
+</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="documentation">Documentation<a href="#documentation" class="hash-link" aria-label="Direct link to Documentation" title="Direct link to Documentation">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="loadcontenttype-string--string">+loadContent(type: String) : String<a href="#loadcontenttype-string--string" class="hash-link" aria-label="Direct link to +loadContent(type: String) : String" title="Direct link to +loadContent(type: String) : String">​</a></h3>
-<p>Stubbed Test Class: documentation
-Requires an existing blockly documentation file assigned a type</p>
-<p>This unit test checks if a documentation string has been returned from the requested dummy content (given by type).</p>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="get-variable-name">Get Variable Name<a href="#get-variable-name" class="hash-link" aria-label="Direct link to Get Variable Name" title="Direct link to Get Variable Name">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to map a Block&#x27;s UUID to a stored variable name in the workspace.<!-- -->
 <ul>
-<li>Creates a <code>Documentation</code> object</li>
-<li><code>expected</code> is set to the documentation string manually</li>
-<li>Calls <code>loadContent(type)</code></li>
-<li>Passes if <code>Documentation</code> returned equals <code>expected</code> string.</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-5">Input / User action<a href="#input--user-action-5" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Block UUID and the workspace JSON it belongs to.</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="configuration">Configuration<a href="#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="scan--string">+scan() : String[]<a href="#scan--string" class="hash-link" aria-label="Direct link to +scan() : String[]" title="Direct link to +scan() : String[]">​</a></h3>
-<p>Stubbed Test Class: configuration
-Requires absence of connections to any network</p>
-<p>This unit test checks if scan returns a non-empty array of available networks to connect to.</p>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-5">Expected Result<a href="#expected-result-5" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
 <ul>
-<li>Creates a <code>Configuration</code> object</li>
-<li>Calls <code>scan()</code></li>
-<li>Passes if returned String array is non-empty</li>
+<li>A predefined variable name present in the workspace that maps to that block.</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="connectssid-string-securitykey-string">+connect(SSID: String, securityKey: String)<a href="#connectssid-string-securitykey-string" class="hash-link" aria-label="Direct link to +connect(SSID: String, securityKey: String)" title="Direct link to +connect(SSID: String, securityKey: String)">​</a></h3>
-<p>Stubbed Test Class: configuration
-Requires access to the wireless adapter hardware</p>
-<p>This unit test checks if connect(SSID, securityKey) sets the connectionStatus to True</p>
-<ul>
-<li>Creates a <code>Configuration</code> object</li>
-<li>Calls <code>connect(SSID, securityKey)</code></li>
-<li>Passes if connectionStatus is True</li>
+</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="close">+close()<a href="#close" class="hash-link" aria-label="Direct link to +close()" title="Direct link to +close()">​</a></h3>
-<p>Stubbed Test Class: configuration
-Requires a network connection</p>
-<p>This unit test checks if close() sets the connectionStatus to False</p>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="get-bitmap-size">Get Bitmap Size<a href="#get-bitmap-size" class="hash-link" aria-label="Direct link to Get Bitmap Size" title="Direct link to Get Bitmap Size">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to retrieve size information from the block definitions array based on the block type.<!-- -->
 <ul>
-<li>Creates a <code>Configuration</code> object</li>
-<li>Calls <code>close()</code></li>
-<li>Passes if connectionStatus is False</li>
-</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/Capstone-Projects-2024-Spring/project-blastpad/edit/main/documentation/docs/testing/unit-testing.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"><details><summary>Revision History</summary><table><thead><tr><th scope="row">Author</th><th scope="row">Revision</th><th scope="row">Date</th></tr></thead><tbody>nothing</tbody></table></details><span class="theme-last-updated">Last updated<!-- --> by <b>mustafamalik-tu</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/project-blastpad/docs/category/test-procedures"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Test Procedures</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/project-blastpad/docs/testing/integration-testing"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Integration tests</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#unit-test-reports" class="table-of-contents__link toc-highlight">Unit Test Reports</a></li><li><a href="#blocklyeditor" class="table-of-contents__link toc-highlight">BlocklyEditor</a><ul><li><a href="#saveworkspace" class="table-of-contents__link toc-highlight">+saveWorkspace()</a></li><li><a href="#loadworkspace" class="table-of-contents__link toc-highlight">+loadWorkspace()</a></li><li><a href="#loadgallerytest" class="table-of-contents__link toc-highlight">+loadGalleryTest()</a></li></ul></li><li><a href="#classroommanager" class="table-of-contents__link toc-highlight">ClassroomManager</a><ul><li><a href="#joinclassroomc-classroom" class="table-of-contents__link toc-highlight">+joinClassroom(c: Classroom)</a></li><li><a href="#leaveclassroomc-classroom" class="table-of-contents__link toc-highlight">+leaveClassroom(c: Classroom)</a></li><li><a href="#viewclassrooms" class="table-of-contents__link toc-highlight">+viewClassrooms()</a></li></ul></li><li><a href="#classroom" class="table-of-contents__link toc-highlight">Classroom</a><ul><li><a href="#deletegameuserid-int-bool" class="table-of-contents__link toc-highlight">+deleteGame(userID: int): bool</a></li><li><a href="#approvegameuserid-int-bool" class="table-of-contents__link toc-highlight">+approveGame(userID: int): bool</a></li><li><a href="#uploadgamegame-game" class="table-of-contents__link toc-highlight">+uploadGame(game: Game)</a></li></ul></li><li><a href="#game" class="table-of-contents__link toc-highlight">Game</a><ul><li><a href="#startgame" class="table-of-contents__link toc-highlight">+startGame()</a></li><li><a href="#pausegame" class="table-of-contents__link toc-highlight">+pauseGame()</a></li><li><a href="#quitgame" class="table-of-contents__link toc-highlight">+quitGame()</a></li><li><a href="#uploadtoclassroomclassroom" class="table-of-contents__link toc-highlight">+uploadToClassroom(Classroom)</a></li><li><a href="#compilegame" class="table-of-contents__link toc-highlight">+compileGame()</a></li></ul></li><li><a href="#sensor" class="table-of-contents__link toc-highlight">Sensor</a><ul><li><a href="#getsensordata" class="table-of-contents__link toc-highlight">+getSensorData()</a></li><li><a href="#recalibratesensor" class="table-of-contents__link toc-highlight">+recalibrateSensor()</a></li><li><a href="#clearsensordata" class="table-of-contents__link toc-highlight">+clearSensorData()</a></li></ul></li><li><a href="#documentation" class="table-of-contents__link toc-highlight">Documentation</a><ul><li><a href="#loadcontenttype-string--string" class="table-of-contents__link toc-highlight">+loadContent(type: String) : String</a></li></ul></li><li><a href="#configuration" class="table-of-contents__link toc-highlight">Configuration</a><ul><li><a href="#scan--string" class="table-of-contents__link toc-highlight">+scan() : String[]</a></li><li><a href="#connectssid-string-securitykey-string" class="table-of-contents__link toc-highlight">+connect(SSID: String, securityKey: String)</a></li><li><a href="#close" class="table-of-contents__link toc-highlight">+close()</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/project-blastpad/docs/intro">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/Capstone-Projects-2024-Spring/project-blastpad" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2024 BlastPad, Inc. Built with Docusaurus.</div></div></div></footer></div>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-6">Input / User action<a href="#input--user-action-6" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Block type and the block definitions array.</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-6">Expected Result<a href="#expected-result-6" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>A 2d array representing the size of the bitmap. E.g: A block with the type &quot;large_bitmap&quot; should have a size of [16, 16].</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="compile-a-game">Compile a Game<a href="#compile-a-game" class="hash-link" aria-label="Direct link to Compile a Game" title="Direct link to Compile a Game">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler is able to generate python code from a workspace.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-7">Input / User action<a href="#input--user-action-7" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>The file name of the workspace JSON and an optional destination file name.</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-7">Expected Result<a href="#expected-result-7" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>A python program defined by the workspace blocks.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="compiled-game-runs">Compiled Game Runs<a href="#compiled-game-runs" class="hash-link" aria-label="Direct link to Compiled Game Runs" title="Direct link to Compiled Game Runs">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the compiler generated a <em>valid</em> python program from a workspace.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-8">Input / User action<a href="#input--user-action-8" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>The file name of the generated python program.</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-8">Expected Result<a href="#expected-result-8" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>A boolean value indicating that the program ran for at least 5 seconds or failed to run.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="flask-server">Flask Server<a href="#flask-server" class="hash-link" aria-label="Direct link to Flask Server" title="Direct link to Flask Server">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="flask-server-starts">Flask Server Starts<a href="#flask-server-starts" class="hash-link" aria-label="Direct link to Flask Server Starts" title="Direct link to Flask Server Starts">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server starts.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-9">Input / User action<a href="#input--user-action-9" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>N/A</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-9">Expected Result<a href="#expected-result-9" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>A boolean value indicating that Flask server is running on port 8000 and that it is serving data.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="retrieve-saved-workspaces-games">Retrieve Saved Workspaces (Games)<a href="#retrieve-saved-workspaces-games" class="hash-link" aria-label="Direct link to Retrieve Saved Workspaces (Games)" title="Direct link to Retrieve Saved Workspaces (Games)">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly exposes saved workspaces through the /games endpoint.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-10">Input / User action<a href="#input--user-action-10" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Call to <a href="http://localhost:8000/games" target="_blank" rel="noopener noreferrer">http://localhost:8000/games</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-10">Expected Result<a href="#expected-result-10" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>An array of objects containing a workspace&#x27;s name, author, description, and time last modified.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="retrieve-games-from-community-hub">Retrieve Games from Community Hub<a href="#retrieve-games-from-community-hub" class="hash-link" aria-label="Direct link to Retrieve Games from Community Hub" title="Direct link to Retrieve Games from Community Hub">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly exposes workspaces (Games) in the Community Hub.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-11">Input / User action<a href="#input--user-action-11" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Call to <a href="http://localhost:8000/get/community/all" target="_blank" rel="noopener noreferrer">http://localhost:8000/get/community/all</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-11">Expected Result<a href="#expected-result-11" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>An array of objects containing a workspace&#x27;s name, author, description, and time last modified.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="retrieve-games-from-a-classroom">Retrieve Games from a Classroom<a href="#retrieve-games-from-a-classroom" class="hash-link" aria-label="Direct link to Retrieve Games from a Classroom" title="Direct link to Retrieve Games from a Classroom">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly exposes workspaces (Games) in a given Classroom.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-12">Input / User action<a href="#input--user-action-12" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Call to <a href="http://localhost:8000/get/classroom/%7BCLASSROOM_ID%7D/all" target="_blank" rel="noopener noreferrer">http://localhost:8000/get/classroom/{CLASSROOM_ID}/all</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-12">Expected Result<a href="#expected-result-12" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>An array of objects containing a workspace&#x27;s name, author, description, and time last modified.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="access-editor-from-external-device">Access Editor From External Device<a href="#access-editor-from-external-device" class="hash-link" aria-label="Direct link to Access Editor From External Device" title="Direct link to Access Editor From External Device">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly serves the editor.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-13">Input / User action<a href="#input--user-action-13" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Navigate to <a href="http://localhost:8000/editor" target="_blank" rel="noopener noreferrer">http://localhost:8000/editor</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-13">Expected Result<a href="#expected-result-13" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>Game selection menu is displayed, allowing the user to choose a saved workspace to edit or create a new one.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="access-editor-from-blastpad">Access Editor From Blastpad<a href="#access-editor-from-blastpad" class="hash-link" aria-label="Direct link to Access Editor From Blastpad" title="Direct link to Access Editor From Blastpad">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly serves the editor.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-14">Input / User action<a href="#input--user-action-14" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Navigate to <a href="http://localhost:8000/editor?load=%5BGAMENAME%5D.json&amp;fromHomescreen=true" target="_blank" rel="noopener noreferrer">http://localhost:8000/editor?load=[GAMENAME].json&amp;fromHomescreen=true</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-14">Expected Result<a href="#expected-result-14" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>The block editor opens and displays [GAMENAME]&#x27;s workspace.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="access-home-screen">Access Home Screen<a href="#access-home-screen" class="hash-link" aria-label="Direct link to Access Home Screen" title="Direct link to Access Home Screen">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly serves the home screen.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-15">Input / User action<a href="#input--user-action-15" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>Navigate to <a href="http://localhost:8000/" target="_blank" rel="noopener noreferrer">http://localhost:8000/</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-15">Expected Result<a href="#expected-result-15" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>The home screen is displayed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="save-game">Save Game<a href="#save-game" class="hash-link" aria-label="Direct link to Save Game" title="Direct link to Save Game">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly saves a workspace.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-16">Input / User action<a href="#input--user-action-16" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>POST request to <a href="http://localhost:8000/saveWithoutRun" target="_blank" rel="noopener noreferrer">http://localhost:8000/saveWithoutRun</a> with a workspace as body data.</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-16">Expected Result<a href="#expected-result-16" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>The POSTed workspace is compiled and saved. Errors in compilation will cause the save request to fail and return 400.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="download-game">Download Game<a href="#download-game" class="hash-link" aria-label="Direct link to Download Game" title="Direct link to Download Game">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server correctly downloads a game from the Community Hub.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-17">Input / User action<a href="#input--user-action-17" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>GET request to <a href="http://localhost:8000/download/community/%5BGAMENAME" target="_blank" rel="noopener noreferrer">http://localhost:8000/download/community/[GAMENAME</a>].</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-17">Expected Result<a href="#expected-result-17" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>The requested workspace (game) is saved to disk.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="run-compiler-on-saved-game">Run Compiler on Saved Game<a href="#run-compiler-on-saved-game" class="hash-link" aria-label="Direct link to Run Compiler on Saved Game" title="Direct link to Run Compiler on Saved Game">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server is able to compile a saved game.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-18">Input / User action<a href="#input--user-action-18" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>GET request to <a href="http://localhost:8000/compile?game=%5BGAMENAME" target="_blank" rel="noopener noreferrer">http://localhost:8000/compile?game=[GAMENAME</a>]</li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-18">Expected Result<a href="#expected-result-18" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>The Blockly Compiler is run on [GAMENAME].json and the resulting python code is saved to /blockly/compiled_games.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="get-local-wifi-networks">Get Local WiFi Networks<a href="#get-local-wifi-networks" class="hash-link" aria-label="Direct link to Get Local WiFi Networks" title="Direct link to Get Local WiFi Networks">​</a></h3>
+<details open="" class="details_lb9f alert alert--info details_b_Ee" data-collapsed="false"><summary>Details</summary><div><div class="collapsibleContent_i85q"><ul>
+<li>Check that the Flask server is able to scan for local wifi networks.<!-- -->
+<ul>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="input--user-action-19">Input / User action<a href="#input--user-action-19" class="hash-link" aria-label="Direct link to Input / User action" title="Direct link to Input / User action">​</a></h4>
+<ul>
+<li>GET request to <a href="http://localhost:8000/get_wifi_networks" target="_blank" rel="noopener noreferrer">http://localhost:8000/get_wifi_networks</a></li>
+</ul>
+</li>
+<li>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="expected-result-19">Expected Result<a href="#expected-result-19" class="hash-link" aria-label="Direct link to Expected Result" title="Direct link to Expected Result">​</a></h4>
+<ul>
+<li>An array of objects containing information about nearby wifi access points.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div></div></details></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/Capstone-Projects-2024-Spring/project-blastpad/edit/main/documentation/docs/testing/unit-testing.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"><details><summary>Revision History</summary><table><thead><tr><th scope="row">Author</th><th scope="row">Revision</th><th scope="row">Date</th></tr></thead><tbody>nothing</tbody></table></details><span class="theme-last-updated">Last updated<!-- --> by <b>Neil</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/project-blastpad/docs/category/test-procedures"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Test Procedures</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/project-blastpad/docs/testing/integration-testing"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Integration tests</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#unit-test-reports" class="table-of-contents__link toc-highlight">Unit Test Reports</a></li><li><a href="#blockly-compiler" class="table-of-contents__link toc-highlight">Blockly Compiler</a><ul><li><a href="#hex-to-rgb-conversion" class="table-of-contents__link toc-highlight">Hex to RGB Conversion</a></li><li><a href="#scale-bitmap" class="table-of-contents__link toc-highlight">Scale Bitmap</a></li><li><a href="#bitmap-string-representation" class="table-of-contents__link toc-highlight">Bitmap String Representation</a></li><li><a href="#unroll-workspace-blocks" class="table-of-contents__link toc-highlight">Unroll Workspace Blocks</a></li><li><a href="#find-path-to-exit" class="table-of-contents__link toc-highlight">Find Path to Exit</a></li><li><a href="#get-variable-name" class="table-of-contents__link toc-highlight">Get Variable Name</a></li><li><a href="#get-bitmap-size" class="table-of-contents__link toc-highlight">Get Bitmap Size</a></li><li><a href="#compile-a-game" class="table-of-contents__link toc-highlight">Compile a Game</a></li><li><a href="#compiled-game-runs" class="table-of-contents__link toc-highlight">Compiled Game Runs</a></li></ul></li><li><a href="#flask-server" class="table-of-contents__link toc-highlight">Flask Server</a><ul><li><a href="#flask-server-starts" class="table-of-contents__link toc-highlight">Flask Server Starts</a></li><li><a href="#retrieve-saved-workspaces-games" class="table-of-contents__link toc-highlight">Retrieve Saved Workspaces (Games)</a></li><li><a href="#retrieve-games-from-community-hub" class="table-of-contents__link toc-highlight">Retrieve Games from Community Hub</a></li><li><a href="#retrieve-games-from-a-classroom" class="table-of-contents__link toc-highlight">Retrieve Games from a Classroom</a></li><li><a href="#access-editor-from-external-device" class="table-of-contents__link toc-highlight">Access Editor From External Device</a></li><li><a href="#access-editor-from-blastpad" class="table-of-contents__link toc-highlight">Access Editor From Blastpad</a></li><li><a href="#access-home-screen" class="table-of-contents__link toc-highlight">Access Home Screen</a></li><li><a href="#save-game" class="table-of-contents__link toc-highlight">Save Game</a></li><li><a href="#download-game" class="table-of-contents__link toc-highlight">Download Game</a></li><li><a href="#run-compiler-on-saved-game" class="table-of-contents__link toc-highlight">Run Compiler on Saved Game</a></li><li><a href="#get-local-wifi-networks" class="table-of-contents__link toc-highlight">Get Local WiFi Networks</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/project-blastpad/docs/intro">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/Capstone-Projects-2024-Spring/project-blastpad" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://raw.githubusercontent.com/Capstone-Projects-2024-Spring/project-blastpad/assets/Color%20Logo%20300px.png" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2024 BlastPad, Inc. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
