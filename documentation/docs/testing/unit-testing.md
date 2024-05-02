@@ -8,183 +8,253 @@ sidebar_position: 1
 
 You can find the generated unit test report [here.](https://htmlpreview.github.io/?https://github.com/Capstone-Projects-2024-Spring/project-blastpad/blob/assets/test-report.html)
 
-## BlocklyEditor
+## Blockly Compiler
 
-### +saveWorkspace()
+### Hex to RGB Conversion
 
-Stubbed test class: blocklyEditor
-Requires access to sandboxed filesystem.
+<details open="True">
 
-Unit test checks if a workspace's contents have been updated after method is called.
+- Check that the compiler is able to convert Hexadecimal color values into a 4-tuple of red, green, blue, and alpha values in the range 0-255.
+    - #### Input / User action
+        - Hexadecimal color value. E.g: #000000
+    - #### Expected Result
+        - A 4-tuple is returned. E.g: [0, 0, 0, 255]
+</details>
 
-### +loadWorkspace()
 
-Stubbed test class: blocklyEditor
-Requires some sort of sandboxed browser. Cypress is ideal for this.
 
-Unit test checks that the correct workspace has been loaded and displayed in the editor.
 
-# DeviceManager Class
 
-### +loadGalleryTest()
+### Scale Bitmap
 
-This unit test is for the loadGallery() method in the DeviceManager class. The test calls the loadGallery method and tests if the "currentScreen" variable was changed to "Gallery".
+<details open="True">
 
-- Stubbed test class: instance of DeviceManager class 
-- Input: Void
-- Expected Output: True
+- Check that the compiler is able to scale a bitmap to a new size.
+    - #### Input / User action
+        - Bitmap in 2d array form and a whole integer scaling factor.
+    - #### Expected Result
+        - A 2d array of the same bitmap, scaled to new dimensions.
+</details>
 
-```
-public loadGalleryTest(Void) -> Boolean
-    deviceManager = New DeviceManager()
-    deviceManager.loadGallery()
-    return deviceManager.currentScreen == "Gallery"
-```
 
-## ClassroomManager 
+### Bitmap String Representation
 
-### +joinClassroom(c: Classroom)
-- Creates an empty list of `Classroom` objects.
-- `expected_size` is set to the current list size plus one.
-- A `Classroom` object is instantiated with random IDs and a `Game` list.
-- Calls `joinClassroom()` with the `Classroom` object.
-- Checks if the `Classroom` list size has increased by one.
+<details open="True">
 
-### +leaveClassroom(c: Classroom) 
-- Creates an empty list of `Classroom` objects.
-- `expected_size` is set to the current list size minus one.
-- A `Classroom` object is instantiated with random IDs and a `Game` list.
-- Calls `leaveClassroom()` with the `Classroom` object.
-- Checks if the `Classroom` list size has decreased by one.
+- Check that the compiler is able to convert a 2d array bitmap into a string representing that 2d array. This is used to insert bitmap data into python code.
+    - #### Input / User action
+        - Bitmap in 2d array form.
+    - #### Expected Result
+        - A string representing that bitmap in the form "[[0,0,],[x,x], ... ]"
+</details>
 
-### +viewClassrooms() 
-- Instantiates several `Classroom` objects and stores them in a list.
-- Calls `viewClassrooms()`.
-- Passes if all `Classroom` objects are displayed.
+### Unroll Workspace Blocks
 
-## Classroom 
+<details open="True">
 
-### +deleteGame(userID: int): bool
-- Instantiates a `Classroom` and two `Game` objects.
-- `userID` matches one of the `Game` objects' author attribute.
-- Calls `deleteGame()` with `userID`.
-- Passes if it returns `True`.
+- Check that the compiler is able to convert a nested workspace structure into an iterable list of blocks.
+    - #### Input / User action
+        - Blockly workspace JSON
+    - #### Expected Result
+        - An array of blocks contained in the workspace.
+</details>
 
-### +approveGame(userID: int): bool
-- Creates a `Classroom` and a `Game` object.
-- Sets `userID` to the `Game` object's author.
-- Calls `approveGame()`.
-- Passes if it returns `True`.
 
-### +uploadGame(game: Game)
-- Creates a `Classroom` with a `Game` list.
-- Sets `expected` to the `Game` list's size plus one.
-- Instantiates a `Game` object with random attributes.
-- Calls `uploadGame()` with the `Game` object.
-- Passes if `Game` list size equals `expected`.
 
-## Game
+### Find Path to Exit
 
-### +startGame()
-- Creates a `Game` object with random attributes.
-- Calls `startGame()`.
-- Passes if it returns `True`.
+<details open="True">
 
-### +pauseGame()
-- Creates a `Game` object with random attributes.
-- Calls `startGame()` then `pauseGame()`.
-- Passes if it returns `True`.
+- Check that the compiler is able to navigate a nested workspace structure and determine if the a Close Game block is reached.
+    - #### Input / User action
+        - Blockly workspace JSON
+    - #### Expected Result
+        - A boolean value indicating that the Close Game block is reachable.
+</details>
 
-### +quitGame()
-- Creates a `Game` object with random attributes.
-- Calls `startGame()` then `quitGame()`.
-- Passes if it returns `True`.
 
-### +uploadToClassroom(Classroom)
-- Instantiates a `Classroom` with a `Game` list.
-- Creates a `Game` object.
-- `expected` is set to the `Game` list's size plus one.
-- Calls `uploadToClassroom()` with the `Classroom`.
-- Passes if `Game` list size equals `expected`.
 
-### +compileGame()
-- Creates a `Game` object with random attributes.
-- Calls `compileGame()`.
-- Passes if it returns `True`.
+### Get Variable Name
 
-## Sensor
+<details open="True">
 
-### +getSensorData()
-Stubbed Test Class: sensor
-Requires hardware to be connected to a sensor
+- Check that the compiler is able to map a Block's UUID to a stored variable name in the workspace.
+    - #### Input / User action
+        - Block UUID and the workspace JSON it belongs to.
+    - #### Expected Result
+        - A predefined variable name present in the workspace that maps to that block.
+</details>
 
-This unit test checks if sensorData is a non-empty array and if the calibration parameter is set to false.
 
-- Creates a `Sensor` object
-- Calls `getSensorData()`
-- Passes if it returns a non-zero integer array and calibration is set to false
+### Get Bitmap Size
 
-### +recalibrateSensor()
-Stubbed Test Class: sensor
-Requires hardware to be connected to a sensor
+<details open="True">
 
-This unit test checks if the calibration parameter has been changed to True.
+- Check that the compiler is able to retrieve size information from the block definitions array based on the block type.
+    - #### Input / User action
+        - Block type and the block definitions array.
+    - #### Expected Result
+        - A 2d array representing the size of the bitmap. E.g: A block with the type "large_bitmap" should have a size of [16, 16].
+</details>
 
-- Creates a `Sensor` object
-- Calls `getSensorData()`
-- Passes if the calibration parameter is set to True.
 
-### +clearSensorData()
-Stubbed Test Class: sensor
-Requires hardware to be connected to a sensor
+### Compile a Game
 
-This unit test checks if the sensorData array is set to all zeroes.
+<details open="True">
 
-- Creates a `Sensor` object
-- Calls `clearSensorData()`
-- Passes if the sensorData array is composed of all zeroes.
+- Check that the compiler is able to generate python code from a workspace.
+    - #### Input / User action
+        - The file name of the workspace JSON and an optional destination file name.
+    - #### Expected Result
+        - A python program defined by the workspace blocks.
+</details>
 
-## Documentation
 
-### +loadContent(type: String) : String
-Stubbed Test Class: documentation
-Requires an existing blockly documentation file assigned a type
+### Compiled Game Runs
 
-This unit test checks if a documentation string has been returned from the requested dummy content (given by type).
+<details open="True">
 
-- Creates a `Documentation` object
-- `expected` is set to the documentation string manually
-- Calls `loadContent(type)`
-- Passes if `Documentation` returned equals `expected` string.
+- Check that the compiler generated a _valid_ python program from a workspace.
+    - #### Input / User action
+        - The file name of the generated python program.
+    - #### Expected Result
+        - A boolean value indicating that the program ran for at least 5 seconds or failed to run.
+</details>
 
-## Configuration
 
-### +scan() : String[]
-Stubbed Test Class: configuration
-Requires absence of connections to any network
+## Flask Server
 
-This unit test checks if scan returns a non-empty array of available networks to connect to.
+### Flask Server Starts
 
-- Creates a `Configuration` object
-- Calls `scan()`
-- Passes if returned String array is non-empty
+<details open="True">
 
-### +connect(SSID: String, securityKey: String)
-Stubbed Test Class: configuration
-Requires access to the wireless adapter hardware
+- Check that the Flask server starts.
+    - #### Input / User action
+        - N/A
+    - #### Expected Result
+        - A boolean value indicating that Flask server is running on port 8000 and that it is serving data.
+</details>
 
-This unit test checks if connect(SSID, securityKey) sets the connectionStatus to True
 
-- Creates a `Configuration` object
-- Calls `connect(SSID, securityKey)`
-- Passes if connectionStatus is True
 
-### +close()
-Stubbed Test Class: configuration
-Requires a network connection
 
-This unit test checks if close() sets the connectionStatus to False
 
-- Creates a `Configuration` object
-- Calls `close()`
-- Passes if connectionStatus is False
+### Retrieve Saved Workspaces (Games)
+
+<details open="True">
+
+- Check that the Flask server correctly exposes saved workspaces through the /games endpoint.
+    - #### Input / User action
+        - Call to http://localhost:8000/games
+    - #### Expected Result
+        - An array of objects containing a workspace's name, author, description, and time last modified.
+</details>
+
+
+### Retrieve Games from Community Hub
+
+<details open="True">
+
+- Check that the Flask server correctly exposes workspaces (Games) in the Community Hub.
+    - #### Input / User action
+        - Call to http://localhost:8000/get/community/all
+    - #### Expected Result
+        - An array of objects containing a workspace's name, author, description, and time last modified.
+</details>
+
+
+
+### Retrieve Games from a Classroom
+
+<details open="True">
+
+- Check that the Flask server correctly exposes workspaces (Games) in a given Classroom.
+    - #### Input / User action
+        - Call to http://localhost:8000/get/classroom/{CLASSROOM_ID}/all
+    - #### Expected Result
+        - An array of objects containing a workspace's name, author, description, and time last modified.
+</details>
+
+
+### Access Editor From External Device
+
+<details open="True">
+
+- Check that the Flask server correctly serves the editor.
+    - #### Input / User action
+        - Navigate to http://localhost:8000/editor
+    - #### Expected Result
+        - Game selection menu is displayed, allowing the user to choose a saved workspace to edit or create a new one.
+</details>
+
+### Access Editor From Blastpad
+
+<details open="True">
+
+- Check that the Flask server correctly serves the editor.
+    - #### Input / User action
+        - Navigate to http://localhost:8000/editor?load=[GAMENAME].json&fromHomescreen=true
+    - #### Expected Result
+        - The block editor opens and displays [GAMENAME]'s workspace.
+</details>
+
+### Access Home Screen
+
+<details open="True">
+
+- Check that the Flask server correctly serves the home screen.
+    - #### Input / User action
+        - Navigate to http://localhost:8000/
+    - #### Expected Result
+        - The home screen is displayed.
+</details>
+
+
+### Save Game
+
+<details open="True">
+
+- Check that the Flask server correctly saves a workspace.
+    - #### Input / User action
+        - POST request to http://localhost:8000/saveWithoutRun with a workspace as body data.
+    - #### Expected Result
+        - The POSTed workspace is compiled and saved. Errors in compilation will cause the save request to fail and return 400.
+</details>
+
+
+
+### Download Game
+
+<details open="True">
+
+- Check that the Flask server correctly downloads a game from the Community Hub.
+    - #### Input / User action
+        - GET request to http://localhost:8000/download/community/[GAMENAME].
+    - #### Expected Result
+        - The requested workspace (game) is saved to disk.
+</details>
+
+
+### Run Compiler on Saved Game
+
+<details open="True">
+
+- Check that the Flask server is able to compile a saved game.
+    - #### Input / User action
+        - GET request to http://localhost:8000/compile?game=[GAMENAME]
+    - #### Expected Result
+        - The Blockly Compiler is run on [GAMENAME].json and the resulting python code is saved to /blockly/compiled_games.
+</details>
+
+
+
+### Get Local WiFi Networks
+
+<details open="True">
+
+- Check that the Flask server is able to scan for local wifi networks.
+    - #### Input / User action
+        - GET request to http://localhost:8000/get_wifi_networks
+    - #### Expected Result
+        - An array of objects containing information about nearby wifi access points.
+</details>
