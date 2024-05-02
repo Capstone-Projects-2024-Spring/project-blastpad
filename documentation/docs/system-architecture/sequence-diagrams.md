@@ -157,15 +157,15 @@ Gallery-->>-User: Display Verbose Compilation Failure Message
 ```
 
 
-## Use Case 6 - Joining a Classroom
+## Use Case 5 - Joining a Classroom
 A user would like to join a classroom from the BlastPad.
 
 1. The user turns on the BlastPad.
 2. Then connects a keyboard and mouse to the BlastPad
-3. Then selects the “Classroom” option on the main menu of the home screen.
-4. Then selects the “Join Classroom” button from the “Classroom” page menu.
-5. Then the user types in the share link given to them by their instructor and hits enter..
-6. The user will be returned to the home screen.
+3. Then clicks on the Settings Page and clicks on the "Classroom" option on the sidebar .
+4. Then selects the “Join” option on the displayed "Classroom" page.
+5. Then the user types in the invite code given to them by their instructor and hits enter.
+6. The user will be shown a successful "Joined" message and be returned to the "Classroom" page.
 
 
 ```mermaid
@@ -182,10 +182,13 @@ deactivate Blastpad
 Gallery-->>-User: Display Home Screen
 
 
-User->>+Gallery: Press "Classroom" Button
-Gallery-->>-User: Display "View Classrooms"/"Join Classroom" Dropdown
-User->>+Gallery: Select "Join Classroom", enter share link.
-Gallery->>+Classroom: POST Share Link & User Information
+User->>+Gallery: Press "Settings" Button
+Gallery-->>-User: Display Settings Sidebar Menu
+User->>+Gallery: Select "Classroom" button.
+Gallery-->>User: Display "Join" and "Create" Classroom options
+User->>Gallery: Select "Join" button, enter invite code.
+
+Gallery->>+Classroom: POST Invite Code
 Classroom->>Classroom: Verify Share Link
 Classroom->>Classroom: Add user to specified classroom
 Classroom-->>-Gallery: Acknowledge Sucessful Join
