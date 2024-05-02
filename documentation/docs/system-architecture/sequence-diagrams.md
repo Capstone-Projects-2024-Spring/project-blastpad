@@ -157,52 +157,6 @@ Gallery-->>-User: Display Verbose Compilation Failure Message
 ```
 
 
-
-## Use Case 5 - Creating a Classrooms Account
-A user would like to create a Classrooms account for their BlastPad.
-
-1. The user turns on the BlastPad and attaches their keyboard and mouse.
-2. The user selects the “Account” button on the main menu of the home screen, which presents a choice between Login and Create Account.
-3. The user selects “Create Account” and enters a username and password.
-4. After entering the username and password, the user confirms their password by re-entering it.
-5. The BlastPad displays a success message and returns the user to the home screen.
-
-```mermaid
----
-title: "Sequence Diagram 5: Creating a Classrooms Account"
----
-
-sequenceDiagram
-	actor User
-	User->>+Blastpad: Power On
-	Blastpad->>+Gallery: Start Home Screen/Gallery
-	Gallery->>-Blastpad: Retrieve games stored on disk
-	Blastpad-->>+Gallery: Return games stored on disk
-	deactivate Blastpad	
-	Gallery-->>-User: Display Home Screen
-	
-	User->>+Blastpad: Attach Keyboard & Mouse
-	Blastpad-->>-User: Acknowledge new input device
-
-
-	User->>+Gallery: Press "Account" Button
-	Gallery-->>-User: Render Account Management Screen
-
-	User->>+Gallery: Press "Create Account" Button
-	Gallery-->>-User: Render Account Creation Screen
-
-
-	User->>+Gallery: Enter username and password
-	Gallery->>+Classrooms: POST new user w/ username and password
-	Classrooms->>+Classrooms Database: Store new user in database
-	Classrooms Database-->>- Classrooms: Acknowledge successful store
-	Classrooms-->>-Gallery: Acknowledge successful user creation
- 
-	Gallery-->>-User: Display successful account creation message
-
-```
-
-
 ## Use Case 6 - Joining a Classroom
 A user would like to join a classroom from the BlastPad.
 
