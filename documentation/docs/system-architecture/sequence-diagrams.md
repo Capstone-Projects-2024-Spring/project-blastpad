@@ -301,11 +301,13 @@ Gallery-->>-User: Display successful upload
 ## Use Case 9 - Creating a Classroom
 A user/teacher would like to a create a classroom to host BlastPad projects for students
 
-1. The user visits the BlastPad™ website.
-2. Then logs in/creates an account as an educator (verified by email domain)
-3. Then selects the “Create Classroom” option from the educator dashboard.
-4. Then the user configures the Classroom’s permissions
-5. The user creates a special share link for students to join from their BlastPad
+1. The instructor turns on the BlastPad.
+2. Then connects a keyboard and mouse to the BlastPad
+3. Then clicks on the Settings Page and clicks on the "Classroom" option on the sidebar .
+4. Then selects the “Create” option on the displayed "Classroom" page.
+5. Then the instructor types in a classroom name, description, their own name, and an invite code.
+6. Then hits the “Create Classroom” button
+7. The instructor will be shown a successful "Created" message and be returned to the "Classroom" page automatically joined in the created Classroom.
 
 
 
@@ -316,126 +318,30 @@ title: "Sequence Diagram 9 - Creating a Classroom"
 
 sequenceDiagram
 actor User
-User->>+Classrooms Site: User Visits Classrooms Site
-Classrooms Site-->>-User: Render Landing Page
-User->>+Classrooms Site: Log in as Educator
-Classrooms Site->>+Classrooms Database: POST User Information
-Classrooms Database-->>-Classrooms Site: User is verified as Educator
-Classrooms Site->>+Classrooms Database: GET User's Owned Classrooms
-Classrooms Database-->>-Classrooms Site: Return User's Owned Classrooms
-Classrooms Site-->>-User: Render Educator Portal and Owned Classrooms
-
-
-User->>+Classrooms Site: Select Create Classroom
-Classrooms Site->>+Classrooms Database: POST Create Classroom
-Classrooms Database-->>-Classrooms Site: Classroom Created
-Classrooms Site->>-User: Render Classroom Settings
-User-->>+Classrooms Site: Configure Classroom Settings
-Classrooms Site->>+Classrooms Database: POST New Classroom Settings
-Classrooms Database-->>-Classrooms Site: Acknowledge New Settings
-Classrooms Site-->>-User: Render New Classroom Settings
-User->>+Classrooms Site: Select "Generate Share Link"
-Classrooms Site->>Classrooms Site: Generate Share Link
-Classrooms Site-->>-User: Display Generated Share Link
-
-```
-
-
-
-
-## Use Case 10 - Approving an uploaded game for public visibility in a Classroom
-A user/teacher would like to approve an uploaded game to be visible in the Classroom
-
-1. The user visits the BlastPad™ website.
-2. Then logs in as an educator.
-3. Then receives a notification on the educator dashboard that a game has been uploaded.
-4. Then the user connects a BlastPad to their computer to view the game code in the editor or play it.
-5. The user approves the game on the dashboard making the game visible within the Classroom.
-
-```mermaid
----
-title: "Sequence Diagram 10 - Approving an uploaded game for public visibility in a Classroom"
----
-
-sequenceDiagram
-actor User
-User->>+Classrooms Site: User Visits Classrooms Site
-Classrooms Site-->>-User: Render Landing Page
-User->>+Classrooms Site: Log in as Educator
-Classrooms Site->>+Classrooms Database: POST User Information
-Classrooms Database-->>-Classrooms Site: User is verified as Educator
-Classrooms Site->>+Classrooms Database: GET User's Owned Classrooms
-Classrooms Database-->>-Classrooms Site: Return User's Owned Classrooms
-Classrooms Site-->>-User: Render Educator Portal and Owned Classrooms
-
-
-
-User->>+Classrooms Site: Select a Classroom
-Classrooms Site->>+Classrooms Database: GET Classroom Information
-Classrooms Database-->>-Classrooms Site: Return Classroom Information
-Classrooms Site-->>-User: Render Classroom
-
-User->>+Classrooms Site: Browse unpublished games
-Classrooms Site->>+Classrooms Database: GET Games pending approval in classroom
-Classrooms Database-->>-Classrooms Site: Return Games pending approval
-Classrooms Site-->>-User: Display games pending approval
-
 User->>+Blastpad: Power On
 Blastpad->>+Gallery: Start Home Screen/Gallery
-Gallery->>-Blastpad: Retrieve games stored on disk
-Blastpad-->>+Gallery: Return games stored on disk
 deactivate Blastpad	
 Gallery-->>-User: Display Home Screen
 
 User->>+Blastpad: Attach Keyboard & Mouse
 Blastpad-->>-User: Acknowledge new input device
 
-User->>+Gallery: Press "Classrooms" Button
-Gallery-->>-User: Display "View Classrooms/Join Classroom" Menu
-User->>+Gallery: Select "View Classrooms"
-Gallery->>+Classrooms: GET User's Classrooms
-Classrooms->>+Classrooms Database: Database Query for User's Classrooms
-Classrooms Database-->>-Classrooms: Successful Retrieval of User's Classrooms
-Classrooms-->>-Gallery: Respond with User's Classrooms
-Gallery-->>-User: Display User's Classrooms as list
 
-User->>+Gallery: Select a Classroom
-Gallery->>+Classrooms: GET Classroom information & uploaded games
-Classrooms->>+Classrooms Database: Database Query for Classroom & Uploaded Games
-Classrooms Database-->>-Classrooms: Successful Classroom Retrieval
-Classrooms-->>-Gallery: Return classroom and published games
-Gallery-->>-User: Display classroom and published games
+User->>+Gallery: Press "Settings" Button
+Gallery-->>-User: Display Settings Sidebar Menu
+User->>+Gallery: Select "Classroom" button.
+Gallery-->>User: Display "Join" and "Create" Classroom options
+User->>Gallery: Select "Create" button, enter title, description, name, and invite code.
 
-User->>+Gallery: Download a published game
-Gallery->>+Classrooms: GET published game
-Classrooms->>+Classrooms Database: Retrieve game file name
-Classrooms Database-->>-Classrooms: Return game file name
-Classrooms-->>-Gallery: Return published game file
-Gallery->>+Blastpad: Save game file to disk
-Blastpad-->>-Gallery: Acknowledge successful save
-Gallery-->>-User: Display successful save message.
+Gallery->>+Classroom: POST Classroom information
+Classroom->>Classroom: Create Classroom
+Classroom->>Classroom: Add user to specified classroom
+Classroom-->>-Gallery: Acknowledge Sucessful Creation
+Gallery-->>-User: Display Successful Create Message, show user joined to Classroom
 
 
-User->>+Gallery: Return to game selection screen
-Gallery->>+Blastpad: Retrieve games stored on disk
-Blastpad-->>-Gallery: Return games stored on disk
-Gallery-->>-User: Display downloaded games
-
-User->>+Gallery: Select downloaded game to play
-Gallery->>+Blockly Compiler: Compile selected game
-Blockly Compiler-->>Blockly Compiler: Attempt Compilation
-Blockly Compiler-->>-Gallery: Compilation Successful
-Gallery->>+Blastpad: Attempt to start game
-Blastpad-->>-Gallery: Game started
-Gallery-->>-User: Close gallery and switch focus to game
-User->>+Game: Play game!
-Game-->>-User: Game over.
-
-User->>+Classrooms Site: Approve game
-Classrooms Site->>+Classrooms Database: POST Game Approval
-Classrooms Database-->>-Classrooms Site: Acknowledge Successful Approval
-Classrooms Site-->>-User: Display games awaiting approval
 ```
+
 
 ## Use Case 11 - Configuring the WiFi
 A user would like to configure the WiFi for the BlastPad.
