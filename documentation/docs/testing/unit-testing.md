@@ -3,6 +3,11 @@ sidebar_position: 1
 ---
 # Unit tests
 
+
+## Unit Test Reports
+
+You can find the generated unit test report [here.](https://htmlpreview.github.io/?https://github.com/Capstone-Projects-2024-Spring/project-blastpad/blob/assets/test-report.html)
+
 ## Blockly Compiler
 
 ### Hex to RGB Conversion
