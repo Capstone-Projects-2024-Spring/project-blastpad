@@ -170,7 +170,7 @@ A user would like to join a classroom from the BlastPad.
 
 ```mermaid
 ---
-title: "Sequence Diagram 6: Joining a Classroom"
+title: "Sequence Diagram 5: Joining a Classroom"
 ---
 sequenceDiagram
 actor User
@@ -208,7 +208,7 @@ A user would like to view their classmate's games and play one.
 
 ```mermaid
 ---
-title: "Sequence Diagram 7 - Viewing and playing a published game"
+title: "Sequence Diagram 6 - Viewing and playing a published game"
 ---
 
 sequenceDiagram
@@ -288,9 +288,7 @@ User->>+Gallery: Scroll through games, select one and press "Upload to Classroom
 Gallery->>+Classrooms: GET User's Classrooms
 Classrooms->>+Classrooms Database: Database Query for User's Classrooms
 Classrooms Database-->>-Classrooms: Successful Retrieval of User's Classrooms
-Classrooms-->>-Gallery: Respond with User's Classrooms
-Gallery-->>-User: Display User's Classrooms as list
-User->>+Gallery: Select a classroom
+Classrooms-->>-Gallery: Respond with User's Classroom
 Gallery->>+Classrooms: POST Game to classroom
 Classrooms->>+Classrooms Database: Save game, flag as pending approval
 Classrooms Database-->>-Classrooms: Acknowledge successful save
