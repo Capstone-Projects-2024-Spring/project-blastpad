@@ -256,7 +256,7 @@ User->>+Game: Play game!
 
 ```
 
-## Use Case 8 - Uploading a game to a Classroom
+## Use Case 7 - Uploading a game to a Classroom
 A user would like to upload a game to a Classroom
 
 1. The user turns on the BlastPad.
@@ -267,7 +267,7 @@ A user would like to upload a game to a Classroom
 
 ```mermaid
 ---
-title: "Sequence Diagram 8 - Uploading a game to a Classroom"
+title: "Sequence Diagram 7 - Uploading a game to a Classroom"
 ---
 
 sequenceDiagram
@@ -298,7 +298,7 @@ Gallery-->>-User: Display successful upload
 ```
 
 
-## Use Case 9 - Creating a Classroom
+## Use Case 8 - Creating a Classroom
 A user/teacher would like to a create a classroom to host BlastPad projects for students
 
 1. The instructor turns on the BlastPad.
@@ -313,7 +313,7 @@ A user/teacher would like to a create a classroom to host BlastPad projects for 
 
 ```mermaid
 ---
-title: "Sequence Diagram 9 - Creating a Classroom"
+title: "Sequence Diagram 8 - Creating a Classroom"
 ---
 
 sequenceDiagram
@@ -343,19 +343,20 @@ Gallery-->>-User: Display Successful Create Message, show user joined to Classro
 ```
 
 
-## Use Case 11 - Configuring the WiFi
+## Use Case 9 - Configuring the WiFi
 A user would like to configure the WiFi for the BlastPad.
 
 1. The user turns on the BlastPad (likely for the first time).
 2. Then connects a keyboard and mouse to the BlastPad.
-3. Then selects the “WiFi” icon on the main menu of the home screen.
-4. Then selects the network they want to connect to from the scrollable list of available networks.
+3. Then selects the “Setting” icon on the main menu of the home screen.
+4. Then selects the "WiFi" icon on the sidebar menu of the "Settings" page
+4. Then selects the network they want to connect to from the scrollable list of available networks in the displayed "WiFi" page.
 5. Then the user types in the Network key and hits enter.
-6. The user is successfully connected and returned to the home screen
+6. The user is successfully connected and returned to the "WiFi" page displaying their connection status.
 
 ```mermaid
 ---
-title: "Sequence Diagram 11 - Configuring the WiFi"
+title: "Sequence Diagram 9 - Configuring the WiFi"
 ---
 
 sequenceDiagram
@@ -372,7 +373,9 @@ Blastpad-->>-User: Acknowledge new input device
 
 
 
-User->>+Gallery: Press "Wifi" Button
+User->>+Gallery: Press "Settings" Button
+Gallery-->>User: Display "Settings" Page sidebar menu
+User->>Gallery: Select "WiFi" button
 Gallery->>+Blastpad: Retrieve local access points
 Blastpad-->>-Gallery: Return list of available access points
 Gallery-->>-User: Display list of available networks
