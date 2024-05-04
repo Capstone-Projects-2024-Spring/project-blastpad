@@ -12,7 +12,7 @@ The GameMetaData entity holds the description for an uploaded gamefile in the Co
 
 ```mermaid
 ---
-title: "E-R Diagram SupaBase"
+title: "E-R Diagram by SupaBase Model"
 ---
 erDiagram
     Classrooms {
