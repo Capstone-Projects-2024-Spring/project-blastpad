@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 ---
-# Integration tests
+# Integration Tests
 
 Tests to demonstrate each use-case based on the use-case descriptions and the sequence diagrams. External input should be provided via mock objects and results verified via mock objects. Integration tests should not require manual entry of data nor require manual interpretation of results.
 
@@ -82,8 +82,6 @@ A user’s Blockly code fails during compilation and they would like to view the
 - Runs `Flask / Fail to Save Game` unit test.
 - Passes if all tests pass.
 </details>
-
-
 
 
 

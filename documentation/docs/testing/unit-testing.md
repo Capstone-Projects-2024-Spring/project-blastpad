@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 ---
-# Unit tests
+# Unit Tests
 
 
 ## Unit Test Reports
