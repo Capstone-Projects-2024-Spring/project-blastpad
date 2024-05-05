@@ -21,8 +21,8 @@ classDiagram
 	ProfileSettingsPage <-- "1" CommunityPage
 	CommunityPage <-- "1" NetworkSettings	
 	Game <-- "1" CodeCompiler
-	Navbar o-- "0..*" Icons
-	Navbar <-- "1..*" Homepage
+	NavBar o-- "0..*" Icons
+	NavBar <-- "1..*" HomePage
 		
     class Game{
         -title: String
