@@ -19,10 +19,10 @@ classDiagram
 	CommunityPage <-- "1" BlocklyEditor	
 	ClassroomSettingsPage *-- "0..*" ClassroomPage
 	ProfileSettingsPage <-- "1" CommunityPage
-	CommunityPage <-- "1" NetworkSettings	
+	CommunityPage --> NetworkSettings	
 	Game <-- "1" CodeCompiler
-	NavBar o-- "0..*" Icons
-	NavBar <-- "1..*" HomePage
+	NavBar --> Icons
+	HomePage --> NavBar
 		
     class Game{
         -title: String
@@ -215,15 +215,7 @@ classDiagram
 
 ## Class Relationships
 
-The class diagram above demonstrates various relationships between classes within the BlastPad system. The **User** class is associated with the **DeviceManager** class, indicating that a user can interact with the device via the device manager. The **DeviceManager** class is also associated with the **Gallery** for loading it, as indicated by the loadGallery() method. Furthermore, the **Gallery** class is connected to the **ClassroomManager**, allowing users to view multiple classrooms, as shown by the viewClassrooms() method.
 
-The **ClassroomManager** maintains a one-to-many relationship with the **Classroom** class, signifying that it can manage multiple **Classrooms**. Each **Classroom** is capable of handling multiple **Game** objects, as depicted by their **one-to-many** association. The **Game** class is similarly connected to the **BlocklyEditor** class through a **one-to-many** relationship, suggesting that the **BlocklyEditor** can manage numerous **Block** objects.
-
-The **Database** class has a **one-to-many link** with both the **User** and **Classroom** classes, indicating that it stores and manages data from both Users and **Classrooms**.
-
-The **Block** class has a **one-to-many** relationship with the **Sensor** class, illustrating that blocks can access and utilize one or many sensors. The **Documentation** class is standalone but associated with the **BlocklyEditor** to provide tutorials for different blocks in the **BlocklyEditor**.
-
-Lastly, the **Gallery** class is linked to the **Configuration** class to handle WiFi connections.
 
 ## `Block`
 - Describes the properties necessary to define and create a Blockly code block
@@ -231,16 +223,16 @@ Lastly, the **Gallery** class is linked to the **Configuration** class to handle
 ## `BlocklyEditor`
 - Allows the user to work on Blockly based projects and create/place code blocks within it
 
-## `Classroom`
-- Acts as a platform to host user-created Blockly games
+## `ClassroomPage`
+- Acts as a platform to host user-created Blockly games belonging in a classroom
 
-## `ClassroomManager`
+## `ClassroomSettingsPage`
 - Lets the user interact with classrooms
 
 ## `CodeCompiler`
 - Converts the raw Blockly JSON definition into a runnable code Block in Python
 
-## `Configuration`
+## `NetworkSettings`
 - Manages the Blastpad's WiFi connection supporting scanning for new networks, connecting to one, and disconnecting from one
 
 ## `Documentation`
@@ -249,5 +241,19 @@ Lastly, the **Gallery** class is linked to the **Configuration** class to handle
 ## `Game`
 - Contains the metadata of a Blockly game, allows users to play the game it defines, and upload it to a Classroom
 
+## `CommunityPage`
+- Allows for all users to upload their games and download games without belonging to a classroom.
+
+## `ProfileSettingsPage`
+- Allows for users to create an account.
+
+## `HomePage`
+- The main screen for the BlastPad allowing for game edits, sharing and other features.
+
+## `Icons`
+- A list of functions which return different SVG objects for the Navbar and other components to render.
+
+## `NavBar`
+- The Navigation Bar of the BlastPad featuring buttons for navigating the UI and Wifi/Battery elements.
 
 <!-- A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance. -->
