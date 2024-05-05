@@ -167,7 +167,7 @@ classDiagram
 		+editGame(): Void
 		+newGame(): Void
 	}
-	Class Icons{
+	class Icons{
 		+HomeIcon(): svgObject
 		+CommunityIcon(): svgObject
 		+ClassroomIcon() svgObject
