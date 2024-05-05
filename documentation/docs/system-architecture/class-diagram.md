@@ -13,13 +13,13 @@ classDiagram
 	ClassroomPage o-- "0..*" Game
 	ProfileSettingsPage --o "0..*" HomePage
 	BlocklyEditor o-- "0..*" Block
-	Database o-- "0..*" Classroom
+	ProfileSettingsPage o-- "0..*" ClassroomPage
 	BlocklyEditor o-- "1" Documentation
-	CommunityHub <-- "1" ClassroomSettingsPage
-	CommunityHub <-- "1" BlocklyEditor	
-	ClassroomSettings *-- "0..*" ClassroomPage
-	ProfileSettingsPage <-- "1" CommunityHub
-	CommunityHub <-- "1" NetworkSettingsPage	
+	CommunityPage <-- "1" ClassroomSettingsPage
+	CommunityPage <-- "1" BlocklyEditor	
+	ClassroomSettingsPage *-- "0..*" ClassroomPage
+	ProfileSettingsPage <-- "1" CommunityPage
+	CommunityPage <-- "1" NetworkSettings	
 	Game <-- "1" CodeCompiler
 		
     class Game{
