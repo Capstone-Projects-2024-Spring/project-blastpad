@@ -2,6 +2,8 @@
 sidebar_position: 7
 ---
 
+# Class Diagram Design?
+
 ## Teacher Class
 
 Represents a teacher.
