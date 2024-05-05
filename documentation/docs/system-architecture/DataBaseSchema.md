@@ -5,27 +5,37 @@ sidebar_position: 5
 
 # Database Schema
 
-The following is our database schema. A visual version of the schema exists in the Design Document in the form of an Entity-Relationship diagram. Our API will be responsible for CRUD, creating, reading, updating and deleting records into the database. Children's information will be especially restricted with COPPA (Children's Online Privacy Protection Act in mind.
+The following is our database schema. A visual version of the schema exists in the Design Document in the form of an Entity-Relationship diagram. Our API will be responsible for CRUD, creating, reading, updating and deleting records into the database. Children's information will be especially restricted with COPPA (Children's Online Privacy Protection Act in mind.)
 
-| Table      | Fields           | Type         | Constraints                 |
-| ---------- | ---------------- | ------------ | --------------------------- |
-| Teachers   | teacher_id       | INT          | PK                          |
-|            | first_name       | VARCHAR(255) |                             |
-|            | last_name        | VARCHAR(255) |                             |
-|            | username         | VARCHAR(255) |                             |
-|            | password         | VARCHAR(255) |                             |
-| Classrooms | room_number      | INT          | PK                          |
-|            | teacher_id       | INT          | FK (Teachers.teacher_id)    |
-| Students   | student_id       | INT          | PK                          |
-|            | first_name       | VARCHAR(255) |                             |
-|            | last_name        | VARCHAR(255) |                             |
-|            | username         | VARCHAR(255) |                             |
-|            | room_number      | INT          | FK (Classrooms.room_number) |
-|            | password         | VARCHAR(255) |                             |
-|            | games            | VARCHAR(255) |                             |
-| Games      | game_id          | INT          | PK                          |
-|            | game_name        | VARCHAR(255) |                             |
-|            | name             | VARCHAR(255) |                             |
-|            | last_edited_date | DATE         |                             |
-|            | json_file        | BLOB         |                             |
-|            | image_icon       | BLOB         |                             |
+| Entity                 | Attributes                    | Keys                             | Relationships                   |
+|------------------------|--------------------------------|----------------------------------|----------------------------------|
+| **Classrooms**         | `created_at` DATE              | `id` INT PK                      |                                  |
+|                        | `invite_code` VARCHAR(255)     |                                  |                                  |
+|                        | `students` INT                 |                                  |                                  |
+|                        | `teacher` VARCHAR(255)         |                                  |                                  |
+|                        | `title` VARCHAR(255)           |                                  |                                  |
+|                        | `description` VARCHAR(255)     |                                  |                                  |
+| **ClassRoomGameMetaData** | `author` VARCHAR(255)       | `id` VARCHAR(255) PK              | Belongs to Classrooms            |
+|                        | `description` VARCHAR(255)     |                                  | `classroomID` INT FK             |
+|                        | `uploaded` DATE                |                                  |                                  |
+| **GameMetaData**       | `author` VARCHAR(255)          | `id` VARCHAR(255) PK              |                                  |
+|                        | `description` VARCHAR(255)     |                                  |                                  |
+|                        | `uploaded` DATE                |                                  |                                  |
+		
+
+    Entities:
+        Classrooms
+        ClassRoomGameMetaData
+        GameMetaData
+
+    Attributes:
+        Classrooms: created_at, invite_code, students, teacher, title, description
+        ClassRoomGameMetaData: author, description, uploaded, classroomID
+        GameMetaData: author, description, uploaded
+
+    Keys:
+        Primary Keys: Classrooms (id), ClassRoomGameMetaData (id), GameMetaData (id)
+        Foreign Key: ClassRoomGameMetaData (classroomID as a FK referencing Classrooms)
+
+    Relationships:
+        ClassRoomGameMetaData belongs to Classrooms (||--|{ indicates a one-to-many relationship).
