@@ -38,4 +38,4 @@ The following is our database schema. A visual version of the schema exists in t
         Foreign Key: ClassRoomGameMetaData (classroomID as a FK referencing Classrooms)
 
     Relationships:
-        ClassRoomGameMetaData belongs to Classrooms (||--|{ indicates a one-to-many relationship).
+        ClassRoomGameMetaData belongs to Classrooms.
