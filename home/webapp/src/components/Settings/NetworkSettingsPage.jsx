@@ -3,7 +3,7 @@ import * as Styled from "../styles/Settings.styled";
 
 export default function NetworkSettingsPage() {
   const [connectedNetwork, setConnectedNetwork] = useState(null);
-  const [wifiNetworks, setWifiNetworks] = useState(["Network1", "Network2", "n3", "n4", "n5", "n6", "n7", "n8"]);
+  const [wifiNetworks, setWifiNetworks] = useState([]);
 
   const fetchNetworks = async () => {
     try {

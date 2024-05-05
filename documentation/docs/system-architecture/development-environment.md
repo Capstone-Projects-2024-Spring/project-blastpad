@@ -9,28 +9,28 @@ sidebar_position: 4
 - **IDE**: any text editor + terminal combination
   - Preferred: Visual Studio Code
 - **Compilers**:
-  - Webpack to compile BlastPad block code editor website
+  - Webpack to compile BlastUI and block code editor
   - Docusaurus to compile documentation
 - **Package Managers**
-  - For Docusaurus: NPM (node package manager)
+  - For Docusaurus: yarn
+  - For Web App: npm
   - For Python: pip
 - **KiCad**
   - For designing electrical schematics and printed circuit board - the interface between the Raspberry Pi and the switches and sensors
 
-## Languages and Frameworks
+## Languages, Frameworks, and Packages
 
 - **HTML/CSS/JavaScript**
-  - For BlastPad block code editor website
-  - For community site where users share games
-- **React** (v TBD)
-  - To build reusable components for community site
-- **Python** (v 3.11 )
+  - **React** (v 18.2.0)
+    - To build reusable components for BlastUI
+  - **Blockly** (v 10.0.0)
+    - For block code editor
+- **Python** (v 3.11)
   - Flask (v 3.0.2)
-    - To host web server that distributes BlastPad block code editor
-    - To host API endpoints for getting game library information and downloading games onto the device from the code editor
-  - Tkinter
-    - To create the graphical user interface of the BlastPad
-  - Pygame Zero (v 1.2.1)
+    - To host web server that distributes BlastUI and block code editor
+    - To host API endpoints for getting system level data
+    - To interface with Supabase API for authentication and database
+  - Pygame (v 2.5.2)
     - Primary game creation library
   - GPIO Zero (v 2.0.1)
     - Primary GPIO interfacing library
