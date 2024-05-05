@@ -69,7 +69,18 @@ describe("Flask", () => {
         })
       })
 
-      test('Access Editor', (done) => {
+      test('Access Editor (External)', (done) => {
+        fetch('http://localhost:8000/editor?load=NewGame.json').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+      })
+
+
+      test('Access Editor (Internal)', (done) => {
         fetch('http://localhost:8000/editor?load=NewGame.json&fromHomescreen=true').then((res) => {
             if(res.status == 200) {
                 done()

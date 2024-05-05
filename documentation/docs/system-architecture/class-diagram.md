@@ -10,19 +10,19 @@ title: BlastPad Class Diagram
 ---
 classDiagram
     BlocklyEditor o-- "0..*" Game
-	UserManager --o "0..*" Database
-	Classroom o-- "0..*" Game
-	DeviceManager <-- "1" UserManager
+	ClassroomPage o-- "0..*" Game
+	ProfileSettingsPage --o "0..*" HomePage
 	BlocklyEditor o-- "0..*" Block
-	Database o-- "0..*" Classroom
+	ProfileSettingsPage o-- "0..*" ClassroomPage
 	BlocklyEditor o-- "1" Documentation
-	Gallery <-- "1" ClassroomManager
-	Gallery <-- "1" BlocklyEditor	
-	ClassroomManager *-- "0..*" Classroom
-	Block <-- "0..*" Sensor
-	Gallery <-- "1" Configuration	
-	DeviceManager <-- "1" Gallery
+	CommunityPage <-- "1" BlocklyEditor	
+	ClassroomSettingsPage *-- "0..*" ClassroomPage
+	ProfileSettingsPage <-- "1" CommunityPage
+	CommunityPage --> NetworkSettings	
 	Game <-- "1" CodeCompiler
+	NavBar --> Icons
+	HomePage --> NavBar
+	ClassroomPage --> NetworkSettings
 		
     class Game{
         -title: String
@@ -55,72 +55,158 @@ classDiagram
 		+helpurl: String
 		+style: String
     }
-    class Sensor {
-		+sensorID: int
-		-sensorData: int[]
-		-calibration: Boolean
+    class ClassroomPage {
+        -createdAt: Date
+		+classroomID: int
+		+invite_code: int
+		+students: int
+		+teacher: String
+		+title: String
+		+description: String
+		+success: Boolean
+		+gameDownloading: Boolean
+		+statusMessage: String
+		+selectedGameIndex: int
+		+searchQuery: String
+		+availableGames: Game[]
+		+selectedGame: Game
 
-		+getSensorData(): int[]
-		+recalibrateSensor()
-		+clearSensorData()
-    }
-    class Classroom {
-        +classroomID: int
-		+teacherID: int
-
-		+deleteGame(userID: int) bool
-		+approveGame(userID: int) bool
-		+uploadGame(game: Game)
-    }
-	class ClassroomManager {
-		-classrooms: Classroom[]
-
-		+joinClassroom(c: Classroom) bool
-		+leaveClassroom(c: Classroom) bool
-		+viewClassrooms()
+		+setSuccess(Boolean)
+		+setGameDownloading(Boolean)
+		+setStatusMessage(String)
+		+setAvailableGames(Game[])
+		+selectGame(Game)
+		+selectedGameIndex(int)
+		+getGamesWithTerm(String)
+		+setSearchQuery(String)
+		+downloadFromClassroom(): Game
+		+useTheme(theme)
 	}
-	class UserManager {
-    	-String: username
-		-String: password
-		+login(username: String, password: String) bool
-		+createAccount(username: String, password: String) bool
+	class ProfileSettingsPage {
+		-email: String
+		-password: String
+
+		+setEmail(String)
+		+setPassword(String)
+		-loginUser(email,password): Boolean
+		-signOut(): Boolean
     }
-    class Configuration {
-		+connectionStatus: Boolean
-		+listOfAvailNetworks: String[]
-		+SSID: String
-		-securityKey: String
+    class NetworkSettings {
+		+connectedNetWork: Network
+		+wifiNetworks: Networks[]
+
+		+setConnectedNetwork(Network)
+		+setWifiNetworks(Network[]) 
+		+fetchNetworks(): Network[]
+		+connectNetwork(): Boolean
+		+handleNetworkConnection(): Boolean
 		
-		+scan() String[]
-		+connect(SSID: String, securityKey: String)
-		+close()
     }
-    class Gallery {
-    	+openCodeEditor()
-		+openConfiguration()
-		+viewClassrooms()
-		+viewGames() Games[]
-			
+    class CommunityPage {
+    	+availableGames: Game[]
+		+selectedGame: Game
+		+selectedGameIndex: int
+		+success: Boolean
+		+gameDownloading: Boolean
+		+statusMessage: String
+		+searchQuery: String
+		+theme: theme
+
+		+setAvailableGames(Game[])
+		+setSelectedGame(Game)
+		+setSelectedGameIndex(int)
+		+setSuccess(Boolean)
+		+setGameDownloading(Boolean)
+		+setStatusMessage(String)
+		+setSearchQuery(String)
+		+useTheme(theme)
+		+downloadFromCommunity(Game)
+		+getGamesWithTerm(String)
     }
+	class ClassroomSettingsPage{
+		+classroom: Classroom
+		+classroomJoining: Boolean
+		+statusMessage: String
+		+success: Boolean
+		+invite: String
+		+menu: int
+		+formData: formData
+
+		+setClassroom(Classroom)
+		+setClassroomJoining(Boolean)
+		+setStatusMessage(String)
+		+setSuccess(Boolean)
+		+setInvite(String)
+		+setMenu(int)
+		+setFormData(Form)
+		+joinClassroom(): Boolean
+		+leaveClassroom(): Boolean
+		+createClassroom(): Classroom
+	}
+	class HomePage{
+		+gameList: Game[]
+		+availableGames: Game[]
+		+selectedGame: Game
+		+selectedGameIndex: int
+		+shareMenuOpen: Boolean
+		+gameLoading: Boolean
+		+gameSharing: Boolean
+		+statusMessage: String
+		+success: Boolean
+		+theme: Theme
+
+		+setAvailableGames(Games[])
+		+setSelectedGame(Game)
+		+setSelectedGameIndex(int)
+		+setShareMenuOpen(Boolean)
+		+setGameLoading(Boolean)
+		+setGameSharing(Boolean)
+		+setStatusMessage(String)
+		+setSuccess(Boolean)
+		+useTheme(theme)
+		+shareToCommunity(): Boolean
+		+shareToClassroom(): Boolean
+		+editGame(): Void
+		+newGame(): Void
+	}
+	class Icons{
+		+HomeIcon(): svgObject
+		+CommunityIcon(): svgObject
+		+ClassroomIcon() svgObject
+		+SettingIcon(): svgObject
+		+NewGameIcon(): svgObject
+		+PlayIcon(): svgObject
+		+PencilIcon(): svgObject
+		+UploadIcon(): svgObject
+		+SearchIcon(): svgObject
+		+ProfileIcon(): svgObject
+		+SensorsIcon(): svgObject
+		+WifiIcon(): svgObject
+		+ThemeIcon(): svgObject
+		+RefreshIcon(): svgObject
+		+NoSignalIcon(): svgObject
+		+FullBatteryFrameIcon(): svgObject
+		+MediumBatteryFrameIcon(): svgObject
+		+LowBatteryFrameIcon(): svgObject
+		+DynamicBatteryIcon(level,theme): svgObject
+	}
+	class NavBar{
+		+navIcons: Icons[]
+		+activePage: Page
+		+isConnected: Boolean
+		+currentTime: dateObject
+		+batteryLevel: BatteryLevel
+		+theme: Theme
+
+		+formatTime(date): date
+		+updateBatteryLevel(): BatteryLevel
+		+updateTime(): DateObject
+	}
     class Documentation {
 		+header: String
     	+body: String
 
 		+loadContent(type: String) String
-	}
-	class DeviceManager {
-		+currentScreen: String
-
-		+loadGallery()
-	}
-	class Database {
-		-users: User[]
-		-classroom: Classroom[]
-
-		+addUser()
-		+removeUser()
-		+addClassroom()
-		+removeClassroom()
 	}
 	class CodeCompiler {
 		+compileBlocklytoPython()
@@ -128,16 +214,11 @@ classDiagram
 ```
 
 ## Class Relationships
+The class diagram above demonstrates various relationships between different classes within the BlastPad system. The **ProfileSettingsPage** is responsible for the user settings which is linked to the **HomePage**. Furthermore, the **CommunityPage** is dependent on the user's **ProfileSettingsPage** to upload and share games. The **CommunityPage** and the **ClassroomPage** are both dependant on the **NetworkSettings** class to provide an internet connection in order to share and download games. The **NavBar** is responsible for allowing navigation and information about battery and wifi connection through different elements. This class depends on the **Icons** class which returns different SVG elements for buttons and icons to render. The **HomePage** also makes use of the **Icons** class in a similar fashion.
 
-The class diagram above demonstrates various relationships between classes within the BlastPad system. The **User** class is associated with the **DeviceManager** class, indicating that a user can interact with the device via the device manager. The **DeviceManager** class is also associated with the **Gallery** for loading it, as indicated by the loadGallery() method. Furthermore, the **Gallery** class is connected to the **ClassroomManager**, allowing users to view multiple classrooms, as shown by the viewClassrooms() method.
 
-The **ClassroomManager** maintains a one-to-many relationship with the **Classroom** class, signifying that it can manage multiple **Classrooms**. Each **Classroom** is capable of handling multiple **Game** objects, as depicted by their **one-to-many** association. The **Game** class is similarly connected to the **BlocklyEditor** class through a **one-to-many** relationship, suggesting that the **BlocklyEditor** can manage numerous **Block** objects.
+The **Game**, **CodeCompiler**, **BlocklyEditor** and the **Block** classes are all dependent on each other. This is because together, they form the most vital part of the BlastPad which is game creation and compilation. This is what makes the BlastPad such an amazing and fun learning tool.
 
-The **Database** class has a **one-to-many link** with both the **User** and **Classroom** classes, indicating that it stores and manages data from both Users and **Classrooms**.
-
-The **Block** class has a **one-to-many** relationship with the **Sensor** class, illustrating that blocks can access and utilize one or many sensors. The **Documentation** class is standalone but associated with the **BlocklyEditor** to provide tutorials for different blocks in the **BlocklyEditor**.
-
-Lastly, the **Gallery** class is linked to the **Configuration** class to handle WiFi connections.
 
 ## `Block`
 - Describes the properties necessary to define and create a Blockly code block
@@ -145,39 +226,37 @@ Lastly, the **Gallery** class is linked to the **Configuration** class to handle
 ## `BlocklyEditor`
 - Allows the user to work on Blockly based projects and create/place code blocks within it
 
-## `Classroom`
-- Acts as a platform to host user-created Blockly games
+## `ClassroomPage`
+- Acts as a platform to host user-created Blockly games belonging in a classroom
 
-## `ClassroomManager`
+## `ClassroomSettingsPage`
 - Lets the user interact with classrooms
 
 ## `CodeCompiler`
 - Converts the raw Blockly JSON definition into a runnable code Block in Python
 
-## `Configuration`
+## `NetworkSettings`
 - Manages the Blastpad's WiFi connection supporting scanning for new networks, connecting to one, and disconnecting from one
-
-## `Database`
-- Stores user and classroom information used for logging in and for retrieving classrooms
-
-## `DeviceManager`
-- Loads the BlastPad's screen upon startup and keeps track of the current screen displayed
 
 ## `Documentation`
 - Loads help documentation for the Blockly code blocks
 
-## `Gallery`
-- Manages the current screen displayed to the user and allows them to navigate to different pages
-
 ## `Game`
 - Contains the metadata of a Blockly game, allows users to play the game it defines, and upload it to a Classroom
 
-## `Sensor`
-- Allows Blockly blocks to retrieve data from the BlastPad's onboard sensors (temperature, light, etc.)
+## `CommunityPage`
+- Allows for all users to upload their games and download games without belonging to a classroom.
 
-## `UserManager`
-- Manages user login for the BlastPad with username/password authentication and allows the creation of a new account
+## `ProfileSettingsPage`
+- Allows for users to create an account.
 
+## `HomePage`
+- The main screen for the BlastPad allowing for game edits, sharing and other features.
 
+## `Icons`
+- A list of functions which return different SVG objects for the Navbar and other components to render.
+
+## `NavBar`
+- The Navigation Bar of the BlastPad featuring buttons for navigating the UI and Wifi/Battery elements.
 
 <!-- A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance. -->
