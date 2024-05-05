@@ -15,7 +15,6 @@ classDiagram
 	BlocklyEditor o-- "0..*" Block
 	ProfileSettingsPage o-- "0..*" ClassroomPage
 	BlocklyEditor o-- "1" Documentation
-	CommunityPage <-- "1" ClassroomSettingsPage
 	CommunityPage <-- "1" BlocklyEditor	
 	ClassroomSettingsPage *-- "0..*" ClassroomPage
 	ProfileSettingsPage <-- "1" CommunityPage
@@ -23,6 +22,7 @@ classDiagram
 	Game <-- "1" CodeCompiler
 	NavBar --> Icons
 	HomePage --> NavBar
+	ClassroomPage --> NetworkSettings
 		
     class Game{
         -title: String
@@ -214,7 +214,10 @@ classDiagram
 ```
 
 ## Class Relationships
+The class diagram above demonstrates various relationships between different classes within the BlastPad system. The **ProfileSettingsPage** is responsible for the user settings which is linked to the **HomePage**. Furthermore, the **CommunityPage** is dependent on the user's **ProfileSettingsPage** to upload and share games. The **CommunityPage** and the **ClassroomPage** are both dependant on the **NetworkSettings** class to provide an internet connection in order to share and download games. The **NavBar** is responsible for allowing navigation and information about battery and wifi connection through different elements. This class depends on the **Icons** class which returns different SVG elements for buttons and icons to render. The **HomePage** also makes use of the **Icons** class in a similar fashion.
 
+
+The **Game**, **CodeCompiler**, **BlocklyEditor** and the **Block** classes are all dependent on each other. This is because together, they form the most vital part of the BlastPad which is game creation and compilation. This is what makes the BlastPad such an amazing and fun learning tool.
 
 
 ## `Block`
