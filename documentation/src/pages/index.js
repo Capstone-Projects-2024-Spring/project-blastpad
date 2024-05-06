@@ -31,8 +31,8 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-        title={`Hello from ${siteConfig.title}`}
-        description="Description will go into a meta tag in <head />">
+        title={`${siteConfig.title}`}
+        description="A kid-friendly handheld gaming device and block-based coding suite that makes it easy to create, play, and share custom games.">
         <HomepageHeader/>
         <main>
             <MDXContent>

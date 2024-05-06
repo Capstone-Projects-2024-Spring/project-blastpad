@@ -19,26 +19,26 @@ title: Sequence Diagram 1 – Playing a Game
 
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
 
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
-User->>Blastpad: Select Game & Press Run
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
+User->>BlastPad: Select Game & Press Run
 
-Blastpad->>+Flask: GET startGame?game=game.json
+BlastPad->>+Flask: GET startGame?game=game.json
 Flask->>+Blockly Compiler: Compile selected game
 Blockly Compiler->>Blockly Compiler: Attempt Compilation
 Blockly Compiler-->>-Flask: Compilation Successful
 Flask->>Flask: Attempt to start game
-Flask-->>-Blastpad: Game started
+Flask-->>-BlastPad: Game started
 
 
-deactivate Blastpad
+deactivate BlastPad
 ```
 
 
@@ -57,25 +57,25 @@ title: "Sequence Diagram 2 - Develop a Game using the BlastPad"
 
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
 
-User->>Blastpad: Press "Create New Game"
-Blastpad->>+Flask: GET Editor
-Flask-->>-Blastpad: Render Editor
-User->>Blastpad: Press "Save Game"
-Blastpad->>+Flask: Attempt to save workspace
-Flask-->>-Blastpad: Return Success Status
+User->>BlastPad: Press "Create New Game"
+BlastPad->>+Flask: GET Editor
+Flask-->>-BlastPad: Render Editor
+User->>BlastPad: Press "Save Game"
+BlastPad->>+Flask: Attempt to save workspace
+Flask-->>-BlastPad: Return Success Status
 
-deactivate Blastpad
+deactivate BlastPad
 
 
 ```
@@ -94,15 +94,15 @@ title: "Sequence Diagram 3 - Develop game using laptop"
 ---
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
 
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
 
 User->>+Flask: GET blastpad.local/editor
@@ -111,7 +111,7 @@ User->>+Flask: Press "Save Game"
 Flask->>Flask: Attempt to save workspace
 Flask-->>-User: Return Success Status
 
-deactivate Blastpad
+deactivate BlastPad
 
 ```
 
@@ -132,28 +132,28 @@ title: "Sequence Diagram 4 - Debugging your game"
 ---
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
 
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
-
-
-
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
 
-User->>Blastpad: Press "Create New Game"
-Blastpad->>+Flask: GET Editor
-Flask-->-Blastpad: Render Editor
-User->>Blastpad: Press "Save Game"
-Blastpad->>+Flask: Attempt to save workspace
+
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
+
+
+User->>BlastPad: Press "Create New Game"
+BlastPad->>+Flask: GET Editor
+Flask-->-BlastPad: Render Editor
+User->>BlastPad: Press "Save Game"
+BlastPad->>+Flask: Attempt to save workspace
 Flask-->>Flask: Game fails to compile
-Flask-->>-Blastpad: Return Verbose Error Message
+Flask-->>-BlastPad: Return Verbose Error Message
 
-deactivate Blastpad
+deactivate BlastPad
 ```
 
 
@@ -173,29 +173,29 @@ title: "Sequence Diagram 5: Joining a Classroom"
 ---
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
-User->>Blastpad: Select Settings
-Blastpad->>+Flask: GET Settings
-Flask-->>-Blastpad: Render Settings Page
+User->>BlastPad: Select Settings
+BlastPad->>+Flask: GET Settings
+Flask-->>-BlastPad: Render Settings Page
 
 
-User->>Blastpad: Enter Classroom Invite Code
-Blastpad->>+Flask: POST Join Classroom Request
+User->>BlastPad: Enter Classroom Invite Code
+BlastPad->>+Flask: POST Join Classroom Request
 Flask->>+Supabase: Check Invite Code
 Supabase-->>-Flask: Invite Code Valid
-Flask-->>-Blastpad: Return Classroom Data
+Flask-->>-BlastPad: Return Classroom Data
 
 
-deactivate Blastpad
+deactivate BlastPad
 ```
 
 
@@ -213,59 +213,59 @@ title: "Sequence Diagram 6 - Viewing and playing a published game"
 ---
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
-User->>Blastpad: Select Settings
-Blastpad->>+Flask: GET Settings
-Flask-->>-Blastpad: Render Settings Page
+User->>BlastPad: Select Settings
+BlastPad->>+Flask: GET Settings
+Flask-->>-BlastPad: Render Settings Page
 
 
-User->>Blastpad: Enter Classroom Invite Code
-Blastpad->>+Flask: POST Join Classroom Request
+User->>BlastPad: Enter Classroom Invite Code
+BlastPad->>+Flask: POST Join Classroom Request
 Flask->>+Supabase: Check Invite Code
 Supabase-->>-Flask: Invite Code Valid
-Flask-->>-Blastpad: Return Classroom Data
+Flask-->>-BlastPad: Return Classroom Data
 
-User->>Blastpad: Select Classroom Gallery
-Blastpad->>+Flask: GET Classroom Page
+User->>BlastPad: Select Classroom Gallery
+BlastPad->>+Flask: GET Classroom Page
 Flask->>+Supabase: Retrieve Games in Classroom
 Supabase-->>-Flask: Array of Classroom Games
-Flask-->>-Blastpad: Render Classroom Page
+Flask-->>-BlastPad: Render Classroom Page
 
 
-User->>Blastpad: Press Download on a game
-Blastpad->>+Flask: GET Classroom/x/game
+User->>BlastPad: Press Download on a game
+BlastPad->>+Flask: GET Classroom/x/game
 Flask->>+Supabase: Download Workspace JSON
 Supabase-->>-Flask: Workspace JSON
 Flask->>+Supabase: Download Workspace Image
 Supabase-->>-Flask: Workspace Image
-Flask-->>-Blastpad: Return Successful Download
+Flask-->>-BlastPad: Return Successful Download
 
 
-User->>Blastpad: Select Home Screen
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+User->>BlastPad: Select Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
 
-User->>Blastpad: Select Game & Press Run
-Blastpad->>+Flask: GET startGame?game=game.json
+User->>BlastPad: Select Game & Press Run
+BlastPad->>+Flask: GET startGame?game=game.json
 Flask->>+Blockly Compiler: Compile selected game
 Blockly Compiler->>Blockly Compiler: Attempt Compilation
 Blockly Compiler-->>-Flask: Compilation Successful
 Flask->>Flask: Attempt to start game
-Flask-->>-Blastpad: Game started
+Flask-->>-BlastPad: Game started
 
 
 
-deactivate Blastpad
+deactivate BlastPad
 
 ```
 ## Use Case 7 - Uploading a game to a Classroom
@@ -283,27 +283,27 @@ title: "Sequence Diagram 7 - Uploading a game to a Classroom"
 
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
 
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
-User->>Blastpad: Select Game & Press Share to Classroom
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
+User->>BlastPad: Select Game & Press Share to Classroom
 
-Blastpad->>+Flask: POST /Classrooms/x/share
+BlastPad->>+Flask: POST /Classrooms/x/share
 Flask->>+Supabase: Upload Workspace JSON
 Supabase-->>-Flask: Return Successful Upload
 
 Flask->>+Supabase: Upload Workspace Image
 Supabase-->>-Flask: Return Successful Upload
 
-Flask-->>-Blastpad: Return Successful Share
+Flask-->>-BlastPad: Return Successful Share
 
-deactivate Blastpad
+deactivate BlastPad
 ```
 
 
@@ -322,52 +322,52 @@ title: "Sequence Diagram 6 - Viewing and playing a published game"
 ---
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
-User->>Blastpad: Select Settings
-Blastpad->>+Flask: GET Settings
-Flask-->>-Blastpad: Render Settings Page
+User->>BlastPad: Select Settings
+BlastPad->>+Flask: GET Settings
+Flask-->>-BlastPad: Render Settings Page
 
-User->>Blastpad: Select Community Hub
-Blastpad->>+Flask: GET Community Hub Page
+User->>BlastPad: Select Community Hub
+BlastPad->>+Flask: GET Community Hub Page
 Flask->>+Supabase: Retrieve Games in the Community Hub
 Supabase-->>-Flask: Array of Games
-Flask-->>-Blastpad: Render Community Hub Page
+Flask-->>-BlastPad: Render Community Hub Page
 
 
-User->>Blastpad: Press Download on a game
-Blastpad->>+Flask: GET Community/game
+User->>BlastPad: Press Download on a game
+BlastPad->>+Flask: GET Community/game
 Flask->>+Supabase: Download Workspace JSON
 Supabase-->>-Flask: Workspace JSON
 Flask->>+Supabase: Download Workspace Image
 Supabase-->>-Flask: Workspace Image
-Flask-->>-Blastpad: Return Successful Download
+Flask-->>-BlastPad: Return Successful Download
 
 
-User->>Blastpad: Select Home Screen
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+User->>BlastPad: Select Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
 
-User->>Blastpad: Select Game & Press Run
-Blastpad->>+Flask: GET startGame?game=game.json
+User->>BlastPad: Select Game & Press Run
+BlastPad->>+Flask: GET startGame?game=game.json
 Flask->>+Blockly Compiler: Compile selected game
 Blockly Compiler->>Blockly Compiler: Attempt Compilation
 Blockly Compiler-->>-Flask: Compilation Successful
 Flask->>Flask: Attempt to start game
-Flask-->>-Blastpad: Game started
+Flask-->>-BlastPad: Game started
 
 
 
-deactivate Blastpad
+deactivate BlastPad
 
 ```
 
@@ -386,27 +386,27 @@ title: "Sequence Diagram 9 - Uploading a game to the Community Hub"
 
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
 
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
-User->>Blastpad: Select Game & Press Share to Community Hub
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
+User->>BlastPad: Select Game & Press Share to Community Hub
 
-Blastpad->>+Flask: POST /community/share
+BlastPad->>+Flask: POST /community/share
 Flask->>+Supabase: Upload Workspace JSON
 Supabase-->>-Flask: Return Successful Upload
 
 Flask->>+Supabase: Upload Workspace Image
 Supabase-->>-Flask: Return Successful Upload
 
-Flask-->>-Blastpad: Return Successful Share
+Flask-->>-BlastPad: Return Successful Share
 
-deactivate Blastpad
+deactivate BlastPad
 ```
 
 
@@ -430,28 +430,28 @@ title: "Sequence Diagram 10 - Creating a Classroom"
 
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
-User->>Blastpad: Select Settings
-Blastpad->>+Flask: GET Settings
-Flask-->>-Blastpad: Render Settings Page
+User->>BlastPad: Select Settings
+BlastPad->>+Flask: GET Settings
+Flask-->>-BlastPad: Render Settings Page
 
 
-User->>Blastpad: Select "Create" And Enter Classroom Information
-Blastpad->>+Flask: POST Create Classroom Request
+User->>BlastPad: Select "Create" And Enter Classroom Information
+BlastPad->>+Flask: POST Create Classroom Request
 Flask->>+Supabase: Create new Classroom Record
 Supabase-->>-Flask: New Classroom Created
-Flask-->>-Blastpad: Return Classroom Data
+Flask-->>-BlastPad: Return Classroom Data
 
-deactivate Blastpad
+deactivate BlastPad
 
 
 
@@ -474,30 +474,30 @@ title: "Sequence Diagram 11 - Configuring the WiFi"
 ---
 sequenceDiagram
 actor User
-User->>+Blastpad: Power On
-Blastpad->>+Flask: Start Flask Server
-Flask-->>-Blastpad: Flask Server Started
-Blastpad->>Blastpad: Start X Server
-Blastpad->>Blastpad: Launch Chromium Browser
+User->>+BlastPad: Power On
+BlastPad->>+Flask: Start Flask Server
+Flask-->>-BlastPad: Flask Server Started
+BlastPad->>BlastPad: Start X Server
+BlastPad->>BlastPad: Launch Chromium Browser
 
-Blastpad->>+Flask: GET Home Screen
-Flask-->>-Blastpad: Render Home Screen
+BlastPad->>+Flask: GET Home Screen
+Flask-->>-BlastPad: Render Home Screen
 
-User->>Blastpad: Connect Keyboard
-Blastpad-->>User: Acknowledge New Input Device
+User->>BlastPad: Connect Keyboard
+BlastPad-->>User: Acknowledge New Input Device
 
-User->>Blastpad: Select Settings
-Blastpad->>+Flask: GET Settings
-Flask-->>-Blastpad: Render Settings Page
+User->>BlastPad: Select Settings
+BlastPad->>+Flask: GET Settings
+Flask-->>-BlastPad: Render Settings Page
 
-User->>Blastpad: Select "WiFi" button
-Blastpad->>+Flask: GET local access points
-Flask-->-Blastpad: Return Local Access Points
-User->>Blastpad: Select Network, enter password
+User->>BlastPad: Select "WiFi" button
+BlastPad->>+Flask: GET local access points
+Flask-->-BlastPad: Return Local Access Points
+User->>BlastPad: Select Network, enter password
 
-Blastpad->>+Flask: POST Connect to Access Point
+BlastPad->>+Flask: POST Connect to Access Point
 Flask->>Flask: Attempt Connection
-Flask-->>-Blastpad: Return Successful Connection
+Flask-->>-BlastPad: Return Successful Connection
 
-deactivate Blastpad
+deactivate BlastPad
 ```
