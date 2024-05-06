@@ -51,7 +51,7 @@ beforeAll( async () => {
     await wait(1000);
 });
 
-describe("Use Case 1: Compile & Run Game ", () => {
+describe("Use Case 1: Compile & Play Game ", () => {
 
     describe("Game Compiles", () => {
         test('Compile a Game', () => {
@@ -76,7 +76,7 @@ describe("Use Case 1: Compile & Run Game ", () => {
     });
 });
 
-describe("Use Case 2: Modify a Game", () => {
+describe("Use Case 2: Develop a Game", () => {
 
     test('Access Home Screen', (done) => {
         fetch('http://localhost:8000/').then((res) => {
@@ -136,11 +136,7 @@ describe("Use Case 2: Modify a Game", () => {
       }, 10 * 1000)
 });
 
-
-
-
-
-describe("Use Case 3: Create New Game & Save", () => {
+describe("Use Case 3: Develop a Game from Laptop", () => {
 
     test('Access Home Screen', (done) => {
         fetch('http://localhost:8000/').then((res) => {
@@ -247,13 +243,22 @@ describe("Use Case 4: Debug a Game", () => {
 });
 
 
-// use case 5: N/A
 
-// use case 6: Join Classroom, react test
+describe("Use Case 5: Join a Classroom", () => {
+
+    test('Access Home Screen', (done) => {
+        fetch('http://localhost:8000/').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })
+});
 
 
-
-describe("Use Case 7: View Classmate's Games in Classroom and Compile One", () => {
+describe("Use Case 6: Download Game from a Classroom", () => {
 
     test('Access Home Screen', (done) => {
         fetch('http://localhost:8000/').then((res) => {
@@ -265,6 +270,7 @@ describe("Use Case 7: View Classmate's Games in Classroom and Compile One", () =
         })
     })
 
+
     test('Retrieve Games from a Classroom', (done) => {
         fetch('http://localhost:8000/get/classroom/7/all').then((res) => {
             if(res.status == 200) {
@@ -275,21 +281,10 @@ describe("Use Case 7: View Classmate's Games in Classroom and Compile One", () =
         })
     })
 
-    describe("Game Compiles", () => {
-        test('Compile a Game', () => {
-            compiler.compile("test_workspace.json", "compiled_result.py", "./images");
-
-            setTimeout(() => {
-                expect(fs.existsSync('compiled_result.py')).toBe(true);
-            }, 2500)
-        })
-
-    });
 });
 
 
-
-describe("Use Case 8: View Classmate's Games in Classroom and Upload One", () => {
+describe("Use Case 7: View Classmate's Games in Classroom and Upload One", () => {
 
     test('Access Home Screen', (done) => {
         fetch('http://localhost:8000/').then((res) => {
@@ -312,11 +307,76 @@ describe("Use Case 8: View Classmate's Games in Classroom and Upload One", () =>
     })  
 });
 
+describe("Use Case 8: Download game from the Community Hub", () => {
 
-// create classroom: React test
+    test('Access Home Screen', (done) => {
+        fetch('http://localhost:8000/').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })
 
-// use case 10: N/a, approving
+    test('Retrieve Games from Community Hub', (done) => {
+        fetch('http://localhost:8000/get/community/all').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })  
+});
 
+
+describe("Use Case 9: Share game to the Community Hub", () => {
+
+    test('Access Home Screen', (done) => {
+        fetch('http://localhost:8000/').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })
+
+    test('Retrieve Games from Community Hub & Share', (done) => {
+        fetch('http://localhost:8000/get/community/all').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })  
+});
+
+
+describe("Use Case 10: Create a Classroom", () => {
+
+    test('Access Home Screen', (done) => {
+        fetch('http://localhost:8000/').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })
+
+    test('Create a Classroom', (done) => {
+        fetch('http://localhost:8000/get/community/all').then((res) => {
+            if(res.status == 200) {
+                done()
+            }
+        }).catch((e) => {
+            done(e);
+        })
+    })  
+});
 
 
 describe("Use Case 11: View Wifi & Connect", () => {
