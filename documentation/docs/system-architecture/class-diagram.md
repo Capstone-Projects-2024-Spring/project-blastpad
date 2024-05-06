@@ -11,15 +11,18 @@ title: BlastPad Class Diagram
 classDiagram
     BlocklyEditor o-- "0..*" Game
 	ClassroomPage o-- "0..*" Game
+    Flask o-- "0..*" HomePage
+    Flask --> "1" CodeCompiler
+
 	ProfileSettingsPage --o "0..*" HomePage
 	BlocklyEditor o-- "0..*" Block
 	ProfileSettingsPage o-- "0..*" ClassroomPage
-	BlocklyEditor o-- "1" Documentation
 	CommunityPage <-- "1" BlocklyEditor	
 	ClassroomSettingsPage *-- "0..*" ClassroomPage
 	ProfileSettingsPage <-- "1" CommunityPage
 	CommunityPage --> NetworkSettings	
 	Game <-- "1" CodeCompiler
+
 	NavBar --> Icons
 	HomePage --> NavBar
 	ClassroomPage --> NetworkSettings
@@ -202,14 +205,49 @@ classDiagram
 		+updateBatteryLevel(): BatteryLevel
 		+updateTime(): DateObject
 	}
-    class Documentation {
-		+header: String
-    	+body: String
-
-		+loadContent(type: String) String
-	}
 	class CodeCompiler {
-		+compileBlocklytoPython()
+		+hexToRgb(String): Int[]
+        +bmap_representation(Int[][]): String
+        +append_bitmaps_to_code(String): String
+        +scaleBitmap(Int[][], Int): Int[][]
+        +saveBitmap(Int[][])
+        +unrollWorkspaceBlocks(json):Object[]
+        +findPathToExit(json):Boolean
+        +getVariableName(String, json): String
+        +getBitmapSize(String, Object[]): Int[]
+        +compile(String, String, String?, Boolean?)
+	}
+
+	class Flask {
+        +unrollWorkspaceBlocks(json):Object[]
+        +editor()
+        +index()
+        +send_report(String): Image
+        +save(Object)
+        +saveWithoutRun(Object)
+        +allgames()
+        +onegame()
+        +compile_game(String)
+        +save_game_icon(String)
+        +compile_and_run(String)
+        +just_compile(String)
+        +run_game(String)
+        +test_game(String)
+        +test_run_game(String)
+        +get_wifi_networks()
+        +disconnect_wifi()
+        +found_password(String)
+        +connect_to_wifi(String, String)
+        +communityhubgames(String)
+        +classroomgames(String)
+        +createclassroom(String)
+        +sharetocommunityhub(String)
+        +sharetoclassroom(String)
+        +joinclassroom(String)
+        +leaveclassroom(String)
+        +downloadfromcommunityhub(String)
+        +downloadfromclassroom(String, String)
+        +running_test()
 	}
 ```
 
@@ -220,43 +258,69 @@ The class diagram above demonstrates various relationships between different cla
 The **Game**, **CodeCompiler**, **BlocklyEditor** and the **Block** classes are all dependent on each other. This is because together, they form the most vital part of the BlastPad which is game creation and compilation. This is what makes the BlastPad such an amazing and fun learning tool.
 
 
-## `Block`
+### Flask
+<details open="True">
+- Describes the Flask server which is in charge of running the compiler, hosting the editor, and hosting the home screen.
+</details>
+
+### Block
+<details open="True">
 - Describes the properties necessary to define and create a Blockly code block
+</details>
 
-## `BlocklyEditor`
+### BlocklyEditor
+<details open="True">
 - Allows the user to work on Blockly based projects and create/place code blocks within it
+</details>
 
-## `ClassroomPage`
+### ClassroomPage
+<details open="True">
 - Acts as a platform to host user-created Blockly games belonging in a classroom
+</details>
 
-## `ClassroomSettingsPage`
+### ClassroomSettingsPage
+<details open="True">
 - Lets the user interact with classrooms
+</details>
 
-## `CodeCompiler`
+### CodeCompiler
+<details open="True">
 - Converts the raw Blockly JSON definition into a runnable code Block in Python
+</details>
 
-## `NetworkSettings`
+### NetworkSettings
+<details open="True">
 - Manages the Blastpad's WiFi connection supporting scanning for new networks, connecting to one, and disconnecting from one
+</details>
 
-## `Documentation`
-- Loads help documentation for the Blockly code blocks
-
-## `Game`
+### Game
+<details open="True">
 - Contains the metadata of a Blockly game, allows users to play the game it defines, and upload it to a Classroom
+</details>
 
-## `CommunityPage`
+### CommunityPage
+<details open="True">
 - Allows for all users to upload their games and download games without belonging to a classroom.
+</details>
 
-## `ProfileSettingsPage`
+### ProfileSettingsPage
+<details open="True">
 - Allows for users to create an account.
+</details>
 
-## `HomePage`
+### HomePage
+<details open="True">
 - The main screen for the BlastPad allowing for game edits, sharing and other features.
+</details>
 
-## `Icons`
+### Icons
+<details open="True">
 - A list of functions which return different SVG objects for the Navbar and other components to render.
+</details>
 
-## `NavBar`
+### NavBar
+<details open="True">
 - The Navigation Bar of the BlastPad featuring buttons for navigating the UI and Wifi/Battery elements.
+</details>
 
 <!-- A check list for architecture design is attached here [architecture\_design\_checklist.pdf](https://templeu.instructure.com/courses/106563/files/16928870/download?wrap=1 "architecture_design_checklist.pdf")  and should be used as a guidance. -->
