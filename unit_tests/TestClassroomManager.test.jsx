@@ -57,6 +57,7 @@ describe('ClassroomSettingsPage', () => {
     });
   });
 
+
   // Test case: Shows an error message if the invite code is invalid
   it('shows an error message if the invite code is invalid', async () => {
     // Mock fetch response for failed join
@@ -81,5 +82,31 @@ describe('ClassroomSettingsPage', () => {
       expect(screen.getByText("Invalid invite code.")).toBeInTheDocument();
     });
   });
+
+
+  // Test case: Allows the user to leave the classroom
+  it('allows the user to leave the classroom', async () => {
+    // Setup initial state with a user already in a classroom
+    // This simulates a scenario where the user is currently part of a classroom before they attempt to leave.
+    renderWithContext(
+      <AuthContext.Provider value={{ classroom: { title: "Applebaum's Class", teacher: 'Ian Applebaum' }, setClassroom: jest.fn() }}>
+        <ClassroomSettingsPage />
+      </AuthContext.Provider>
+    );
+
+    // Simulate user clicking the leave button
+    // This action triggers the event that should result in the user leaving the classroom.
+    fireEvent.click(screen.getByRole('button', { name: /leave classroom/i }));
+
+    // Expect the setClassroom function to have been called with `null` to signify leaving the classroom
+    // This checks that the application correctly handles the state change associated with leaving a classroom.
+    await waitFor(() => {
+      expect(setClassroom).toHaveBeenCalledWith(null);
+      // Verify that the appropriate status message "Leaving Classroom..." is displayed to the user.
+      // This message should indicate to the user that the leave action is being processed.
+      expect(screen.getByText('Leaving Classroom...')).toBeInTheDocument();
+    });
+  });
+
 
 });
