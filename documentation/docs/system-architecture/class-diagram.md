@@ -290,7 +290,7 @@ The **Game**, **CodeCompiler**, **BlocklyEditor** and the **Block** classes are 
 
 ### NetworkSettings
 <details open="True">
-- Manages the Blastpad's WiFi connection supporting scanning for new networks, connecting to one, and disconnecting from one
+- Manages the BlastPad's WiFi connection supporting scanning for new networks, connecting to one, and disconnecting from one
 </details>
 
 ### Game

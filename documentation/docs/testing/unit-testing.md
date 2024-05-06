@@ -187,7 +187,7 @@ You can find the generated unit test report [here.](https://htmlpreview.github.i
         - Game selection menu is displayed, allowing the user to choose a saved workspace to edit or create a new one.
 </details>
 
-### Access Editor From Blastpad
+### Access Editor From BlastPad
 
 <details open="True">
 
