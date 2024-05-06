@@ -258,3 +258,39 @@ You can find the generated unit test report [here.](https://htmlpreview.github.i
     - #### Expected Result
         - An array of objects containing information about nearby wifi access points.
 </details>
+
+
+<!-- ## Classroom Components
+
+### Allow User to Join a Classroom
+
+<details open="True">
+- Check that the user is able to join a classroom with an invite code.
+    - #### Input / User action
+        - User inputs an invite code to a classroom.
+    - #### Expected Result
+        - User should be added to the classroom.
+</details>
+
+### Fail to join with an invalid invite code
+
+<details open="True">
+- Check that the user is unable to join a classroom with an invalid invite code.
+    - #### Input / User action
+        - User inputs an invalid invite code.
+    - #### Expected Result
+        - Classroom join request should fail.
+</details>
+
+
+### Allow User to Leave a Classroom
+
+<details open="True">
+- Check that the user is able to leave a classroom.
+    - #### Input / User action
+        - User presses the "leave classroom" button.
+    - #### Expected Result
+        - User should be removed from the classroom.
+</details>
+
+ -->

@@ -9,7 +9,7 @@ badWorkspace.blocks.blocks[0].inputs = {};
 var spawn = require('child_process').spawn;
 require('node-fetch')
 
-server = null
+var server = null
 
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
