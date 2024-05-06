@@ -81,23 +81,30 @@ https://capstone-projects-2024-spring.github.io/project-blastpad/docs/requiremen
     </td>
     <td align="center">
         <a href="https://github.com/MWedee">
-            <img src="https://avatars.githubusercontent.com/u/104322948?v=4" width="100;" alt="Wedee"/>
+            <img src="https://avatars.githubusercontent.com/u/104322948?v=4" width="100;" alt="Mustafa Wedee"/>
             <br />
             <sub><b>Mustafa Wedee</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/mustafamalik-tu">
-            <img src="https://avatars.githubusercontent.com/u/144449116?v=4" width="100;" alt="Malik"/>
+            <img src="https://avatars.githubusercontent.com/u/144449116?v=4" width="100;" alt="Mustafa Malik"/>
             <br />
             <sub><b>Mustafa Malik</b></sub>
         </a>
     </td>
     <td align="center">
         <a href="https://github.com/tuk05348">
-            <img src="https://avatars.githubusercontent.com/u/123013839?v=4" width="100;" alt="Baharudeen"/>
+            <img src="https://avatars.githubusercontent.com/u/123013839?v=4" width="100;" alt="Niaz Baharudeen"/>
             <br />
             <sub><b>Niaz Baharudeen</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/APM1015">
+            <img src="https://avatars.githubusercontent.com/u/122992723?v=4" width="100;" alt="Aiden McGonagle"/>
+            <br />
+            <sub><b>Aiden McGonagle</b></sub>
         </a>
     </td>
     
