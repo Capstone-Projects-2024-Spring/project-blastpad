@@ -6,7 +6,7 @@ const testWorkspace = jsonfile.readFileSync('test_workspace.json');
 var spawn = require('child_process').spawn;
 require('node-fetch')
 
-child = null
+var child = null
 
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
